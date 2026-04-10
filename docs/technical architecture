@@ -1,0 +1,64 @@
+# Technical Architecture: Rent & Lease Management System
+
+As the Technical Architect for this project, I have translated our high-level System Architecture into a detailed, "ground-level" implementation plan. While the System Architecture defined *what* we are building, this **Technical Architecture** dictates exactly *how* we are building it using our specific technology stack.
+
+Per your instructions, this document contains **no diagrams** and focuses purely on the physical and digital infrastructure required to bring the system to life.
+
+---
+
+## 1. Core Components (The Software & Hardware Stack)
+
+This section acts as the engineering blueprint, detailing the exact technologies, frameworks, and protocols our developers will use to implement the system.
+
+### A. Software Stack
+*   **Backend Framework (Core Logic):** **Python 3.11+** running the **Django 4.x** web framework. Django is chosen for its "batteries-included" approach, providing built-in authentication, ORM (Object-Relational Mapping), and robust middleware routing.
+*   **API Protocol:** **Django REST Framework (DRF)** will be used to serialize backend data into JSON format for the frontend to consume.
+*   **Real-Time Middleware:** **Django Channels** running on an ASGI (Asynchronous Server Gateway Interface) server like Daphne or Uvicorn. This upgrades standard Django from synchronous to asynchronous, enabling the chat feature.
+*   **Frontend Technologies:** **HTML5** for semantic structuring, **CSS3** (using a strict 4px base-unit design system) for styling, and **Vanilla JavaScript (ES6+)** for DOM manipulation and API fetching.
+*   **Database Management System:** **MySQL 8.0**. We will specifically utilize the **InnoDB storage engine** because it natively supports the ACID transactions required for processing rent payments safely.
+*   **Message Broker (Required for Chat):** **Redis**. Django Channels requires an in-memory data store like Redis to route real-time WebSocket messages between different users efficiently.
+
+### B. Hardware Infrastructure
+*   **Hosting Environment:** A Linux-based cloud virtual machine (e.g., Ubuntu 22.04 on AWS EC2 or DigitalOcean Droplet).
+*   **Storage:** SSD-based block storage for the MySQL database to ensure fast read/write speeds for financial queries, plus an S3-compatible cloud bucket for storing static assets (like tenant lease PDFs and chat image attachments).
+
+### C. Network & Connectivity
+*   **Web Traffic (Synchronous):** All standard web traffic (dashboards, forms, payments) will be routed over **HTTPS (Port 443)** using TLS 1.2+ encryption.
+*   **Chat Traffic (Asynchronous):** All real-time chat data will be routed over **WSS (WebSocket Secure)** protocols.
+*   **Firewall Rules:** The MySQL database port (3306) and Redis port (6379) will be strictly blocked from public internet access, allowing communication only internally from the Django application server.
+
+### D. Integration Architecture
+*   **Frontend-to-Backend:** The Vanilla JavaScript frontend will communicate with Django via the **Fetch API**, using asynchronous `Promises` to send JSON payloads.
+*   **Payment Integration:** Integration with external financial systems (e.g., Stripe or Paystack API) will be handled securely via backend-to-backend Webhooks, ensuring the client-side JavaScript never handles sensitive transaction processing.
+
+---
+
+## 2. Typical Layers (The 4-Tier Implementation)
+
+Following the standard N-Tier pattern, here is how our technical stack is distributed across the implementation layers:
+
+### Layer 1: Presentation Layer
+*   **Implementation:** HTML, CSS, and Vanilla JS executing inside the Landlord's or Tenant's web browser.
+*   **Technical Role:** JavaScript parses the JSON data sent from Django and dynamically updates the HTML DOM. For the chat, JavaScript instantiates the `WebSocket()` object to listen for incoming messages and render them into chat bubbles instantly.
+
+### Layer 2: Application Layer
+*   **Implementation:** Python (Django) and Django Channels.
+*   **Technical Role:** This layer executes the core business logic. When a JavaScript `POST` request arrives to pay rent, Django's Python functions calculate the 5% late fee, validate the JWT (JSON Web Token) to ensure the user is authenticated, and enforce IDOR (Insecure Direct Object Reference) rules.
+
+### Layer 3: Data Layer
+*   **Implementation:** MySQL and Redis.
+*   **Technical Role:** MySQL acts as the permanent, relational storage. It uses Foreign Keys to map `tenant_id` to `lease_id`. Redis acts as the volatile, high-speed memory layer, temporarily holding WebSocket connection states so the system knows exactly which Landlord is currently online to receive a chat message.
+
+### Layer 4: Infrastructure Layer
+*   **Implementation:** Nginx (Reverse Proxy) and Cloud Linux Servers.
+*   **Technical Role:** Nginx sits at the very edge of the server. It receives all internet traffic, serves the static HTML/CSS files directly to the user for maximum speed, and proxies the complex Python/API requests back to the Django application.
+
+---
+
+## 3. The "How" Decisions (Technical Architect Justifications)
+
+As the Technical Architect, these specific technologies were chosen over alternatives to guarantee system stability and scalability:
+
+1.  **Why Vanilla JS instead of React/Angular?** By using Vanilla JavaScript, we reduce the complexity of the frontend build process. For a semester project, relying on native browser APIs (like Fetch and WebSocket) ensures high performance without the overhead of maintaining a heavy JavaScript framework.
+2.  **Why MySQL instead of MongoDB (NoSQL)?** A Rent and Lease Management system is heavily relational and financial. A Landlord *has* Properties, Properties *have* Leases, and Leases *have* Invoices. MySQL's relational structure and InnoDB ACID compliance mathematically prevent orphaned records and lost payments, which MongoDB cannot natively guarantee with the same strictness.
+3.  **Why WebSockets over HTTP Long-Polling?** Standard HTTP requires the client to constantly ask the server, "Do I have a new message?" every 3 seconds (Long-Polling). This exhausts server resources. WebSockets establish a single, persistent connection, meaning the server only pushes data when a message is actually sent, making the WhatsApp-style chat highly scalable.

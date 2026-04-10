@@ -1,0 +1,53 @@
+Here is the complete, industry-ready list of the **Users in the system**, broken down by their core **Features** (the broad modules they access) and their specific **Functionalities** (the exact actions they can perform).
+
+There are **two primary human users** in the Rent and Lease Management System, supported by one **automated system engine**.
+
+---
+
+### 👨‍💼 1. THE LANDLORD (Property Owner / Manager)
+The Landlord is the initiator of the system. They are responsible for setting up the properties, onboarding the tenants, and monitoring the financial health of their portfolio.
+
+**Core Features:**
+*   **Property Portfolio Management:** A hub to catalog and manage real estate assets.
+*   **Lease & Onboarding Engine:** A digital contract module for generating and managing active leases.
+*   **Financial Dashboard:** A reporting tool to track expected vs. actual revenue.
+*   **Real-Time Communication Portal:** A secure, WhatsApp-style chat system.
+*   **Maintenance Tracker:** A dashboard to monitor repair requests from tenants.
+
+**Specific Functionalities (What they can actually do):**
+*   **Register/Login:** Authenticate into a secure, isolated Landlord Dashboard.
+*   **Add/Delete Properties:** Add new units to their portfolio, or delete them *(System Rule: Cannot delete if an active lease exists).*
+*   **Create Leases:** Generate a lease agreement, set rent amounts, and invite a tenant via email *(System Rule: Cannot create a lease if the dates overlap with an existing lease).*
+*   **Generate Financial Reports:** Export revenue and payment history as PDF/CSV files.
+*   **Send Chat Messages:** Send text or media directly to a tenant *(System Rule: Can only chat with tenants who are actively assigned to their properties).*
+*   **Manage Tickets:** View maintenance tickets submitted by tenants and update their status.
+
+---
+
+### 👨‍💻 2. THE TENANT (Renter)
+The Tenant is the receiver in the system. They use the platform to fulfill their lease obligations, pay rent securely, and request assistance for their assigned property.
+
+**Core Features:**
+*   **Tenant Dashboard & Document Repository:** A centralized view of their current living situation and digital paperwork.
+*   **Rent Payment Gateway:** A secure financial module for clearing invoices.
+*   **Maintenance Helpdesk:** A ticketing system to report property damage or issues.
+*   **Real-Time Communication Portal:** Direct chat access to their specific landlord.
+
+**Specific Functionalities (What they can actually do):**
+*   **Register/Login:** Authenticate and access their isolated Tenant Dashboard.
+*   **View Lease Documents:** Access, read, and download a PDF copy of their active lease agreement.
+*   **Pay Rent:** Input payment details to clear monthly rent invoices. *(System Rule: Must pay the exact amount billed; cannot underpay).*
+*   **Submit Maintenance Tickets:** Report plumbing, electrical, or structural issues. *(System Rule: Limited to a maximum of 3 active/open tickets at a time to prevent spam).*
+*   **Send Chat Messages:** Communicate instantly with their landlord.
+*   **Receive Receipts:** Download PDF receipts immediately after a successful rent payment.
+
+---
+
+### ⚙️ 3. THE SYSTEM (Automated Background Engine)
+While not a human user, the System acts as the "Third Actor" that enforces all the business rules and logic in the background without human intervention.
+
+**Core Features & Functionalities:**
+*   **Late Fee Calculator:** Automatically detects if a tenant's payment is past the due date and applies a strictly enforced **5% Late Fee** before allowing the payment to process.
+*   **Payment Processor:** Securely routes the exact rent amount from the Tenant to the Landlord and automatically generates a digital receipt.
+*   **Security & Isolation Enforcer:** Automatically blocks unauthorized actions (e.g., blocking a Landlord from deleting a leased property, or blocking unassigned users from chatting).
+*   **Offline Notification Trigger:** Automatically sends an email alert to a user if they receive a chat message while they are offline.

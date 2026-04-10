@@ -1,0 +1,65 @@
+# System Architecture: Rent & Lease Management System
+
+Based on the core principles of system architecture and our defined technology stack (HTML, CSS, JS, Python/Django, WebSockets, and MySQL), here is the comprehensive, academic, and industry-ready architectural breakdown of the platform.
+
+---
+
+## 1. Architectural Classification
+According to standard architectural types, the Rent & Lease Management System is a hybrid model. It primarily utilizes a **3-Tier Client-Server Architecture**, augmented by an **Event-Driven** component.
+
+*   **Client-Server:** The web browsers of the Landlords and Tenants (Clients) request services, data, and HTML pages from the centralized Django backend (Server).
+*   **3-Tier Architecture:** The system is strictly separated into three layers: Presentation (UI), Logic (Processing), and Data (Storage), ensuring that the UI never interacts directly with the database.
+*   **Event-Driven (Real-Time):** The WhatsApp-style chat feature responds to real-time events. When a landlord sends a message, it triggers a WebSocket event that instantly pushes the payload to the tenant.
+
+---
+
+## 2. Key Components of the Architecture
+Aligning with standard system architecture definitions, the platform is built upon these foundational elements to ensure it is highly functional, secure, and scalable.
+
+### A. Hardware Platform
+*   **Infrastructure:** A Linux-based cloud server environment (e.g., AWS, DigitalOcean) designed to host the web application, manage continuous WebSocket connections, and safely store database files. 
+*   **Network Equipment:** Standard cloud load balancers and firewalls to route HTTP/HTTPS and `ws://` (WebSocket) traffic.
+
+### B. Software Platform
+*   **Frontend (Client-Side):** Built using **HTML5, CSS3, and Vanilla JavaScript**. This handles the user interface, DOM manipulation for the chat, and basic client-side form validation.
+*   **Backend (Server-Side):** Built using **Python (Django)**. Django acts as the robust framework that powers the core application, handling business logic, URL routing, and server-side rendering.
+
+### C. System Interfaces (APIs & Protocols)
+*   **Synchronous Interface (REST APIs):** Built with Django REST Framework. The frontend uses standard HTTP `GET`, `POST`, `PUT`, and `DELETE` protocols to communicate with the backend for tasks like paying rent, submitting maintenance tickets, and creating leases.
+*   **Asynchronous Interface (WebSockets):** Built with Django Channels. A persistent, bi-directional protocol used exclusively for the real-time chat, allowing instant message delivery without page reloads.
+
+### D. Data Management
+*   **Primary Database:** **MySQL (InnoDB Engine)**. 
+*   **Functionality:** Acts as the structured, relational memory of the system. It manages complex relationships (e.g., Landlord → Property → Lease → Tenant). It strictly enforces data integrity through Foreign Keys and guarantees **ACID compliance** (Atomicity, Consistency, Isolation, Durability) to ensure that financial rent payments are processed accurately and never lost during a system failure.
+
+### E. Security
+*   **Authentication:** JSON Web Tokens (JWT) are used to verify the identity of the Landlord or Tenant upon login.
+*   **Authorization (IDOR Prevention):** Django Middleware actively checks if the authenticated user has the legal right to access a specific resource (e.g., preventing a tenant from viewing another tenant's lease).
+*   **Rate Limiting & CORS:** Middleware restricts the number of requests a user can make to prevent DDoS attacks (spam) and restricts API access solely to authorized domain origins.
+
+---
+
+## 3. The 3-Tier Execution (How the System Operates)
+
+To understand how the system behaves, we map our software platform to the classic 3-Tier model:
+
+1.  **Tier 1: Presentation Layer (UI)**
+    *   **What it is:** The Landlord and Tenant Dashboards.
+    *   **Execution:** The browser renders the HTML/CSS and runs JavaScript. It captures the user's intent (e.g., typing a chat message or clicking "Pay Rent").
+2.  **Tier 2: Business Logic Layer (Processing)**
+    *   **What it is:** The Django Backend and Middleware.
+    *   **Execution:** This layer acts as the brain. When a rent payment request arrives, this tier checks the current date, calculates the 5% late fee if necessary, enforces the business rule that the payment amount must be exact, and processes the receipt. 
+3.  **Tier 3: Data Layer (Storage)**
+    *   **What it is:** The MySQL Database.
+    *   **Execution:** It permanently records the changes made by Tier 2. It saves the chat histories, updates the invoice statuses to "Paid," and alters the property occupancy status.
+
+---
+
+## 4. Importance of this Architecture (Business Value)
+
+By adopting this specific architectural blueprint, the Rent & Lease Management System achieves the following critical objectives:
+
+*   **Risk Mitigation:** By relying on MySQL's ACID properties, the system mitigates the risk of financial data corruption. By implementing Django Middleware for IDOR checks, it mitigates the risk of data breaches and unauthorized access.
+*   **Maintainability:** Because the architecture follows the "Separation of Concerns" (3-Tier), developers can update the frontend CSS or JavaScript without breaking the backend Django Python code or altering the MySQL database tables.
+*   **Scalability:** By isolating the real-time chat into its own WebSocket interface (Django Channels), heavy chat traffic will not slow down the REST API responsible for processing rent payments. The system can independently scale the chat server as the number of users grows. 
+*   **Communication:** This structured model provides a clear, shared vocabulary. When a bug occurs with a rent payment, stakeholders know to check the "Logic Tier" (Django), whereas a visual glitch is immediately identified as a "Presentation Tier" (HTML/CSS) issue.

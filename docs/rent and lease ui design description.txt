@@ -1,0 +1,1208 @@
+Here is the complete, comprehensive description of all **38 pages** in the Rent & Lease Management System, covering their **Purpose, Core Features, Functionalities, and UI/UX** design.
+
+---
+
+# 🖥️ SECTION 1: THE 14 LANDLORD PAGES
+*(Desktop-Optimized B2B CRM Experience)*
+
+---
+
+### PAGE 1: Landlord Dashboard (Home)
+**Purpose:** The high-level command center giving the Landlord instant visibility into the financial and operational health of their entire property portfolio.
+
+**Core Features:**
+*   Portfolio Overview Metrics
+*   Recent Transaction Feed
+*   Expiring Lease Alerts
+
+**Functionalities:**
+*   View total occupied vs. vacant units
+*   View expected vs. actual monthly revenue
+*   See overdue rent alerts and open maintenance ticket count
+*   Click "Renew Lease" button on expiring contracts
+
+**UI/UX:**
+*   Desktop-optimized F-Pattern layout
+*   Three metric cards at the top (Occupancy, Revenue, Alerts)
+*   Deep Blue sidebar on the left, Light Gray canvas on the right
+*   Split lower view (Transactions left, Expiring Leases right)
+*   Number ticker animation on revenue figures
+
+---
+
+### PAGE 2: Property Portfolio
+**Purpose:** The digital real estate catalog allowing the Landlord to manage all physical property assets.
+
+**Core Features:**
+*   Property Grid View
+*   Add/Edit/Delete Property
+*   Occupancy Status Badges
+
+**Functionalities:**
+*   Add new properties with address, unit number, and base rent
+*   Edit existing property descriptions and details
+*   Delete vacant properties (blocked by system if active lease exists)
+*   View occupancy status badge per property (Leased/Vacant)
+
+**UI/UX:**
+*   CSS Grid layout of Pure White property cards
+*   Muted Emerald badge for Leased, Soft Gray for Vacant
+*   Delete button turns Light Gray and unclickable if active lease exists
+*   `not-allowed` cursor and tooltip appears on hover over disabled delete
+
+---
+
+### PAGE 3: Leases & Tenant Onboarding
+**Purpose:** The digital contract management hub for generating and managing all legal lease agreements.
+
+**Core Features:**
+*   Lease Data Table
+*   Create New Lease Modal
+*   Overlap Date Validation
+
+**Functionalities:**
+*   View all active and expired leases in a sortable table
+*   Create a new lease by selecting a unit, dates, and rent amount
+*   System validates dates for overlapping conflicts in real-time
+*   Invite tenant via email to create their account and sign the lease
+
+**UI/UX:**
+*   Full-width Pure White data table with sortable columns
+*   Deep Blue "Create New Lease" button top right
+*   Modal overlay slides down with a dark blurred backdrop
+*   Input borders turn Muted Red and submit button disables on overlap error
+*   Form shakes animation on validation failure
+
+---
+
+### PAGE 4: Financials & Billing
+**Purpose:** The accounting ledger tracking all financial activity, including rent invoices, late fees, and revenue reports.
+
+**Core Features:**
+*   Invoice Ledger Table
+*   Late Fee Row Highlighting
+*   Revenue Export Function
+
+**Functionalities:**
+*   View all invoices filtered by property, month, or status
+*   See base rent and 5% late fee broken out separately per row
+*   Export full financial reports as CSV or PDF files
+*   Overdue invoice rows get a Muted Red left border automatically
+
+**UI/UX:**
+*   Filter bar (dropdowns) at the top for easy data sorting
+*   Overdue rows visually highlighted with a 4px Muted Red left border
+*   Hovering over the total amount shows a tooltip breaking down the math
+*   Deep Blue export button triggers a toast notification on download
+
+---
+
+### PAGE 5: Real-Time Chat (WhatsApp-Style)
+**Purpose:** The WebSocket-driven instant messaging hub for direct communication between the Landlord and all assigned Tenants.
+
+**Core Features:**
+*   Two-Pane Desktop Chat Layout
+*   Tenant Contact List
+*   Read Receipts and Typing Indicators
+
+**Functionalities:**
+*   Select a tenant from the contact list to open a dedicated chat thread
+*   Send and receive instant text messages via WebSockets
+*   Send file and document attachments
+*   Drag and drop files from desktop directly onto the chat canvas
+*   View blue double ticks for read receipts
+
+**UI/UX:**
+*   Two-pane layout: Contact List (30% left) and Chat Thread (70% right)
+*   Light Gray chat canvas separating the message bubbles
+*   Deep Blue sent bubbles (right), Pure White received bubbles (left)
+*   Sharp bottom-right corner on sent bubbles, sharp bottom-left on received
+*   Green dot for online tenants, gray for offline
+*   Floating "New Message" pill when landlord scrolls up in history
+
+---
+
+### PAGE 6: Maintenance Helpdesk (Kanban Board)
+**Purpose:** The visual workflow management system for tracking and resolving all tenant-submitted repair requests.
+
+**Core Features:**
+*   Three-Column Kanban Board
+*   Drag-and-Drop Ticket Management
+*   Priority Tags
+
+**Functionalities:**
+*   View all tickets organized across Pending, In Progress, and Resolved columns
+*   Drag a ticket card from one column to another to update its status
+*   Click a ticket to view tenant-uploaded photos of the damage
+*   See priority tags (Emergency in Muted Red, Low in Soft Gray)
+
+**UI/UX:**
+*   Trello-style Kanban board on a Light Gray canvas
+*   Column headers color-coded (Amber for Pending, Blue for In Progress, Emerald for Resolved)
+*   Ticket cards are Pure White with subtle drop shadows
+*   On drag, card tilts 3 degrees and casts a Strong Shadow
+*   Valid drop zones highlighted with a dashed Deep Blue outline
+
+---
+
+### PAGE 7: Tenant Directory (CRM)
+**Purpose:** The human-centric relationship management hub for viewing, searching, and managing all tenant profiles.
+
+**Core Features:**
+*   Tenant List View
+*   Slide-Out Detail Drawer
+*   Direct Message Routing
+
+**Functionalities:**
+*   View all active and past tenants in a searchable list
+*   Filter between Active and Moved-Out tenants
+*   Click a tenant row to open a slide-out detail panel
+*   View emergency contacts, lifetime payments, and active tickets
+*   Click "Message Tenant" to route directly to the Chat page
+
+**UI/UX:**
+*   Clean list view with Avatar, Name, Unit, and Status columns
+*   Slide-out drawer from right edge using `cubic-bezier` easing
+*   Dark backdrop overlay when drawer is open
+*   ESC key closes the drawer for power users
+*   Drawer contains a Deep Blue "Message Tenant" primary button
+
+---
+
+### PAGE 8: Document Center (The Vault)
+**Purpose:** A secure, IDOR-protected file management system for storing all property and tenant-related legal documents.
+
+**Core Features:**
+*   Drag-and-Drop File Upload
+*   Google Drive-Style Grid View
+*   IDOR-Protected Download
+
+**Functionalities:**
+*   Upload PDFs, images, and documents via drag-and-drop or file browser
+*   Organize files into folders named after each property
+*   Download any file securely with JWT verification
+*   Delete files with a typed confirmation modal ("Type DELETE to confirm")
+
+**UI/UX:**
+*   Wide dashed-border upload zone at the top
+*   Google Drive-style grid of Pure White cards below
+*   Folder cards have Deep Blue folder icons
+*   Hovering a file reveals a vertical ellipsis menu for actions
+*   Ripple animation on download button click
+
+---
+
+### PAGE 9: Advanced Analytics & Reports
+**Purpose:** Visual data intelligence converting raw MySQL database records into actionable business insights.
+
+**Core Features:**
+*   12-Month Revenue Line Chart
+*   Maintenance Category Donut Chart
+*   Payment Timeliness Donut Chart
+
+**Functionalities:**
+*   View a 12-month revenue trend line chart (Chart.js)
+*   View maintenance ticket category breakdown in a Donut chart
+*   View on-time vs. late payment ratio in a Donut chart
+*   Export the full analytics report as a CSV file
+
+**UI/UX:**
+*   Deep Blue line chart with soft blue gradient fill beneath the curve
+*   Chart bars and lines animate upward from the X-axis on page load
+*   Hovering over chart points shows a tooltip with the exact dollar amount
+*   Full-width Pure White card for the revenue chart
+*   Dual Donut charts in a 2-column row above the line chart
+
+---
+
+### PAGE 10: System Notifications & Alerts
+**Purpose:** The chronological audit feed keeping the Landlord informed of every system event in real-time.
+
+**Core Features:**
+*   Notification Feed
+*   Read/Unread Visual States
+*   Icon-Based Quick Scanning
+
+**Functionalities:**
+*   View all system events in reverse chronological order
+*   Mark all notifications as read instantly
+*   Load older notifications via pagination button
+*   Identify event types via color-coded icons
+
+**UI/UX:**
+*   Unread notifications have a faint Deep Blue background tint
+*   Read notifications have a Pure White background
+*   Emerald icon for payments, Red for late fees, Amber for tickets, Blue for chat
+*   "Mark all as read" text link anchored to the top right
+*   Separated by 1px Soft Gray horizontal lines
+
+---
+
+### PAGE 11: Settings & Profile Management
+**Purpose:** The personal account configuration panel for the Landlord's credentials, bank details, and notification preferences.
+
+**Core Features:**
+*   Vertical Tab Navigation
+*   Profile, Security, and Bank Forms
+*   Notification Preference Toggles
+
+**Functionalities:**
+*   Update personal name and phone number
+*   Change account password
+*   Add bank account or payment receiving details
+*   Toggle specific email notifications on or off
+
+**UI/UX:**
+*   Two-column split: Vertical tabs (left), Active form on Pure White card (right)
+*   Active tab has Deep Blue background, inactive tabs are transparent
+*   Input borders transition to Deep Blue with a blue glow on focus
+*   Save button anchored to bottom right of the form card
+*   Toggle switches animate with iOS-style slide motion
+
+---
+
+### PAGE 12: Expense & ROI Ledger (Advanced Financials)
+**Purpose:** A dedicated financial accounting module for logging property expenses and calculating true Net Return on Investment (ROI).
+
+**Core Features:**
+*   Expense Input Log
+*   Net Income Auto-Calculator
+*   Offline Payment Recording
+
+**Functionalities:**
+*   Manually log property costs (plumbing bills, taxes, repairs)
+*   Record offline cash payments received from tenants
+*   System automatically subtracts expenses from collected rent
+*   View real-time Net Income calculation per property
+
+**UI/UX:**
+*   "Log Expense" button triggers a Pure White modal input form
+*   Net ROI widget pinned at the top of the page in a Deep Blue card
+*   Expense rows are displayed in a clean Light Gray table
+*   Negative expenses shown in Muted Red, positive revenue in Muted Emerald
+
+---
+
+### PAGE 13: Multi-Unit & Building Management
+**Purpose:** A hierarchical organizational tool for grouping individual property units under parent building categories.
+
+**Core Features:**
+*   Parent Building Groups
+*   Accordion/Tree-View Layout
+*   Bulk Property Management
+
+**Functionalities:**
+*   Create a parent "Building" group (e.g., Sunset Apartments)
+*   Assign individual units as children under a parent building
+*   Expand a building row to reveal all its units
+*   Apply bulk financial views per building
+
+**UI/UX:**
+*   Accordion/Tree-view UI where parent rows expand downward
+*   Parent buildings shown in Deep Blue bold text
+*   Child unit rows are indented with a subtle left border line
+*   Expand/collapse arrows animate with a smooth 0.3s rotation
+
+---
+
+### PAGE 14: Automated Reminders Control Panel
+**Purpose:** A UI control panel giving the Landlord direct control over the system's background Python Cron Jobs via simple toggle switches.
+
+**Core Features:**
+*   Cron Job Toggle Switches
+*   Real-Time Status Indicators
+*   Automation Descriptions
+
+**Functionalities:**
+*   Toggle "3-Day Rent Reminder Emails" on or off
+*   Toggle "Auto-Apply 5% Late Fee" on or off
+*   Toggle "Lease Expiry Warning (60 Days)" on or off
+*   View the current active/inactive status of each automation
+
+**UI/UX:**
+*   Clean list of automation items with large iOS-style toggle switches
+*   Active toggle turns Deep Blue, inactive remains Light Gray
+*   Muted Emerald "Active" badge appears next to ON toggles
+*   Toggling a switch instantly fires an API call to update the cron job
+
+---
+
+# 📱 SECTION 2: THE 11 TENANT PAGES
+*(Mobile-First Frictionless Experience)*
+
+---
+
+### PAGE 1: Tenant Dashboard (Home)
+**Purpose:** The Tenant's instant financial snapshot, answering "Do I owe money?" within 2 seconds of opening the app.
+
+**Core Features:**
+*   Hero Financial Status Card
+*   Quick Action Buttons
+*   Latest Notice Preview
+
+**Functionalities:**
+*   View current balance due with a clear "All Clear" or "Overdue" state
+*   Tap "Pay Exact Amount" to navigate to the checkout page
+*   Tap "Message Landlord" for direct chat routing
+*   Tap "Request Repair" for maintenance ticket creation
+
+**UI/UX:**
+*   Massive centered Pure White Hero Card taking up 90% of screen width
+*   Three visual states: Safe (Emerald), Due (Deep Blue), Overdue (Muted Red border)
+*   Muted Red warning text when 5% late fee has been applied
+*   Large 48px touch-target buttons for fat-finger prevention
+*   Number count-up animation on the balance figure
+
+---
+
+### PAGE 2: Rent Payment & Invoices
+**Purpose:** A highly restricted, secure financial checkout portal for clearing rent invoices and downloading receipts.
+
+**Core Features:**
+*   Locked Exact-Amount Checkout
+*   Invoice Status Ledger
+*   PDF Receipt Download
+
+**Functionalities:**
+*   View the locked, system-calculated total amount due
+*   Select a saved payment method or add a new card
+*   Submit payment (button becomes a spinner to prevent double-charging)
+*   View past invoice history and download PDF receipts
+
+**UI/UX:**
+*   Payment amount input is `readonly` with a Light Gray background
+*   Cursor changes to `not-allowed` if tenant taps the locked field
+*   Submit button transitions from Deep Blue to a spinning loader
+*   Success triggers a toast notification at the bottom of the screen
+*   Past invoices expand on tap to reveal the PDF download link
+
+---
+
+### PAGE 3: My Lease & Property Details
+**Purpose:** The Tenant's read-only digital filing cabinet for their living arrangement details and legal documents.
+
+**Core Features:**
+*   Property Info Card
+*   Lease Progress Bar
+*   Document Vault
+
+**Functionalities:**
+*   View the property address and Landlord's contact details
+*   Track lease progress via a visual progress bar
+*   Download the signed lease agreement as a secure PDF
+*   View and download property rules uploaded by the Landlord
+
+**UI/UX:**
+*   Pure White property info card at the top with building image placeholder
+*   Deep Blue progress bar filling up a Light Gray track
+*   Document rows display a download icon and file name
+*   Page is entirely read-only with no editable input fields
+
+---
+
+### PAGE 4: Maintenance Helpdesk
+**Purpose:** A formal, structured repair request system allowing tenants to report property damage while enforcing a spam prevention limit.
+
+**Core Features:**
+*   New Ticket Submission
+*   Photo Evidence Upload
+*   Ticket Status Tracker
+
+**Functionalities:**
+*   Submit a new maintenance ticket (category, urgency, description, photos)
+*   Button disabled if 3 active tickets already exist (spam rule)
+*   Track the live status of all open tickets
+*   Add follow-up comments to an existing open ticket
+
+**UI/UX:**
+*   "New Ticket" button turns Light Gray with `not-allowed` cursor at limit
+*   Shakes animation with red tooltip if limit-blocked button is tapped
+*   Slide-up modal for ticket creation on mobile
+*   Ticket cards show Amber (Pending), Blue (In Progress), Emerald (Resolved)
+
+---
+
+### PAGE 5: Real-Time Chat
+**Purpose:** The WebSocket-powered direct communication line exclusively between the Tenant and their assigned Landlord.
+
+**Core Features:**
+*   Single Dedicated Chat Thread
+*   Photo Attachments
+*   Typing Indicators
+
+**Functionalities:**
+*   Send and receive instant messages directly to assigned Landlord
+*   Send photos of property damage directly in the chat
+*   See "Typing..." indicator when Landlord is composing a reply
+*   View read receipts (blue double ticks) confirming delivery
+
+**UI/UX:**
+*   No contact list shown, chat opens directly into the thread
+*   Online green dot in the chat header for live presence
+*   Deep Blue sent bubbles (right), Pure White received bubbles (left)
+*   Optimistic UI renders messages instantly before server confirmation
+*   Chat auto-scrolls to the newest message on arrival
+
+---
+
+### PAGE 6: Move-In & Move-Out Inspection
+**Purpose:** A legally binding digital checklist to document the property's condition upon arrival and departure, protecting the Tenant's security deposit.
+
+**Core Features:**
+*   Room-by-Room Accordion Checklist
+*   Photo Upload per Room
+*   Progress-Gated Submission
+
+**Functionalities:**
+*   Expand room accordions (Kitchen, Bathroom, Bedroom) to fill checklists
+*   Tick mandatory checkboxes for each room condition item
+*   Upload photos of any pre-existing damage
+*   Submit the final report (button disabled until 100% complete)
+
+**UI/UX:**
+*   Progress bar at the top filling from 0% to 100%
+*   Checkboxes fill with Deep Blue when ticked
+*   Submit button transitions from Light Gray to Deep Blue at 100%
+*   Once submitted the entire form becomes `readonly` (legally locked)
+*   Accordion opens with smooth `cubic-bezier` easing animation
+
+---
+
+### PAGE 7: Payment Methods & Auto-Pay Setup
+**Purpose:** Automating the Tenant's rent payments to prevent them from ever triggering the 5% late fee.
+
+**Core Features:**
+*   Saved Card Management
+*   Auto-Pay Toggle Switch
+*   Cron Job Status Indicator
+
+**Functionalities:**
+*   View masked saved credit/debit cards
+*   Add a new payment method via Stripe/Paystack modal
+*   Delete saved cards
+*   Toggle Auto-Pay switch (deducts exact rent on the 1st)
+
+**UI/UX:**
+*   Pure White cards styled to resemble physical credit cards
+*   iOS-style toggle switch with spring physics bounce on activation
+*   Toggle ON triggers API call and shows Muted Emerald confirmation badge
+*   No "Save" button required, toggling the switch is the save action
+
+---
+
+### PAGE 8: Notice Board
+**Purpose:** A read-only broadcast channel for the Landlord to publish community announcements to all Tenants in a building.
+
+**Core Features:**
+*   Chronological Announcement Feed
+*   Urgent vs. Standard Styling
+*   Read-Only Enforcement
+
+**Functionalities:**
+*   View all broadcast announcements from the Landlord
+*   Distinguish between standard notices and urgent alerts
+*   No reply or interaction possible (read-only)
+
+**UI/UX:**
+*   Standard notices have a Deep Blue left border
+*   Urgent notices have a thick Muted Red left border and "URGENT" badge
+*   Cards have no hover state or ripple effect (teaches read-only context)
+*   Chronological vertical feed on a Light Gray canvas
+
+---
+
+### PAGE 9: Compliance & Renter's Insurance
+**Purpose:** A mandatory document upload portal ensuring the Tenant maintains legally required compliance paperwork.
+
+**Core Features:**
+*   Three Mandatory Upload Blocks
+*   Document Verification Status Badges
+*   Expiry Date Tracking
+
+**Functionalities:**
+*   Upload Government ID, Proof of Income, and Renter's Insurance PDF
+*   View the verification status of each document
+*   Input expiry date for insurance policy
+*   Receive automatic expiry warning if insurance expires in under 30 days
+
+**UI/UX:**
+*   Three distinct upload blocks with clear labeling
+*   Muted Amber badge for "Action Required", Muted Emerald for "Verified"
+*   Expired insurance card pulses with a Muted Red shadow every 3 seconds
+*   A full Muted Red banner appears on the Dashboard if a document expires
+
+---
+
+### PAGE 10: Profile & Settings
+**Purpose:** The Tenant's personal account management hub for credentials, emergency contacts, and notification preferences.
+
+**Core Features:**
+*   Profile Information Form
+*   Emergency Contact Form
+*   Notification Toggle Switches
+
+**Functionalities:**
+*   Update phone number and password (email is locked to the lease ID)
+*   Add or edit next-of-kin emergency contact details
+*   Toggle email notifications for rent reminders and ticket updates
+
+**UI/UX:**
+*   Email input field is `readonly` with a lock icon (tied to lease)
+*   Input labels float upward (Material Design) on focus
+*   Borders glow Deep Blue when a field is active
+*   Toggle switches animate with an iOS-style sliding motion
+
+---
+
+### PAGE 11: Notification & History Center (Audit Log)
+**Purpose:** A comprehensive chronological record of every financial, maintenance, and chat event during the Tenant's entire lease.
+
+**Core Features:**
+*   Chronological System Audit Log
+*   Icon-Based Event Categories
+*   Infinite Scroll Pagination
+
+**Functionalities:**
+*   View all past rent payments, ticket updates, and system alerts
+*   Load older notifications via "Load More" pagination
+*   Distinguish event types via color-coded icons
+*   Securely log out from the bottom of the page
+
+**UI/UX:**
+*   Full-height vertical list separated by 1px Soft Gray lines
+*   Emerald icon for payments, Red for late fees, Blue for tickets, Gray for documents
+*   `IntersectionObserver` JavaScript triggers auto-fetch on scroll to bottom
+*   Muted Red "Log Out Securely" text link anchored at the absolute bottom
+
+---
+
+# 🌍 SECTION 3: THE 13 EXTERNAL & SYSTEM PAGES
+*(Public Shell and Security Perimeter)*
+
+---
+
+### PAGE 1: The Public Landing Page (Home)
+**Purpose:** The marketing front door converting visitors into registered Landlords or Tenants.
+
+**Core Features:**
+*   Deep Blue Hero Section
+*   Feature Cards Grid
+*   Dual Call-to-Action Buttons
+
+**Functionalities:**
+*   Read a platform overview and value proposition
+*   Click "Log In" for returning users
+*   Click "Get Started" to begin registration
+*   Scroll to view the 3 key feature highlights
+
+**UI/UX:**
+*   Solid Deep Blue hero section with Pure White text and CTA button
+*   Light Gray canvas below with a 3-column feature card grid
+*   Scroll reveal animation on feature cards (fade up from Y+20px)
+*   Sticky navbar transitions from transparent to Pure White with a shadow on scroll
+
+---
+
+### PAGE 2: Role-Based Registration
+**Purpose:** The onboarding gateway that routes new users into the correct database table based on their selected role.
+
+**Core Features:**
+*   Role Segmented Toggle
+*   Registration Form
+*   Account Creation Action
+
+**Functionalities:**
+*   Select "I am a Landlord" or "I am a Tenant" via a toggle
+*   Input full name, email, and password
+*   Submit to create a verified account tied to the correct role
+*   Link back to login page for existing users
+
+**UI/UX:**
+*   Centered Pure White card on a Light Gray canvas
+*   Role toggle: Active role has Deep Blue background, inactive is Light Gray
+*   The Deep Blue active block physically slides left/right on selection
+*   "Create Account" button starts disabled (Light Gray) until all fields are valid
+
+---
+
+### PAGE 3: Login Page
+**Purpose:** The secure authentication entry point routing verified users to their correct portal.
+
+**Core Features:**
+*   Email & Password Inputs
+*   Role-Based Routing
+*   Error State Feedback
+
+**Functionalities:**
+*   Input credentials and submit to log in
+*   System verifies JWT and routes to Landlord or Tenant dashboard
+*   Click "Forgot Password?" to initiate password reset
+*   Incorrect credentials trigger an error state
+
+**UI/UX:**
+*   Minimalist centered Pure White card on Light Gray canvas
+*   No navigation menus or sidebars (cognitive load reduction)
+*   On invalid credentials the card shakes with a horizontal shake animation
+*   Input borders turn Muted Red on failed login attempt
+
+---
+
+### PAGE 4: Lease Invitation Gateway
+**Purpose:** The secure digital bridge connecting a Landlord's lease creation to the Tenant's account registration.
+
+**Core Features:**
+*   Invitation Details Display
+*   Accept & Register Action
+*   Lease Pre-Binding Logic
+
+**Functionalities:**
+*   Tenant lands here via a unique encrypted URL from their email
+*   View the property details and the inviting Landlord's name
+*   Click "Accept & Create Account" to begin registration
+*   Account is automatically tied to that specific lease ID upon creation
+
+**UI/UX:**
+*   Deep Blue banner header at the top of the centered card
+*   Clear invitation message in Dark Slate text
+*   Single prominent Deep Blue "Accept & Create Account" button
+*   If the invite link is expired, a Muted Red error message is shown
+
+---
+
+### PAGE 5: Email Verification Gateway
+**Purpose:** A holding screen telling the user to verify their email before gaining system access.
+
+**Core Features:**
+*   Verification Status Message
+*   Resend Verification Option
+
+**Functionalities:**
+*   Inform the user that a verification link has been sent
+*   Click "Resend Email" if the original email was not received
+*   Auto-redirect to login once the email link is clicked
+
+**UI/UX:**
+*   Centered Pure White card on Light Gray canvas
+*   Email icon animation pulsing gently in Deep Blue
+*   Deep Blue text link for "Resend Email"
+
+---
+
+### PAGE 6: Forgot Password
+**Purpose:** The initial step of the two-stage password recovery process.
+
+**Core Features:**
+*   Single Email Input
+*   Reset Request Action
+
+**Functionalities:**
+*   Input registered email address
+*   Submit to trigger a secure, time-limited password reset link
+*   Confirmation message displayed upon submission
+
+**UI/UX:**
+*   Minimal centered Pure White card
+*   Single input field and a Deep Blue "Send Reset Link" button
+*   Success shows a Muted Emerald confirmation message below the button
+
+---
+
+### PAGE 7: Reset Password
+**Purpose:** The secure second stage of password recovery, accessed exclusively via the emailed one-time link.
+
+**Core Features:**
+*   New Password Inputs
+*   Password Match Validation
+*   Token Expiry Handling
+
+**Functionalities:**
+*   Input new password and confirm password
+*   System validates that both fields match before enabling submit
+*   Link expires after 15 minutes for security
+
+**UI/UX:**
+*   Centered Pure White card on Light Gray canvas
+*   "Confirm Password" border turns Muted Red if passwords do not match
+*   Deep Blue "Update Password" button enables only when passwords match
+
+---
+
+### PAGE 8: Payment Success Page
+**Purpose:** The financial callback page providing immediate psychological reassurance after a rent payment clears.
+
+**Core Features:**
+*   SVG Checkmark Animation
+*   Confirmation Message
+*   Auto-Redirect Timer
+
+**Functionalities:**
+*   Confirm payment was successful with the exact amount processed
+*   Display a 3-second countdown before auto-routing to the dashboard
+*   Backend verifies the Stripe/Paystack webhook before confirming success
+
+**UI/UX:**
+*   Pure White full-screen canvas
+*   SVG path animation draws the Muted Emerald checkmark in 0.8s
+*   Dark Slate confirmation text fades in after the checkmark completes
+*   Subtle loading bar at the bottom shrinks during the 3-second redirect
+
+---
+
+### PAGE 9: Payment Cancelled / Declined
+**Purpose:** The financial callback page for declined or cancelled transactions, assuring the user no charges were made.
+
+**Core Features:**
+*   Decline Notification
+*   Retry Action Button
+
+**Functionalities:**
+*   Inform the user the transaction was not completed
+*   Confirm no charges were made to their account
+*   Click "Try Another Payment Method" to return to the checkout
+
+**UI/UX:**
+*   Light Gray canvas with a centered Pure White card
+*   Large Muted Red X icon in the center
+*   Deep Blue "Try Another Payment Method" button below the message
+
+---
+
+### PAGE 10: 403 Forbidden (IDOR Security Block)
+**Purpose:** The branded error page triggered by Django Middleware when an unauthorized data access attempt (IDOR) is detected.
+
+**Core Features:**
+*   Security Violation Message
+*   Audit Log Notification
+*   Safe Return Action
+
+**Functionalities:**
+*   Display a clear explanation that the user lacks the required permissions
+*   Inform the user that the security event has been logged
+*   Click "Return to Dashboard" to safely navigate back
+
+**UI/UX:**
+*   Light Gray canvas with a centered Pure White card
+*   Muted Red shield/padlock icon pulses with a scale animation
+*   Deep Blue "Return to Dashboard" button as the safe escape hatch
+
+---
+
+### PAGE 11: 429 Too Many Requests (Rate Limit Block)
+**Purpose:** The branded error page triggered by Django Middleware when a user's request rate exceeds the defined limit.
+
+**Core Features:**
+*   Live Countdown Timer
+*   Friendly De-escalation Message
+
+**Functionalities:**
+*   Display the specific number of seconds remaining before they can retry
+*   Countdown timer runs live in JavaScript
+*   No action button, user simply waits for the timer to expire
+
+**UI/UX:**
+*   Light Gray canvas with a Muted Amber stop-hand icon
+*   Live JavaScript countdown timer (e.g., "Try again in 45s... 44s...")
+*   Muted Amber color scheme to signal caution without aggression
+
+---
+
+### PAGE 12: 404 Not Found
+**Purpose:** The branded error page for broken URLs or pages that do not exist in the routing system.
+
+**Core Features:**
+*   404 Watermark Graphic
+*   Helpful Navigation Action
+
+**Functionalities:**
+*   Inform the user the requested page does not exist
+*   Click "Take Me Home" to return to the Landing Page
+
+**UI/UX:**
+*   Pure White canvas
+*   Massive Light Gray "404" watermark text in the background
+*   Deep Blue "Take Me Home" button centered on the screen
+
+---
+
+### PAGE 13: 503 Maintenance / 500 Server Error
+**Purpose:** The branded system error page displayed during scheduled maintenance or critical server/database failures.
+
+**Core Features:**
+*   Maintenance Mode Message
+*   Data Safety Assurance
+
+**Functionalities:**
+*   Inform the user the platform is temporarily unavailable
+*   Assure users that no financial data has been affected
+*   No interactive elements (the server is down or in maintenance mode)
+
+**UI/UX:**
+*   Full-screen Deep Blue canvas (indicates a system-level event)
+*   Pure White wrench/gear icon in the center
+*   Pure White text with calm, reassuring language
+*   Absolutely zero animations or JavaScript (prevents browser overload)
+
+---
+
+### 📊 GRAND SUMMARY TABLE
+
+| Section | Pages | Description |
+| :--- | :---: | :--- |
+| Landlord Portal | 14 | Desktop CRM for property and financial management |
+| Tenant Portal | 11 | Mobile-first living and payment platform |
+| External & System | 13 | Public shell, auth, payments, and error handling |
+| **TOTAL** | **38** | Complete, end-to-end SaaS platform |, i want the ui design and the languages we are using is html, css, js, python and sql
+Since you're using **vanilla HTML, CSS, JS + Python + SQL**, I’ll give you a **production-ready, copy-paste foundation** that exactly matches your UI/UX spec, plus a scalable template to build all 38 pages efficiently.
+
+I’ll provide:
+1. 🎨 **Complete Design System** (CSS variables, animations, component classes)
+2. 💻 **3 Fully Coded Pages** (Landlord Dashboard, Tenant Dashboard, Login) matching your spec exactly
+3. 🗄️ **Python + SQL Integration Blueprint**
+4. 📐 **Scalable Page Template** to build the remaining 35 pages fast
+
+---
+
+## 🎨 1. DESIGN SYSTEM (`style.css`)
+```css
+/* 🎨 EXACT SPEC COLORS & TOKENS */
+:root {
+  --deep-blue: #0F172A;
+  --light-gray: #F8FAFC;
+  --pure-white: #FFFFFF;
+  --muted-emerald: #10B981;
+  --muted-red: #EF4444;
+  --amber: #F59E0B;
+  --soft-gray: #E2E8F0;
+  --dark-slate: #1E293B;
+  --blue-glow: 0 0 0 3px rgba(15, 23, 42, 0.15);
+  --card-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --drag-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+  --transition-smooth: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-drawer: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: var(--light-gray); color: var(--dark-slate); line-height: 1.5; }
+
+/* 🔹 COMPONENTS */
+.card { background: var(--pure-white); border-radius: 10px; box-shadow: var(--card-shadow); padding: 20px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.badge.emerald { background: rgba(16,185,129,0.1); color: var(--muted-emerald); }
+.badge.red { background: rgba(239,68,68,0.1); color: var(--muted-red); }
+.badge.gray { background: var(--soft-gray); color: #64748B; }
+
+.btn-primary {
+  background: var(--deep-blue); color: var(--pure-white); border: none; padding: 10px 16px;
+  border-radius: 6px; cursor: pointer; font-weight: 500; transition: var(--transition-smooth);
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { background: var(--soft-gray); cursor: not-allowed; }
+
+.input-field {
+  width: 100%; padding: 10px; border: 1px solid var(--soft-gray); border-radius: 6px;
+  font-size: 14px; transition: var(--transition-smooth); background: var(--pure-white);
+}
+.input-field:focus { outline: none; border-color: var(--deep-blue); box-shadow: var(--blue-glow); }
+.input-field.error { border-color: var(--muted-red); }
+.input-field:read-only { background: var(--light-gray); cursor: not-allowed; }
+
+.toggle-switch {
+  position: relative; width: 44px; height: 24px; background: var(--soft-gray);
+  border-radius: 12px; cursor: pointer; transition: var(--transition-smooth);
+}
+.toggle-switch.active { background: var(--deep-blue); }
+.toggle-switch::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px;
+  background: var(--pure-white); border-radius: 50%; transition: var(--transition-smooth);
+}
+.toggle-switch.active::after { transform: translateX(20px); }
+
+/* 🔹 ANIMATIONS */
+@keyframes countUp { 0% { opacity: 0; transform: translateY(4px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@keyframes slideInRight { 0% { transform: translateX(100%); } 100% { transform: translateX(0); } }
+@keyframes pulseRed { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); } 50% { box-shadow: 0 0 0 12px rgba(239,68,68,0); } }
+
+.number-ticker { animation: countUp 0.6s ease-out forwards; }
+.shake { animation: shake 0.4s ease-in-out; }
+.drawer { animation: slideInRight var(--ease-drawer) forwards; }
+.pulse-red { animation: pulseRed 3s infinite; }
+```
+
+---
+
+## 💻 2. FULLY CODED PAGE EXAMPLES
+
+### 🖥️ LANDLORD DASHBOARD (`landlord-dashboard.html`)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landlord Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 260px; background: var(--deep-blue); color: var(--pure-white); padding: 24px; }
+    .main { flex: 1; padding: 24px; }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+    .metric-card .value { font-size: 28px; font-weight: 700; color: var(--deep-blue); margin: 8px 0; }
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .tx-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--soft-gray); }
+    .lease-item { display: flex; justify-content: space-between; align-items: center; background: var(--light-gray); padding: 12px; border-radius: 6px; margin-bottom: 10px; }
+    .nav-link { display: block; padding: 10px; color: #CBD5E1; text-decoration: none; border-radius: 6px; }
+    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: var(--pure-white); }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h2 style="margin-bottom: 24px;">RentFlow CRM</h2>
+    <nav>
+      <a href="#" class="nav-link active">Dashboard</a>
+      <a href="#" class="nav-link">Properties</a>
+      <a href="#" class="nav-link">Leases</a>
+      <a href="#" class="nav-link">Financials</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+      <h1>Portfolio Overview</h1>
+      <span style="color:#64748B; font-size:13px;">Last updated: 2m ago</span>
+    </header>
+
+    <div class="metrics">
+      <div class="card metric-card">
+        <p style="color:#64748B; font-size:13px;">Occupancy Rate</p>
+        <p class="value number-ticker">92%</p>
+        <span class="badge emerald">+2% vs last month</span>
+      </div>
+      <div class="card metric-card">
+        <p style="color:#64748B; font-size:13px;">Expected Revenue</p>
+        <p class="value number-ticker">$14,250</p>
+        <span class="badge red">$320 overdue</span>
+      </div>
+      <div class="card metric-card">
+        <p style="color:#64748B; font-size:13px;">Open Alerts</p>
+        <p class="value number-ticker" style="color:var(--amber);">4</p>
+        <span style="font-size:12px; color:#64748B;">2 maintenance, 2 expiring</span>
+      </div>
+    </div>
+
+    <div class="split-grid">
+      <div class="card">
+        <h3 style="margin-bottom:12px;">Recent Transactions</h3>
+        <div class="tx-row"><span>Unit 4B Rent</span><span style="color:var(--muted-emerald);">+$1,200</span></div>
+        <div class="tx-row"><span>Unit 2A Late Fee</span><span style="color:var(--muted-red);">+$60</span></div>
+        <div class="tx-row"><span>Plumbing Repair</span><span style="color:#64748B;">-$180</span></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:12px;">Expiring Leases (60 Days)</h3>
+        <div class="lease-item">
+          <div><strong>Unit 1C • Sarah M.</strong><br><small style="color:#64748B;">Expires: May 15, 2026</small></div>
+          <button class="btn-primary" style="font-size:12px; padding:6px 12px;">Renew Lease</button>
+        </div>
+        <div class="lease-item">
+          <div><strong>Unit 3A • David K.</strong><br><small style="color:#64748B;">Expires: Jun 01, 2026</small></div>
+          <button class="btn-primary" style="font-size:12px; padding:6px 12px;">Renew Lease</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
+```
+
+### 📱 TENANT DASHBOARD (`tenant-dashboard.html`)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Tenant Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .container { max-width: 420px; margin: 0 auto; padding: 16px; }
+    .hero-card { background: var(--pure-white); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 20px; border-left: 4px solid var(--muted-red); box-shadow: var(--card-shadow); }
+    .hero-card .balance { font-size: 36px; font-weight: 800; color: var(--deep-blue); margin: 8px 0; }
+    .hero-card .warning { color: var(--muted-red); font-size: 13px; font-weight: 500; }
+    .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    .action-btn { background: var(--pure-white); border: 1px solid var(--soft-gray); border-radius: 10px; padding: 14px 0; text-align: center; cursor: pointer; min-height: 48px; }
+    .action-btn.primary { background: var(--deep-blue); color: var(--pure-white); border: none; }
+    .notice-preview { background: var(--pure-white); border-radius: 10px; padding: 16px; box-shadow: var(--card-shadow); border-left: 4px solid var(--deep-blue); }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero-card">
+    <p style="color:#64748B; font-size:14px;">Current Balance</p>
+    <p class="balance number-ticker">$1,260.00</p>
+    <p class="warning">5% late fee applied • Due today</p>
+  </div>
+
+  <div class="actions">
+    <button class="action-btn primary">💳 Pay Rent</button>
+    <button class="action-btn">💬 Message</button>
+    <button class="action-btn">🔧 Request Repair</button>
+  </div>
+
+  <div class="notice-preview">
+    <strong style="font-size:14px;">📢 Water Maintenance Notice</strong>
+    <p style="font-size:13px; color:#475569; margin-top:6px;">Scheduled for Tuesday, 8AM-12PM. Please store water in advance.</p>
+  </div>
+</div>
+</body>
+</html>
+```
+
+### 🔐 LOGIN PAGE (`login.html`)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .auth-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--light-gray); }
+    .auth-card { width: 100%; max-width: 380px; background: var(--pure-white); padding: 32px; border-radius: 12px; box-shadow: var(--card-shadow); }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+    .forgot { display: block; text-align: right; font-size: 13px; color: var(--deep-blue); text-decoration: none; margin-top: 4px; }
+    .error-msg { color: var(--muted-red); font-size: 13px; margin-top: 8px; display: none; }
+  </style>
+</head>
+<body>
+<div class="auth-wrapper">
+  <div class="auth-card" id="loginForm">
+    <h2 style="margin-bottom: 20px; text-align: center;">Sign In</h2>
+    <form id="loginFormEl">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="input-field" id="email" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="input-field" id="password" required>
+      </div>
+      <a href="#" class="forgot">Forgot password?</a>
+      <button type="submit" class="btn-primary" style="width:100%; margin-top:16px;">Log In</button>
+      <p class="error-msg" id="error">Invalid credentials. Please try again.</p>
+    </form>
+  </div>
+</div>
+<script>
+  document.getElementById('loginFormEl').addEventListener('submit', e => {
+    e.preventDefault();
+    const card = document.getElementById('loginForm');
+    const err = document.getElementById('error');
+    // Simulate failed login for demo
+    card.classList.add('shake');
+    document.querySelectorAll('.input-field').forEach(i => i.classList.add('error'));
+    err.style.display = 'block';
+    setTimeout(() => { card.classList.remove('shake'); }, 400);
+    setTimeout(() => { err.style.display = 'none'; }, 3000);
+  });
+</script>
+</body>
+</html>
+```
+
+---
+
+## 🗄️ 3. PYTHON + SQL INTEGRATION BLUEPRINT
+
+### 🐍 Python (Flask Example)
+```python
+# app.py
+from flask import Flask, render_template, request, jsonify
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+import sqlite3
+
+app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = 'your-secret'
+jwt = JWTManager(app)
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.json
+    user = query_db("SELECT role, id FROM users WHERE email=? AND password_hash=?", 
+                    (data['email'], hash_password(data['password'])))
+    if not user: return jsonify({'error': 'Invalid credentials'}), 401
+    token = create_access_token(identity={'id': user['id'], 'role': user['role']})
+    return jsonify({'token': token, 'redirect': f"/dashboard/{user['role']}"})
+
+@app.route('/dashboard/landlord')
+@jwt_required()
+def landlord_dashboard():
+    return render_template('landlord-dashboard.html')
+```
+
+### 🗃️ SQL Schema (SQLite/PostgreSQL)
+```sql
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  role TEXT CHECK(role IN ('landlord','tenant')) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE properties (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  landlord_id INTEGER REFERENCES users(id),
+  address TEXT NOT NULL,
+  unit_number TEXT,
+  base_rent DECIMAL(10,2),
+  status TEXT DEFAULT 'Vacant' CHECK(status IN ('Leased','Vacant'))
+);
+
+CREATE TABLE leases (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  property_id INTEGER REFERENCES properties(id),
+  tenant_id INTEGER REFERENCES users(id),
+  start_date DATE,
+  end_date DATE,
+  monthly_rent DECIMAL(10,2),
+  status TEXT DEFAULT 'Active'
+);
+```
+
+### 🔌 WebSocket & Cron Integration Points
+- **Chat**: Use `Flask-SocketIO` or `FastAPI` WebSockets. Frontend: `const socket = io();`
+- **Cron Toggles**: Store in DB `cron_jobs` table. Python `apscheduler` reads toggle state hourly.
+- **IDOR Protection**: Middleware checks `request.user.role` + `WHERE landlord_id = ?` on every query.
+
+---
+
+## 📦 4. HOW TO SCALE TO ALL 38 PAGES FAST
+
+1. **Create a `templates/` folder** with base layouts:
+   - `layout_landlord.html` (sidebar + main)
+   - `layout_tenant.html` (mobile wrapper + bottom nav)
+   - `layout_auth.html` (centered card)
+2. **Reuse Components**: Buttons, cards, badges, modals, toggles are already in `style.css`
+3. **Page Generation Formula**:
+   ```html
+   {% extends "layout_landlord.html" %}
+   {% block content %}
+     <h1>{{ page_title }}</h1>
+     <!-- Paste your specific grid/table/modal here -->
+   {% endblock %}
+   ```
+4. **JS State Management**: Keep it vanilla. Use `fetch()` + `FormData` for all API calls. Store JWT in `sessionStorage`.
+
+---
+
+## ✅ NEXT STEPS
+Tell me which **batch of 5-8 pages** you want next, and I’ll generate them with exact HTML/CSS/JS matching your spec:
+- `📦 Batch A`: Property Portfolio, Leases & Onboarding, Financials & Billing, Tenant Directory, Document Center
+- `📦 Batch B`: Real-Time Chat, Maintenance Kanban, Analytics, Notifications, Settings
+- `📦 Batch C`: Tenant Pages (Rent Payment, My Lease, Maintenance, Inspection, Auto-Pay, Notice Board)
+- `📦 Batch D`: External & Error Pages (Landing, Registration, Invitation, Password Reset, 403/429/404/503)
+
+Which batch should I generate next? I’ll deliver them ready-to-run in your stack.
