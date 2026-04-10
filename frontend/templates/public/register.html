@@ -1,0 +1,164 @@
+{% extends "base/layout_auth.html" %}
+
+{% block title %}Register | Rent & Lease Management{% endblock %}
+{% block auth_subtitle %}Create your account{% endblock %}
+
+{% block auth_content %}
+<form id="registerForm">
+    <!-- Role Toggle -->
+    <div class="form-group mb-4">
+        <label class="form-label d-block text-center mb-2">I am a...</label>
+        <div class="role-toggle">
+            <button type="button" class="role-toggle-option active" data-role="tenant">Tenant</button>
+            <button type="button" class="role-toggle-option" data-role="landlord">Landlord</button>
+        </div>
+        <input type="hidden" id="registerRole" value="tenant">
+    </div>
+
+    <!-- Name Fields Container -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-6 form-group mb-0">
+            <label class="form-label" for="firstName">First Name</label>
+            <input type="text" class="form-input" id="firstName" required>
+        </div>
+        <div class="col-md-6 form-group mb-0">
+            <label class="form-label" for="lastName">Last Name</label>
+            <input type="text" class="form-input" id="lastName" required>
+        </div>
+    </div>
+
+    <div class="form-group mb-4">
+        <label class="form-label" for="registerEmail">Email Address</label>
+        <input type="email" class="form-input" id="registerEmail" required>
+    </div>
+
+    <div class="form-group mb-4">
+        <label class="form-label" for="registerPassword">Password</label>
+        <div class="password-wrapper">
+            <input type="password" class="form-input" id="registerPassword" required>
+            <button type="button" class="password-toggle toggle-pw" data-target="registerPassword">
+                <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
+            </button>
+        </div>
+        <div class="form-hint">At least 8 characters, 1 uppercase, 1 lowercase, 1 number</div>
+    </div>
+    
+    <div class="form-group mb-4">
+        <label class="form-label" for="confirmPassword">Confirm Password</label>
+        <div class="password-wrapper">
+            <input type="password" class="form-input" id="confirmPassword" required>
+            <button type="button" class="password-toggle toggle-pw" data-target="confirmPassword">
+                <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="form-group mb-0">
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="registerBtn">
+            <span id="registerBtnText">Create Account</span>
+            <div id="registerSpinner" class="spinner spinner-white d-none ms-2"></div>
+        </button>
+    </div>
+    <div id="globalError" class="form-error text-center mt-3" style="display: none;"></div>
+</form>
+{% endblock %}
+
+{% block auth_footer %}
+    Already have an account? <a href="/login/" class="text-decoration-none">Sign in</a>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Role Toggle Logic
+        const roleBtns = document.querySelectorAll('.role-toggle-option');
+        const roleInput = document.getElementById('registerRole');
+        
+        roleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                roleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                roleInput.value = btn.dataset.role;
+            });
+        });
+
+        // Password Toggle Logic
+        const pwToggles = document.querySelectorAll('.toggle-pw');
+        pwToggles.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.dataset.target;
+                const input = document.getElementById(targetId);
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                const icon = type === 'password' ? 'eye' : 'eye-off';
+                btn.innerHTML = `<i data-lucide="${icon}" style="width: 18px; height: 18px;"></i>`;
+                lucide.createIcons();
+            });
+        });
+
+        // Form Submit Logic
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('registerBtn');
+            const btnText = document.getElementById('registerBtnText');
+            const spinner = document.getElementById('registerSpinner');
+            const authCard = document.querySelector('.auth-card');
+            const globalError = document.getElementById('globalError');
+            
+            // Collect Data
+            const data = {
+                role: roleInput.value,
+                first_name: document.getElementById('firstName').value,
+                last_name: document.getElementById('lastName').value,
+                email: document.getElementById('registerEmail').value,
+                password: document.getElementById('registerPassword').value,
+                confirm_password: document.getElementById('confirmPassword').value,
+            };
+            
+            globalError.style.display = 'none';
+            globalError.textContent = '';
+            
+            btn.disabled = true;
+            btnText.textContent = 'Creating account...';
+            spinner.classList.remove('d-none');
+
+            try {
+                const resData = await api.post('/auth/register/', data, false);
+                
+                showToast(resData.message || 'Account created successfully!');
+                
+                setTimeout(() => {
+                    // Redirect to a placeholder "check your email" page or login
+                    window.location.href = '/login/?registered=true';
+                }, 1500);
+                
+            } catch (err) {
+                authCard.classList.add('anim-shake');
+                setTimeout(() => authCard.classList.remove('anim-shake'), 400);
+                
+                // Displaying errors dynamically
+                if (err.detail) {
+                    globalError.textContent = err.detail;
+                    globalError.style.display = 'block';
+                } else if (typeof err === 'object') {
+                    // First validation error text
+                    const firstKey = Object.keys(err)[0];
+                    if (Array.isArray(err[firstKey])) {
+                       globalError.textContent = err[firstKey][0];
+                    } else {
+                       globalError.textContent = err[firstKey];
+                    }
+                    globalError.style.display = 'block';
+                } else {
+                    showToast('An unexpected error occurred.', 'error');
+                }
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = 'Create Account';
+                spinner.classList.add('d-none');
+            }
+        });
+    });
+</script>
+{% endblock %}

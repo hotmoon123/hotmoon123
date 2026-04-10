@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+
+{% block layout %}
+<div class="layout-tenant">
+    {% block tenant_content %}{% endblock %}
+</div>
+
+<nav class="bottom-nav">
+    <a href="/tenant/dashboard" class="bottom-nav-item {% if '/tenant/dashboard' in request.path %}active{% endif %}">
+        <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
+        Home
+    </a>
+    <a href="/tenant/payments" class="bottom-nav-item {% if '/tenant/payments' in request.path %}active{% endif %}">
+        <i data-lucide="wallet" style="width: 18px; height: 18px;"></i>
+        Payments
+    </a>
+    <a href="/tenant/maintenance" class="bottom-nav-item {% if '/tenant/maintenance' in request.path %}active{% endif %}">
+        <i data-lucide="wrench" style="width: 18px; height: 18px;"></i>
+        Repairs
+    </a>
+    <a href="/tenant/chat" class="bottom-nav-item {% if '/tenant/chat' in request.path %}active{% endif %}">
+        <i data-lucide="message-square" style="width: 18px; height: 18px;"></i>
+        Chat
+    </a>
+    <a href="/tenant/profile" class="bottom-nav-item {% if '/tenant/profile' in request.path %}active{% endif %}">
+        <i data-lucide="user" style="width: 18px; height: 18px;"></i>
+        Profile
+    </a>
+</nav>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons();
+});
+</script>
+{% endblock %}

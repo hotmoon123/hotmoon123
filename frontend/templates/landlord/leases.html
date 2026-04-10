@@ -1,0 +1,228 @@
+{% extends "base/layout_landlord.html" %}
+
+{% block title %}Leases | RentFlow CRM{% endblock %}
+
+{% block landlord_content %}
+<div class="leases-page">
+    <div class="page-header mb-6">
+        <div>
+            <h1 class="page-title">Leases</h1>
+            <p class="page-subtitle text-muted">Manage rental agreements and tenants</p>
+        </div>
+        <button class="btn btn-primary" id="createLeaseBtn">
+            <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+            Create Lease
+        </button>
+    </div>
+
+    <!-- Status Tabs -->
+    <div class="status-tabs mb-4">
+        <button class="status-tab active" data-status="">All</button>
+        <button class="status-tab" data-status="Active">Active</button>
+        <button class="status-tab" data-status="Pending">Pending</button>
+        <button class="status-tab" data-status="Expired">Expired</button>
+    </div>
+
+    <!-- Leases Table -->
+    <div class="card">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Tenant</th>
+                    <th>Monthly Rent</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="leasesTableBody">
+                <tr>
+                    <td colspan="7" class="text-center text-muted" style="padding: 48px;">
+                        <div class="spinner"></div>
+                        <p class="mt-4">Loading leases...</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .page-title {
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-deep-blue);
+        margin-bottom: 4px;
+    }
+    
+    .status-tabs {
+        display: flex;
+        gap: var(--space-2);
+        background: var(--color-white);
+        padding: var(--space-2);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+    }
+    .status-tab {
+        padding: var(--space-2) var(--space-4);
+        border: none;
+        background: transparent;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-slate-500);
+        cursor: pointer;
+        transition: var(--ease-smooth);
+    }
+    .status-tab:hover {
+        background: var(--color-light-gray);
+    }
+    .status-tab.active {
+        background: var(--color-deep-blue);
+        color: var(--color-white);
+    }
+    
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .data-table th {
+        text-align: left;
+        padding: var(--space-4);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-slate-500);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--color-border);
+    }
+    .data-table td {
+        padding: var(--space-4);
+        border-bottom: 1px solid var(--color-border);
+        font-size: var(--font-size-sm);
+    }
+    .data-table tr:last-child td {
+        border-bottom: none;
+    }
+    .data-table tr:hover td {
+        background: var(--color-light-gray);
+    }
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let allLeases = [];
+let currentStatus = '';
+
+document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+    loadLeases();
+    setupFilters();
+});
+
+function setupFilters() {
+    document.querySelectorAll('.status-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.status-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentStatus = tab.dataset.status;
+            filterLeases();
+        });
+    });
+    
+    document.getElementById('createLeaseBtn').addEventListener('click', () => {
+        window.location.href = '/landlord/leases/new';
+    });
+}
+
+async function loadLeases() {
+    try {
+        allLeases = await api.get('/leases/');
+        renderLeases(allLeases);
+    } catch (error) {
+        renderError('Failed to load leases');
+    }
+}
+
+function filterLeases() {
+    let filtered = allLeases;
+    if (currentStatus) {
+        filtered = allLeases.filter(l => l.status === currentStatus);
+    }
+    renderLeases(filtered);
+}
+
+function renderLeases(leases) {
+    const tbody = document.getElementById('leasesTableBody');
+    
+    if (leases.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center text-muted" style="padding: 48px;">
+                    <i data-lucide="file-text" style="width: 48px; height: 48px; opacity: 0.3;"></i>
+                    <p class="mt-4">No leases found</p>
+                </td>
+            </tr>
+        `;
+        lucide.createIcons();
+        return;
+    }
+    
+    tbody.innerHTML = leases.map(lease => `
+        <tr>
+            <td>
+                <div style="font-weight: 500;">Unit ${lease.property_unit || 'N/A'}</div>
+                <div class="text-muted text-xs">${lease.property_address || ''}</div>
+            </td>
+            <td>${lease.tenant_name || '<span class="text-muted">No tenant</span>'}</td>
+            <td>$${parseFloat(lease.monthly_rent).toLocaleString()}</td>
+            <td>${new Date(lease.start_date).toLocaleDateString()}</td>
+            <td>${new Date(lease.end_date).toLocaleDateString()}</td>
+            <td><span class="badge ${getStatusBadge(lease.status)}">${lease.status}</span></td>
+            <td>
+                <button class="btn btn-ghost btn-sm" onclick="viewLease(${lease.id})">
+                    <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                </button>
+                ${!lease.tenant ? `
+                <button class="btn btn-ghost btn-sm" onclick="inviteTenant(${lease.id})">
+                    <i data-lucide="send" style="width: 14px; height: 14px;"></i>
+                </button>
+                ` : ''}
+            </td>
+        </tr>
+    `).join('');
+    lucide.createIcons();
+}
+
+function getStatusBadge(status) {
+    const badges = {
+        'Active': 'badge-emerald',
+        'Pending': 'badge-amber',
+        'Expired': 'badge-red',
+        'Terminated': 'badge-gray'
+    };
+    return badges[status] || 'badge-gray';
+}
+
+function renderError(message) {
+    document.getElementById('leasesTableBody').innerHTML = `
+        <tr>
+            <td colspan="7" class="text-center text-muted" style="padding: 48px;">
+                <i data-lucide="alert-circle" style="width: 48px; height: 48px; color: var(--color-red);"></i>
+                <p class="mt-4">${message}</p>
+            </td>
+        </tr>
+    `;
+    lucide.createIcons();
+}
+</script>
+{% endblock %}

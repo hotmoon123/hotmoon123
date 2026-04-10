@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+
+{% block layout %}
+<div class="auth-wrapper">
+    <div class="auth-card anim-slide-up">
+        
+        <div class="auth-header">
+            <div class="auth-logo">
+                <i data-lucide="building-2" class="me-2" style="color: var(--color-deep-blue); width: 32px; height: 32px;"></i>
+                RentFlow CRM
+            </div>
+            <p class="auth-subtitle">{% block auth_subtitle %}Welcome{% endblock %}</p>
+        </div>
+
+        {% block auth_content %}{% endblock %}
+
+        <div class="auth-footer">
+            {% block auth_footer %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

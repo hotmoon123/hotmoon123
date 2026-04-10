@@ -1,0 +1,142 @@
+{% extends "base/base.html" %}
+
+{% block layout %}
+<div class="layout-landlord">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <i data-lucide="building-2" style="width: 24px; height: 24px;"></i>
+            RentFlow CRM
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/landlord/dashboard" class="nav-link {% if request.path == '/landlord/dashboard' %}active{% endif %}">
+                <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
+                Dashboard
+            </a>
+            <a href="/landlord/properties" class="nav-link {% if '/properties' in request.path %}active{% endif %}">
+                <i data-lucide="home" style="width: 18px; height: 18px;"></i>
+                Properties
+            </a>
+            <a href="/landlord/leases" class="nav-link {% if '/leases' in request.path %}active{% endif %}">
+                <i data-lucide="file-text" style="width: 18px; height: 18px;"></i>
+                Leases
+            </a>
+            <a href="/landlord/financials" class="nav-link {% if '/financials' in request.path %}active{% endif %}">
+                <i data-lucide="dollar-sign" style="width: 18px; height: 18px;"></i>
+                Financials
+            </a>
+            <a href="/landlord/tenants" class="nav-link {% if '/tenants' in request.path %}active{% endif %}">
+                <i data-lucide="users" style="width: 18px; height: 18px;"></i>
+                Tenants
+            </a>
+            <a href="/landlord/maintenance" class="nav-link {% if '/maintenance' in request.path %}active{% endif %}">
+                <i data-lucide="wrench" style="width: 18px; height: 18px;"></i>
+                Maintenance
+            </a>
+            <a href="/landlord/chat" class="nav-link {% if '/chat' in request.path %}active{% endif %}">
+                <i data-lucide="message-square" style="width: 18px; height: 18px;"></i>
+                Chat
+            </a>
+
+            <div class="nav-section-title">Management</div>
+
+            <a href="/landlord/documents" class="nav-link {% if '/documents' in request.path %}active{% endif %}">
+                <i data-lucide="folder" style="width: 18px; height: 18px;"></i>
+                Documents
+            </a>
+            <a href="/landlord/analytics" class="nav-link {% if '/analytics' in request.path %}active{% endif %}">
+                <i data-lucide="bar-chart-2" style="width: 18px; height: 18px;"></i>
+                Analytics
+            </a>
+            <a href="/landlord/notifications" class="nav-link {% if '/notifications' in request.path %}active{% endif %}">
+                <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                Notifications
+            </a>
+
+            <div class="nav-section-title">Settings</div>
+
+            <a href="/landlord/settings" class="nav-link {% if '/settings' in request.path %}active{% endif %}">
+                <i data-lucide="settings" style="width: 18px; height: 18px;"></i>
+                Settings
+            </a>
+            <a href="/landlord/automations" class="nav-link {% if '/automations' in request.path %}active{% endif %}">
+                <i data-lucide="zap" style="width: 18px; height: 18px;"></i>
+                Automations
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="/landlord/buildings" class="nav-link {% if '/buildings' in request.path %}active{% endif %}">
+                <i data-lucide="building" style="width: 18px; height: 18px;"></i>
+                Buildings
+            </a>
+            <a href="/landlord/expenses" class="nav-link {% if '/expenses' in request.path %}active{% endif %}">
+                <i data-lucide="receipt" style="width: 18px; height: 18px;"></i>
+                Expenses
+            </a>
+            <div class="nav-link" id="logoutBtn" style="cursor: pointer;">
+                <i data-lucide="log-out" style="width: 18px; height: 18px;"></i>
+                Logout
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block landlord_content %}{% endblock %}
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+        
+        // Check authentication
+        const token = sessionStorage.getItem('accessToken');
+        if (!token) {
+            window.location.href = '/login/';
+            return;
+        }
+
+        // Logout handler
+        document.getElementById('logoutBtn')?.addEventListener('click', () => {
+            sessionStorage.removeItem('accessToken');
+            window.location.href = '/login/';
+        });
+
+        // Update active nav link
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Token refresh helper
+    async function refreshTokenIfNeeded() {
+        const refresh = sessionStorage.getItem('refreshToken');
+        if (!refresh) return false;
+        
+        try {
+            const response = await fetch('/api/v1/auth/token/refresh/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ refresh })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                sessionStorage.setItem('accessToken', data.access);
+                return true;
+            }
+        } catch (e) {
+            console.error('Token refresh failed');
+        }
+        return false;
+    }
+</script>
+{% endblock %}

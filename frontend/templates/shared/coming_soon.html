@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+
+{% block title %}{{ page_title }} | Rent & Lease Management{% endblock %}
+
+{% block layout %}
+<div class="error-wrapper">
+    <div class="badge badge-amber mb-4">{{ portal|title }} Portal</div>
+    <h1 class="error-title">{{ page_title }}</h1>
+    <p class="error-message">{{ page_description }}</p>
+    <div class="flex gap-3">
+        {% if portal == "landlord" %}
+            <a href="/landlord/dashboard" class="btn btn-primary">Go to Landlord Dashboard</a>
+        {% elif portal == "tenant" %}
+            <a href="/tenant/dashboard" class="btn btn-primary">Go to Tenant Dashboard</a>
+        {% else %}
+            <a href="/login/" class="btn btn-primary">Go to Login</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
