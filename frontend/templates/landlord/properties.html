@@ -1,508 +1,137 @@
-{% extends "base/layout_landlord.html" %}
+{% extends "landlord/layout_landlord.html" %}
 
-{% block title %}Properties | RentFlow CRM{% endblock %}
+{% block title %}Property Portfolio | RentFlow{% endblock %}
 
-{% block landlord_content %}
-<div class="properties-page">
-    <!-- Page Header -->
-    <div class="page-header mb-6">
-        <div>
-            <h1 class="page-title">Properties</h1>
-            <p class="page-subtitle text-muted">Manage your property portfolio</p>
-        </div>
-        <div class="page-actions">
-            <button class="btn btn-primary" id="addPropertyBtn">
-                <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
-                Add Property
-            </button>
-        </div>
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">Property Portfolio</h2>
+        <p class="text-muted">Manage your apartments, houses, and buildings.</p>
     </div>
-
-    <!-- Filters -->
-    <div class="filters card mb-4">
-        <div class="filters-row">
-            <div class="filter-group">
-                <label class="form-label mb-2">Status</label>
-                <select class="form-input" id="statusFilter" style="min-width: 150px;">
-                    <option value="">All</option>
-                    <option value="Vacant">Vacant</option>
-                    <option value="Leased">Leased</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label class="form-label mb-2">Building</label>
-                <select class="form-input" id="buildingFilter" style="min-width: 200px;">
-                    <option value="">All Buildings</option>
-                </select>
-            </div>
-            <div class="filter-group" style="flex: 1;">
-                <label class="form-label mb-2">Search</label>
-                <input type="text" class="form-input" id="searchFilter" placeholder="Search by address or unit...">
-            </div>
-        </div>
-    </div>
-
-    <!-- Properties Grid -->
-    <div id="propertiesGrid" class="properties-grid">
-        <div class="loading-state card">
-            <div class="spinner"></div>
-            <p class="text-muted mt-4">Loading properties...</p>
-        </div>
+    <div class="d-flex gap-3">
+        <button class="btn btn-secondary" onclick="fetchProperties()">
+            <i data-lucide="refresh-cw" style="width: 16px; height:16px;"></i> Refresh
+        </button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPropertyModal">
+            <i data-lucide="plus" style="width: 16px; height:16px;"></i> New Property
+        </button>
     </div>
 </div>
 
-<!-- Add/Edit Property Modal -->
-<div class="modal-backdrop" id="propertyModal" style="display: none;">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title" id="modalTitle">Add Property</h2>
-            <button class="modal-close" id="closeModal">
-                <i data-lucide="x" style="width: 20px; height: 20px;"></i>
-            </button>
-        </div>
-        <form id="propertyForm" class="modal-body">
-            <input type="hidden" id="propertyId">
-            
-            <div class="form-group">
-                <label class="form-label" for="unitNumber">Unit Number *</label>
-                <input type="text" class="form-input" id="unitNumber" placeholder="e.g., 101, A2" required>
-                <div class="form-error" id="unitNumberError"></div>
+<!-- Empty State & Loader -->
+<div id="propertyLoader" class="text-center py-5">
+    <div class="spinner mx-auto mb-3" style="width: 40px; height: 40px; border-width: 4px;"></div>
+    <p class="text-muted">Fetching your properties...</p>
+</div>
+
+<!-- Grid for Properties -->
+<div id="propertyGrid" class="row g-4 d-none">
+    <!-- JAVASCRIPT WILL INJECT CARDS HERE -->
+</div>
+
+<!-- Final Empty State (fallback) -->
+<div id="emptyState" class="text-center py-5 d-none">
+    <i data-lucide="home" class="mb-3 text-muted" style="width: 48px; height: 48px;"></i>
+    <h4>No Properties Yet</h4>
+    <p class="text-muted">Add your first property to start managing your units.</p>
+    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPropertyModal">Add Property</button>
+</div>
+
+<!-- Simple Add Property Modal Placeholder -->
+<div class="modal fade" id="addPropertyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Property</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label" for="address">Street Address *</label>
-                <input type="text" class="form-input" id="address" placeholder="123 Main St" required>
-                <div class="form-error" id="addressError"></div>
+            <div class="modal-body">
+                <p class="text-muted">Logic for adding properties will be built in the next step.</p>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label" for="building">Building (Optional)</label>
-                <select class="form-input" id="building">
-                    <option value="">Standalone Property</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label" for="baseRent">Monthly Rent ($) *</label>
-                <input type="number" class="form-input" id="baseRent" placeholder="1500.00" min="0" step="0.01" required>
-                <div class="form-error" id="baseRentError"></div>
-            </div>
-        </form>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
-            <button type="submit" form="propertyForm" class="btn btn-primary" id="saveBtn">
-                <span id="saveBtnText">Save Property</span>
-                <div id="saveSpinner" class="spinner spinner-white d-none ms-2"></div>
-            </button>
         </div>
     </div>
 </div>
-
-<style>
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .page-title {
-        font-size: var(--font-size-xl);
-        font-weight: var(--font-weight-bold);
-        color: var(--color-deep-blue);
-        margin-bottom: 4px;
-    }
-    .page-subtitle {
-        font-size: var(--font-size-sm);
-    }
-    
-    .filters-row {
-        display: flex;
-        gap: var(--space-4);
-        align-items: flex-end;
-    }
-    .filter-group {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .properties-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: var(--space-4);
-    }
-    
-    .property-card {
-        background: var(--color-white);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-card);
-        padding: var(--space-5);
-        transition: var(--ease-smooth);
-        cursor: pointer;
-    }
-    .property-card:hover {
-        box-shadow: var(--shadow-md);
-        transform: translateY(-2px);
-    }
-    
-    .property-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: var(--space-4);
-    }
-    .property-unit {
-        font-size: var(--font-size-lg);
-        font-weight: var(--font-weight-bold);
-        color: var(--color-deep-blue);
-    }
-    .property-address {
-        font-size: var(--font-size-sm);
-        color: var(--color-slate-500);
-        margin-top: 2px;
-    }
-    
-    .property-details {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-2);
-        padding-top: var(--space-4);
-        border-top: 1px solid var(--color-border);
-    }
-    .property-detail {
-        display: flex;
-        justify-content: space-between;
-        font-size: var(--font-size-sm);
-    }
-    .property-detail-label {
-        color: var(--color-slate-500);
-    }
-    .property-detail-value {
-        font-weight: var(--font-weight-medium);
-    }
-    
-    .property-actions {
-        display: flex;
-        gap: var(--space-2);
-        margin-top: var(--space-4);
-        padding-top: var(--space-4);
-        border-top: 1px solid var(--color-border);
-    }
-    .property-actions .btn {
-        flex: 1;
-    }
-    
-    .loading-state {
-        grid-column: 1 / -1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-12);
-    }
-    
-    .empty-state {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: var(--space-12);
-        color: var(--color-slate-500);
-    }
-    
-    /* Modal Styles */
-    .modal-backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(4px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        animation: fadeIn 0.2s ease;
-    }
-    
-    .modal {
-        background: var(--color-white);
-        border-radius: var(--radius-xl);
-        width: 100%;
-        max-width: 480px;
-        max-height: 90vh;
-        overflow: hidden;
-        animation: slideUp 0.3s var(--ease-spring);
-    }
-    
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--space-5) var(--space-6);
-        border-bottom: 1px solid var(--color-border);
-    }
-    .modal-title {
-        font-size: var(--font-size-lg);
-        font-weight: var(--font-weight-bold);
-    }
-    .modal-close {
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: var(--color-slate-400);
-        padding: var(--space-1);
-        transition: var(--ease-smooth);
-    }
-    .modal-close:hover {
-        color: var(--color-deep-blue);
-    }
-    
-    .modal-body {
-        padding: var(--space-6);
-        max-height: 60vh;
-        overflow-y: auto;
-    }
-    
-    .modal-footer {
-        display: flex;
-        justify-content: flex-end;
-        gap: var(--space-3);
-        padding: var(--space-4) var(--space-6);
-        border-top: 1px solid var(--color-border);
-        background: var(--color-light-gray);
-    }
-</style>
 {% endblock %}
 
-{% block extra_js %}
+{% block landlord_js %}
 <script>
-let allProperties = [];
-let allBuildings = [];
-let editingPropertyId = null;
-
-document.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
-    loadProperties();
-    loadBuildings();
-    setupEventListeners();
-});
-
-function setupEventListeners() {
-    document.getElementById('addPropertyBtn').addEventListener('click', () => openModal());
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    document.getElementById('cancelBtn').addEventListener('click', closeModal);
-    document.getElementById('propertyModal').addEventListener('click', (e) => {
-        if (e.target.id === 'propertyModal') closeModal();
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchProperties();
     });
-    
-    document.getElementById('propertyForm').addEventListener('submit', handleSubmit);
-    
-    document.getElementById('statusFilter').addEventListener('change', filterProperties);
-    document.getElementById('buildingFilter').addEventListener('change', filterProperties);
-    document.getElementById('searchFilter').addEventListener('input', filterProperties);
-}
 
-async function loadProperties() {
-    const grid = document.getElementById('propertiesGrid');
-    try {
-        const response = await api.get('/properties/');
-        allProperties = response;
-        renderProperties(allProperties);
-    } catch (error) {
-        grid.innerHTML = `
-            <div class="empty-state">
-                <i data-lucide="alert-circle" style="width: 48px; height: 48px;"></i>
-                <p>Failed to load properties</p>
-            </div>
-        `;
-        lucide.createIcons();
-    }
-}
-
-async function loadBuildings() {
-    try {
-        const response = await api.get('/properties/buildings/');
-        allBuildings = response;
-        populateBuildingFilters(response);
-    } catch (error) {
-        console.error('Failed to load buildings');
-    }
-}
-
-function populateBuildingFilters(buildings) {
-    const modalSelect = document.getElementById('building');
-    const filterSelect = document.getElementById('buildingFilter');
-    
-    const options = buildings.map(b => 
-        `<option value="${b.id}">${b.name}</option>`
-    ).join('');
-    
-    modalSelect.innerHTML = '<option value="">Standalone Property</option>' + options;
-    filterSelect.innerHTML = '<option value="">All Buildings</option>' + options;
-}
-
-function renderProperties(properties) {
-    const grid = document.getElementById('propertiesGrid');
-    
-    if (properties.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state">
-                <i data-lucide="home" style="width: 48px; height: 48px;"></i>
-                <p>No properties found</p>
-                <button class="btn btn-primary mt-4" onclick="openModal()">Add Your First Property</button>
-            </div>
-        `;
-        lucide.createIcons();
-        return;
-    }
-    
-    grid.innerHTML = properties.map(property => `
-        <div class="property-card" onclick="openModal(${property.id})">
-            <div class="property-header">
-                <div>
-                    <div class="property-unit">Unit ${property.unit_number}</div>
-                    <div class="property-address">${property.address}</div>
-                </div>
-                <span class="badge ${property.status === 'Leased' ? 'badge-emerald' : 'badge-gray'}">${property.status}</span>
-            </div>
-            <div class="property-details">
-                <div class="property-detail">
-                    <span class="property-detail-label">Monthly Rent</span>
-                    <span class="property-detail-value">$${parseFloat(property.base_rent).toLocaleString()}</span>
-                </div>
-                ${property.building_name ? `
-                <div class="property-detail">
-                    <span class="property-detail-label">Building</span>
-                    <span class="property-detail-value">${property.building_name}</span>
-                </div>
-                ` : ''}
-            </div>
-            <div class="property-actions">
-                <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openModal(${property.id})">
-                    <i data-lucide="edit-2" style="width: 14px; height: 14px;"></i>
-                    Edit
-                </button>
-                <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); confirmDelete(${property.id})">
-                    <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
-                </button>
-            </div>
-        </div>
-    `).join('');
-    lucide.createIcons();
-}
-
-function filterProperties() {
-    const status = document.getElementById('statusFilter').value;
-    const buildingId = document.getElementById('buildingFilter').value;
-    const search = document.getElementById('searchFilter').value.toLowerCase();
-    
-    let filtered = allProperties;
-    
-    if (status) {
-        filtered = filtered.filter(p => p.status === status);
-    }
-    if (buildingId) {
-        filtered = filtered.filter(p => p.building && p.building == buildingId);
-    }
-    if (search) {
-        filtered = filtered.filter(p => 
-            p.address.toLowerCase().includes(search) ||
-            p.unit_number.toLowerCase().includes(search)
-        );
-    }
-    
-    renderProperties(filtered);
-}
-
-function openModal(propertyId = null) {
-    const modal = document.getElementById('propertyModal');
-    const form = document.getElementById('propertyForm');
-    const title = document.getElementById('modalTitle');
-    
-    form.reset();
-    editingPropertyId = propertyId;
-    
-    if (propertyId) {
-        const property = allProperties.find(p => p.id === propertyId);
-        if (property) {
-            title.textContent = 'Edit Property';
-            document.getElementById('propertyId').value = property.id;
-            document.getElementById('unitNumber').value = property.unit_number;
-            document.getElementById('address').value = property.address;
-            document.getElementById('baseRent').value = property.base_rent;
-            document.getElementById('building').value = property.building || '';
-        }
-    } else {
-        title.textContent = 'Add Property';
-        document.getElementById('propertyId').value = '';
-    }
-    
-    modal.style.display = 'flex';
-    lucide.createIcons();
-}
-
-function closeModal() {
-    document.getElementById('propertyModal').style.display = 'none';
-    editingPropertyId = null;
-}
-
-async function handleSubmit(e) {
-    e.preventDefault();
-    
-    const btn = document.getElementById('saveBtn');
-    const btnText = document.getElementById('saveBtnText');
-    const spinner = document.getElementById('saveSpinner');
-    
-    btn.disabled = true;
-    btnText.textContent = 'Saving...';
-    spinner.classList.remove('d-none');
-    
-    const data = {
-        unit_number: document.getElementById('unitNumber').value,
-        address: document.getElementById('address').value,
-        base_rent: parseFloat(document.getElementById('baseRent').value),
-        building: document.getElementById('building').value || null,
-    };
-    
-    try {
-        if (editingPropertyId) {
-            await api.request(`/properties/${editingPropertyId}/`, {
-                method: 'PUT',
-                headers: api.getHeaders(),
-                body: JSON.stringify(data),
-            });
-            showToast('Property updated successfully');
-        } else {
-            await api.request('/properties/', {
-                method: 'POST',
-                headers: api.getHeaders(),
-                body: JSON.stringify(data),
-            });
-            showToast('Property created successfully');
-        }
+    async function fetchProperties() {
+        const grid = document.getElementById('propertyGrid');
+        const loader = document.getElementById('propertyLoader');
+        const empty = document.getElementById('emptyState');
         
-        closeModal();
-        await loadProperties();
-    } catch (error) {
-        showToast('Failed to save property', 'error');
-    } finally {
-        btn.disabled = false;
-        btnText.textContent = 'Save Property';
-        spinner.classList.add('d-none');
-    }
-}
+        // Setup initial display
+        loader.classList.remove('d-none');
+        grid.classList.add('d-none');
+        empty.classList.add('d-none');
 
-async function confirmDelete(propertyId) {
-    if (!confirm('Are you sure you want to delete this property?')) return;
-    
-    try {
-        await api.request(`/properties/${propertyId}/`, {
-            method: 'DELETE',
-            headers: api.getHeaders(),
-        });
-        showToast('Property deleted');
-        await loadProperties();
-    } catch (error) {
-        showToast('Failed to delete property', 'error');
+        try {
+            // LAYER 3: Data Retrieval via API
+            const data = await api.get('/properties/units/');
+            const properties = data.results || data; // Use results because we set pagination to 20
+
+            loader.classList.add('d-none');
+
+            if (!properties || properties.length === 0) {
+                empty.classList.remove('d-none');
+                return;
+            }
+
+            // DYNAMIC INJECTION: Zero hardcoded properties
+            grid.innerHTML = ''; // Clear prior entries
+            properties.forEach(prop => {
+                const card = createPropertyCard(prop);
+                grid.appendChild(card);
+            });
+
+            grid.classList.remove('d-none');
+            lucide.createIcons(); // Refresh icons for the newly created cards
+
+        } catch (err) {
+            console.error(err);
+            showToast('Failed to load properties.', 'error');
+            loader.classList.add('d-none');
+            empty.classList.remove('d-none');
+        }
     }
-}
+
+    function createPropertyCard(prop) {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-4 anim-fade-in';
+        
+        const statusBadge = `<span class="badge ${prop.status === 'occupied' ? 'badge-emerald' : 'badge-amber'}">${prop.status.toUpperCase()}</span>`;
+        
+        col.innerHTML = `
+            <div class="card card-hover h-100 p-4 border-0">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div class="text-xs font-weight-bold text-uppercase" style="color: var(--color-slate-500)">${prop.property_type || 'Unit'}</div>
+                        <h4 class="mb-0" style="color: var(--color-deep-blue);">${prop.unit_number}</h4>
+                    </div>
+                    ${statusBadge}
+                </div>
+                <div class="mb-4">
+                    <div class="text-sm font-weight-medium" style="color: var(--color-slate-600)">
+                        <i data-lucide="building" style="width: 14px; height: 14px;" class="me-1"></i>
+                        ${prop.building_name || 'Standalone Building'}
+                    </div>
+                </div>
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-xs text-muted">Monthly Rent</div>
+                        <div class="font-weight-bold" style="color: var(--color-deep-blue)">$${parseFloat(prop.rent_amount).toLocaleString()}</div>
+                    </div>
+                    <button class="btn btn-ghost p-2" title="Manage Unit">
+                        <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        return col;
+    }
 </script>
 {% endblock %}

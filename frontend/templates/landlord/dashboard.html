@@ -1,424 +1,143 @@
-{% extends "base/layout_landlord.html" %}
+{% extends "landlord/layout_landlord.html" %}
 
-{% block title %}Dashboard | RentFlow CRM{% endblock %}
+{% block title %}Dashboard | RentFlow Landlord{% endblock %}
 
-{% block landlord_content %}
-<div class="dashboard">
-    <!-- Page Header -->
-    <div class="page-header mb-6">
-        <div>
-            <h1 class="page-title">Dashboard</h1>
-            <p class="page-subtitle text-muted">Welcome back! Here's an overview of your portfolio.</p>
-        </div>
-        <div class="page-actions">
-            <button class="btn btn-primary" id="refreshBtn">
-                <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
-                Refresh
-            </button>
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1" style="font-size: var(--font-size-2xl);">Welcome back</h2>
+        <p class="text-muted">Here is what's happening with your properties today.</p>
+    </div>
+    <div class="d-flex gap-3">
+        <button class="btn btn-secondary">
+            <i data-lucide="download" style="width: 16px; height:16px;"></i> Export Report
+        </button>
+        <button class="btn btn-primary">
+            <i data-lucide="plus" style="width: 16px; height:16px;"></i> Add Property
+        </button>
+    </div>
+</div>
+
+<!-- Key Metrics Row -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card card-hover d-flex flex-row align-items-center">
+            <div class="me-3 p-3 rounded" style="background: var(--color-emerald-light); color: var(--color-emerald);">
+                <i data-lucide="dollar-sign" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div>
+                <div class="text-muted text-sm font-weight-semibold">Monthly Revenue</div>
+                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">$24,500</div>
+            </div>
         </div>
     </div>
-
-    <!-- Metrics Row -->
-    <div class="metrics-grid mb-6">
-        <div class="metric-card card">
-            <div class="metric-icon" style="background: var(--color-emerald-light); color: var(--color-emerald);">
+    <div class="col-md-4">
+        <div class="card card-hover d-flex flex-row align-items-center">
+            <div class="me-3 p-3 rounded" style="background: var(--color-blue-light); color: var(--color-blue-accent);">
                 <i data-lucide="home" style="width: 24px; height: 24px;"></i>
             </div>
-            <div class="metric-content">
-                <p class="metric-label text-muted text-sm">Total Properties</p>
-                <p class="metric-value" id="totalProperties">--</p>
-            </div>
-            <div class="metric-detail">
-                <span class="badge badge-emerald" id="leasedCount">-- Leased</span>
-                <span class="badge badge-gray" id="vacantCount">-- Vacant</span>
-            </div>
-        </div>
-
-        <div class="metric-card card">
-            <div class="metric-icon" style="background: var(--color-blue-light); color: var(--color-blue-accent);">
-                <i data-lucide="percent" style="width: 24px; height: 24px;"></i>
-            </div>
-            <div class="metric-content">
-                <p class="metric-label text-muted text-sm">Occupancy Rate</p>
-                <p class="metric-value" id="occupancyRate">--%</p>
-            </div>
-        </div>
-
-        <div class="metric-card card">
-            <div class="metric-icon" style="background: var(--color-emerald-light); color: var(--color-emerald);">
-                <i data-lucide="trending-up" style="width: 24px; height: 24px;"></i>
-            </div>
-            <div class="metric-content">
-                <p class="metric-label text-muted text-sm">Revenue This Month</p>
-                <p class="metric-value" id="monthlyRevenue">$--</p>
-            </div>
-        </div>
-
-        <div class="metric-card card">
-            <div class="metric-icon" style="background: var(--color-red-light); color: var(--color-red);">
-                <i data-lucide="alert-circle" style="width: 24px; height: 24px;"></i>
-            </div>
-            <div class="metric-content">
-                <p class="metric-label text-muted text-sm">Overdue Invoices</p>
-                <p class="metric-value" id="overdueCount">--</p>
+            <div>
+                <div class="text-muted text-sm font-weight-semibold">Occupancy Rate</div>
+                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">92%</div>
             </div>
         </div>
     </div>
-
-    <!-- Two Column Layout -->
-    <div class="dashboard-grid">
-        <!-- Left Column -->
-        <div class="dashboard-left">
-            <!-- Expiring Leases -->
-            <div class="card mb-4">
-                <div class="card-header flex flex-between flex-center mb-4">
-                    <h3 class="card-title">Expiring Leases</h3>
-                    <a href="/landlord/leases" class="text-sm text-muted">View All</a>
-                </div>
-                <div id="expiringLeasesList" class="lease-list">
-                    <div class="loading-state">
-                        <div class="spinner"></div>
-                    </div>
-                </div>
+    <div class="col-md-4">
+        <div class="card card-hover d-flex flex-row align-items-center">
+            <div class="me-3 p-3 rounded" style="background: var(--color-amber-light); color: var(--color-amber);">
+                <i data-lucide="wrench" style="width: 24px; height: 24px;"></i>
             </div>
-
-            <!-- Recent Transactions -->
-            <div class="card">
-                <div class="card-header flex flex-between flex-center mb-4">
-                    <h3 class="card-title">Recent Payments</h3>
-                    <a href="/landlord/financials" class="text-sm text-muted">View All</a>
-                </div>
-                <div id="recentTransactionsList" class="transaction-list">
-                    <div class="loading-state">
-                        <div class="spinner"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Column -->
-        <div class="dashboard-right">
-            <!-- Quick Actions -->
-            <div class="card mb-4">
-                <h3 class="card-title mb-4">Quick Actions</h3>
-                <div class="quick-actions">
-                    <a href="/landlord/properties?add=true" class="quick-action-btn">
-                        <i data-lucide="plus" style="width: 20px; height: 20px;"></i>
-                        Add Property
-                    </a>
-                    <a href="/landlord/leases?new=true" class="quick-action-btn">
-                        <i data-lucide="file-plus" style="width: 20px; height: 20px;"></i>
-                        Create Lease
-                    </a>
-                    <a href="/landlord/financials?invoice=true" class="quick-action-btn">
-                        <i data-lucide="file-text" style="width: 20px; height: 20px;"></i>
-                        Generate Invoice
-                    </a>
-                </div>
-            </div>
-
-            <!-- Outstanding Balance -->
-            <div class="card mb-4">
-                <div class="card-header flex flex-between flex-center mb-4">
-                    <h3 class="card-title">Outstanding Balance</h3>
-                    <span class="badge badge-red" id="outstandingCount">-- invoices</span>
-                </div>
-                <div class="outstanding-amount">
-                    <span class="amount" id="outstandingAmount">$--</span>
-                    <span class="text-sm text-muted">total outstanding</span>
-                </div>
-            </div>
-
-            <!-- Maintenance Summary -->
-            <div class="card">
-                <div class="card-header flex flex-between flex-center mb-4">
-                    <h3 class="card-title">Maintenance</h3>
-                    <a href="/landlord/maintenance" class="text-sm text-muted">View All</a>
-                </div>
-                <div class="maintenance-summary">
-                    <div class="maintenance-stat">
-                        <span class="badge badge-amber" id="pendingTickets">-- Pending</span>
-                    </div>
-                    <div class="maintenance-stat">
-                        <span class="badge badge-blue" id="inProgressTickets">-- In Progress</span>
-                    </div>
-                </div>
+            <div>
+                <div class="text-muted text-sm font-weight-semibold">Open Tickets</div>
+                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">4</div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .page-title {
-        font-size: var(--font-size-xl);
-        font-weight: var(--font-weight-bold);
-        color: var(--color-deep-blue);
-        margin-bottom: 4px;
-    }
-    .page-subtitle {
-        font-size: var(--font-size-sm);
-    }
-    
-    .metrics-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: var(--space-4);
-    }
-    .metric-card {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-3);
-    }
-    .metric-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: var(--radius-lg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .metric-content {
-        flex: 1;
-    }
-    .metric-label {
-        margin-bottom: 4px;
-    }
-    .metric-value {
-        font-size: var(--font-size-xl);
-        font-weight: var(--font-weight-bold);
-        color: var(--color-deep-blue);
-    }
-    .metric-detail {
-        display: flex;
-        gap: var(--space-2);
-    }
-    
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: var(--space-6);
-    }
-    .card-header {
-        padding-bottom: var(--space-4);
-        border-bottom: 1px solid var(--color-border);
-    }
-    .card-title {
-        font-size: var(--font-size-md);
-        font-weight: var(--font-weight-semibold);
-    }
-    
-    .lease-list, .transaction-list {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-3);
-    }
-    .lease-item, .transaction-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--space-3);
-        background: var(--color-light-gray);
-        border-radius: var(--radius-md);
-    }
-    .lease-info, .transaction-info {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-    .lease-address, .transaction-amount {
-        font-weight: var(--font-weight-medium);
-    }
-    .lease-date, .transaction-date {
-        font-size: var(--font-size-xs);
-        color: var(--color-slate-500);
-    }
-    
-    .quick-actions {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-2);
-    }
-    .quick-action-btn {
-        display: flex;
-        align-items: center;
-        gap: var(--space-3);
-        padding: var(--space-3) var(--space-4);
-        background: var(--color-light-gray);
-        border-radius: var(--radius-md);
-        color: var(--color-dark-slate);
-        font-weight: var(--font-weight-medium);
-        transition: var(--ease-smooth);
-    }
-    .quick-action-btn:hover {
-        background: var(--color-deep-blue);
-        color: var(--color-white);
-    }
-    
-    .outstanding-amount {
-        text-align: center;
-        padding: var(--space-4);
-    }
-    .outstanding-amount .amount {
-        display: block;
-        font-size: var(--font-size-2xl);
-        font-weight: var(--font-weight-bold);
-        color: var(--color-red);
-        margin-bottom: var(--space-1);
-    }
-    
-    .maintenance-summary {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-2);
-    }
-    .maintenance-stat {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .loading-state {
-        display: flex;
-        justify-content: center;
-        padding: var(--space-6);
-    }
-    
-    .empty-state {
-        text-align: center;
-        padding: var(--space-6);
-        color: var(--color-slate-500);
-    }
-    .empty-state i {
-        margin-bottom: var(--space-2);
-        opacity: 0.5;
-    }
-</style>
+<!-- Main Split View -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <h4 class="mb-4">Revenue Overview</h4>
+            <canvas id="revenueChart" height="120"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <h4 class="mb-4">Recent Notifications</h4>
+            <div class="d-flex flex-column gap-3">
+                <div class="d-flex align-items-start gap-3 border-bottom pb-3">
+                    <div class="p-2 rounded mt-1" style="background: var(--color-amber-light); color: var(--color-amber);">
+                        <i data-lucide="alert-circle" style="width: 16px; height: 16px;"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">Lease Ending Soon</div>
+                        <div class="text-muted" style="font-size: var(--font-size-xs);">Apt 4B lease expires in 45 days.</div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-start gap-3 border-bottom pb-3">
+                    <div class="p-2 rounded mt-1" style="background: var(--color-emerald-light); color: var(--color-emerald);">
+                        <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">Rent Paid</div>
+                        <div class="text-muted" style="font-size: var(--font-size-xs);">Sarah Jenkins paid $1,200.</div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-start gap-3">
+                    <div class="p-2 rounded mt-1" style="background: var(--color-red-light); color: var(--color-red);">
+                        <i data-lucide="wrench" style="width: 16px; height: 16px;"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">New Maintenance Ticket</div>
+                        <div class="text-muted" style="font-size: var(--font-size-xs);">Plumbing issue in Unit 12.</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-ghost w-100 text-sm mt-auto pt-3">View All Notifications</button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
-{% block extra_js %}
+{% block landlord_js %}
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
-    loadDashboardData();
-    
-    document.getElementById('refreshBtn').addEventListener('click', () => {
-        loadDashboardData();
+    document.addEventListener('DOMContentLoaded', () => {
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [19500, 21000, 20500, 23000, 24500, 24500],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2,
+                    pointBackgroundColor: '#FFFFFF',
+                    pointBorderColor: '#3B82F6',
+                    pointRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { borderDash: [4, 4], color: '#E2E8F0' },
+                        border: { display: false }
+                    },
+                    x: {
+                        grid: { display: false },
+                        border: { display: false }
+                    }
+                }
+            }
+        });
     });
-});
-
-async function loadDashboardData() {
-    const refreshBtn = document.getElementById('refreshBtn');
-    refreshBtn.disabled = true;
-    refreshBtn.innerHTML = '<div class="spinner spinner-white" style="width: 16px; height: 16px;"></div>';
-    
-    try {
-        await Promise.all([
-            loadPropertyStats(),
-            loadFinancialSummary(),
-            loadExpiringLeases(),
-            loadRecentTransactions()
-        ]);
-    } catch (error) {
-        console.error('Failed to load dashboard data:', error);
-        showToast('Failed to load some data', 'error');
-    } finally {
-        refreshBtn.disabled = false;
-        refreshBtn.innerHTML = '<i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> Refresh';
-        lucide.createIcons();
-    }
-}
-
-async function loadPropertyStats() {
-    try {
-        const data = await api.get('/properties/stats/');
-        document.getElementById('totalProperties').textContent = data.total_properties;
-        document.getElementById('leasedCount').textContent = `${data.leased} Leased`;
-        document.getElementById('vacantCount').textContent = `${data.vacant} Vacant`;
-        document.getElementById('occupancyRate').textContent = `${data.occupancy_rate}%`;
-    } catch (error) {
-        document.getElementById('totalProperties').textContent = '0';
-        document.getElementById('occupancyRate').textContent = '0%';
-    }
-}
-
-async function loadFinancialSummary() {
-    try {
-        const data = await api.get('/financials/invoices/summary/');
-        document.getElementById('monthlyRevenue').textContent = `$${data.paid_this_month.toLocaleString()}`;
-        document.getElementById('overdueCount').textContent = data.overdue_count;
-        document.getElementById('outstandingAmount').textContent = `$${data.total_outstanding.toLocaleString()}`;
-        
-        const outstandingList = await api.get('/financials/invoices/outstanding/');
-        document.getElementById('outstandingCount').textContent = `${outstandingList.length} invoices`;
-    } catch (error) {
-        document.getElementById('monthlyRevenue').textContent = '$0';
-        document.getElementById('overdueCount').textContent = '0';
-        document.getElementById('outstandingAmount').textContent = '$0';
-    }
-}
-
-async function loadExpiringLeases() {
-    const container = document.getElementById('expiringLeasesList');
-    try {
-        const leases = await api.get('/leases/expiring/?days=60');
-        if (leases.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <i data-lucide="calendar" style="width: 32px; height: 32px;"></i>
-                    <p>No leases expiring soon</p>
-                </div>
-            `;
-            lucide.createIcons();
-            return;
-        }
-        
-        container.innerHTML = leases.slice(0, 5).map(lease => `
-            <div class="lease-item">
-                <div class="lease-info">
-                    <span class="lease-address">${lease.property_address || 'Property'}</span>
-                    <span class="lease-date">Expires: ${new Date(lease.end_date).toLocaleDateString()}</span>
-                </div>
-                <span class="badge badge-amber">${lease.days_until_expiry || 0} days</span>
-            </div>
-        `).join('');
-        lucide.createIcons();
-    } catch (error) {
-        container.innerHTML = '<div class="empty-state"><p>Failed to load</p></div>';
-    }
-}
-
-async function loadRecentTransactions() {
-    const container = document.getElementById('recentTransactionsList');
-    try {
-        const transactions = await api.get('/financials/transactions/');
-        if (transactions.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <i data-lucide="credit-card" style="width: 32px; height: 32px;"></i>
-                    <p>No recent transactions</p>
-                </div>
-            `;
-            lucide.createIcons();
-            return;
-        }
-        
-        container.innerHTML = transactions.slice(0, 5).map(txn => `
-            <div class="transaction-item">
-                <div class="transaction-info">
-                    <span class="transaction-amount">$${parseFloat(txn.amount).toLocaleString()}</span>
-                    <span class="transaction-date">${new Date(txn.created_at).toLocaleDateString()}</span>
-                </div>
-                <span class="badge badge-emerald">Paid</span>
-            </div>
-        `).join('');
-    } catch (error) {
-        container.innerHTML = '<div class="empty-state"><p>Failed to load</p></div>';
-    }
-}
 </script>
 {% endblock %}

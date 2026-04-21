@@ -35,92 +35,92 @@ urlpatterns = [
     ),
     # ─── Landlord Pages ───────────────────────────────────────────
     path(
-        "landlord/dashboard",
+        "landlord/dashboard/",
         frontend_views.landlord_dashboard,
         name="landlord_dashboard",
     ),
     path(
-        "landlord/properties",
+        "landlord/properties/",
         frontend_views.landlord_properties,
         name="landlord_properties",
     ),
-    path("landlord/leases", frontend_views.landlord_leases, name="landlord_leases"),
+    path("landlord/leases/", frontend_views.landlord_leases, name="landlord_leases"),
     path(
-        "landlord/financials",
+        "landlord/financials/",
         frontend_views.landlord_financials,
         name="landlord_financials",
     ),
-    path("landlord/tenants", frontend_views.landlord_tenants, name="landlord_tenants"),
+    path("landlord/tenants/", frontend_views.landlord_tenants, name="landlord_tenants"),
     path(
-        "landlord/maintenance",
+        "landlord/maintenance/",
         frontend_views.landlord_maintenance,
         name="landlord_maintenance",
     ),
-    path("landlord/chat", frontend_views.landlord_chat, name="landlord_chat"),
+    path("landlord/chat/", frontend_views.landlord_chat, name="landlord_chat"),
     path(
-        "landlord/documents",
+        "landlord/documents/",
         frontend_views.landlord_documents,
         name="landlord_documents",
     ),
     path(
-        "landlord/analytics",
+        "landlord/analytics/",
         frontend_views.landlord_analytics,
         name="landlord_analytics",
     ),
     path(
-        "landlord/notifications",
+        "landlord/notifications/",
         frontend_views.landlord_notifications,
         name="landlord_notifications",
     ),
     path(
-        "landlord/settings", frontend_views.landlord_settings, name="landlord_settings"
+        "landlord/settings/", frontend_views.landlord_settings, name="landlord_settings"
     ),
     path(
-        "landlord/automations",
+        "landlord/automations/",
         frontend_views.landlord_automations,
         name="landlord_automations",
     ),
     path(
-        "landlord/buildings",
+        "landlord/buildings/",
         frontend_views.landlord_buildings,
         name="landlord_buildings",
     ),
     path(
-        "landlord/expenses", frontend_views.landlord_expenses, name="landlord_expenses"
+        "landlord/expenses/", frontend_views.landlord_expenses, name="landlord_expenses"
     ),
     # ─── Tenant Pages ─────────────────────────────────────────────
-    path("tenant/dashboard", frontend_views.tenant_dashboard, name="tenant_dashboard"),
-    path("tenant/payments", frontend_views.tenant_payments, name="tenant_payments"),
-    path("tenant/lease", frontend_views.tenant_lease, name="tenant_lease"),
+    path("tenant/dashboard/", frontend_views.tenant_dashboard, name="tenant_dashboard"),
+    path("tenant/payments/", frontend_views.tenant_payments, name="tenant_payments"),
+    path("tenant/lease/", frontend_views.tenant_lease, name="tenant_lease"),
     path(
-        "tenant/maintenance",
+        "tenant/maintenance/",
         frontend_views.tenant_maintenance,
         name="tenant_maintenance",
     ),
-    path("tenant/chat", frontend_views.tenant_chat, name="tenant_chat"),
+    path("tenant/chat/", frontend_views.tenant_chat, name="tenant_chat"),
     path(
-        "tenant/inspection", frontend_views.tenant_inspection, name="tenant_inspection"
+        "tenant/inspection/", frontend_views.tenant_inspection, name="tenant_inspection"
     ),
     path(
-        "tenant/payment-methods",
+        "tenant/payment-methods/",
         frontend_views.tenant_payment_methods,
         name="tenant_payment_methods",
     ),
     path(
-        "tenant/notice-board",
+        "tenant/notice-board/",
         frontend_views.tenant_notice_board,
         name="tenant_notice_board",
     ),
     path(
-        "tenant/compliance", frontend_views.tenant_compliance, name="tenant_compliance"
+        "tenant/compliance/", frontend_views.tenant_compliance, name="tenant_compliance"
     ),
-    path("tenant/profile", frontend_views.tenant_profile, name="tenant_profile"),
-    path("tenant/history", frontend_views.tenant_history, name="tenant_history"),
+    path("tenant/profile/", frontend_views.tenant_profile, name="tenant_profile"),
+    path("tenant/history/", frontend_views.tenant_history, name="tenant_history"),
     # ─── Django Admin ─────────────────────────────────────────────
     path("admin/", admin.site.urls),
-    # ─── API v1 Endpoints ─────────────────────────────────────────
-    path("api/v1/auth/", include("apps.users.urls")),
-    path("api/v1/properties/", include("apps.properties.urls")),
+    # API v1 endpoints — activated as each app is built
+    path('api/v1/auth/', include('apps.users.urls')),
+    path('api/v1/properties/', include('apps.properties.urls')),
     path("api/v1/leases/", include("apps.leases.urls")),
     path("api/v1/financials/", include("apps.financials.urls")),
     # path("api/v1/maintenance/", include("apps.maintenance.urls")),

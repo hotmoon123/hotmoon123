@@ -1,0 +1,74 @@
+{% extends "base/base.html" %}
+
+{% block layout %}
+<div class="layout-tenant">
+    
+    <!-- Top Header inside content area -->
+    <header class="d-flex justify-content-between align-items-center mb-4 mt-2">
+        <div>
+            <h4 class="mb-0" style="color: var(--color-deep-blue);">RentFlow</h4>
+            <div class="text-muted text-sm">Tenant Portal</div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-ghost p-2" id="logoutBtn">
+                <i data-lucide="log-out" style="width: 20px; height: 20px;"></i>
+            </button>
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-soft-gray); display:flex; align-items:center; justify-content:center; color: var(--color-deep-blue); font-weight: bold;">
+                U
+            </div>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="/tenant/dashboard/" class="bottom-nav-item text-decoration-none {% if request.path == '/tenant/dashboard/' %}active{% endif %}">
+            <i data-lucide="home" style="width: 22px; height: 22px; margin-bottom: 2px;"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="bottom-nav-item text-decoration-none">
+            <i data-lucide="credit-card" style="width: 22px; height: 22px; margin-bottom: 2px;"></i>
+            <span>Pay</span>
+        </a>
+        <a href="#" class="bottom-nav-item text-decoration-none">
+            <i data-lucide="wrench" style="width: 22px; height: 22px; margin-bottom: 2px;"></i>
+            <span>Fix</span>
+        </a>
+        <a href="#" class="bottom-nav-item text-decoration-none">
+            <i data-lucide="message-circle" style="width: 22px; height: 22px; margin-bottom: 2px;"></i>
+            <span>Chat</span>
+        </a>
+    </nav>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Enforce Authentication
+        const token = sessionStorage.getItem('accessToken');
+        if (!token) {
+            window.location.href = '/login/';
+            return;
+        }
+
+        // Verify User Role
+        api.get('/auth/me/').then(user => {
+            if (user.role !== 'tenant') {
+                window.location.href = '/landlord/dashboard/';
+            }
+        }).catch(() => {
+            // Interceptor handles bad token
+        });
+
+        // Logout logic
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem('accessToken');
+            window.location.href = '/login/';
+        });
+    });
+</script>
+{% block tenant_js %}{% endblock %}
+{% endblock %}

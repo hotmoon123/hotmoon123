@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+{% block title %}Payment cancelled{% endblock %}
+
+{% block layout %}
+<div class="error-wrapper">
+    <div class="card" style="max-width: 420px; text-align: center; padding: var(--space-8);">
+        <i data-lucide="x-circle" style="width: 56px; height: 56px; color: var(--color-red);"></i>
+        <h1 class="error-title mt-4">Payment not completed</h1>
+        <p class="error-message">No charge was made. You can try again with another method when you’re ready.</p>
+        <a href="/tenant/payments" class="btn btn-primary">Try another payment method</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>document.addEventListener("DOMContentLoaded", () => lucide.createIcons());</script>
+{% endblock %}

@@ -1,0 +1,104 @@
+"""
+Application-wide constants for the Rent & Lease Management System.
+"""
+
+# User Roles
+ROLE_LANDLORD = 'landlord'
+ROLE_TENANT = 'tenant'
+ROLE_CHOICES = [
+    (ROLE_LANDLORD, 'Landlord'),
+    (ROLE_TENANT, 'Tenant'),
+]
+
+# Lease Status
+LEASE_STATUS_ACTIVE = 'active'
+LEASE_STATUS_PENDING = 'pending'
+LEASE_STATUS_TERMINATED = 'terminated'
+LEASE_STATUS_EXPIRED = 'expired'
+LEASE_STATUS_CHOICES = [
+    (LEASE_STATUS_ACTIVE, 'Active'),
+    (LEASE_STATUS_PENDING, 'Pending Approval'),
+    (LEASE_STATUS_TERMINATED, 'Terminated'),
+    (LEASE_STATUS_EXPIRED, 'Expired'),
+]
+
+# Property Status
+PROPERTY_STATUS_AVAILABLE = 'available'
+PROPERTY_STATUS_OCCUPIED = 'occupied'
+PROPERTY_STATUS_MAINTENANCE = 'maintenance'
+PROPERTY_STATUS_CHOICES = [
+    (PROPERTY_STATUS_AVAILABLE, 'Available'),
+    (PROPERTY_STATUS_OCCUPIED, 'Occupied'),
+    (PROPERTY_STATUS_MAINTENANCE, 'Under Maintenance'),
+]
+
+# Property Types
+PROPERTY_TYPE_APARTMENT = 'apartment'
+PROPERTY_TYPE_HOUSE = 'house'
+PROPERTY_TYPE_OFFICE = 'office'
+PROPERTY_TYPE_STUDIO = 'studio'
+PROPERTY_TYPE_CHOICES = [
+    (PROPERTY_TYPE_APARTMENT, 'Apartment'),
+    (PROPERTY_TYPE_HOUSE, 'House'),
+    (PROPERTY_TYPE_OFFICE, 'Office'),
+    (PROPERTY_TYPE_STUDIO, 'Studio'),
+]
+
+# Invoice Status
+INVOICE_STATUS_UNPAID = 'unpaid'
+INVOICE_STATUS_PARTIAL = 'partial'
+INVOICE_STATUS_PAID = 'paid'
+INVOICE_STATUS_OVERDUE = 'overdue'
+INVOICE_STATUS_CHOICES = [
+    (INVOICE_STATUS_UNPAID, 'Unpaid'),
+    (INVOICE_STATUS_PARTIAL, 'Partially Paid'),
+    (INVOICE_STATUS_PAID, 'Fully Paid'),
+    (INVOICE_STATUS_OVERDUE, 'Overdue'),
+]
+
+# Invoice Types
+INVOICE_TYPE_RENT = 'rent'
+INVOICE_TYPE_UTILITY = 'utility'
+INVOICE_TYPE_PENALTY = 'penalty'
+INVOICE_TYPE_DEPOSIT = 'deposit'
+INVOICE_TYPE_CHOICES = [
+    (INVOICE_TYPE_RENT, 'Rent'),
+    (INVOICE_TYPE_UTILITY, 'Utility'),
+    (INVOICE_TYPE_PENALTY, 'Penalty'),
+    (INVOICE_TYPE_DEPOSIT, 'Deposit'),
+]
+
+# Maintenance Priority
+MAINTENANCE_PRIORITY_LOW = 'low'
+MAINTENANCE_PRIORITY_MEDIUM = 'medium'
+MAINTENANCE_PRIORITY_HIGH = 'high'
+MAINTENANCE_PRIORITY_EMERGENCY = 'emergency'
+MAINTENANCE_PRIORITY_CHOICES = [
+    (MAINTENANCE_PRIORITY_LOW, 'Low'),
+    (MAINTENANCE_PRIORITY_MEDIUM, 'Medium'),
+    (MAINTENANCE_PRIORITY_HIGH, 'High'),
+    (MAINTENANCE_PRIORITY_EMERGENCY, 'Emergency'),
+]
+
+# Maintenance Status
+MAINTENANCE_STATUS_TODO = 'todo'
+MAINTENANCE_STATUS_IN_PROGRESS = 'in_progress'
+MAINTENANCE_STATUS_PENDING_PARTS = 'pending_parts'
+MAINTENANCE_STATUS_DONE = 'done'
+MAINTENANCE_STATUS_CHOICES = [
+    (MAINTENANCE_STATUS_TODO, 'To Do'),
+    (MAINTENANCE_STATUS_IN_PROGRESS, 'In Progress'),
+    (MAINTENANCE_STATUS_PENDING_PARTS, 'Pending Parts'),
+    (MAINTENANCE_STATUS_DONE, 'Completed'),
+]
+
+# API Configuration
+API_V1_PREFIX = '/api/v1/'
+DEFAULT_PAGE_SIZE = 20
+
+# Token Expiry (seconds)
+EMAIL_VERIFICATION_TOKEN_EXPIRY = 86400  # 24 hours
+PASSWORD_RESET_TOKEN_EXPIRY = 900  # 15 minutes
+
+# Email Configuration
+DEFAULT_FROM_EMAIL = 'noreply@rentflow.com'

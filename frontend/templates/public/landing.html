@@ -1,0 +1,76 @@
+{% extends "base/base.html" %}
+
+{% block title %}RentFlow — Rent & Lease Management{% endblock %}
+
+{% block layout %}
+<header class="landing-nav">
+    <div class="landing-nav-inner">
+        <span class="landing-brand"><i data-lucide="building-2" style="width: 22px; height: 22px;"></i> RentFlow</span>
+        <div class="landing-nav-actions">
+            <a href="/login/" class="btn btn-ghost btn-sm">Log In</a>
+            <a href="/register/" class="btn btn-primary btn-sm">Get Started</a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="landing-hero">
+        <div class="landing-hero-inner anim-fade-in">
+            <h1>Run rentals without the spreadsheet chaos</h1>
+            <p class="landing-lead">Leases, rent collection, maintenance, and chat — one calm workspace for landlords and a simple app for tenants.</p>
+            <div class="landing-cta">
+                <a href="/register/" class="btn btn-primary btn-lg">Create account</a>
+                <a href="/login/" class="btn btn-secondary btn-lg">Sign in</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="landing-features">
+        <div class="landing-features-grid">
+            <article class="card card-hover anim-slide-up">
+                <i data-lucide="wallet" style="width: 28px; height: 28px; color: var(--color-deep-blue);"></i>
+                <h3>Billing &amp; invoices</h3>
+                <p class="text-muted text-sm">Track rent, late fees, and exports in one ledger.</p>
+            </article>
+            <article class="card card-hover anim-slide-up">
+                <i data-lucide="file-text" style="width: 28px; height: 28px; color: var(--color-deep-blue);"></i>
+                <h3>Leases &amp; onboarding</h3>
+                <p class="text-muted text-sm">Create leases, avoid date overlaps, invite tenants.</p>
+            </article>
+            <article class="card card-hover anim-slide-up">
+                <i data-lucide="message-square" style="width: 28px; height: 28px; color: var(--color-deep-blue);"></i>
+                <h3>Real-time chat</h3>
+                <p class="text-muted text-sm">Message tenants instantly with a familiar thread UI.</p>
+            </article>
+        </div>
+    </section>
+</main>
+
+<footer class="landing-footer text-muted text-sm text-center">
+    RentFlow — Rent &amp; Lease Management
+</footer>
+
+<style>
+.landing-nav { position: sticky; top: 0; z-index: 50; background: var(--color-white); border-bottom: 1px solid var(--color-border); box-shadow: var(--shadow-sm); }
+.landing-nav-inner { max-width: 1100px; margin: 0 auto; padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; }
+.landing-brand { display: flex; align-items: center; gap: var(--space-2); font-weight: var(--font-weight-bold); color: var(--color-deep-blue); font-size: var(--font-size-md); }
+.landing-nav-actions { display: flex; gap: var(--space-2); align-items: center; }
+.landing-hero { background: var(--color-deep-blue); color: var(--color-white); padding: var(--space-12) var(--space-6); }
+.landing-hero-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+.landing-hero h1 { color: var(--color-white); font-size: clamp(28px, 5vw, 40px); margin-bottom: var(--space-4); }
+.landing-lead { font-size: var(--font-size-md); opacity: 0.92; line-height: 1.6; margin-bottom: var(--space-6); }
+.landing-cta { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
+.landing-cta .btn-primary { background: var(--color-white); color: var(--color-deep-blue); }
+.landing-cta .btn-primary:hover { opacity: 0.95; }
+.landing-cta .btn-secondary { border-color: rgba(255,255,255,0.4); color: var(--color-white); background: transparent; }
+.landing-cta .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+.landing-features { padding: var(--space-10) var(--space-6); background: var(--color-page-bg); }
+.landing-features-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4); }
+.landing-features h3 { font-size: var(--font-size-md); margin: var(--space-3) 0 var(--space-2); }
+.landing-footer { padding: var(--space-8) var(--space-4); background: var(--color-light-gray); }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>document.addEventListener("DOMContentLoaded", () => lucide.createIcons());</script>
+{% endblock %}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .email-body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #1e293b; max-width: 600px; margin: 0 auto; }
+        .header { background: #0f172a; padding: 40px; text-align: center; border-radius: 8px 8px 0 0; }
+        .content { padding: 40px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px; }
+        .welcome-text { font-size: 24px; font-weight: bold; color: #0f172a; margin-bottom: 20px; }
+        .btn { display: inline-block; background: #10b981; color: #ffffff !important; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 30px 0; }
+        .footer { font-size: 12px; color: #94a3b8; text-align: center; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="email-body">
+        <div class="header">
+            <h1 style="color: white; margin: 0;">RentFlow</h1>
+        </div>
+        <div class="content">
+            <div class="welcome-text">You are welcome to RentFlow, {{ user.first_name }}! 🎉</div>
+            <p>We are absolutely thrilled to have you on board. Managing properties shouldn't feel like a chore, and with RentFlow, it's about to get a whole lot sweeter.</p>
+            <p>Whether you're looking for your next home or managing a portfolio, we've built every tool with you in mind.</p>
+            <p><strong>Please click the button below to verify your account and unlock your new dashboard:</strong></p>
+            
+            <a href="{{ verify_url }}" class="btn">Verify My Account</a>
+
+            <p>If you didn't create an account, you can safely ignore this email.</p>
+            <p>Warmest regards,<br>The RentFlow Team</p>
+        </div>
+        <div class="footer">
+            &copy; 2026 RentFlow Management System. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

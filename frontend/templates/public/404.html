@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+
+{% block title %}Page Not Found | Rent & Lease Management{% endblock %}
+
+{% block layout %}
+<div class="error-wrapper">
+    <div class="error-code anim-slide-up">404</div>
+    <h2 class="error-title anim-slide-up" style="animation-delay: 0.1s;">Page Not Found</h2>
+    <p class="error-message anim-slide-up" style="animation-delay: 0.2s;">
+        The page you are looking for doesn't exist or has been moved.
+    </p>
+    <div class="anim-slide-up" style="animation-delay: 0.3s;">
+        <button onclick="window.history.back()" class="btn btn-secondary me-2">Go Back</button>
+        <a href="/" class="btn btn-primary">Return Home</a>
+    </div>
+</div>
+{% endblock %}

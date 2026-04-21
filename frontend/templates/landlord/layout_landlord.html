@@ -1,0 +1,101 @@
+{% extends "base/base.html" %}
+
+{% block layout %}
+<div class="layout-landlord">
+    <!-- Sidebar CRM Navigation -->
+    <aside class="sidebar d-flex flex-column">
+        <div class="sidebar-logo">
+            <i data-lucide="building-2" class="me-2 text-white"></i>
+            RentFlow
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Core Actions</div>
+            <a href="/landlord/dashboard/" class="nav-link {% if request.path == '/landlord/dashboard/' %}active{% endif %}">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="/landlord/properties/" class="nav-link {% if request.path == '/landlord/properties/' %}active{% endif %}">
+                <i data-lucide="home"></i> Properties
+            </a>
+            <a href="#" class="nav-link">
+                <i data-lucide="file-text"></i> Leases & Tenants
+            </a>
+            <a href="#" class="nav-link">
+                <i data-lucide="credit-card"></i> Financials
+            </a>
+            
+            <div class="nav-section-title mt-4">Operations</div>
+            <a href="#" class="nav-link">
+                <i data-lucide="wrench"></i> Maintenance
+            </a>
+            <a href="#" class="nav-link">
+                <i data-lucide="message-square"></i> Chat
+            </a>
+            <a href="#" class="nav-link">
+                <i data-lucide="folder"></i> Documents
+            </a>
+            
+            <div class="nav-section-title mt-4">System</div>
+            <a href="#" class="nav-link">
+                <i data-lucide="bell"></i> Notifications
+            </a>
+            <a href="/landlord/analytics/" class="nav-link {% if request.path == '/landlord/analytics/' %}active{% endif %}">
+                <i data-lucide="pie-chart"></i> Analytics
+            </a>
+            <a href="#" class="nav-link">
+                <i data-lucide="settings"></i> Settings
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer mt-auto">
+            <a href="#" class="nav-link" id="logoutBtn">
+                <i data-lucide="log-out"></i> Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Report Generation Libraries (Frontend) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Enforce Authentication
+        const token = sessionStorage.getItem('accessToken');
+        if (!token) {
+            window.location.href = '/login/';
+            return;
+        }
+
+        // Verify User Role and fetch profile
+        api.get('/auth/me/').then(user => {
+            if (user.role !== 'landlord') {
+                window.location.href = '/tenant/dashboard/';
+            }
+        }).catch(() => {
+            // Already handled by API interceptor redirecting to login
+        });
+
+        // Logout logic
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem('accessToken');
+            window.location.href = '/login/';
+        });
+    });
+</script>
+<!-- Chart.js for Landlord pages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+{% block landlord_js %}{% endblock %}
+{% endblock %}

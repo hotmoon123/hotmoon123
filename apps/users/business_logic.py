@@ -54,23 +54,34 @@ def generate_verification_token(user):
     return raw_token
 
 
-def send_verification_email(user, raw_token):
-    """Send email verification link to the user."""
-    verification_url = f'{settings.ALLOWED_HOSTS[0]}:8000/verify-email?token={raw_token}'
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
 
-    send_mail(
-        subject='Verify your email — Rent & Lease Management',
-        message=(
-            f'Hi {user.first_name},\n\n'
-            f'Click the link below to verify your email:\n'
-            f'{verification_url}\n\n'
-            f'This link expires in 24 hours.\n\n'
-            f'— Rent & Lease Management System'
-        ),
-        from_email='noreply@rentlease.com',
-        recipient_list=[user.email],
-        fail_silently=False,
+def send_verification_email(user, raw_token):
+    """Send beautiful HTML 'Sweet Welcome' email verification link."""
+    verify_url = f"http://{settings.ALLOWED_HOSTS[0]}:8000/verify-email?token={raw_token}"
+    
+    # Render the sweet HTML template
+    html_content = render_to_string('emails/welcome_email.html', {
+        'user': user,
+        'verify_url': verify_url
+    })
+    text_content = strip_tags(html_content) # Fallback for email clients that don't support HTML
+
+    email = EmailMultiAlternatives(
+        subject="You are welcome to RentFlow! 🏠",
+        body=text_content,
+        from_email=settings.DEFAULT_FROM_EMAIL if hasattr(settings, 'DEFAULT_FROM_EMAIL') else 'noreply@rentflow.com',
+        to=[user.email]
     )
+    email.attach_alternative(html_content, "text/html")
+    
+    try:
+        email.send(fail_silently=False)
+    except Exception as e:
+        print(f"Error sending email: {e}")
+
 
 
 def verify_email_token(raw_token):
