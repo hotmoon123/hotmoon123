@@ -23,7 +23,7 @@ class Invoice(models.Model):
     lease = models.ForeignKey(Lease, on_delete=models.CASCADE, related_name='invoices')
     rental_property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='invoices', null=True, blank=True)
     
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     amount_paid = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     due_date = models.DateField()
     paid_at = models.DateTimeField(null=True, blank=True)

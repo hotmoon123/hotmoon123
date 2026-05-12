@@ -7,14 +7,27 @@
 <div class="card mb-4" style="background: var(--color-deep-blue); color: var(--color-white); border: none;">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <span style="color: var(--color-soft-gray); font-size: var(--font-size-sm);">Next Payment Due</span>
-        <div class="badge badge-amber" style="background: rgba(245, 158, 11, 0.2);">Oct 1, 2026</div>
+        {% if next_payment %}
+        <div class="badge {% if next_payment.status == 'overdue' %}badge-red{% else %}badge-amber{% endif %}" 
+             style="background: {% if next_payment.status == 'overdue' %}rgba(239, 68, 68, 0.2){% else %}rgba(245, 158, 11, 0.2){% endif %};">
+            {{ next_payment.due_date|date:"M d, Y" }}
+        </div>
+        {% else %}
+        <div class="badge badge-emerald" style="background: rgba(16, 185, 129, 0.2);">All Clear</div>
+        {% endif %}
     </div>
     <div style="font-size: 40px; font-weight: var(--font-weight-bold); line-height: 1.1; margin-bottom: 24px;">
-        $1,200.00
+        ${{ total_balance|floatformat:2 }}
     </div>
+    {% if next_payment %}
     <button class="btn btn-primary w-100" style="background: var(--color-emerald); border: none; color: white;">
         Pay Rent Now
     </button>
+    {% else %}
+    <div class="text-center" style="color: var(--color-emerald); font-size: var(--font-size-sm);">
+        <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i> No payments due
+    </div>
+    {% endif %}
 </div>
 
 <!-- Quick Actions -->
@@ -38,15 +51,38 @@
 </div>
 
 <!-- Recent Activity / Notice Board -->
-<h5 class="mb-3" style="color: var(--color-deep-blue);">Notice Board</h5>
-<div class="card border-0 mb-3 p-3 text-sm">
-    <div class="d-flex gap-3">
-        <div class="mt-1" style="color: var(--color-emerald);"><i data-lucide="info" style="width: 20px; height: 20px;"></i></div>
-        <div>
-            <div class="font-weight-bold" style="color: var(--color-deep-blue);">Water Shutoff Notice</div>
-            <div class="text-muted mt-1">Water will be shut off for maintenance on Thursday from 10 AM to 2 PM. Please plan accordingly.</div>
-            <div class="mt-2 text-xs" style="color: var(--color-slate-400);">Posted 2 days ago</div>
+<h5 class="mb-3" style="color: var(--color-deep-blue);">Recent Activity</h5>
+{% if recent_activity %}
+    {% for invoice in recent_activity %}
+    <div class="card border-0 mb-3 p-3 text-sm">
+        <div class="d-flex gap-3">
+            <div class="mt-1" style="color: {% if invoice.status == 'paid' %}var(--color-emerald){% elif invoice.status == 'overdue' %}var(--color-red){% else %}var(--color-amber){% endif %};">
+                <i data-lucide="{% if invoice.status == 'paid' %}check-circle{% elif invoice.status == 'overdue' %}alert-circle{% else %}clock{% endif %}" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div>
+                <div class="font-weight-bold" style="color: var(--color-deep-blue);">
+                    {% if invoice.status == 'paid' %}
+                        Payment Received - ${{ invoice.amount }}
+                    {% elif invoice.status == 'overdue' %}
+                        Overdue Payment - ${{ invoice.amount }}
+                    {% else %}
+                        Invoice Generated - ${{ invoice.amount }}
+                    {% endif %}
+                </div>
+                <div class="text-muted mt-1">
+                    Due date: {{ invoice.due_date|date:"M d, Y" }}
+                    {% if invoice.status == 'paid' and invoice.paid_at %}
+                        • Paid on {{ invoice.paid_at|date:"M d, Y" }}
+                    {% endif %}
+                </div>
+                <div class="mt-2 text-xs" style="color: var(--color-slate-400);">{{ invoice.created_at|timesince }} ago</div>
+            </div>
         </div>
     </div>
+    {% endfor %}
+{% else %}
+<div class="card border-0 mb-3 p-4 text-center text-muted">
+    <p>No recent activity</p>
 </div>
+{% endif %}
 {% endblock %}

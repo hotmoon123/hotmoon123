@@ -14,7 +14,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login as django_login
 from django.core.exceptions import ValidationError
 
 from .serializers import (
@@ -106,6 +106,7 @@ def login_view(request):
     POST /api/v1/auth/login/
 
     Authenticates user and returns JWT tokens.
+    Also establishes Django session for template-based views.
     Returns access token (stored in JS memory) + refresh token.
     Routes user to landlord or tenant dashboard based on role.
     """
@@ -152,8 +153,12 @@ def login_view(request):
     # Generate JWT tokens
     refresh = RefreshToken.for_user(user)
 
+    # Establish Django session for template-based views
+    # This allows request.user.is_authenticated to work in Django views
+    django_login(request, user)
+
     # Determine dashboard redirect based on role
-    redirect_url = '/landlord/dashboard' if user.role == 'landlord' else '/tenant/dashboard'
+    redirect_url = '/landlord/dashboard/' if user.role == 'landlord' else '/tenant/dashboard/'
 
     return Response({
         'access': str(refresh.access_token),

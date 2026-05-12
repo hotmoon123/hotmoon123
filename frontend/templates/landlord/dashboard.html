@@ -27,7 +27,7 @@
             </div>
             <div>
                 <div class="text-muted text-sm font-weight-semibold">Monthly Revenue</div>
-                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">$24,500</div>
+                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">${{ monthly_revenue|floatformat:2 }}</div>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
             </div>
             <div>
                 <div class="text-muted text-sm font-weight-semibold">Occupancy Rate</div>
-                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">92%</div>
+                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">{{ occupancy_rate }}%</div>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
             </div>
             <div>
                 <div class="text-muted text-sm font-weight-semibold">Open Tickets</div>
-                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">4</div>
+                <div class="font-weight-bold" style="font-size: var(--font-size-xl); color: var(--color-deep-blue);">{{ open_tickets }}</div>
             </div>
         </div>
     </div>
@@ -67,33 +67,51 @@
         <div class="card h-100">
             <h4 class="mb-4">Recent Notifications</h4>
             <div class="d-flex flex-column gap-3">
-                <div class="d-flex align-items-start gap-3 border-bottom pb-3">
-                    <div class="p-2 rounded mt-1" style="background: var(--color-amber-light); color: var(--color-amber);">
-                        <i data-lucide="alert-circle" style="width: 16px; height: 16px;"></i>
+                {% if expiring_leases %}
+                    {% for lease in expiring_leases %}
+                    <div class="d-flex align-items-start gap-3 border-bottom pb-3">
+                        <div class="p-2 rounded mt-1" style="background: var(--color-amber-light); color: var(--color-amber);">
+                            <i data-lucide="alert-circle" style="width: 16px; height: 16px;"></i>
+                        </div>
+                        <div>
+                            <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">Lease Ending Soon</div>
+                            <div class="text-muted" style="font-size: var(--font-size-xs);">{{ lease.property.unit_number }} lease expires on {{ lease.end_date|date:"M d, Y" }}.</div>
+                        </div>
                     </div>
-                    <div>
-                        <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">Lease Ending Soon</div>
-                        <div class="text-muted" style="font-size: var(--font-size-xs);">Apt 4B lease expires in 45 days.</div>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if recent_transactions %}
+                    {% for transaction in recent_transactions|slice:":2" %}
+                    <div class="d-flex align-items-start gap-3 border-bottom pb-3">
+                        <div class="p-2 rounded mt-1" style="background: var(--color-emerald-light); color: var(--color-emerald);">
+                            <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
+                        </div>
+                        <div>
+                            <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">Rent Paid</div>
+                            <div class="text-muted" style="font-size: var(--font-size-xs);">{{ transaction.tenant.email }} paid ${{ transaction.amount }}.</div>
+                        </div>
                     </div>
-                </div>
-                <div class="d-flex align-items-start gap-3 border-bottom pb-3">
-                    <div class="p-2 rounded mt-1" style="background: var(--color-emerald-light); color: var(--color-emerald);">
-                        <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
-                    </div>
-                    <div>
-                        <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">Rent Paid</div>
-                        <div class="text-muted" style="font-size: var(--font-size-xs);">Sarah Jenkins paid $1,200.</div>
-                    </div>
-                </div>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if open_tickets > 0 %}
                 <div class="d-flex align-items-start gap-3">
                     <div class="p-2 rounded mt-1" style="background: var(--color-red-light); color: var(--color-red);">
                         <i data-lucide="wrench" style="width: 16px; height: 16px;"></i>
                     </div>
                     <div>
-                        <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">New Maintenance Ticket</div>
-                        <div class="text-muted" style="font-size: var(--font-size-xs);">Plumbing issue in Unit 12.</div>
+                        <div class="font-weight-medium" style="font-size: var(--font-size-sm); color: var(--color-deep-blue);">Open Maintenance Tickets</div>
+                        <div class="text-muted" style="font-size: var(--font-size-xs);">You have {{ open_tickets }} ticket(s) requiring attention.</div>
                     </div>
                 </div>
+                {% endif %}
+                
+                {% if not expiring_leases and not recent_transactions and open_tickets == 0 %}
+                <div class="text-center text-muted py-4">
+                    <p>No recent notifications</p>
+                </div>
+                {% endif %}
             </div>
             <button class="btn btn-ghost w-100 text-sm mt-auto pt-3">View All Notifications</button>
         </div>

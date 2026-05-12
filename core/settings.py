@@ -108,6 +108,12 @@ ROOT_URLCONF = 'core.urls'
 WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
 
+# ─── AUTHENTICATION URLS ───────────────────────────────────
+# These settings define where Django redirects for auth flows
+LOGIN_URL = '/login/'  # Redirect unauthenticated users here
+LOGIN_REDIRECT_URL = '/landlord/dashboard/'  # Redirect after successful login
+LOGOUT_REDIRECT_URL = '/login/'  # Redirect after logout
+
 # ─── TEMPLATES ───────────────────────────────────────────────
 TEMPLATES = [
     {
@@ -139,18 +145,25 @@ if _db_engine == 'django.db.backends.sqlite3':
         }
     }
 else:
+    _mysql_options = {
+        'charset': 'utf8mb4',
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+    }
+    # LAMPP/XAMPP on Linux often uses a Unix socket instead of TCP (optional)
+    _db_socket = config('DB_SOCKET', default='').strip()
+    if _db_socket:
+        _mysql_options['unix_socket'] = _db_socket
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': config('DB_NAME'),
             'USER': config('DB_USER'),
-            'PASSWORD': config('DB_PASSWORD'),
+            # XAMPP/LAMPP default user is often root with an empty password
+            'PASSWORD': config('DB_PASSWORD', default=''),
             'HOST': config('DB_HOST', default='127.0.0.1'),
             'PORT': config('DB_PORT', default='3306'),
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
+            'OPTIONS': _mysql_options,
         }
     }
 
@@ -263,6 +276,10 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
+else:
+    # Development: allow HTTP cookies
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
 
 X_FRAME_OPTIONS = 'DENY'
 CSRF_COOKIE_HTTPONLY = False  # Must be False — JS reads this for AJAX requests

@@ -99,3 +99,78 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+
+class LandlordProfile(models.Model):
+    """
+    Profile table specifically for Landlord users.
+    Contains business, location, and banking details.
+    """
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='landlord_profile')
+    
+    # Business Details
+    company_name = models.CharField(max_length=255, blank=True, default='')
+    business_reg_no = models.CharField(max_length=100, blank=True, default='')
+    tax_id = models.CharField(max_length=100, blank=True, default='')
+    
+    # Location
+    address = models.TextField(blank=True, default='')
+    city = models.CharField(max_length=100, blank=True, default='')
+    state = models.CharField(max_length=100, blank=True, default='')
+    country = models.CharField(max_length=100, blank=True, default='')
+    postal_code = models.CharField(max_length=20, blank=True, default='')
+    
+    # Media & Bio
+    profile_photo = models.CharField(max_length=500, blank=True, default='') # Path to stored file
+    bio = models.TextField(blank=True, default='')
+    
+    # Banking (Sensitives should be securely handled, here for schema completion)
+    bank_name = models.CharField(max_length=100, blank=True, default='')
+    bank_account_no = models.CharField(max_length=100, blank=True, default='')
+    bank_routing_no = models.CharField(max_length=100, blank=True, default='')
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'landlords'
+
+    def __str__(self):
+        return f"Landlord Profile: {self.user.email}"
+
+
+class TenantProfile(models.Model):
+    """
+    Profile table specifically for Tenant users.
+    Contains personal identification, employment, and emergency contact details.
+    """
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='tenant_profile')
+    
+    # Personal Identification
+    date_of_birth = models.DateField(null=True, blank=True)
+    national_id_number = models.CharField(max_length=100, blank=True, default='')
+    id_document = models.CharField(max_length=500, blank=True, default='') # Path to uploaded doc
+    profile_photo = models.CharField(max_length=500, blank=True, default='') # Path to stored file
+    
+    # Employment & Finance
+    employer_name = models.CharField(max_length=255, blank=True, default='')
+    monthly_income = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    
+    # Emergency Contact
+    emergency_contact_name = models.CharField(max_length=100, blank=True, default='')
+    emergency_contact_phone = models.CharField(max_length=30, blank=True, default='')
+    emergency_contact_relation = models.CharField(max_length=50, blank=True, default='')
+    
+    # Rental History
+    previous_address = models.TextField(blank=True, default='')
+    previous_landlord_name = models.CharField(max_length=100, blank=True, default='')
+    previous_landlord_phone = models.CharField(max_length=30, blank=True, default='')
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'tenants'
+
+    def __str__(self):
+        return f"Tenant Profile: {self.user.email}"
