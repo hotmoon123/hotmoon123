@@ -15,10 +15,10 @@ class LeaseSerializer(serializers.ModelSerializer):
     """Serializer for Lease model (read operations)."""
 
     property_address = serializers.CharField(
-        source="rental_property.address", read_only=True
+        source="property.address", read_only=True
     )
     property_unit = serializers.CharField(
-        source="rental_property.unit_number", read_only=True
+        source="property.unit_number", read_only=True
     )
     tenant_name = serializers.SerializerMethodField()
     landlord_name = serializers.SerializerMethodField()
@@ -34,7 +34,8 @@ class LeaseSerializer(serializers.ModelSerializer):
             "landlord_name",
             "tenant",
             "tenant_name",
-            "monthly_rent",
+            "rent_amount",
+            "deposit_amount",
             "start_date",
             "end_date",
             "status",
@@ -65,24 +66,21 @@ class LeaseCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lease
-        fields = ["rental_property", "tenant", "monthly_rent", "start_date", "end_date"]
-        extra_kwargs = {"rental_property": {"source": "property"}}
+        fields = ["property", "tenant", "rent_amount", "deposit_amount", "start_date", "end_date"]
 
-    def validate_rental_property(self, value):
+    def validate_property(self, value):
         """Ensure property is vacant (no active lease)."""
-        if value.status == "Leased":
+        if value.status == "occupied":
             raise serializers.ValidationError(
                 "This property already has an active lease."
             )
-        if value.deleted_at is not None:
-            raise serializers.ValidationError("This property no longer exists.")
         return value
 
     def validate(self, data):
         """Validate lease dates and check for overlaps."""
         start_date = data.get("start_date")
         end_date = data.get("end_date")
-        rental_property = data.get("rental_property")
+        property_obj = data.get("property")
 
         if end_date <= start_date:
             raise serializers.ValidationError(
@@ -90,8 +88,8 @@ class LeaseCreateSerializer(serializers.ModelSerializer):
             )
 
         overlapping = Lease.objects.filter(
-            rental_property=rental_property,
-            status__in=["Pending", "Active"],
+            property=property_obj,
+            status__in=["pending", "active"],
             deleted_at__isnull=True,
         ).filter(start_date__lte=end_date, end_date__gte=start_date)
 
@@ -107,9 +105,9 @@ class LeaseCreateSerializer(serializers.ModelSerializer):
 
         return data
 
-    def validate_monthly_rent(self, value):
+    def validate_rent_amount(self, value):
         if value <= 0:
-            raise serializers.ValidationError("Monthly rent must be greater than zero.")
+            raise serializers.ValidationError("Rent amount must be greater than zero.")
         return value
 
 
@@ -118,7 +116,7 @@ class LeaseUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lease
-        fields = ["tenant", "monthly_rent", "start_date", "end_date", "status"]
+        fields = ["tenant", "rent_amount", "start_date", "end_date", "status"]
 
     def validate(self, data):
         """Validate lease dates on update."""
@@ -137,10 +135,10 @@ class InvitationSerializer(serializers.ModelSerializer):
     """Serializer for Invitation model."""
 
     lease_property = serializers.CharField(
-        source="lease.rental_property.address", read_only=True
+        source="lease.property.address", read_only=True
     )
     lease_unit = serializers.CharField(
-        source="lease.rental_property.unit_number", read_only=True
+        source="lease.property.unit_number", read_only=True
     )
 
     class Meta:

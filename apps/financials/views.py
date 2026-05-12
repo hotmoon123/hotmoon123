@@ -53,11 +53,8 @@ class InvoiceViewSet(viewsets.ModelViewSet):
         """Set landlord from lease on create."""
         lease = serializer.validated_data["lease"]
         invoice = serializer.save(
-            landlord=lease.landlord, rental_property=lease.rental_property
+            landlord=lease.landlord, rental_property=lease.property
         )
-        invoice.base_rent = lease.monthly_rent
-        invoice.total_amount = lease.monthly_rent
-        invoice.save()
 
     @action(detail=False, methods=["get"])
     def outstanding(self, request):

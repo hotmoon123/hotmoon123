@@ -45,11 +45,11 @@ class LeaseViewSet(viewsets.ModelViewSet):
         if user.role == "landlord":
             return Lease.objects.filter(
                 landlord=user, deleted_at__isnull=True
-            ).select_related("rental_property", "tenant")
+            ).select_related("property", "tenant")
         else:
             return Lease.objects.filter(
                 tenant=user, deleted_at__isnull=True
-            ).select_related("rental_property", "landlord")
+            ).select_related("property", "landlord")
 
     def get_serializer_class(self):
         """Return appropriate serializer based on action."""
@@ -62,7 +62,7 @@ class LeaseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Set landlord to current user on create."""
         lease = serializer.save(landlord=self.request.user)
-        property_obj = lease.rental_property
+        property_obj = lease.property
 
     def perform_destroy(self, instance):
         """Soft delete instead of hard delete."""
@@ -184,8 +184,8 @@ class LeaseViewSet(viewsets.ModelViewSet):
         lease.signed_at = timezone.now()
         lease.save()
 
-        property_obj = lease.rental_property
-        property_obj.status = "Leased"
+        property_obj = lease.property
+        property_obj.status = "occupied"
         property_obj.save()
 
         return Response(
@@ -207,5 +207,5 @@ class InvitationViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         """Filter invitations to landlord's own invitations."""
         return Invitation.objects.filter(landlord=self.request.user).select_related(
-            "lease", "lease__rental_property"
+            "lease", "lease__property"
         )
