@@ -1,0 +1,6 @@
+is this a good practice whereby so xampp runs the database, django-python runs the backend, and the frontend is html, css, and js and now the libraries websocket,
+bootstrap, and more so how do i run the servers for this type of work or project and please can you give me the database code from the sqlite so i can put in the xampp
+because when i checked there no database code in xamppis this a good practice whereby so xampp runs the database, django-python runs the backend, and the frontend is
+html, css, and js and now the libraries websocket,
+bootstrap, and more so how do i run the servers for this type of work or project and please can you give me the database code from the sqlite so i can put in the xampp
+because when i checked there no database code in xampp

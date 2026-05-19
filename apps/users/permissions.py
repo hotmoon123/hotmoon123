@@ -7,28 +7,30 @@ The middleware checks WHAT they're accessing.
 """
 from rest_framework.permissions import BasePermission
 
+from apps.users.models import Landlord, Tenant
+
 
 class IsLandlord(BasePermission):
-    """Allows access only to users with role='landlord'."""
+    """Allows access only to landlord accounts (MTI Landlord subclass)."""
     message = 'This action is only available to landlords.'
 
     def has_permission(self, request, view):
         return (
             request.user
             and request.user.is_authenticated
-            and request.user.role == 'landlord'
+            and isinstance(request.user, Landlord)
         )
 
 
 class IsTenant(BasePermission):
-    """Allows access only to users with role='tenant'."""
+    """Allows access only to tenant accounts (MTI Tenant subclass)."""
     message = 'This action is only available to tenants.'
 
     def has_permission(self, request, view):
         return (
             request.user
             and request.user.is_authenticated
-            and request.user.role == 'tenant'
+            and isinstance(request.user, Tenant)
         )
 
 

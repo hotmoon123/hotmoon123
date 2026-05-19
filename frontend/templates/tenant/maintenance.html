@@ -1,0 +1,325 @@
+{% extends "tenant/layout_tenant.html" %}
+
+{% block title %}Maintenance | RentFlow Tenant{% endblock %}
+
+{% block content %}
+{# Spec §2 Page 4: Formal structured repair request, spam limit (3 active), photo upload, status tracker #}
+<div class="container" style="max-width: 640px;">
+
+  {# Header with new ticket button #}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-deep-blue); margin: 0;">Maintenance</h2>
+      <p class="text-muted text-sm mt-1 mb-0">Report and track repair requests</p>
+    </div>
+    <button type="button" class="btn btn-primary" id="newTicketBtn"
+            {% if active_tickets_count >= 3 %}disabled{% endif %}>
+      <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i>
+      New ticket
+    </button>
+  </div>
+
+  {# Spam limit warning #}
+  {% if active_tickets_count >= 3 %}
+  <div class="alert alert-warning mb-4 visible" role="alert">
+    <i data-lucide="alert-triangle" style="width: 18px; height: 18px;"></i>
+    <div>
+      <strong>Ticket limit reached</strong><br>
+      You have {{ active_tickets_count }} active tickets. Please wait for resolution before submitting new requests.
+    </div>
+  </div>
+  {% endif %}
+
+  {# Active tickets list #}
+  <section class="mb-4" aria-label="Your maintenance tickets">
+    <h4 class="mb-3" style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-deep-blue);">
+      Your tickets ({{ active_tickets_count }}/3 active)
+    </h4>
+
+    {% if tickets %}
+      <div class="vstack gap-3">
+        {% for ticket in tickets %}
+        <div class="card border-0 p-0" style="box-shadow: var(--shadow-sm); border: 1px solid var(--color-border) !important; overflow: hidden;">
+          <div class="p-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div class="flex-grow-1">
+                <div class="fw-bold mb-1" style="color: var(--color-deep-blue); font-size: var(--font-size-md);">
+                  {{ ticket.category|title }}
+                </div>
+                <div class="text-sm text-muted mb-2">
+                  Submitted {{ ticket.created_at|date:"M j, Y \a\t g:i a" }}
+                </div>
+                <div class="text-sm">{{ ticket.description|truncatewords:20 }}</div>
+              </div>
+              <span class="badge ms-3" style="
+                {% if ticket.status == 'pending' %}background: rgba(245,158,11,0.1); color: #b45309; 
+                {% elif ticket.status == 'in_progress' %}background: rgba(59,130,246,0.1); color: #3B82F6;
+                {% else %}background: rgba(16,185,129,0.1); color: #10B981;{% endif %}
+                font-size: 12px; padding: 6px 10px; border-radius: var(--radius-full); white-space: nowrap;">
+                {% if ticket.status == 'pending' %}Pending
+                {% elif ticket.status == 'in_progress' %}In progress
+                {% else %}Resolved{% endif %}
+              </span>
+            </div>
+
+            {# Ticket photos preview (up to 3) #}
+            {% if ticket.photos %}
+            <div class="d-flex gap-2 mt-3" style="overflow-x: auto; padding-bottom: var(--space-2);">
+              {% for photo in ticket.photos|slice:":3" %}
+              <div style="width: 80px; height: 80px; flex-shrink: 0; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--color-border);">
+                <img src="{{ photo.thumbnail_url }}" alt="Photo {{ forloop.counter }}" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              {% endfor %}
+              {% if ticket.photos|length > 3 %}
+              <div style="width: 80px; height: 80px; flex-shrink: 0; border-radius: var(--radius-md); background: var(--color-light-gray); display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-border);">
+                <span class="text-sm fw-semibold" style="color: var(--color-slate-500);">+{{ ticket.photos|length|add:-3 }}</span>
+              </div>
+              {% endif %}
+            </div>
+            {% endif %}
+
+            {# Follow-up comment section #}
+            {% if ticket.status != 'resolved' %}
+            <div class="mt-3 pt-3" style="border-top: 1px solid var(--color-border);">
+              <form class="ticket-followup-form" data-ticket-id="{{ ticket.id }}">
+                <div class="d-flex gap-2">
+                  <input type="text" class="form-input" placeholder="Add a comment..." style="flex: 1; min-height: 36px; font-size: 14px;">
+                  <button type="submit" class="btn btn-primary btn-sm" style="min-height: 36px;">Send</button>
+                </div>
+              </form>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="card p-6 text-center" style="box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+        <i data-lucide="wrench" style="width: 48px; height: 48px; color: var(--color-slate-400); margin-bottom: var(--space-3);"></i>
+        <p class="text-muted mb-0">No tickets submitted yet.</p>
+      </div>
+    {% endif %}
+  </section>
+
+</div>
+
+{# New ticket modal #}
+<div class="modal fade" id="newTicketModal" tabindex="-1" aria-labelledby="newTicketModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 560px;">
+    <div class="modal-content" style="border-radius: var(--radius-xl);">
+      <div class="modal-header" style="border-bottom: 1px solid var(--color-border); padding: var(--space-4);">
+        <h5 class="modal-title fw-bold" id="newTicketModalLabel" style="color: var(--color-deep-blue);">
+          Submit maintenance request
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form id="ticketForm" enctype="multipart/form-data">
+          {# Category #}
+          <div class="form-group mb-4">
+            <label class="form-label">Category</label>
+            <select class="form-input" name="category" id="ticketCategory" required>
+              <option value="" disabled selected>Select a category</option>
+              <option value="plumbing">Plumbing</option>
+              <option value="electrical">Electrical</option>
+              <option value="hvac">HVAC / Heating</option>
+              <option value="appliance">Appliance</option>
+              <option value="pest_control">Pest control</option>
+              <option value="structural">Structural damage</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          {# Urgency #}
+          <div class="form-group mb-4">
+            <label class="form-label">Urgency</label>
+            <div class="d-flex gap-3">
+              <label class="flex-grow-1">
+                <input type="radio" name="urgency" value="low" class="form-check-input" checked style="position: relative; top: 2px;">
+                <span class="ms-2">Low</span>
+              </label>
+              <label class="flex-grow-1">
+                <input type="radio" name="urgency" value="medium" class="form-check-input" style="position: relative; top: 2px;">
+                <span class="ms-2">Medium</span>
+              </label>
+              <label class="flex-grow-1">
+                <input type="radio" name="urgency" value="emergency" class="form-check-input" style="position: relative; top: 2px;">
+                <span class="ms-2" style="color: var(--color-red); font-weight: 500;">Emergency</span>
+              </label>
+            </div>
+          </div>
+
+          {# Description #}
+          <div class="form-group mb-4">
+            <label class="form-label">Description</label>
+            <textarea class="form-input" name="description" id="ticketDescription" rows="4" 
+                      placeholder="Describe the issue in detail..." required></textarea>
+            <div class="form-hint">Be specific about location and severity.</div>
+          </div>
+
+          {# Photo upload #}
+          <div class="form-group mb-4">
+            <label class="form-label">Photos (optional)</label>
+            <div id="photoDropzone" style="
+              border: 2px dashed var(--color-border);
+              border-radius: var(--radius-lg);
+              padding: var(--space-6);
+              text-align: center;
+              background: var(--color-light-gray);
+              transition: var(--ease-smooth);
+              cursor: pointer;
+            ">
+              <i data-lucide="image" style="width: 32px; height: 32px; color: var(--color-slate-400); margin-bottom: var(--space-2);"></i>
+              <p class="text-sm text-muted mb-1">Drag and drop images here or tap to upload</p>
+              <p class="text-xs text-muted mb-0">PNG, JPG up to 5MB each</p>
+              <input type="file" name="photos" id="photoInput" multiple accept="image/*" style="display: none;">
+            </div>
+            <div id="photoPreview" class="d-flex gap-2 mt-3" style="overflow-x: auto;"></div>
+          </div>
+
+          {# Preview of uploaded photos #}
+        </form>
+      </div>
+      <div class="modal-footer" style="border-top: 1px solid var(--color-border); padding: var(--space-4);">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="submitTicketBtn" disabled>
+          Submit ticket
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const newTicketBtn = document.getElementById('newTicketBtn');
+  const modalEl = document.getElementById('newTicketModal');
+  const modal = new bootstrap.Modal(modalEl);
+  const ticketForm = document.getElementById('ticketForm');
+  const submitBtn = document.getElementById('submitTicketBtn');
+  const photoDropzone = document.getElementById('photoDropzone');
+  const photoInput = document.getElementById('photoInput');
+  const photoPreview = document.getElementById('photoPreview');
+
+  let uploadedPhotos = [];
+
+  {# Open modal #}
+  newTicketBtn.addEventListener('click', () => modal.show());
+
+  {# Photo upload zone #}
+  photoDropzone.addEventListener('click', () => photoInput.click());
+  photoDropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    photoDropzone.style.borderColor = 'var(--color-deep-blue)';
+    photoDropzone.style.background = 'rgba(15, 23, 42, 0.04)';
+  });
+  photoDropzone.addEventListener('dragleave', () => {
+    photoDropzone.style.borderColor = 'var(--color-border)';
+    photoDropzone.style.background = 'var(--color-light-gray)';
+  });
+  photoDropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    photoDropzone.style.borderColor = 'var(--color-border)';
+    photoDropzone.style.background = 'var(--color-light-gray)';
+    handleFiles(e.dataTransfer.files);
+  });
+  photoInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+  function handleFiles(files) {
+    Array.from(files).forEach(file => {
+      if (!file.type.startsWith('image/')) return;
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File too large. Max 5MB per image.');
+        return;
+      }
+      uploadedPhotos.push(file);
+      renderPhotoThumbnail(file);
+    });
+    updateSubmitState();
+  }
+
+  function renderPhotoThumbnail(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'relative';
+      wrapper.style.width = '80px';
+      wrapper.style.height = '80px';
+      wrapper.style.flexShrink = '0';
+
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      img.style.borderRadius = 'var(--radius-md)';
+      img.style.border = '1px solid var(--color-border)';
+
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.innerHTML = '×';
+      remove.style.cssText = 'position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: var(--color-red); color: white; border: none; font-size: 14px; line-height: 1; cursor: pointer;';
+      remove.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        uploadedPhotos = uploadedPhotos.filter(f => f !== file);
+        wrapper.remove();
+        updateSubmitState();
+      });
+
+      wrapper.appendChild(img);
+      wrapper.appendChild(remove);
+      photoPreview.appendChild(wrapper);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function updateSubmitState() {
+    const desc = document.getElementById('ticketDescription');
+    const cat = document.getElementById('ticketCategory');
+    const hasRequired = desc.value.trim().length > 0 && cat.value;
+    submitBtn.disabled = !hasRequired;
+  }
+
+  ticketForm.addEventListener('input', updateSubmitState);
+  ticketForm.addEventListener('change', updateSubmitState);
+
+  {# Form validation: desc and category required, photos optional #}
+  submitBtn.addEventListener('click', () => {
+    if (submitBtn.disabled) return;
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner spinner-border spinner-border-sm me-2"></span>Submitting...';
+
+    const formData = new FormData(ticketForm);
+    uploadedPhotos.forEach((photo, i) => formData.append('photos', photo));
+
+    fetch('/tenant/maintenance/create/', {
+      method: 'POST',
+      body: formData,
+      headers: { 'X-CSRFToken': getCookie('csrftoken') }
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        modal.hide();
+        showToast('Ticket submitted successfully', 'success');
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        showToast(data.error || 'Submission failed', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit ticket';
+      }
+    })
+    .catch(() => {
+      showToast('Network error. Please try again.', 'error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit ticket';
+    });
+  });
+
+  lucide.createIcons();
+});
+</script>
+{% endblock %}

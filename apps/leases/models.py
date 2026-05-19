@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 from apps.properties.models import Property
 
 class Lease(models.Model):
@@ -11,8 +10,8 @@ class Lease(models.Model):
         ('expired', 'Expired'),
     ]
 
-    landlord = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='managed_leases')
-    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tenancy_leases', null=True, blank=True)
+    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='managed_leases')
+    tenant = models.ForeignKey('users.Tenant', on_delete=models.SET_NULL, null=True, blank=True, related_name='tenancy_leases')
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='leases')
     
     start_date = models.DateField()
@@ -38,7 +37,7 @@ class Lease(models.Model):
 class Invitation(models.Model):
     """Tenant invitation to join a lease."""
     lease = models.ForeignKey(Lease, on_delete=models.CASCADE, related_name='invitations')
-    landlord = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sent_invitations')
+    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='sent_invitations')
     email = models.EmailField()
     token_hash = models.CharField(max_length=255)
     expires_at = models.DateTimeField()

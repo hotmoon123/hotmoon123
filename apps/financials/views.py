@@ -1,239 +1,219 @@
 """
-Financials App — API Views (Layer 5)
-
-RESTful CRUD operations for Invoices, Transactions, Expenses, PaymentMethods.
+Financials App — Django MVT Views
+Returns JSON for AJAX calls from the frontend JS.
 """
-
-from rest_framework import status, viewsets
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from django.db.models import Sum, Count, Q
-from django.db.models.functions import TruncMonth
-from django.utils import timezone
-from datetime import timedelta
+import json
+import uuid
 from decimal import Decimal
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+from django.db.models import Sum, Q, F
+from django.utils import timezone
 
+from apps.users.models import Landlord
 from .models import Invoice, Transaction, Expense, PaymentMethod
-from .serializers import (
-    InvoiceSerializer,
-    InvoiceCreateSerializer,
-    TransactionSerializer,
-    ExpenseSerializer,
-    ExpenseCreateSerializer,
-    PaymentMethodSerializer,
-    PaymentSubmitSerializer,
-)
 
 
-class InvoiceViewSet(viewsets.ModelViewSet):
-    """
-    API endpoints for managing invoices.
-    """
+def invoice_to_dict(inv):
+    return {
+        'id': inv.pk,
+        'amount': str(inv.amount),
+        'amount_paid': str(inv.amount_paid),
+        'status': inv.status,
+        'due_date': inv.due_date.isoformat() if inv.due_date else None,
+        'paid_at': inv.paid_at.isoformat() if inv.paid_at else None,
+        'tenant_id': inv.tenant_id,
+        'landlord_id': inv.landlord_id,
+    }
 
-    permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        if user.role == "landlord":
-            return Invoice.objects.filter(landlord=user).select_related(
-                "rental_property", "tenant", "lease"
-            )
-        else:
-            return Invoice.objects.filter(tenant=user).select_related(
-                "rental_property", "landlord", "lease"
-            )
+@login_required
+@require_http_methods(['GET'])
+def invoice_list(request):
+    user = request.user
+    if isinstance(user, Landlord):
+        qs = Invoice.objects.filter(landlord=user).select_related('tenant', 'lease')
+    else:
+        qs = Invoice.objects.filter(tenant=user).select_related('landlord', 'lease')
+    return JsonResponse({'results': [invoice_to_dict(i) for i in qs]})
 
-    def get_serializer_class(self):
-        if self.action == "create":
-            return InvoiceCreateSerializer
-        return InvoiceSerializer
 
-    def perform_create(self, serializer):
-        """Set landlord from lease on create."""
-        lease = serializer.validated_data["lease"]
-        invoice = serializer.save(
-            landlord=lease.landlord, rental_property=lease.property
+@login_required
+@require_http_methods(['POST'])
+def invoice_create(request):
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Invalid JSON.'}}, status=400)
+
+    from apps.leases.models import Lease
+    errors = {}
+    lease_id = data.get('lease_id')
+    amount = data.get('amount')
+    due_date = data.get('due_date')
+
+    if not lease_id: errors['lease_id'] = 'Lease is required.'
+    if not amount: errors['amount'] = 'Amount is required.'
+    if not due_date: errors['due_date'] = 'Due date is required.'
+
+    if errors:
+        return JsonResponse({'success': False, 'errors': errors}, status=400)
+
+    try:
+        lease = Lease.objects.get(pk=lease_id, landlord=request.user)
+    except Lease.DoesNotExist:
+        return JsonResponse({'success': False, 'errors': {'lease_id': 'Lease not found.'}}, status=404)
+
+    invoice = Invoice.objects.create(
+        landlord=lease.landlord,
+        tenant=lease.tenant,
+        lease=lease,
+        amount=Decimal(str(amount)),
+        amount_paid=Decimal('0.00'),
+        due_date=due_date,
+        status='unpaid',
+    )
+    return JsonResponse({'success': True, 'invoice': invoice_to_dict(invoice)}, status=201)
+
+
+@login_required
+@require_http_methods(['GET'])
+def invoice_outstanding(request):
+    today = timezone.now().date()
+    qs = Invoice.objects.filter(
+        tenant=request.user,
+        status__in=['unpaid', 'partial', 'overdue'],
+        due_date__lt=today,
+    ).order_by('due_date')
+    return JsonResponse({'results': [invoice_to_dict(i) for i in qs]})
+
+
+@login_required
+@require_http_methods(['GET'])
+def invoice_summary(request):
+    user = request.user
+    if isinstance(user, Landlord):
+        qs = Invoice.objects.filter(landlord=user)
+    else:
+        qs = Invoice.objects.filter(tenant=user)
+
+    total_outstanding = qs.filter(status__in=['unpaid', 'partial', 'overdue']).aggregate(
+        total=Sum('amount')
+    )['total'] or Decimal('0.00')
+
+    overdue_count = qs.filter(
+        status__in=['unpaid', 'partial'],
+        due_date__lt=timezone.now().date()
+    ).count()
+
+    current_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    paid_this_month = qs.filter(
+        status='paid', paid_at__gte=current_month
+    ).aggregate(total=Sum('amount_paid'))['total'] or Decimal('0.00')
+
+    return JsonResponse({
+        'total_outstanding': float(total_outstanding),
+        'overdue_count': overdue_count,
+        'paid_this_month': float(paid_this_month),
+    })
+
+
+@login_required
+@require_http_methods(['POST'])
+def payment_pay(request):
+    """Tenant submits payment for an invoice."""
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Invalid JSON.'}}, status=400)
+
+    invoice_id = data.get('invoice_id')
+    if not invoice_id:
+        return JsonResponse({'success': False, 'errors': {'invoice_id': 'Invoice ID is required.'}}, status=400)
+
+    try:
+        invoice = Invoice.objects.get(pk=invoice_id, tenant=request.user)
+    except Invoice.DoesNotExist:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Invoice not found.'}}, status=404)
+
+    if invoice.status == 'paid':
+        return JsonResponse({'success': False, 'errors': {'detail': 'Invoice already paid.'}}, status=400)
+
+    tenant = request.user
+    idempotency_key = f"{tenant.id}_{invoice.id}_{timezone.now().date()}"
+
+    if Transaction.objects.filter(idempotency_key=idempotency_key).exists():
+        return JsonResponse(
+            {'success': False, 'errors': {'detail': 'This payment has already been processed.'}},
+            status=400
         )
 
-    @action(detail=False, methods=["get"])
-    def outstanding(self, request):
-        """GET /api/v1/financials/invoices/outstanding/ - Get overdue invoices."""
-        today = timezone.now().date()
-        invoices = (
-            self.get_queryset()
-            .filter(status="Outstanding", due_date__lt=today)
-            .order_by("due_date")
-        )
-        serializer = InvoiceSerializer(invoices, many=True)
-        return Response(serializer.data)
+    gateway_reference = f"txn_{uuid.uuid4().hex[:16]}"
 
-    @action(detail=False, methods=["get"])
-    def summary(self, request):
-        """GET /api/v1/financials/invoices/summary/ - Dashboard summary."""
-        user = request.user
-        queryset = self.get_queryset()
+    transaction = Transaction.objects.create(
+        invoice=invoice,
+        tenant=tenant,
+        landlord=invoice.landlord,
+        amount=invoice.amount,
+        gateway_reference=gateway_reference,
+        idempotency_key=idempotency_key,
+    )
 
-        total_outstanding = queryset.filter(status="Outstanding").aggregate(
-            total=Sum("total_amount")
-        )["total"] or Decimal("0.00")
+    invoice.status = 'paid'
+    invoice.amount_paid = invoice.amount
+    invoice.paid_at = timezone.now()
+    invoice.save()
 
-        overdue_count = queryset.filter(
-            status="Outstanding", due_date__lt=timezone.now().date()
-        ).count()
-
-        paid_this_month = queryset.filter(
-            status="Paid",
-            paid_at__gte=timezone.now().replace(
-                day=1, hour=0, minute=0, second=0, microsecond=0
-            ),
-        ).aggregate(total=Sum("total_amount"))["total"] or Decimal("0.00")
-
-        return Response(
-            {
-                "total_outstanding": float(total_outstanding),
-                "overdue_count": overdue_count,
-                "paid_this_month": float(paid_this_month),
-            }
-        )
+    return JsonResponse({
+        'success': True,
+        'message': 'Payment successful.',
+        'receipt_id': gateway_reference,
+    })
 
 
-class TransactionViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API endpoints for viewing transactions.
-    """
-
-    serializer_class = TransactionSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.role == "landlord":
-            return Transaction.objects.filter(landlord=user)
-        return Transaction.objects.filter(tenant=user)
-
-
-class ExpenseViewSet(viewsets.ModelViewSet):
-    """
-    API endpoints for managing expenses.
-    """
-
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return Expense.objects.filter(landlord=self.request.user).select_related(
-            "rental_property"
-        )
-
-    def get_serializer_class(self):
-        if self.action == "create":
-            return ExpenseCreateSerializer
-        return ExpenseSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(landlord=self.request.user)
-
-    @action(detail=False, methods=["get"])
-    def summary(self, request):
-        """GET /api/v1/financials/expenses/summary/ - ROI summary by property."""
-        expenses = self.get_queryset()
-
-        by_property = (
-            expenses.values("rental_property__id", "rental_property__address")
-            .annotate(total=Sum("amount"))
-            .order_by("-total")
-        )
-
-        by_category = (
-            expenses.values("category").annotate(total=Sum("amount")).order_by("-total")
-        )
-
-        total_this_month = expenses.filter(
-            expense_date__gte=timezone.now().replace(day=1)
-        ).aggregate(total=Sum("amount"))["total"] or Decimal("0.00")
-
-        return Response(
-            {
-                "by_property": list(by_property),
-                "by_category": list(by_category),
-                "total_this_month": float(total_this_month),
-            }
-        )
+@login_required
+@require_http_methods(['GET'])
+def expense_list(request):
+    qs = Expense.objects.filter(landlord=request.user).select_related('rental_property')
+    return JsonResponse({'results': [
+        {
+            'id': e.pk,
+            'category': e.category,
+            'amount': str(e.amount),
+            'description': e.description,
+            'expense_date': e.expense_date.isoformat() if e.expense_date else None,
+            'property_id': e.rental_property_id,
+        }
+        for e in qs
+    ]})
 
 
-class PaymentMethodViewSet(viewsets.ModelViewSet):
-    """
-    API endpoints for managing tenant payment methods.
-    """
+@login_required
+@require_http_methods(['POST'])
+def expense_create(request):
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Invalid JSON.'}}, status=400)
 
-    serializer_class = PaymentMethodSerializer
-    permission_classes = [IsAuthenticated]
+    errors = {}
+    category = data.get('category', '').strip()
+    amount = data.get('amount')
+    expense_date = data.get('expense_date')
 
-    def get_queryset(self):
-        return PaymentMethod.objects.filter(tenant=self.request.user, is_active=True)
+    if not category: errors['category'] = 'Category is required.'
+    if not amount: errors['amount'] = 'Amount is required.'
+    if not expense_date: errors['expense_date'] = 'Date is required.'
 
-    def perform_create(self, serializer):
-        payment_method = serializer.save(tenant=self.request.user)
-        if payment_method.is_default:
-            PaymentMethod.objects.filter(tenant=self.request.user).exclude(
-                pk=payment_method.pk
-            ).update(is_default=False)
+    if errors:
+        return JsonResponse({'success': False, 'errors': errors}, status=400)
 
-    @action(detail=True, methods=["post"])
-    def set_default(self, request, pk=None):
-        """POST /api/v1/financials/payment-methods/{id}/set_default/"""
-        payment_method = self.get_object()
-        PaymentMethod.objects.filter(tenant=request.user).update(is_default=False)
-        payment_method.is_default = True
-        payment_method.save()
-        return Response(PaymentMethodSerializer(payment_method).data)
-
-    @action(detail=False, methods=["post"])
-    def pay(self, request):
-        """
-        POST /api/v1/financials/payment-methods/pay/
-
-        Process a rent payment. In production, this would integrate with
-        Stripe/Paystack payment gateway.
-        """
-        serializer = PaymentSubmitSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(
-                {"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST
-            )
-
-        invoice = serializer._invoice
-        tenant = request.user
-
-        idempotency_key = f"{tenant.id}_{invoice.id}_{timezone.now().date()}"
-
-        if Transaction.objects.filter(idempotency_key=idempotency_key).exists():
-            return Response(
-                {"errors": {"detail": "This payment has already been processed."}},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        import uuid
-
-        gateway_reference = f"txn_{uuid.uuid4().hex[:16]}"
-
-        transaction = Transaction.objects.create(
-            invoice=invoice,
-            tenant=tenant,
-            landlord=invoice.landlord,
-            amount=invoice.total_amount,
-            gateway_reference=gateway_reference,
-            idempotency_key=idempotency_key,
-        )
-
-        invoice.status = "Paid"
-        invoice.paid_at = timezone.now()
-        invoice.save()
-
-        return Response(
-            {
-                "message": "Payment successful",
-                "transaction": TransactionSerializer(transaction).data,
-                "receipt_id": gateway_reference,
-            }
-        )
+    expense = Expense.objects.create(
+        landlord=request.user,
+        category=category,
+        amount=Decimal(str(amount)),
+        expense_date=expense_date,
+        description=data.get('description', ''),
+    )
+    return JsonResponse({'success': True, 'expense': {'id': expense.pk, 'amount': str(expense.amount)}}, status=201)

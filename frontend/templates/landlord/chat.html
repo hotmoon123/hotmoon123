@@ -1,0 +1,315 @@
+{% extends "landlord/layout_landlord.html" %}
+
+{% block title %}Chat | RentFlow CRM{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-page { display: flex; flex-direction: column; height: calc(100vh - 120px); min-height: 420px; max-height: 900px; }
+    .chat-banner {
+        font-size: var(--font-size-sm);
+        color: var(--color-slate-600);
+        background: var(--color-white);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-3) var(--space-4);
+        margin-bottom: var(--space-4);
+    }
+    .chat-shell {
+        display: flex;
+        flex: 1;
+        min-height: 0;
+        background: var(--color-white);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        overflow: hidden;
+        border: 1px solid var(--color-border);
+    }
+    .chat-contacts {
+        width: 32%;
+        min-width: 260px;
+        max-width: 340px;
+        border-right: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: column;
+        background: var(--color-light-gray);
+    }
+    .chat-contacts-head {
+        padding: var(--space-4);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-deep-blue);
+        border-bottom: 1px solid var(--color-border);
+        background: var(--color-white);
+    }
+    .chat-contact-list { overflow-y: auto; flex: 1; }
+    .chat-contact {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        cursor: pointer;
+        border: none;
+        width: 100%;
+        text-align: left;
+        background: transparent;
+        border-bottom: 1px solid var(--color-border);
+        transition: background 0.15s ease;
+    }
+    .chat-contact:hover { background: rgba(255,255,255,0.7); }
+    .chat-contact.active {
+        background: var(--color-white);
+        box-shadow: inset 3px 0 0 var(--color-deep-blue);
+    }
+    .chat-avatar {
+        width: 40px; height: 40px;
+        border-radius: 50%;
+        background: var(--color-deep-blue);
+        color: var(--color-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+    .chat-contact-meta { min-width: 0; }
+    .chat-contact-name { font-weight: 600; color: var(--color-deep-blue); font-size: var(--font-size-sm); }
+    .chat-contact-sub { font-size: 12px; color: var(--color-slate-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .chat-online-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: var(--color-slate-300);
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+    .chat-main { flex: 1; display: flex; flex-direction: column; min-width: 0; background: #f0f2f5; }
+    .chat-thread-head {
+        padding: var(--space-3) var(--space-4);
+        background: var(--color-white);
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+    }
+    .chat-thread-title { font-weight: 600; color: var(--color-deep-blue); }
+    .chat-thread-sub { font-size: 12px; color: var(--color-slate-500); }
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--space-4);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+    .chat-empty {
+        margin: auto;
+        text-align: center;
+        color: var(--color-slate-500);
+        max-width: 280px;
+        font-size: var(--font-size-sm);
+    }
+    .chat-bubble-row { display: flex; width: 100%; }
+    .chat-bubble-row.sent { justify-content: flex-end; }
+    .chat-bubble-row.recv { justify-content: flex-start; }
+    .chat-bubble {
+        max-width: 72%;
+        padding: 10px 14px;
+        border-radius: 14px;
+        font-size: var(--font-size-sm);
+        line-height: 1.45;
+        word-break: break-word;
+    }
+    .chat-bubble.sent {
+        background: var(--color-deep-blue);
+        color: var(--color-white);
+        border-bottom-right-radius: 4px;
+    }
+    .chat-bubble.recv {
+        background: var(--color-white);
+        color: var(--color-deep-blue);
+        border: 1px solid var(--color-border);
+        border-bottom-left-radius: 4px;
+    }
+    .chat-bubble-meta { font-size: 11px; opacity: 0.75; margin-top: 4px; }
+    .chat-composer {
+        padding: var(--space-3) var(--space-4);
+        background: var(--color-white);
+        border-top: 1px solid var(--color-border);
+        display: flex;
+        gap: var(--space-2);
+        align-items: flex-end;
+    }
+    .chat-composer textarea {
+        flex: 1;
+        resize: none;
+        min-height: 44px;
+        max-height: 120px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-border);
+        padding: 10px 12px;
+        font-size: var(--font-size-sm);
+    }
+    .chat-composer textarea:focus {
+        outline: none;
+        border-color: var(--color-deep-blue);
+        box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08);
+    }
+    .chat-attach-btn {
+        border: none;
+        background: var(--color-light-gray);
+        width: 44px; height: 44px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-slate-600);
+        cursor: not-allowed;
+    }
+    .chat-send-btn {
+        border: none;
+        background: var(--color-deep-blue);
+        color: var(--color-white);
+        padding: 0 18px;
+        height: 44px;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        font-size: var(--font-size-sm);
+    }
+    .chat-send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    @media (max-width: 900px) {
+        .chat-shell { flex-direction: column; max-height: none; height: auto; min-height: 560px; }
+        .chat-contacts { width: 100%; max-width: none; min-height: 180px; max-height: 220px; border-right: none; border-bottom: 1px solid var(--color-border); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="chat-page">
+    <div class="chat-banner">
+        <strong>How chat works right now:</strong>
+        Messages you send stay on this device only—tenants do not see them yet. When live chat is turned on, conversations will sync in real time.
+        <span class="d-block mt-2 text-muted">The tenant list comes from people assigned to your leases. If no one appears, open <a href="/landlord/leases/">Leases</a> and assign or invite a tenant.</span>
+    </div>
+
+    <div class="chat-shell">
+        <aside class="chat-contacts" aria-label="Tenants">
+            <div class="chat-contacts-head">Tenants</div>
+            <div class="chat-contact-list" id="contactList">
+                {% if chat_contacts %}
+                    {% for c in chat_contacts %}
+                    <button type="button" class="chat-contact" data-id="{{ c.id }}" data-name="{{ c.name|escape }}" data-email="{{ c.email|escape }}" data-unit="{{ c.unit|escape }}">
+                        <span class="chat-avatar">{{ c.initials }}</span>
+                        <span class="chat-contact-meta">
+                            <span class="chat-contact-name">{{ c.name }}</span>
+                            <span class="chat-contact-sub">Unit {{ c.unit }}</span>
+                        </span>
+                        <span class="chat-online-dot" title="Status unknown"></span>
+                    </button>
+                    {% endfor %}
+                {% else %}
+                    <div class="p-4 text-muted text-sm">
+                        No tenants on file yet. Assign a tenant to a lease or accept an invitation from
+                        <a href="/landlord/leases/">Leases</a>.
+                    </div>
+                {% endif %}
+            </div>
+        </aside>
+
+        <section class="chat-main" aria-label="Conversation">
+            <div class="chat-thread-head" id="threadHead">
+                <span class="chat-avatar" id="threadAvatar" style="visibility:hidden;">?</span>
+                <div>
+                    <div class="chat-thread-title" id="threadTitle">Select a tenant</div>
+                    <div class="chat-thread-sub" id="threadSub">Choose someone from the list to open a thread</div>
+                </div>
+            </div>
+            <div class="chat-messages" id="messagePane" role="log" aria-live="polite">
+                <div class="chat-empty" id="threadPlaceholder">
+                    Two-pane layout: contacts on the left, conversation on the right. When chat sync is live, messages will appear here for both sides.
+                </div>
+            </div>
+            <div class="chat-composer">
+                <button type="button" class="chat-attach-btn" disabled title="Attachments when chat API is ready" aria-disabled="true">
+                    <i data-lucide="paperclip" style="width:20px;height:20px;"></i>
+                </button>
+                <label class="visually-hidden" for="chatInput">Message</label>
+                <textarea id="chatInput" rows="1" placeholder="Type a message…" disabled></textarea>
+                <button type="button" class="chat-send-btn" id="chatSend" disabled>Send</button>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block landlord_js %}
+<script>
+(function () {
+    const contacts = document.querySelectorAll('.chat-contact');
+    const threadTitle = document.getElementById('threadTitle');
+    const threadSub = document.getElementById('threadSub');
+    const threadAvatar = document.getElementById('threadAvatar');
+    const messagePane = document.getElementById('messagePane');
+    const placeholder = document.getElementById('threadPlaceholder');
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('chatSend');
+    let activeId = null;
+
+    function scrollToBottom() {
+        messagePane.scrollTop = messagePane.scrollHeight;
+    }
+
+    function appendBubble(text, sent) {
+        if (placeholder) placeholder.remove();
+        const row = document.createElement('div');
+        row.className = 'chat-bubble-row ' + (sent ? 'sent' : 'recv');
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble ' + (sent ? 'sent' : 'recv');
+        const body = document.createElement('div');
+        body.textContent = text;
+        const meta = document.createElement('div');
+        meta.className = 'chat-bubble-meta';
+        meta.textContent = sent ? 'You · not shared with tenant yet' : 'RentFlow';
+        bubble.appendChild(body);
+        bubble.appendChild(meta);
+        row.appendChild(bubble);
+        messagePane.appendChild(row);
+        scrollToBottom();
+        lucide.createIcons();
+    }
+
+    function selectContact(btn) {
+        contacts.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeId = btn.dataset.id;
+        threadTitle.textContent = btn.dataset.name;
+        threadSub.textContent = btn.dataset.email + ' · Unit ' + btn.dataset.unit;
+        threadAvatar.textContent = (btn.querySelector('.chat-avatar') || {}).textContent || '?';
+        threadAvatar.style.visibility = 'visible';
+        messagePane.innerHTML = '';
+        appendBubble('You can type below to try the layout. Nothing is sent to the tenant until live chat is enabled.', false);
+        input.disabled = false;
+        sendBtn.disabled = false;
+        input.focus();
+        lucide.createIcons();
+    }
+
+    contacts.forEach(btn => {
+        btn.addEventListener('click', () => selectContact(btn));
+    });
+
+    sendBtn.addEventListener('click', () => {
+        const t = (input.value || '').trim();
+        if (!t || !activeId) return;
+        appendBubble(t, true);
+        input.value = '';
+    });
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendBtn.click();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+})();
+</script>
+{% endblock %}

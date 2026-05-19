@@ -1,0 +1,254 @@
+{% extends "tenant/layout_tenant.html" %}
+
+{% block title %}Rent & Invoices | RentFlow Tenant{% endblock %}
+
+{% block content %}
+{# Spec §2 Page 2: Locked exact-amount checkout, invoice ledger, PDF receipts #}
+<div class="container" style="max-width: 640px;">
+
+  {# Current invoice hero #}
+  <section class="tenant-hero tenant-hero--due mb-4" aria-label="Current invoice">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+      <span class="tenant-hero__label">Amount due</span>
+      {% if next_payment %}
+        <span class="badge badge-amber">Due {{ next_payment.due_date|date:"M j, Y" }}</span>
+      {% else %}
+        <span class="badge badge-emerald">All clear</span>
+      {% endif %}
+    </div>
+    <div class="tenant-hero__amount anim-count-up">
+      ${{ total_balance|floatformat:2 }}
+    </div>
+    {% if next_payment and next_payment.status == 'overdue' %}
+      <p class="tenant-hero__warn mb-3">This amount is overdue. Please pay as soon as possible to avoid additional fees.</p>
+    {% elif next_payment %}
+      <p class="text-muted text-sm mb-3">Pay your exact rent amount. Partial payments are not accepted.</p>
+    {% endif %}
+  </section>
+
+  {# Payment method selection #}
+  {% if next_payment %}
+  <section class="card mb-4" aria-label="Payment method">
+    <h4 class="mb-3" style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-deep-blue);">Payment method</h4>
+
+    {% if saved_cards %}
+      <div class="vstack gap-3">
+        {% for card in saved_cards %}
+        <label class="card p-3 border-2" style="border-color: var(--color-border); border-radius: var(--radius-lg); cursor: pointer; transition: var(--ease-smooth);" 
+               style="border: 2px solid {% if forloop.first %}{% if saved_cards|length == 1 %}var(--color-deep-blue){% else %}var(--color-border){% endif %}{% else %}var(--color-border){% endif %};">
+          <input type="radio" name="payment_method" value="{{ card.id }}" {% if forloop.first %}checked{% endif %} class="form-check-input" style="display: none;">
+          <div class="d-flex align-items-center gap-3">
+            <div style="width: 48px; height: 32px; background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">
+              <i data-lucide="credit-card" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div class="flex-grow-1">
+              <div class="fw-semibold" style="color: var(--color-deep-blue);">
+                {{ card.brand|title }} ending in {{ card.last4 }}
+              </div>
+              <div class="text-xs text-muted">
+                Expires {{ card.exp_month }}/{{ card.exp_year }}
+              </div>
+            </div>
+            {% if forloop.first %}
+              <div class="badge badge-blue">Selected</div>
+            {% endif %}
+          </div>
+        </label>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-4">
+        <p class="text-muted mb-3">No saved payment methods. You'll need to add a new card.</p>
+      </div>
+    {% endif %}
+
+    {# Add new card button #}
+    <button type="button" class="btn btn-secondary w-100 mt-3" id="addCardBtn">
+      <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i>
+      Add new payment method
+    </button>
+
+    {# Locked amount display #}
+    <div class="mt-4 p-3" style="background: var(--color-light-gray); border-radius: var(--radius-md);">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="text-sm text-muted">Rent amount</span>
+        <span class="fw-semibold">${{ invoice_amount|floatformat:2 }}</span>
+      </div>
+      {% if late_fee > 0 %}
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="text-sm text-muted">Late fee (5%)</span>
+        <span class="fw-semibold" style="color: var(--color-red);">${{ late_fee|floatformat:2 }}</span>
+      </div>
+      {% endif %}
+      <hr style="border-color: var(--color-border); margin: var(--space-3) 0;">
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">Total due</span>
+        <span class="fw-bold" style="font-size: var(--font-size-lg); color: var(--color-deep-blue);">
+          ${{ total_balance|floatformat:2 }}
+        </span>
+      </div>
+    </div>
+
+    {# Submit button #}
+    <button type="button" class="btn btn-primary btn-lg w-100 mt-4" id="payNowBtn" disabled>
+      <span class="btn-text">Pay ${{ total_balance|floatformat:2 }}</span>
+    </button>
+
+    <p class="text-xs text-muted text-center mt-3 mb-0">
+      By paying, you agree to the payment terms. Charges are processed securely via Stripe.
+    </p>
+  </section>
+  {% endif %}
+
+  {# Invoice history #}
+  <section class="card" aria-label="Invoice history">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-deep-blue); margin: 0;">Payment history</h4>
+    </div>
+
+    {% if invoices %}
+      <div class="vstack gap-3">
+        {% for invoice in invoices %}
+        <div class="card border-0 p-3" style="box-shadow: var(--shadow-sm); border: 1px solid var(--color-border) !important;">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="flex-grow-1">
+              <div class="fw-semibold mb-1" style="color: var(--color-deep-blue);">
+                Rent — {{ invoice.period_start|date:"M Y" }}
+                {% if invoice.status == 'overdue' %}
+                  <span class="badge badge-red ms-2">Overdue</span>
+                {% elif invoice.status == 'paid' %}
+                  <span class="badge badge-emerald ms-2">Paid</span>
+                {% else %}
+                  <span class="badge badge-amber ms-2">Pending</span>
+                {% endif %}
+              </div>
+              <div class="text-xs text-muted">
+                Due: {{ invoice.due_date|date:"M j, Y" }}
+                {% if invoice.paid_at %}
+                  · Paid: {{ invoice.paid_at|date:"M j, Y" }}
+                {% endif %}
+              </div>
+            </div>
+            <div class="text-end">
+              <div class="fw-bold" style="color: var(--color-deep-blue);">
+                ${{ invoice.amount|floatformat:2 }}
+              </div>
+              {% if invoice.status == 'paid' and invoice.receipt_url %}
+              <a href="{{ invoice.receipt_url }}" target="_blank" class="btn btn-ghost btn-sm mt-1" style="font-size: 12px; padding: 4px 8px;">
+                <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+                Receipt
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-6">
+        <i data-lucide="receipt" style="width: 48px; height: 48px; color: var(--color-slate-400); margin-bottom: var(--space-3);"></i>
+        <p class="text-muted mb-0">No payment history yet.</p>
+      </div>
+    {% endif %}
+  </section>
+
+</div>
+
+{# Payment modal (Stripe/Paystack integration placeholder) #}
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: var(--radius-xl);">
+      <div class="modal-header" style="border-bottom: 1px solid var(--color-border); padding: var(--space-4);">
+        <h5 class="modal-title fw-bold" style="color: var(--color-deep-blue);">Add payment method</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <p class="text-muted text-sm mb-3">Card payment form would be rendered here via Stripe Elements or Paystack Inline.</p>
+        {# Stripe/Paystack mount point #}
+        <div id="card-element" style="padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); min-height: 40px; background: var(--color-white);"></div>
+        <div id="card-errors" class="text-red text-sm mt-2" role="alert"></div>
+      </div>
+      <div class="modal-footer" style="border-top: 1px solid var(--color-border); padding: var(--space-4);">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmPaymentBtn">Pay ${{ total_balance|floatformat:2 }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const payBtn = document.getElementById('payNowBtn');
+  const addCardBtn = document.getElementById('addCardBtn');
+  const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+  let selectedMethod = null;
+
+  {# Enable pay button only when method selected #}
+  const methodInputs = document.querySelectorAll('input[name="payment_method"]');
+  if (methodInputs.length > 0) {
+    methodInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        selectedMethod = input.value;
+        payBtn.disabled = false;
+        {# Update visual selected state #}
+        document.querySelectorAll('label.card').forEach(l => {
+          l.style.borderColor = 'var(--color-border)';
+          l.querySelector('.badge')?.remove();
+        });
+        input.closest('label').style.borderColor = 'var(--color-deep-blue)';
+        const badge = document.createElement('div');
+        badge.className = 'badge badge-blue';
+        badge.textContent = 'Selected';
+        input.closest('label').appendChild(badge);
+      });
+    });
+    {# Pre-select first #}
+    methodInputs[0].dispatchEvent(new Event('change'));
+  } else {
+    {# No saved cards - must add one #}
+    addCardBtn.addEventListener('click', () => paymentModal.show());
+    payBtn.disabled = false;
+  }
+
+  {# Open payment modal #}
+  payBtn.addEventListener('click', () => {
+    paymentModal.show();
+  });
+
+  {# Add card button #}
+  addCardBtn.addEventListener('click', () => {
+    paymentModal.show();
+  });
+
+  {# Confirm payment - would integrate with Stripe/Paystack #}
+  document.getElementById('confirmPaymentBtn').addEventListener('click', () => {
+    const btn = document.getElementById('confirmPaymentBtn');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner spinner-border spinner-border-sm me-2"></span>Processing...';
+
+    {# Simulate API call #}
+    setTimeout(() => {
+      window.location.href = '/tenant/payment/success/';
+    }, 1500);
+  });
+
+  {# Metric counter animation #}
+  const amountEl = document.querySelector('.tenant-hero__amount');
+  if (amountEl && typeof gsap !== 'undefined') {
+    const target = parseFloat(amountEl.textContent.replace(/[^0-9.-]+/g, ''));
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      val: target,
+      duration: 0.85,
+      ease: 'power2.out',
+      onUpdate: () => amountEl.textContent = '$' + obj.val.toFixed(2)
+    });
+  }
+
+  lucide.createIcons();
+});
+</script>
+{% endblock %}

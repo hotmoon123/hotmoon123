@@ -11,16 +11,15 @@ from datetime import timedelta
 from django.conf import settings
 from django.core.mail import send_mail
 from django.utils import timezone
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from .models import Landlord, Tenant, PasswordResetToken
 
 
 def create_user(email, password, role, first_name, last_name, phone_number=''):
     """
     Create a new user account.
     Password is hashed automatically by Django's set_password (bcrypt).
-    User starts as unverified — must verify email before login.
+    When DEBUG is True, email is treated as verified so local login works without mail.
+    In production (DEBUG False), users must verify via the emailed link before login.
     """
     user = User.objects.create_user(
         email=email.lower().strip(),
@@ -29,7 +28,7 @@ def create_user(email, password, role, first_name, last_name, phone_number=''):
         first_name=first_name.strip(),
         last_name=last_name.strip(),
         phone_number=phone_number.strip() if phone_number else '',
-        is_verified=False,
+        is_verified=settings.DEBUG,
     )
     return user
 
@@ -112,16 +111,20 @@ def verify_email_token(raw_token):
 def generate_password_reset_token(user):
     """
     Generate a password reset token with 15-minute expiry.
+    Stores token in PasswordResetToken model to handle both Landlord and Tenant.
     Returns the raw token to be emailed.
     """
     raw_token = secrets.token_urlsafe(48)
     token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
 
-    from django.core.cache import cache
-    cache.set(
-        f'password_reset_{token_hash}',
-        {'user_id': user.id, 'created_at': timezone.now().isoformat()},
-        timeout=900  # 15 minutes
+    user_type = 'landlord' if isinstance(user, Landlord) else 'tenant'
+    expires_at = timezone.now() + timedelta(minutes=15)
+
+    PasswordResetToken.objects.create(
+        user_type=user_type,
+        user_id=user.id,
+        token_hash=token_hash,
+        expires_at=expires_at,
     )
     return raw_token
 
@@ -151,21 +154,39 @@ def reset_password_with_token(raw_token, new_password):
     Reset password using a valid token.
     Returns the user if successful, None if token is invalid/expired.
     """
-    from django.core.cache import cache
-
     token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
-    data = cache.get(f'password_reset_{token_hash}')
-
-    if not data:
-        return None
 
     try:
-        user = User.objects.get(id=data['user_id'])
-        user.set_password(new_password)
-        user.save(update_fields=['password', 'updated_at'])
-
-        # Delete the used token
-        cache.delete(f'password_reset_{token_hash}')
-        return user
-    except User.DoesNotExist:
+        token = PasswordResetToken.objects.get(token_hash=token_hash)
+    except PasswordResetToken.DoesNotExist:
         return None
+
+    # Check if token is expired
+    if token.is_expired:
+        return None
+
+    # Check if token was already used
+    if token.is_used:
+        return None
+
+    # Get the correct user model
+    if token.user_type == 'landlord':
+        try:
+            user = Landlord.objects.get(id=token.user_id)
+        except Landlord.DoesNotExist:
+            return None
+    elif token.user_type == 'tenant':
+        try:
+            user = Tenant.objects.get(id=token.user_id)
+        except Tenant.DoesNotExist:
+            return None
+    else:
+        return None
+
+    # Reset password and mark token as used
+    user.set_password(new_password)
+    user.save(update_fields=['password'])
+    token.used_at = timezone.now()
+    token.save(update_fields=['used_at'])
+
+    return user

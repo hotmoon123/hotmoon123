@@ -1,211 +1,140 @@
 """
-Leases App — API Views (Layer 5)
-
-RESTful CRUD operations for Leases and Invitations.
-Follows the 9-layer architecture.
+Leases App — Django MVT Views
+Returns JSON for AJAX calls from the frontend JS.
 """
-
-from rest_framework import status, viewsets
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+import json
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 from django.utils import timezone
-from django.db.models import Q
 
+from apps.users.models import Landlord
 from .models import Lease, Invitation
-from .serializers import (
-    LeaseSerializer,
-    LeaseCreateSerializer,
-    LeaseUpdateSerializer,
-    InvitationSerializer,
-)
-from apps.properties.models import Property
 
 
-class LeaseViewSet(viewsets.ModelViewSet):
-    """
-    API endpoints for managing leases.
-
-    Endpoints:
-    - GET    /api/v1/leases/                    - List all leases
-    - POST   /api/v1/leases/                    - Create lease
-    - GET    /api/v1/leases/{id}/               - Get lease
-    - PUT    /api/v1/leases/{id}/               - Update lease
-    - DELETE /api/v1/leases/{id}/               - Delete lease
-    - GET    /api/v1/leases/expiring/           - Get leases expiring soon
-    - POST   /api/v1/leases/{id}/invite         - Send tenant invitation
-    - POST   /api/v1/leases/{id}/accept         - Accept invitation (tenant)
-    """
-
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        """Filter leases based on user role."""
-        user = self.request.user
-        if user.role == "landlord":
-            return Lease.objects.filter(
-                landlord=user, deleted_at__isnull=True
-            ).select_related("property", "tenant")
-        else:
-            return Lease.objects.filter(
-                tenant=user, deleted_at__isnull=True
-            ).select_related("property", "landlord")
-
-    def get_serializer_class(self):
-        """Return appropriate serializer based on action."""
-        if self.action == "create":
-            return LeaseCreateSerializer
-        elif self.action in ["update", "partial_update"]:
-            return LeaseUpdateSerializer
-        return LeaseSerializer
-
-    def perform_create(self, serializer):
-        """Set landlord to current user on create."""
-        lease = serializer.save(landlord=self.request.user)
-        property_obj = lease.property
-
-    def perform_destroy(self, instance):
-        """Soft delete instead of hard delete."""
-        instance.deleted_at = timezone.now()
-        instance.save()
-
-    @action(detail=False, methods=["get"])
-    def expiring(self, request):
-        """
-        GET /api/v1/leases/expiring/
-
-        Returns leases expiring within the next 60 days.
-        """
-        days = request.query_params.get("days", 60)
-        try:
-            days = int(days)
-        except ValueError:
-            days = 60
-
-        target_date = timezone.now().date() + timezone.timedelta(days=days)
-
-        leases = (
-            self.get_queryset()
-            .filter(
-                status="Active",
-                end_date__lte=target_date,
-                end_date__gte=timezone.now().date(),
-            )
-            .order_by("end_date")
-        )
-
-        serializer = LeaseSerializer(leases, many=True)
-        return Response(serializer.data)
-
-    @action(detail=True, methods=["post"])
-    def invite(self, request, pk=None):
-        """
-        POST /api/v1/leases/{id}/invite/
-
-        Send an invitation email to a tenant.
-        """
-        lease = self.get_object()
-
-        if lease.landlord != request.user:
-            return Response(
-                {
-                    "errors": {
-                        "detail": "You do not have permission to invite to this lease."
-                    }
-                },
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
-        if lease.tenant:
-            return Response(
-                {"errors": {"detail": "This lease already has a tenant assigned."}},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        email = request.data.get("email")
-        if not email:
-            return Response(
-                {"errors": {"email": "Email is required."}},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        invitation = Invitation.objects.create(
-            lease=lease,
-            landlord=request.user,
-            email=email,
-            token_hash=f"hashed_token_{timezone.now().timestamp()}",
-            expires_at=timezone.now() + timezone.timedelta(hours=24),
-        )
-
-        return Response(
-            {
-                "message": f"Invitation sent to {email}",
-                "invitation": InvitationSerializer(invitation).data,
-            },
-            status=status.HTTP_201_CREATED,
-        )
-
-    @action(detail=True, methods=["post"])
-    def accept(self, request, pk=None):
-        """
-        POST /api/v1/leases/{id}/accept/
-
-        Tenant accepts the invitation and binds to the lease.
-        """
-        lease = self.get_object()
-        user = request.user
-
-        if lease.tenant:
-            return Response(
-                {"errors": {"detail": "This lease already has a tenant assigned."}},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        invitation = Invitation.objects.filter(
-            lease=lease, email=user.email, accepted_at__isnull=True
-        ).first()
-
-        if not invitation:
-            return Response(
-                {"errors": {"detail": "No pending invitation found for your email."}},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
-        if invitation.is_expired:
-            return Response(
-                {"errors": {"detail": "This invitation has expired."}},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        invitation.accepted_at = timezone.now()
-        invitation.save()
-
-        lease.tenant = user
-        lease.signed_at = timezone.now()
-        lease.save()
-
-        property_obj = lease.property
-        property_obj.status = "occupied"
-        property_obj.save()
-
-        return Response(
-            {
-                "message": "You have successfully joined the lease.",
-                "lease": LeaseSerializer(lease).data,
-            }
-        )
+def lease_to_dict(lease):
+    return {
+        'id': lease.pk,
+        'property_id': lease.property_id,
+        'property_unit': lease.property.unit_number if lease.property else None,
+        'tenant_id': lease.tenant_id,
+        'tenant_name': (
+            f"{lease.tenant.first_name} {lease.tenant.last_name}".strip()
+            if lease.tenant else None
+        ),
+        'start_date': lease.start_date.isoformat() if lease.start_date else None,
+        'end_date': lease.end_date.isoformat() if lease.end_date else None,
+        'rent_amount': str(lease.rent_amount),
+        'status': lease.status,
+    }
 
 
-class InvitationViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API endpoints for viewing invitations (landlord only).
-    """
+@login_required
+@require_http_methods(['GET'])
+def lease_list(request):
+    user = request.user
+    if isinstance(user, Landlord):
+        qs = Lease.objects.filter(landlord=user, deleted_at__isnull=True).select_related('property', 'tenant')
+    else:
+        qs = Lease.objects.filter(tenant=user, deleted_at__isnull=True).select_related('property', 'landlord')
+    return JsonResponse({'results': [lease_to_dict(l) for l in qs]})
 
-    serializer_class = InvitationSerializer
-    permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        """Filter invitations to landlord's own invitations."""
-        return Invitation.objects.filter(landlord=self.request.user).select_related(
-            "lease", "lease__property"
-        )
+@login_required
+@require_http_methods(['POST'])
+def lease_create(request):
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Invalid JSON.'}}, status=400)
+
+    from apps.properties.models import Property
+    errors = {}
+    property_id = data.get('property_id')
+    start_date = data.get('start_date')
+    end_date = data.get('end_date')
+    rent_amount = data.get('rent_amount')
+
+    if not property_id: errors['property_id'] = 'Property is required.'
+    if not start_date: errors['start_date'] = 'Start date is required.'
+    if not end_date: errors['end_date'] = 'End date is required.'
+    if not rent_amount: errors['rent_amount'] = 'Rent amount is required.'
+
+    if errors:
+        return JsonResponse({'success': False, 'errors': errors}, status=400)
+
+    try:
+        prop = Property.objects.get(pk=property_id, landlord=request.user)
+    except Property.DoesNotExist:
+        return JsonResponse({'success': False, 'errors': {'property_id': 'Property not found.'}}, status=404)
+
+    lease = Lease.objects.create(
+        landlord=request.user,
+        property=prop,
+        start_date=start_date,
+        end_date=end_date,
+        rent_amount=rent_amount,
+        status='active',
+    )
+    return JsonResponse({'success': True, 'lease': lease_to_dict(lease)}, status=201)
+
+
+@login_required
+@require_http_methods(['DELETE'])
+def lease_delete(request, pk):
+    try:
+        lease = Lease.objects.get(pk=pk, landlord=request.user, deleted_at__isnull=True)
+    except Lease.DoesNotExist:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Not found.'}}, status=404)
+    lease.deleted_at = timezone.now()
+    lease.save()
+    return JsonResponse({'success': True})
+
+
+@login_required
+@require_http_methods(['GET'])
+def lease_expiring(request):
+    days = int(request.GET.get('days', 60))
+    target = timezone.now().date() + timezone.timedelta(days=days)
+    qs = Lease.objects.filter(
+        landlord=request.user,
+        status='active',
+        end_date__lte=target,
+        end_date__gte=timezone.now().date(),
+        deleted_at__isnull=True,
+    ).select_related('property', 'tenant').order_by('end_date')
+    return JsonResponse({'results': [lease_to_dict(l) for l in qs]})
+
+
+@login_required
+@require_http_methods(['POST'])
+def lease_invite(request, pk):
+    try:
+        lease = Lease.objects.get(pk=pk, landlord=request.user, deleted_at__isnull=True)
+    except Lease.DoesNotExist:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Not found.'}}, status=404)
+
+    if lease.tenant:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Lease already has a tenant.'}}, status=400)
+
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'errors': {'detail': 'Invalid JSON.'}}, status=400)
+
+    email = data.get('email', '').strip()
+    if not email:
+        return JsonResponse({'success': False, 'errors': {'email': 'Email is required.'}}, status=400)
+
+    import hashlib, secrets
+    raw_token = secrets.token_urlsafe(32)
+    token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
+
+    Invitation.objects.create(
+        lease=lease,
+        landlord=request.user,
+        email=email,
+        token_hash=token_hash,
+        expires_at=timezone.now() + timezone.timedelta(hours=24),
+    )
+    return JsonResponse({'success': True, 'message': f'Invitation sent to {email}.'}, status=201)

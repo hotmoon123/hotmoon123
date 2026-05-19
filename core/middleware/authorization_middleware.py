@@ -10,6 +10,8 @@ Both lines must exist independently — defense in depth.
 import logging
 from django.http import JsonResponse
 
+from apps.users.models import Landlord, Tenant
+
 logger = logging.getLogger('middleware.authorization')
 
 
@@ -36,8 +38,12 @@ class IDORAuthorizationMiddleware:
         # Role-based path restrictions
         if not self._check_role_access(request):
             logger.warning(
-                'IDOR blocked: user=%s role=%s path=%s',
-                request.user.email, request.user.role, request.path
+                'IDOR blocked: user=%s kind=%s path=%s',
+                request.user.email,
+                'landlord' if isinstance(request.user, Landlord) else (
+                    'tenant' if isinstance(request.user, Tenant) else 'unknown'
+                ),
+                request.path,
             )
             return JsonResponse(
                 {'errors': {'detail': 'You do not have permission to access this resource.'}},
@@ -52,7 +58,8 @@ class IDORAuthorizationMiddleware:
         and vice versa.
         """
         path = request.path
-        role = request.user.role
+        is_landlord = isinstance(request.user, Landlord)
+        is_tenant = isinstance(request.user, Tenant)
 
         # Landlord-only API paths
         landlord_only = [
@@ -68,11 +75,11 @@ class IDORAuthorizationMiddleware:
         ]
 
         for prefix in landlord_only:
-            if path.startswith(prefix) and role != 'landlord':
+            if path.startswith(prefix) and not is_landlord:
                 return False
 
         for prefix in tenant_only:
-            if path.startswith(prefix) and role != 'tenant':
+            if path.startswith(prefix) and not is_tenant:
                 return False
 
         return True

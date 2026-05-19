@@ -3,76 +3,91 @@
 {% block title %}Dashboard | RentFlow Tenant{% endblock %}
 
 {% block content %}
-<!-- Hero Balance Card -->
-<div class="card mb-4" style="background: var(--color-deep-blue); color: var(--color-white); border: none;">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <span style="color: var(--color-soft-gray); font-size: var(--font-size-sm);">Next Payment Due</span>
-        {% if next_payment %}
-        <div class="badge {% if next_payment.status == 'overdue' %}badge-red{% else %}badge-amber{% endif %}" 
-             style="background: {% if next_payment.status == 'overdue' %}rgba(239, 68, 68, 0.2){% else %}rgba(245, 158, 11, 0.2){% endif %};">
-            {{ next_payment.due_date|date:"M d, Y" }}
-        </div>
-        {% else %}
-        <div class="badge badge-emerald" style="background: rgba(16, 185, 129, 0.2);">All Clear</div>
-        {% endif %}
+{# Spec §2 Page 1: hero + quick actions + notice preview #}
+{% if next_payment %}
+    {% if next_payment.status == 'overdue' %}
+<section class="tenant-hero tenant-hero--overdue" aria-label="Balance due">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+        <span class="tenant-hero__label">Amount due</span>
+        <span class="badge badge-red">Overdue</span>
     </div>
-    <div style="font-size: 40px; font-weight: var(--font-weight-bold); line-height: 1.1; margin-bottom: 24px;">
-        ${{ total_balance|floatformat:2 }}
-    </div>
-    {% if next_payment %}
-    <button class="btn btn-primary w-100" style="background: var(--color-emerald); border: none; color: white;">
-        Pay Rent Now
-    </button>
+    <div class="tenant-hero__amount anim-count-up">${{ total_balance|floatformat:2 }}</div>
+    <p class="tenant-hero__warn mb-3">Includes any late fees — pay as soon as you can.</p>
+    <a href="/tenant/payments/" class="tenant-action-btn tenant-action-btn--primary w-100 text-decoration-none" style="min-height: 52px;">Pay now</a>
+</section>
     {% else %}
-    <div class="text-center" style="color: var(--color-emerald); font-size: var(--font-size-sm);">
-        <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i> No payments due
+<section class="tenant-hero tenant-hero--due" aria-label="Balance due">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+        <span class="tenant-hero__label">Next payment</span>
+        <span class="badge badge-amber">Due {{ next_payment.due_date|date:"M j" }}</span>
     </div>
+    <div class="tenant-hero__amount anim-count-up">${{ total_balance|floatformat:2 }}</div>
+    <a href="/tenant/payments/" class="tenant-action-btn tenant-action-btn--primary w-100 text-decoration-none mt-2" style="min-height: 52px;">Pay exact amount</a>
+</section>
     {% endif %}
-</div>
-
-<!-- Quick Actions -->
-<div class="row g-3 mb-4">
-    <div class="col-6">
-        <button class="card card-hover text-center w-100 border-0">
-            <div class="mx-auto mb-2 p-2 rounded-circle" style="background: var(--color-blue-light); color: var(--color-blue-accent); width: fit-content;">
-                <i data-lucide="wrench"></i>
-            </div>
-            <div class="font-weight-medium text-sm">Repair Ticket</div>
-        </button>
+{% else %}
+<section class="tenant-hero tenant-hero--safe" aria-label="Balance">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+        <span class="tenant-hero__label">Balance</span>
+        <span class="badge badge-emerald">All clear</span>
     </div>
-    <div class="col-6">
-        <button class="card card-hover text-center w-100 border-0">
-            <div class="mx-auto mb-2 p-2 rounded-circle" style="background: var(--color-amber-light); color: var(--color-amber); width: fit-content;">
-                <i data-lucide="file-text"></i>
-            </div>
-            <div class="font-weight-medium text-sm">My Lease</div>
-        </button>
-    </div>
-</div>
+    <div class="tenant-hero__amount anim-count-up">${{ total_balance|floatformat:2 }}</div>
+    <p class="text-muted text-sm mb-0 d-flex align-items-center gap-2">
+        <i data-lucide="check-circle" style="width: 18px; height: 18px; color: var(--color-emerald);"></i>
+        No payments due right now.
+    </p>
+</section>
+{% endif %}
 
-<!-- Recent Activity / Notice Board -->
-<h5 class="mb-3" style="color: var(--color-deep-blue);">Recent Activity</h5>
+<nav class="tenant-actions" aria-label="Quick actions">
+    <a href="/tenant/payments/" class="tenant-action-btn tenant-action-btn--primary text-decoration-none">
+        <span class="icon-wrap" style="background: rgba(255,255,255,0.15); color: #fff;">
+            <i data-lucide="credit-card" style="width: 20px; height: 20px;"></i>
+        </span>
+        Pay rent
+    </a>
+    <a href="/tenant/chat/" class="tenant-action-btn text-decoration-none">
+        <span class="icon-wrap" style="background: var(--color-blue-light); color: var(--color-blue-accent);">
+            <i data-lucide="message-circle" style="width: 20px; height: 20px;"></i>
+        </span>
+        Message
+    </a>
+    <a href="/tenant/maintenance/" class="tenant-action-btn text-decoration-none">
+        <span class="icon-wrap" style="background: var(--color-amber-light); color: var(--color-amber);">
+            <i data-lucide="wrench" style="width: 20px; height: 20px;"></i>
+        </span>
+        Repair
+    </a>
+</nav>
+
+<section class="notice-preview mb-4" aria-label="Latest notice">
+    <h3>Latest from your landlord</h3>
+    <p>Notices and building updates will appear here when your landlord posts them to the notice board.</p>
+    <a href="/tenant/notice-board/" class="text-sm font-weight-semibold text-decoration-none" style="color: var(--color-deep-blue);">Open notice board →</a>
+</section>
+
+<h5 class="mb-3" style="color: var(--color-deep-blue); font-size: var(--font-size-md); font-weight: var(--font-weight-semibold);">Recent activity</h5>
 {% if recent_activity %}
     {% for invoice in recent_activity %}
-    <div class="card border-0 mb-3 p-3 text-sm">
+    <div class="card border-0 mb-3 p-3 text-sm" style="box-shadow: var(--shadow-sm); border: 1px solid var(--color-border) !important;">
         <div class="d-flex gap-3">
             <div class="mt-1" style="color: {% if invoice.status == 'paid' %}var(--color-emerald){% elif invoice.status == 'overdue' %}var(--color-red){% else %}var(--color-amber){% endif %};">
                 <i data-lucide="{% if invoice.status == 'paid' %}check-circle{% elif invoice.status == 'overdue' %}alert-circle{% else %}clock{% endif %}" style="width: 20px; height: 20px;"></i>
             </div>
             <div>
-                <div class="font-weight-bold" style="color: var(--color-deep-blue);">
+                <div class="font-weight-semibold" style="color: var(--color-deep-blue);">
                     {% if invoice.status == 'paid' %}
-                        Payment Received - ${{ invoice.amount }}
+                        Payment received · ${{ invoice.amount }}
                     {% elif invoice.status == 'overdue' %}
-                        Overdue Payment - ${{ invoice.amount }}
+                        Overdue · ${{ invoice.amount }}
                     {% else %}
-                        Invoice Generated - ${{ invoice.amount }}
+                        Invoice · ${{ invoice.amount }}
                     {% endif %}
                 </div>
-                <div class="text-muted mt-1">
-                    Due date: {{ invoice.due_date|date:"M d, Y" }}
+                <div class="text-muted mt-1 text-xs">
+                    Due {{ invoice.due_date|date:"M j, Y" }}
                     {% if invoice.status == 'paid' and invoice.paid_at %}
-                        • Paid on {{ invoice.paid_at|date:"M d, Y" }}
+                        · Paid {{ invoice.paid_at|date:"M j, Y" }}
                     {% endif %}
                 </div>
                 <div class="mt-2 text-xs" style="color: var(--color-slate-400);">{{ invoice.created_at|timesince }} ago</div>
@@ -81,8 +96,8 @@
     </div>
     {% endfor %}
 {% else %}
-<div class="card border-0 mb-3 p-4 text-center text-muted">
-    <p>No recent activity</p>
+<div class="card border-0 p-4 text-center text-muted" style="box-shadow: var(--shadow-sm);">
+    <p class="mb-0">No recent activity</p>
 </div>
 {% endif %}
 {% endblock %}

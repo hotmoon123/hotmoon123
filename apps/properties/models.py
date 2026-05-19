@@ -1,9 +1,8 @@
 from django.db import models
-from django.conf import settings
 
 class Building(models.Model):
     """Parent group for properties (e.g., 'Sunset Apartments')."""
-    landlord = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='buildings')
+    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='buildings')
     name = models.CharField(max_length=255)
     address = models.TextField()
     description = models.TextField(blank=True, null=True, default='')
@@ -30,9 +29,10 @@ class Property(models.Model):
         ('studio', 'Studio'),
     ]
 
-    landlord = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='properties')
+    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='properties')
     building = models.ForeignKey(Building, on_delete=models.SET_NULL, null=True, blank=True, related_name='units')
     unit_number = models.CharField(max_length=50)
+    address = models.TextField(blank=True, default='', help_text='Street / area when not using a building record.')
     property_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='apartment')
     rent_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')

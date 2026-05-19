@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 from apps.leases.models import Lease
 from apps.properties.models import Property
 
@@ -18,8 +17,8 @@ class Invoice(models.Model):
         ('overdue', 'Overdue'),
     ]
 
-    landlord = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issued_invoices')
-    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_invoices')
+    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='issued_invoices')
+    tenant = models.ForeignKey('users.Tenant', on_delete=models.CASCADE, related_name='received_invoices')
     lease = models.ForeignKey(Lease, on_delete=models.CASCADE, related_name='invoices')
     rental_property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='invoices', null=True, blank=True)
     
@@ -50,8 +49,8 @@ class Invoice(models.Model):
 class Transaction(models.Model):
     """Payment transaction record."""
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='transactions')
-    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='payment_transactions')
-    landlord = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_transactions')
+    tenant = models.ForeignKey('users.Tenant', on_delete=models.CASCADE, related_name='payment_transactions')
+    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='received_transactions')
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     gateway_reference = models.CharField(max_length=255, blank=True, default='')
     idempotency_key = models.CharField(max_length=255, unique=True)
@@ -75,7 +74,7 @@ class Expense(models.Model):
         ('other', 'Other'),
     ]
 
-    landlord = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='expenses')
+    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='expenses')
     rental_property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='expenses', null=True, blank=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
@@ -100,7 +99,7 @@ class PaymentMethod(models.Model):
         ('mobile', 'Mobile Money'),
     ]
 
-    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='payment_methods')
+    tenant = models.ForeignKey('users.Tenant', on_delete=models.CASCADE, related_name='payment_methods')
     method_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='card')
     provider = models.CharField(max_length=100, default='stripe')  # stripe, paystack, etc.
     last_four = models.CharField(max_length=4, default='0000')

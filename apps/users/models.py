@@ -1,176 +1,171 @@
 """
-Custom User Model — Rent & Lease Management System
+Custom User Models — Rent & Lease Management System
 
-This MUST be set as AUTH_USER_MODEL before running any migrations.
-Uses email as the login identifier instead of username.
-Supports two roles: 'landlord' and 'tenant'.
-Implements soft delete via deleted_at field.
+Two completely independent models:
+- Landlord(AbstractBaseUser, PermissionsMixin) → landlord_accounts table
+- Tenant(AbstractBaseUser) → tenant_accounts table
+
+No MTI, no shared users table. Both stored entirely in their own tables.
 """
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils import timezone
+import hashlib
 
 
-class SoftDeleteManager(models.Manager):
-    """Default manager that excludes soft-deleted records."""
-
-    def get_queryset(self):
-        return super().get_queryset().filter(deleted_at__isnull=True)
-
-
-class AllObjectsManager(models.Manager):
-    """Manager that includes soft-deleted records."""
-    pass
-
-
-class CustomUserManager(BaseUserManager):
-    """Manager for creating users with email as the identifier."""
+class LandlordManager(BaseUserManager):
+    """Manager for creating landlords with email as the identifier."""
 
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('Email is required')
         email = self.normalize_email(email)
+        extra_fields.setdefault('is_active', True)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_verified', True)
-        extra_fields.setdefault('role', 'landlord')
         return self.create_user(email, password, **extra_fields)
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    """
-    Custom user model using email for authentication.
+class Landlord(AbstractBaseUser, PermissionsMixin):
+    """Landlord user model — stored entirely in landlord_accounts table."""
+    email           = models.EmailField(max_length=255, unique=True)
+    first_name      = models.CharField(max_length=150, default='')
+    last_name       = models.CharField(max_length=150, default='')
+    phone_number    = models.CharField(max_length=30, default='')
+    company_name    = models.CharField(max_length=255, default='')
+    business_reg_no = models.CharField(max_length=100, default='')
+    tax_id          = models.CharField(max_length=100, default='')
+    address         = models.CharField(max_length=500, default='')
+    city            = models.CharField(max_length=100, default='')
+    state           = models.CharField(max_length=100, default='')
+    country         = models.CharField(max_length=100, default='')
+    postal_code     = models.CharField(max_length=20, default='')
+    profile_photo   = models.ImageField(upload_to='landlord/photos/', null=True, blank=True)
+    bio             = models.TextField(default='')
+    bank_name       = models.CharField(max_length=255, default='')
+    bank_account_no = models.CharField(max_length=100, default='')
+    bank_routing_no = models.CharField(max_length=100, default='')
+    is_verified     = models.BooleanField(default=False)
+    is_active       = models.BooleanField(default=True)
+    is_staff        = models.BooleanField(default=False)
+    created_at      = models.DateTimeField(default=timezone.now)
 
-    Fields align with database schema in docs/documents file.md:
-    - email: unique login identifier (locked to lease for tenants)
-    - role: 'landlord' or 'tenant' — determines portal routing
-    - is_verified: set True after email verification
-    - deleted_at: soft delete — NULL when active
-    """
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    ROLE_CHOICES = [
+    objects = LandlordManager()
+
+    class Meta:
+        db_table = 'landlord_accounts'
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.email})"
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}".strip()
+
+
+class TenantManager(BaseUserManager):
+    """Manager for creating tenants with email as the identifier."""
+
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('Email is required')
+        email = self.normalize_email(email)
+        extra_fields.setdefault('is_active', True)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
+
+
+class Tenant(AbstractBaseUser):
+    """Tenant user model — stored entirely in tenant_accounts table."""
+    email                       = models.EmailField(max_length=255, unique=True)
+    first_name                  = models.CharField(max_length=150, default='')
+    last_name                   = models.CharField(max_length=150, default='')
+    phone_number                = models.CharField(max_length=30, default='')
+    date_of_birth               = models.DateField(null=True, blank=True)
+    national_id_number          = models.CharField(max_length=100, default='')
+    id_document                 = models.FileField(upload_to='tenant/docs/', null=True, blank=True)
+    employer_name               = models.CharField(max_length=255, default='')
+    monthly_income              = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    emergency_contact_name      = models.CharField(max_length=255, default='')
+    emergency_contact_phone     = models.CharField(max_length=30, default='')
+    emergency_contact_relation  = models.CharField(max_length=100, default='')
+    profile_photo               = models.ImageField(upload_to='tenant/photos/', null=True, blank=True)
+    previous_address            = models.CharField(max_length=500, default='')
+    previous_landlord_name      = models.CharField(max_length=255, default='')
+    previous_landlord_phone     = models.CharField(max_length=30, default='')
+    is_verified                 = models.BooleanField(default=False)
+    is_active                   = models.BooleanField(default=True)
+    is_staff                    = models.BooleanField(default=False)
+    is_superuser                = models.BooleanField(default=False)
+    created_at                  = models.DateTimeField(default=timezone.now)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    objects = TenantManager()
+
+    class Meta:
+        db_table = 'tenant_accounts'
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.email})"
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}".strip()
+
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser
+
+    def has_module_perms(self, app_label):
+        return self.is_superuser
+
+
+class PasswordResetToken(models.Model):
+    """Secure tokens for password reset flow (supports both user types)."""
+    USER_TYPE_CHOICES = [
         ('landlord', 'Landlord'),
         ('tenant', 'Tenant'),
     ]
 
-    email = models.EmailField(unique=True)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=30, blank=True, default='')
-    is_verified = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(null=True, blank=True, default=None)
-
-    # Login with email, not username
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'role']
-
-    # Default manager excludes soft-deleted users
-    objects = CustomUserManager()
-    all_objects = AllObjectsManager()
+    user_type   = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
+    user_id     = models.BigIntegerField()
+    token_hash  = models.CharField(max_length=255, unique=True)
+    expires_at  = models.DateTimeField()
+    used_at     = models.DateTimeField(null=True, blank=True)
+    created_at  = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'users'
+        db_table = 'password_reset_tokens'
         indexes = [
-            models.Index(fields=['email'], name='idx_users_email'),
-            models.Index(fields=['role'], name='idx_users_role'),
-            models.Index(fields=['deleted_at'], name='idx_users_deleted'),
+            models.Index(fields=['token_hash']),
+            models.Index(fields=['user_type', 'user_id']),
         ]
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} ({self.role})'
-
-    def soft_delete(self):
-        """Soft delete — sets deleted_at timestamp instead of destroying."""
-        self.deleted_at = timezone.now()
-        self.is_active = False
-        self.save(update_fields=['deleted_at', 'is_active', 'updated_at'])
+        return f"Token for {self.user_type} {self.user_id}"
 
     @property
-    def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+    def is_expired(self):
+        from django.utils import timezone
+        return timezone.now() > self.expires_at
 
-
-class LandlordProfile(models.Model):
-    """
-    Profile table specifically for Landlord users.
-    Contains business, location, and banking details.
-    """
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='landlord_profile')
-    
-    # Business Details
-    company_name = models.CharField(max_length=255, blank=True, default='')
-    business_reg_no = models.CharField(max_length=100, blank=True, default='')
-    tax_id = models.CharField(max_length=100, blank=True, default='')
-    
-    # Location
-    address = models.TextField(blank=True, default='')
-    city = models.CharField(max_length=100, blank=True, default='')
-    state = models.CharField(max_length=100, blank=True, default='')
-    country = models.CharField(max_length=100, blank=True, default='')
-    postal_code = models.CharField(max_length=20, blank=True, default='')
-    
-    # Media & Bio
-    profile_photo = models.CharField(max_length=500, blank=True, default='') # Path to stored file
-    bio = models.TextField(blank=True, default='')
-    
-    # Banking (Sensitives should be securely handled, here for schema completion)
-    bank_name = models.CharField(max_length=100, blank=True, default='')
-    bank_account_no = models.CharField(max_length=100, blank=True, default='')
-    bank_routing_no = models.CharField(max_length=100, blank=True, default='')
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        db_table = 'landlords'
-
-    def __str__(self):
-        return f"Landlord Profile: {self.user.email}"
-
-
-class TenantProfile(models.Model):
-    """
-    Profile table specifically for Tenant users.
-    Contains personal identification, employment, and emergency contact details.
-    """
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='tenant_profile')
-    
-    # Personal Identification
-    date_of_birth = models.DateField(null=True, blank=True)
-    national_id_number = models.CharField(max_length=100, blank=True, default='')
-    id_document = models.CharField(max_length=500, blank=True, default='') # Path to uploaded doc
-    profile_photo = models.CharField(max_length=500, blank=True, default='') # Path to stored file
-    
-    # Employment & Finance
-    employer_name = models.CharField(max_length=255, blank=True, default='')
-    monthly_income = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    
-    # Emergency Contact
-    emergency_contact_name = models.CharField(max_length=100, blank=True, default='')
-    emergency_contact_phone = models.CharField(max_length=30, blank=True, default='')
-    emergency_contact_relation = models.CharField(max_length=50, blank=True, default='')
-    
-    # Rental History
-    previous_address = models.TextField(blank=True, default='')
-    previous_landlord_name = models.CharField(max_length=100, blank=True, default='')
-    previous_landlord_phone = models.CharField(max_length=30, blank=True, default='')
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        db_table = 'tenants'
-
-    def __str__(self):
-        return f"Tenant Profile: {self.user.email}"
+    @property
+    def is_used(self):
+        return self.used_at is not None

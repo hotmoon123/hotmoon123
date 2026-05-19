@@ -33,7 +33,10 @@ class APIClient {
     // Generic Fetch Request
     async request(url, options = {}) {
         try {
-            const response = await fetch(`${this.baseUrl}${url}`, options);
+            const response = await fetch(`${this.baseUrl}${url}`, {
+                ...options,
+                credentials: 'same-origin',
+            });
             
             // Check for 401 Unauthorized (invalid/expired token)
             if (response.status === 401 && !url.includes('/auth/login')) {
@@ -43,10 +46,13 @@ class APIClient {
                 return;
             }
 
-            const data = response.status !== 204 ? await response.json() : null;
+            const data =
+                response.status === 204
+                    ? null
+                    : await response.json().catch(() => null);
 
             if (!response.ok) {
-                throw data.errors || data;
+                throw data?.errors || data || { detail: response.statusText };
             }
 
             return data;
@@ -69,6 +75,29 @@ class APIClient {
     get(url, requiresAuth = true) {
         return this.request(url, {
             method: 'GET',
+            headers: this.getHeaders(requiresAuth),
+        });
+    }
+
+    put(url, data, requiresAuth = true) {
+        return this.request(url, {
+            method: 'PUT',
+            headers: this.getHeaders(requiresAuth),
+            body: JSON.stringify(data),
+        });
+    }
+
+    patch(url, data, requiresAuth = true) {
+        return this.request(url, {
+            method: 'PATCH',
+            headers: this.getHeaders(requiresAuth),
+            body: JSON.stringify(data),
+        });
+    }
+
+    delete(url, requiresAuth = true) {
+        return this.request(url, {
+            method: 'DELETE',
             headers: this.getHeaders(requiresAuth),
         });
     }

@@ -1,0 +1,89 @@
+{% extends "tenant/layout_tenant.html" %}
+
+{% block title %}Notice Board | RentFlow Tenant{% endblock %}
+
+{% block content %}
+{# Spec §2 Page 8: Read-only broadcast feed, urgent vs standard styling #}
+<div class="container" style="max-width: 640px;">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-deep-blue); margin: 0;">Notice board</h2>
+      <p class="text-muted text-sm mt-1 mb-0">Announcements from your landlord</p>
+    </div>
+    <span class="badge badge-amber">{{ notices|length }} announcements</span>
+  </div>
+
+  {% if notices %}
+    <div class="vstack gap-3">
+      {% for notice in notices %}
+      <article class="card border-0 p-4 notice-card {{ 'urgent' if notice.is_urgent else '' }}" 
+               style="box-shadow: var(--shadow-sm); border-left: 4px solid {{ notice.is_urgent|yesno:'var(--color-red),var(--color-deep-blue)' }} !important;">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge" style="
+              background: {{ 'rgba(239,68,68,0.1)' if notice.is_urgent else 'rgba(59,130,246,0.1)' }};
+              color: {{ 'var(--color-red)' if notice.is_urgent else 'var(--color-blue-accent)' }};
+              font-size: 11px; padding: 4px 8px; border-radius: var(--radius-sm); font-weight: 600;
+            ">
+              {% if notice.is_urgent %}
+                <i data-lucide="alert-circle" style="width: 12px; height: 12px;"></i> URGENT
+              {% else %}
+                <i data-lucide="info" style="width: 12px; height: 12px;"></i> NOTICE
+              {% endif %}
+            </span>
+            <span class="text-xs text-muted">
+              {{ notice.created_at|date:"M j, Y \a\t g:i a" }}
+            </span>
+          </div>
+        </div>
+        
+        <h4 class="mb-2" style="font-size: var(--font-size-md); font-weight: var(--font-weight-bold); color: var(--color-deep-blue); line-height: 1.3;">
+          {{ notice.title }}
+        </h4>
+        
+        <div class="text-sm" style="color: var(--color-slate-600); line-height: 1.6;">
+          {{ notice.content|linebreaks }}
+        </div>
+
+        {# Attachments #}
+        {% if notice.attachments %}
+        <div class="mt-3 pt-3" style="border-top: 1px solid var(--color-light-gray);">
+          <div class="d-flex gap-2">
+            {% for attachment in notice.attachments %}
+            <a href="{{ attachment.url }}" target="_blank" class="btn btn-ghost btn-sm" style="font-size: 12px;">
+              <i data-lucide="paperclip" style="width: 14px; height: 14px;"></i>
+              {{ attachment.name|truncate:20 }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="card p-6 text-center" style="box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+      <i data-lucide="bell" style="width: 48px; height: 48px; color: var(--color-slate-400); margin-bottom: var(--space-3);"></i>
+      <p class="text-muted mb-0">No notices posted yet.</p>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  {# No hover effects on notice cards to emphasize read-only context #}
+  const cards = document.querySelectorAll('.notice-card');
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', (e) => {
+      e.preventDefault();
+    });
+  });
+
+  lucide.createIcons();
+});
+</script>
+{% endblock %}

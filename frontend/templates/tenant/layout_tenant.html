@@ -27,15 +27,15 @@
             <i data-lucide="home" style="width: 22px; height: 22px; margin-bottom: 2px;"></i>
             <span>Home</span>
         </a>
-        <a href="#" class="bottom-nav-item text-decoration-none">
+        <a href="/tenant/payments/" class="bottom-nav-item text-decoration-none {% if '/tenant/payments/' in request.path %}active{% endif %}">
             <i data-lucide="credit-card" style="width: 22px; height: 22px; margin-bottom: 2px;"></i>
             <span>Pay</span>
         </a>
-        <a href="#" class="bottom-nav-item text-decoration-none">
+        <a href="/tenant/maintenance/" class="bottom-nav-item text-decoration-none {% if '/tenant/maintenance/' in request.path %}active{% endif %}">
             <i data-lucide="wrench" style="width: 22px; height: 22px; margin-bottom: 2px;"></i>
             <span>Fix</span>
         </a>
-        <a href="#" class="bottom-nav-item text-decoration-none">
+        <a href="/tenant/chat/" class="bottom-nav-item text-decoration-none {% if '/tenant/chat/' in request.path %}active{% endif %}">
             <i data-lucide="message-circle" style="width: 22px; height: 22px; margin-bottom: 2px;"></i>
             <span>Chat</span>
         </a>
@@ -53,11 +53,14 @@
             return;
         }
 
-        // Verify User Role
         api.get('/auth/me/').then(user => {
-            if (user.role !== 'tenant') {
+            if (user.role === 'tenant') return;
+            if (user.role === 'landlord') {
                 window.location.href = '/landlord/dashboard/';
+                return;
             }
+            sessionStorage.removeItem('accessToken');
+            window.location.href = '/login/';
         }).catch(() => {
             // Interceptor handles bad token
         });

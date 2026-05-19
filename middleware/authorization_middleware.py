@@ -1,78 +1,46 @@
 """
-IDOR Authorization Middleware
-
-Prevents Insecure Direct Object Reference attacks at the middleware level.
-This is the FIRST line of IDOR defense — the SECOND line is query-level
-scoping in every ViewSet's get_queryset() method.
-
-Both lines must exist independently — defense in depth.
+Role Authorization Middleware
+Prevents tenants from accessing landlord pages and vice versa.
+Replaces the former API-only IDOR middleware with page-level enforcement.
 """
 import logging
-from django.http import JsonResponse
+from django.shortcuts import redirect
+
+from apps.users.models import Landlord, Tenant
 
 logger = logging.getLogger('middleware.authorization')
 
+LANDLORD_ONLY = ['/landlord/']
+TENANT_ONLY   = ['/tenant/']
+PUBLIC_PATHS  = ['/login/', '/register/', '/forgot-password/', '/reset-password/',
+                 '/verify-email/', '/admin/', '/static/', '/media/', '/']
 
-class IDORAuthorizationMiddleware:
-    """
-    Base IDOR protection at the middleware level.
 
-    For Phase 1, this provides the framework. As more apps are built,
-    resource-specific ownership checks are added here.
-    """
-
+class RoleAuthorizationMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
-        # Skip for unauthenticated requests (handled by DRF permissions)
-        if not hasattr(request, 'user') or not request.user.is_authenticated:
+        path = request.path
+
+        # Skip for public/static paths
+        if any(path.startswith(p) for p in PUBLIC_PATHS):
             return self.get_response(request)
 
-        # Skip for non-API requests
-        if not request.path.startswith('/api/'):
-            return self.get_response(request)
+        if not request.user.is_authenticated:
+            return redirect(f'/login/?next={path}')
 
-        # Role-based path restrictions
-        if not self._check_role_access(request):
-            logger.warning(
-                'IDOR blocked: user=%s role=%s path=%s',
-                request.user.email, request.user.role, request.path
-            )
-            return JsonResponse(
-                {'errors': {'detail': 'You do not have permission to access this resource.'}},
-                status=403
-            )
+        is_landlord = isinstance(request.user, Landlord)
+        is_tenant = isinstance(request.user, Tenant)
+
+        # Block tenants from landlord pages
+        if any(path.startswith(p) for p in LANDLORD_ONLY) and not is_landlord:
+            logger.warning('Role block: tenant=%s tried landlord path=%s', request.user.email, path)
+            return redirect('/tenant/dashboard/')
+
+        # Block landlords from tenant pages
+        if any(path.startswith(p) for p in TENANT_ONLY) and not is_tenant:
+            logger.warning('Role block: landlord=%s tried tenant path=%s', request.user.email, path)
+            return redirect('/landlord/dashboard/')
 
         return self.get_response(request)
-
-    def _check_role_access(self, request):
-        """
-        Enforce that landlord-only paths cannot be accessed by tenants
-        and vice versa.
-        """
-        path = request.path
-        role = request.user.role
-
-        # Landlord-only API paths
-        landlord_only = [
-            '/api/v1/properties/',
-            '/api/v1/automation/',
-            '/api/v1/analytics/',
-        ]
-
-        # Tenant-only API paths
-        tenant_only = [
-            '/api/v1/financials/pay/',
-            '/api/v1/financials/auto-pay/',
-        ]
-
-        for prefix in landlord_only:
-            if path.startswith(prefix) and role != 'landlord':
-                return False
-
-        for prefix in tenant_only:
-            if path.startswith(prefix) and role != 'tenant':
-                return False
-
-        return True

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python manage.py startapp notices apps/notices)",
+      "Bash(python manage.py makemigrations users properties leases financials maintenance notifications documents chat automation inspections notices)",
+      "Bash(python manage.py makemigrations)",
+      "Bash(mysql -u root -e \"SHOW DATABASES LIKE 'rent_lease_db';\")",
+      "Bash(python manage.py *)",
+      "Bash(mysql -u root rent_lease_db)",
+      "Bash(mysql -u root -e \"DROP DATABASE IF EXISTS rent_lease_db;\")",
+      "Bash(mysql -u root -e \"CREATE DATABASE rent_lease_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\")",
+      "Bash(sudo /opt/lampp/lampp start)"
+    ]
+  }
+}

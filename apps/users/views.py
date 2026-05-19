@@ -1,277 +1,205 @@
 """
-Users App — API Views (Layer 5)
-
-Each view:
-1. Validates input via serializer
-2. Checks business rules (Layer 6)
-3. Calls business logic (Layer 7)
-4. Returns formatted response
-
-Views never touch the database directly.
+Users App — Django MVT Views (auth actions)
+All form submissions are standard POST requests with CSRF.
 """
-from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model, login as django_login
-from django.core.exceptions import ValidationError
+import json
+from django.shortcuts import redirect
+from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_protect
 
-from .serializers import (
-    RegisterSerializer,
-    LoginSerializer,
-    UserProfileSerializer,
-    ForgotPasswordSerializer,
-    ResetPasswordSerializer,
-    VerifyEmailSerializer,
-)
-from .business_rules import (
-    validate_password_strength,
-    validate_role,
-    validate_name_not_empty,
-)
+from .models import Landlord, Tenant
 from .business_logic import (
-    create_user,
-    generate_verification_token,
-    send_verification_email,
-    verify_email_token,
     generate_password_reset_token,
-    send_password_reset_email,
     reset_password_with_token,
+    send_password_reset_email,
 )
 
-User = get_user_model()
 
-
-@api_view(['POST'])
-@permission_classes([AllowAny])
+@csrf_protect
+@require_POST
 def register_view(request):
-    """
-    POST /api/v1/auth/register/
+    """POST /auth/register/ — creates landlord or tenant account."""
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        data = request.POST
 
-    Creates a new user account and sends verification email.
-    User cannot log in until email is verified.
-    """
-    serializer = RegisterSerializer(data=request.data)
-    if not serializer.is_valid():
-        return Response(
-            {'errors': serializer.errors},
-            status=status.HTTP_400_BAD_REQUEST
+    email = data.get('email', '').lower().strip()
+    password = data.get('password', '')
+    confirm_password = data.get('confirm_password', '')
+    role = data.get('role', '')
+    first_name = data.get('first_name', '').strip()
+    last_name = data.get('last_name', '').strip()
+    phone_number = data.get('phone_number', '').strip()
+
+    errors = {}
+
+    if not email:
+        errors['email'] = 'Email is required.'
+    elif Landlord.objects.filter(email=email).exists() or Tenant.objects.filter(email=email).exists():
+        errors['email'] = 'An account with this email already exists.'
+
+    if not password or len(password) < 8:
+        errors['password'] = 'Password must be at least 8 characters.'
+    elif password != confirm_password:
+        errors['confirm_password'] = 'Passwords do not match.'
+
+    if role not in ('landlord', 'tenant'):
+        errors['role'] = 'Role must be landlord or tenant.'
+
+    if not first_name:
+        errors['first_name'] = 'First name is required.'
+    if not last_name:
+        errors['last_name'] = 'Last name is required.'
+
+    if errors:
+        return JsonResponse({'success': False, 'errors': errors}, status=400)
+
+    if role == 'landlord':
+        user = Landlord.objects.create_user(
+            email=email, password=password,
+            first_name=first_name, last_name=last_name,
+            phone_number=phone_number,
+        )
+    else:
+        user = Tenant.objects.create_user(
+            email=email, password=password,
+            first_name=first_name, last_name=last_name,
+            phone_number=phone_number,
         )
 
-    data = serializer.validated_data
-
-    # Layer 6 — Business Rules
-    try:
-        validate_password_strength(data['password'])
-        validate_role(data['role'])
-        validate_name_not_empty(data['first_name'], data['last_name'])
-    except ValidationError as e:
-        return Response(
-            {'errors': {'detail': str(e.message)}},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
-    # Layer 7 — Business Logic
-    user = create_user(
-        email=data['email'],
-        password=data['password'],
-        role=data['role'],
-        first_name=data['first_name'],
-        last_name=data['last_name'],
-        phone_number=data.get('phone_number', ''),
-    )
-
-    # Send verification email
-    raw_token = generate_verification_token(user)
-    try:
-        send_verification_email(user, raw_token)
-    except Exception:
-        # Email failure should not block registration
-        pass
-
-    return Response(
-        {
-            'message': 'Account created. Please check your email to verify your account.',
-            'user': UserProfileSerializer(user).data,
-        },
-        status=status.HTTP_201_CREATED
-    )
+    # Specify backend and store user type in session to resolve ID collisions
+    login(request, user, backend='apps.users.auth_backend.EmailBackend')
+    request.session['_auth_user_type'] = role
+    redirect_url = '/landlord/dashboard/' if role == 'landlord' else '/tenant/dashboard/'
+    return JsonResponse({'success': True, 'redirect': redirect_url})
 
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
+@csrf_protect
+@require_POST
 def login_view(request):
-    """
-    POST /api/v1/auth/login/
-
-    Authenticates user and returns JWT tokens.
-    Also establishes Django session for template-based views.
-    Returns access token (stored in JS memory) + refresh token.
-    Routes user to landlord or tenant dashboard based on role.
-    """
-    serializer = LoginSerializer(data=request.data)
-    if not serializer.is_valid():
-        return Response(
-            {'errors': serializer.errors},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
-    email = serializer.validated_data['email'].lower().strip()
-    password = serializer.validated_data['password']
-
-    # Fetch user — generic error to prevent user enumeration
+    """POST /auth/login/ — authenticates and starts session."""
     try:
-        user = User.objects.get(email=email)
-    except User.DoesNotExist:
-        return Response(
-            {'errors': {'detail': 'Invalid email or password.'}},
-            status=status.HTTP_401_UNAUTHORIZED
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        data = request.POST
+
+    email = data.get('email', '').lower().strip()
+    password = data.get('password', '')
+
+    if not email or not password:
+        return JsonResponse(
+            {'success': False, 'errors': {'detail': 'Email and password are required.'}},
+            status=400
         )
 
-    # Check password
-    if not user.check_password(password):
-        return Response(
-            {'errors': {'detail': 'Invalid email or password.'}},
-            status=status.HTTP_401_UNAUTHORIZED
-        )
-
-    # Check if email is verified
-    if not user.is_verified:
-        return Response(
-            {'errors': {'detail': 'Please verify your email before logging in.'}},
-            status=status.HTTP_403_FORBIDDEN
-        )
-
-    # Check if account is active (not soft-deleted)
-    if not user.is_active:
-        return Response(
-            {'errors': {'detail': 'This account has been deactivated.'}},
-            status=status.HTTP_403_FORBIDDEN
-        )
-
-    # Generate JWT tokens
-    refresh = RefreshToken.for_user(user)
-
-    # Establish Django session for template-based views
-    # This allows request.user.is_authenticated to work in Django views
-    django_login(request, user)
-
-    # Determine dashboard redirect based on role
-    redirect_url = '/landlord/dashboard/' if user.role == 'landlord' else '/tenant/dashboard/'
-
-    return Response({
-        'access': str(refresh.access_token),
-        'refresh': str(refresh),
-        'user': UserProfileSerializer(user).data,
-        'redirect': redirect_url,
-    })
-
-
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def verify_email_view(request):
-    """
-    POST /api/v1/auth/verify-email/
-
-    Verifies email using the token sent during registration.
-    """
-    serializer = VerifyEmailSerializer(data=request.data)
-    if not serializer.is_valid():
-        return Response(
-            {'errors': serializer.errors},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
-    user = verify_email_token(serializer.validated_data['token'])
+    user = authenticate(request, email=email, password=password)
 
     if not user:
-        return Response(
-            {'errors': {'detail': 'Invalid or expired verification link.'}},
-            status=status.HTTP_400_BAD_REQUEST
+        return JsonResponse(
+            {'success': False, 'errors': {'detail': 'Invalid email or password.'}},
+            status=401
         )
 
-    return Response({'message': 'Email verified successfully. You can now log in.'})
+    login(request, user, backend='apps.users.auth_backend.EmailBackend')
+
+    # Store user type in session to resolve ID collisions
+    if isinstance(user, Landlord):
+        request.session['_auth_user_type'] = 'landlord'
+        redirect_url = '/landlord/dashboard/'
+    elif isinstance(user, Tenant):
+        request.session['_auth_user_type'] = 'tenant'
+        redirect_url = '/tenant/dashboard/'
+    else:
+        redirect_url = '/'
+
+    return JsonResponse({'success': True, 'redirect': redirect_url})
 
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
+@require_POST
+def logout_view(request):
+    """POST /auth/logout/ — ends session."""
+    logout(request)
+    return JsonResponse({'success': True, 'redirect': '/login/'})
+
+
+@csrf_protect
+@require_POST
 def forgot_password_view(request):
-    """
-    POST /api/v1/auth/forgot-password/
+    """POST /auth/forgot-password/ — sends reset email (silent on unknown email)."""
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        data = request.POST
 
-    Sends password reset email. Always returns 200 to prevent
-    user enumeration — even if the email doesn't exist.
-    """
-    serializer = ForgotPasswordSerializer(data=request.data)
-    if not serializer.is_valid():
-        return Response(
-            {'errors': serializer.errors},
-            status=status.HTTP_400_BAD_REQUEST
+    email = data.get('email', '').lower().strip()
+
+    if not email:
+        return JsonResponse(
+            {'success': False, 'errors': {'email': 'Email is required.'}},
+            status=400
         )
 
-    email = serializer.validated_data['email'].lower().strip()
-
-    # Always return success — never reveal if email exists
+    # Always return success — never reveal if email exists (anti-enumeration)
+    user = None
     try:
-        user = User.objects.get(email=email)
-        raw_token = generate_password_reset_token(user)
-        send_password_reset_email(user, raw_token)
-    except User.DoesNotExist:
-        pass  # Silent — prevents user enumeration
-    except Exception:
-        pass  # Email failure should not expose information
+        user = Landlord.objects.get(email=email)
+    except Landlord.DoesNotExist:
+        try:
+            user = Tenant.objects.get(email=email)
+        except Tenant.DoesNotExist:
+            pass
 
-    return Response({
+    if user:
+        try:
+            raw_token = generate_password_reset_token(user)
+            send_password_reset_email(user, raw_token)
+        except Exception:
+            pass
+
+    return JsonResponse({
+        'success': True,
         'message': 'If an account with that email exists, a reset link has been sent.'
     })
 
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
+@csrf_protect
+@require_POST
 def reset_password_view(request):
-    """
-    POST /api/v1/auth/reset-password/
-
-    Resets password using the token from the reset email.
-    Token expires after 15 minutes.
-    """
-    serializer = ResetPasswordSerializer(data=request.data)
-    if not serializer.is_valid():
-        return Response(
-            {'errors': serializer.errors},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
-    data = serializer.validated_data
-
-    # Validate new password strength
+    """POST /auth/reset-password/ — resets password using token."""
     try:
-        validate_password_strength(data['new_password'])
-    except ValidationError as e:
-        return Response(
-            {'errors': {'detail': str(e.message)}},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        data = request.POST
 
-    user = reset_password_with_token(data['token'], data['new_password'])
+    token = data.get('token', '').strip()
+    new_password = data.get('new_password', '')
+    confirm_password = data.get('confirm_password', '')
+
+    errors = {}
+
+    if not token:
+        errors['token'] = 'Reset token is required.'
+    if not new_password or len(new_password) < 8:
+        errors['new_password'] = 'Password must be at least 8 characters.'
+    elif new_password != confirm_password:
+        errors['confirm_password'] = 'Passwords do not match.'
+
+    if errors:
+        return JsonResponse({'success': False, 'errors': errors}, status=400)
+
+    user = reset_password_with_token(token, new_password)
 
     if not user:
-        return Response(
-            {'errors': {'detail': 'Invalid or expired reset link.'}},
-            status=status.HTTP_400_BAD_REQUEST
+        return JsonResponse(
+            {'success': False, 'errors': {'detail': 'Invalid or expired reset link.'}},
+            status=400
         )
 
-    return Response({'message': 'Password reset successfully. You can now log in.'})
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def me_view(request):
-    """
-    GET /api/v1/auth/me/
-
-    Returns the currently authenticated user's profile.
-    Used by the frontend to check auth state and get user data.
-    """
-    return Response(UserProfileSerializer(request.user).data)
+    return JsonResponse({
+        'success': True,
+        'message': 'Password reset successfully. You can now log in.'
+    })

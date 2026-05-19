@@ -1,0 +1,375 @@
+{% extends "tenant/layout_tenant.html" %}
+
+{% block title %}Compliance Documents | RentFlow Tenant{% endblock %}
+
+{% block extra_css %}
+<style>
+  .compliance-card {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    transition: transform var(--ease-smooth), box-shadow var(--ease-smooth);
+  }
+  .compliance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .compliance-header {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-light-gray);
+  }
+  .compliance-body {
+    padding: var(--space-4);
+  }
+  .compliance-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .compliance-status.action-required { background: var(--color-amber-light); color: #b45309; }
+  .compliance-status.verified { background: var(--color-emerald-light); color: var(--color-emerald); }
+  .compliance-status.expired { background: var(--color-red-light); color: var(--color-red); }
+
+  .upload-zone {
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    text-align: center;
+    background: var(--color-light-gray);
+    transition: var(--ease-smooth);
+    cursor: pointer;
+  }
+  .upload-zone.dragging {
+    border-color: var(--color-deep-blue);
+    background: rgba(15, 23, 42, 0.04);
+  }
+  .upload-zone.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .upload-zone img.preview {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-2);
+  }
+
+  .expiry-banner {
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    margin-top: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .expiry-banner.warning {
+    background: var(--color-amber-light);
+    border: 1px solid #fcd34d;
+    color: #b45309;
+  }
+  .expiry-banner.danger {
+    background: var(--color-red-light);
+    border: 1px solid #fca5a5;
+    color: var(--color-red);
+  }
+  .expiry-banner i { flex-shrink: 0; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+{# Spec §2 Page 9: 3 mandatory upload blocks, verification badges, expiry tracking, warning if <30 days #}
+<div class="container" style="max-width: 640px;">
+
+  <div class="mb-4">
+    <h2 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); color: var(--color-deep-blue); margin: 0;">
+      Compliance & insurance
+    </h2>
+    <p class="text-muted text-sm mt-1 mb-0">Required documents to keep your account active</p>
+  </div>
+
+  {# Banner if any document is expired #}
+  {% if has_expired_documents %}
+  <div class="alert alert-error visible mb-4" style="padding: var(--space-3); border-radius: var(--radius-lg); display: flex; align-items: center; gap: var(--space-3);">
+    <i data-lucide="alert-triangle" style="width: 24px; height: 24px;"></i>
+    <div>
+      <strong>Action required</strong><br>
+      One or more documents have expired. Please update them as soon as possible.
+    </div>
+  </div>
+  {% endif %}
+
+  {# 1. Government ID #}
+  <section class="compliance-card mb-4" data-doc="id">
+    <div class="compliance-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="mb-1" style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-deep-blue);">
+            Government ID
+          </h4>
+          <p class="text-xs text-muted mb-0">Driver's license, passport, or state ID</p>
+        </div>
+        <span class="compliance-status {{ id_doc.status|lower|default:'action-required' }}" id="idStatus">
+          {% if id_doc.status == 'verified' %}
+            <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i> Verified
+          {% elif id_doc.status == 'expired' %}
+            <i data-lucide="alert-circle" style="width: 14px; height: 14px;"></i> Expired
+          {% else %}
+            <i data-lucide="clock" style="width: 14px; height: 14px;"></i> Action required
+          {% endif %}
+        </span>
+      </div>
+    </div>
+    <div class="compliance-body">
+      {% if id_doc.verified and id_doc.file_url %}
+        <div class="d-flex align-items-center gap-3">
+          <div style="width: 40px; height: 40px; background: var(--color-emerald-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="file-check" style="width: 20px; height: 20px; color: var(--color-emerald);"></i>
+          </div>
+          <div class="flex-grow-1">
+            <div class="fw-semibold text-sm">{{ id_doc.file_name }}</div>
+            <div class="text-xs text-muted">Uploaded {{ id_doc.uploaded_at|date:"M j, Y" }}</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="window.open('{{ id_doc.file_url }}', '_blank')">
+            <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+            View
+          </button>
+        </div>
+      {% else %}
+        <div id="idUploadZone" class="upload-zone{% if id_doc.status in ('expired', 'action_required') %} disabled{% endif %}" 
+             data-doc="id" onclick="triggerUpload('id')">
+          <i data-lucide="upload-cloud" style="width: 36px; height: 36px; color: var(--color-slate-400); margin-bottom: var(--space-2);"></i>
+          <p class="text-sm text-muted mb-1">Drag & drop your ID or tap to upload</p>
+          <p class="text-xs text-muted mb-0">PDF, JPG, PNG (max 5MB)</p>
+          <input type="file" id="idFileInput" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(event, 'id')">
+        </div>
+        <div id="idPreview" class="mt-3" style="display: none;"></div>
+      {% endif %}
+    </div>
+  </section>
+
+  {# 2. Proof of Income #}
+  <section class="compliance-card mb-4" data-doc="income">
+    <div class="compliance-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="mb-1" style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-deep-blue);">
+            Proof of Income
+          </h4>
+          <p class="text-xs text-muted mb-0">Pay stubs, offer letter, or tax return</p>
+        </div>
+        <span class="compliance-status {{ income_doc.status|lower|default:'action-required' }}" id="incomeStatus">
+          {% if income_doc.status == 'verified' %}
+            <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i> Verified
+          {% elif income_doc.status == 'expired' %}
+            <i data-lucide="alert-circle" style="width: 14px; height: 14px;"></i> Expired
+          {% else %}
+            <i data-lucide="clock" style="width: 14px; height: 14px;"></i> Action required
+          {% endif %}
+        </span>
+      </div>
+    </div>
+    <div class="compliance-body">
+      {% if income_doc.verified and income_doc.file_url %}
+        <div class="d-flex align-items-center gap-3">
+          <div style="width: 40px; height: 40px; background: var(--color-emerald-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="file-check" style="width: 20px; height: 20px; color: var(--color-emerald);"></i>
+          </div>
+          <div class="flex-grow-1">
+            <div class="fw-semibold text-sm">{{ income_doc.file_name }}</div>
+            <div class="text-xs text-muted">Uploaded {{ income_doc.uploaded_at|date:"M j, Y" }}</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="window.open('{{ income_doc.file_url }}', '_blank')">
+            <i data-lucide="eye" style="width: 14px; height: 14px;"></i> View
+          </button>
+        </div>
+      {% else %}
+        <div id="incomeUploadZone" class="upload-zone{% if income_doc.status in ('expired', 'action_required') %} disabled{% endif %}" 
+             data-doc="income" onclick="triggerUpload('income')">
+          <i data-lucide="upload-cloud" style="width: 36px; height: 36px; color: var(--color-slate-400); margin-bottom: var(--space-2);"></i>
+          <p class="text-sm text-muted mb-1">Drag & drop your income proof or tap to upload</p>
+          <p class="text-xs text-muted mb-0">PDF, JPG, PNG (max 5MB)</p>
+          <input type="file" id="incomeFileInput" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(event, 'income')">
+        </div>
+        <div id="incomePreview" class="mt-3" style="display: none;"></div>
+      {% endif %}
+    </div>
+  </section>
+
+  {# 3. Renter's Insurance #}
+  <section class="compliance-card mb-4" data-doc="insurance">
+    <div class="compliance-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="mb-1" style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-deep-blue);">
+            Renter's Insurance
+          </h4>
+          <p class="text-xs text-muted mb-0">Insurance policy document</p>
+        </div>
+        <span class="compliance-status {{ insurance_doc.status|lower|default:'action-required' }}" id="insuranceStatus">
+          {% if insurance_doc.status == 'verified' %}
+            <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i> Verified
+          {% elif insurance_doc.status == 'expired' %}
+            <i data-lucide="alert-circle" style="width: 14px; height: 14px;"></i> Expired
+          {% else %}
+            <i data-lucide="clock" style="width: 14px; height: 14px;"></i> Action required
+          {% endif %}
+        </span>
+      </div>
+    </div>
+    <div class="compliance-body">
+      {% if insurance_doc.verified and insurance_doc.file_url %}
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div style="width: 40px; height: 40px; background: var(--color-emerald-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="file-check" style="width: 20px; height: 20px; color: var(--color-emerald);"></i>
+          </div>
+          <div class="flex-grow-1">
+            <div class="fw-semibold text-sm">{{ insurance_doc.file_name }}</div>
+            <div class="text-xs text-muted">Uploaded {{ insurance_doc.uploaded_at|date:"M j, Y" }}</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="window.open('{{ insurance_doc.file_url }}', '_blank')">
+            <i data-lucide="eye" style="width: 14px; height: 14px;"></i> View
+          </button>
+        </div>
+        {# Expiry display for verified insurance #}
+        <div class="text-sm">
+          <span class="text-muted">Expires:</span>
+          <span class="fw-semibold" style="color: {{ 'var(--color-red)' if insurance_doc.expires_soon else 'var(--color-deep-blue)' }};">
+            {{ insurance_doc.expiry_date|date:"F j, Y" }}
+          </span>
+          {% if insurance_doc.expires_soon %}
+            <span class="badge badge-red ms-2">Expires soon</span>
+            <div class="expiry-banner danger mt-2">
+              <i data-lucide="alert-circle" style="width: 18px; height: 18px;"></i>
+              Your insurance expires in less than 30 days. Please upload a renewal policy to avoid coverage gaps.
+            </div>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Policy expiry date</label>
+            <input type="date" class="form-input" id="insuranceExpiry" required>
+          </div>
+        </div>
+        <div id="insuranceUploadZone" class="upload-zone mt-3{% if insurance_doc.status == 'expired' %} disabled{% endif %}" 
+             data-doc="insurance" onclick="triggerUpload('insurance')">
+          <i data-lucide="upload-cloud" style="width: 36px; height: 36px; color: var(--color-slate-400); margin-bottom: var(--space-2);"></i>
+          <p class="text-sm text-muted mb-1">Drag & drop your insurance policy or tap to upload</p>
+          <p class="text-xs text-muted mb-0">PDF (max 5MB)</p>
+          <input type="file" id="insuranceFileInput" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(event, 'insurance')">
+        </div>
+        <div id="insurancePreview" class="mt-3" style="display: none;"></div>
+      {% endif %}
+    </div>
+  </section>
+
+  {# Dashboard alert reference #}
+  <div class="card p-3" style="background: var(--color-light-gray); border: 1px solid var(--color-border); border-radius: var(--radius-lg);">
+    <div class="d-flex align-items-center gap-3">
+      <i data-lucide="info" style="width: 20px; height: 20px; color: var(--color-blue-accent);"></i>
+      <div class="text-sm text-muted">
+        <strong>Note:</strong> Any missing or expired compliance documents will trigger a red alert banner on your dashboard until resolved.
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  {# Expiry date validation #}
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('insuranceExpiry')?.setAttribute('min', today);
+
+  {# Drag & drop zone handlers #}
+  ['id', 'income', 'insurance'].forEach(docType => {
+    const zone = document.getElementById(`${docType}UploadZone`);
+    if (!zone) return;
+
+    zone.addEventListener('click', () => {
+      if (!zone.classList.contains('disabled')) {
+        document.getElementById(`${docType}FileInput`).click();
+      }
+    });
+
+    zone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!zone.classList.contains('disabled')) {
+        zone.classList.add('dragging');
+      }
+    });
+
+    zone.addEventListener('dragleave', () => zone.classList.remove('dragging'));
+
+    zone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      zone.classList.remove('dragging');
+      if (zone.classList.contains('disabled')) return;
+
+      const file = e.dataTransfer.files[0];
+      if (file) handleFileUpload(file, docType);
+    });
+  });
+
+  window.handleFileSelect = function(e, docType) {
+    const file = e.target.files[0];
+    if (file) handleFileUpload(file, docType);
+  };
+
+  window.handleFileUpload = function(file, docType) {
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File too large. Max 5MB.');
+      return;
+    }
+
+    const allowedTypes = docType === 'insurance' 
+      ? ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg']
+      : ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+
+    if (!allowedTypes.includes(file.type)) {
+      alert('Invalid file type. Please upload PDF or image.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const previewEl = document.getElementById(`${docType}Preview`);
+      previewEl.innerHTML = `
+        <div class="d-flex align-items-center gap-3 p-3" style="background: var(--color-light-gray); border-radius: var(--radius-md);">
+          <img src="${e.target.result}" style="width: 60px; height: 60px; object-fit: cover; border-radius: var(--radius-sm);">
+          <div class="flex-grow-1">
+            <div class="fw-semibold text-sm">${file.name}</div>
+            <div class="text-xs text-muted">${(file.size / 1024).toFixed(0)} KB</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="removeFile('${docType}')">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i> Remove
+          </button>
+        </div>
+      `;
+      previewEl.style.display = 'block';
+      window[`${docType}UploadedFile`] = file;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.removeFile = function(docType) {
+    document.getElementById(`${docType}Preview`).style.display = 'none';
+    document.getElementById(`${docType}Preview`).innerHTML = '';
+    document.getElementById(`${docType}FileInput`).value = '';
+    delete window[`${docType}UploadedFile`];
+  };
+
+  lucide.createIcons();
+});
+</script>
+{% endblock %}

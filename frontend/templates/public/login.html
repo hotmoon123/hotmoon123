@@ -80,11 +80,10 @@
                     email: email.value,
                     password: password.value
                 }, false); // false = don't require auth header
-                
-                // Success! Store token in memory and redirect
-                sessionStorage.setItem('accessToken', data.access);
+
+                // Success! Session is created on server, redirect to dashboard
                 showToast('Login successful!');
-                
+
                 setTimeout(() => {
                     window.location.href = data.redirect;
                 }, 500);
