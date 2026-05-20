@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ property.unit_number }} - RentFlow{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Edit Property: {{ property.unit_number }}</h1>
+</div>
+
+<div style="max-width: 600px;">
+    <div class="card">
+        <form id="propertyForm">
+            <div class="form-group">
+                <label>Unit Number</label>
+                <input type="text" value="{{ property.unit_number }}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" value="{{ property.address }}" required>
+            </div>
+            <div class="form-group">
+                <label for="propertyType">Property Type</label>
+                <select id="propertyType" name="property_type" required>
+                    <option value="apartment" {% if property.property_type == 'apartment' %}selected{% endif %}>Apartment</option>
+                    <option value="house" {% if property.property_type == 'house' %}selected{% endif %}>House</option>
+                    <option value="duplex" {% if property.property_type == 'duplex' %}selected{% endif %}>Duplex</option>
+                    <option value="bungalow" {% if property.property_type == 'bungalow' %}selected{% endif %}>Bungalow</option>
+                    <option value="commercial" {% if property.property_type == 'commercial' %}selected{% endif %}>Commercial</option>
+                    <option value="other" {% if property.property_type == 'other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rentAmount">Rent Amount (₵)</label>
+                <input type="number" id="rentAmount" name="rent_amount" step="0.01" value="{{ property.rent_amount }}" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status" required>
+                    <option value="available" {% if property.status == 'available' %}selected{% endif %}>Available</option>
+                    <option value="occupied" {% if property.status == 'occupied' %}selected{% endif %}>Occupied</option>
+                    <option value="maintenance" {% if property.status == 'maintenance' %}selected{% endif %}>Maintenance</option>
+                    <option value="unavailable" {% if property.status == 'unavailable' %}selected{% endif %}>Unavailable</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4">{{ property.description }}</textarea>
+            </div>
+            <div id="errorMessage" class="error" style="display: none;"></div>
+            <button type="submit" class="button">Save Changes</button>
+            <a href="/properties/list/" class="button secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('propertyForm');
+    const errorDiv = document.getElementById('errorMessage');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorDiv.style.display = 'none';
+
+        const formData = {
+            address: document.getElementById('address').value,
+            property_type: document.getElementById('propertyType').value,
+            rent_amount: document.getElementById('rentAmount').value,
+            status: document.getElementById('status').value,
+            description: document.getElementById('description').value,
+        };
+
+        try {
+            const response = await fetch('/properties/{{ property.id }}/update/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                window.location.href = '/properties/{{ property.id }}/detail/';
+            } else {
+                errorDiv.textContent = data.error || 'Failed to update property';
+                errorDiv.style.display = 'block';
+            }
+        } catch (error) {
+            errorDiv.textContent = 'An error occurred. Please try again.';
+            errorDiv.style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}

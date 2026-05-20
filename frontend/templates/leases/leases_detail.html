@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Lease Detail - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Lease: {{ lease.property.unit_number }}</h1></div>
+<div class="card" style="max-width: 600px;">
+  <p><strong>Property:</strong> {{ lease.property.unit_number }} - {{ lease.property.address }}</p>
+  <p><strong>Tenant:</strong> {{ lease.tenant.first_name }} {{ lease.tenant.last_name }}</p>
+  <p><strong>Status:</strong> <span class="badge {{ lease.status }}">{{ lease.get_status_display }}</span></p>
+  <p><strong>Start Date:</strong> {{ lease.start_date }}</p>
+  <p><strong>End Date:</strong> {{ lease.end_date }}</p>
+  <p><strong>Rent Amount:</strong> ₵ {{ lease.rent_amount }}</p>
+  <p><strong>Deposit:</strong> ₵ {{ lease.deposit_amount }}</p>
+  <a href="/leases/list/" class="button">Back</a>
+</div>
+{% endblock %}

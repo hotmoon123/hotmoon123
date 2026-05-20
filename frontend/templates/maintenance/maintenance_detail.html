@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Maintenance Ticket - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Maintenance Ticket #{{ ticket.id }}</h1></div>
+<div class="card" style="max-width: 600px;">
+  <p><strong>Property:</strong> {{ ticket.property.unit_number }}</p>
+  <p><strong>Title:</strong> {{ ticket.title }}</p>
+  <p><strong>Description:</strong> {{ ticket.description }}</p>
+  <p><strong>Priority:</strong> {{ ticket.get_priority_display }}</p>
+  <p><strong>Status:</strong> {{ ticket.get_status_display }}</p>
+  <p><strong>Cost:</strong> ₵ {{ ticket.estimated_cost }}</p>
+  <a href="/maintenance/list/" class="button">Back</a>
+</div>
+{% endblock %}

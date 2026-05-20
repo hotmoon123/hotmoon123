@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to RentFlow{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Welcome to RentFlow</h1>
+    <p>Manage your rental properties and leases with ease</p>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h3>For Landlords</h3>
+        <p style="color: #666; margin: 10px 0;">Manage properties, leases, invoices, and maintenance requests.</p>
+        <a href="/register/" class="button" style="margin-top: 10px;">Register as Landlord</a>
+    </div>
+    <div class="card">
+        <h3>For Tenants</h3>
+        <p style="color: #666; margin: 10px 0;">View your leases, pay invoices, and submit maintenance requests.</p>
+        <a href="/register/" class="button" style="margin-top: 10px;">Register as Tenant</a>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 40px;">
+    <h2>Features</h2>
+    <ul style="list-style: none;">
+        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+            <strong>Property Management</strong> - Add and manage multiple properties
+        </li>
+        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+            <strong>Lease Creation</strong> - Create and manage lease agreements
+        </li>
+        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+            <strong>Invoicing</strong> - Generate and track invoices
+        </li>
+        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+            <strong>Payment Tracking</strong> - Track payments via MoMo and other methods
+        </li>
+        <li style="padding: 10px 0;">
+            <strong>Maintenance Requests</strong> - Submit and track maintenance issues
+        </li>
+    </ul>
+</div>
+{% endblock %}

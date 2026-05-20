@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Add Expense - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Add Expense</h1></div>
+<div style="max-width: 600px;"><div class="card">
+  <form id="expenseForm">
+    <div class="form-group">
+      <label for="category">Category *</label>
+      <select id="category" required>
+        <option value="maintenance">Maintenance</option>
+        <option value="repair">Repair</option>
+        <option value="utility">Utility</option>
+        <option value="tax">Tax</option>
+        <option value="insurance">Insurance</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="amount">Amount (₵) *</label>
+      <input type="number" id="amount" step="0.01" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description *</label>
+      <textarea id="description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="expenseDate">Date *</label>
+      <input type="date" id="expenseDate" required>
+    </div>
+    <div id="errorMessage" class="error" style="display: none;"></div>
+    <button type="submit" class="button">Add Expense</button>
+  </form>
+</div></div>
+<script>
+  document.getElementById('expenseForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {category:document.getElementById('category').value, amount:document.getElementById('amount').value, description:document.getElementById('description').value, expense_date:document.getElementById('expenseDate').value};
+    try {
+      const r = await fetch('/expenses/create/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body:JSON.stringify(data)});
+      const resp = await r.json();
+      if (resp.success) window.location.href = '/expenses/list/';
+    } catch (e) {}
+  });
+</script>
+{% endblock %}

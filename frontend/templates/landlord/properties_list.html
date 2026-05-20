@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Properties - RentFlow{% endblock %}
+
+{% block content %}
+<div class="header">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Properties</h1>
+        <a href="/properties/create/" class="button">Add Property</a>
+    </div>
+</div>
+
+{% if properties %}
+    <div class="card">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Unit Number</th>
+                    <th>Address</th>
+                    <th>Type</th>
+                    <th>Rent Amount</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for property in properties %}
+                    <tr>
+                        <td>{{ property.unit_number }}</td>
+                        <td>{{ property.address }}</td>
+                        <td>{{ property.get_property_type_display }}</td>
+                        <td>₵ {{ property.rent_amount }}</td>
+                        <td><span class="badge {{ property.status }}">{{ property.get_status_display }}</span></td>
+                        <td>{{ property.created_at|date:"M d, Y" }}</td>
+                        <td>
+                            <a href="/properties/{{ property.id }}/detail/" style="color: #0066cc;">View</a> |
+                            <a href="/properties/{{ property.id }}/update/" style="color: #0066cc;">Edit</a> |
+                            <form method="POST" action="/properties/{{ property.id }}/delete/" style="display: inline;" onsubmit="return confirm('Delete this property?');">
+                                {% csrf_token %}
+                                <button type="submit" style="color: #cc0000; background: none; border: none; cursor: pointer; text-decoration: underline;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="card">
+        <p>No properties yet. <a href="/properties/create/">Create your first property</a></p>
+    </div>
+{% endif %}
+{% endblock %}

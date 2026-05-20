@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Create Lease - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Create Lease</h1></div>
+<div style="max-width: 600px;">
+  <div class="card">
+    <form id="leaseForm">
+      <div class="form-group">
+        <label for="propertyId">Property *</label>
+        <select id="propertyId" name="property_id" required>
+          <option>Select...</option>
+          {% for property in properties %}
+            <option value="{{ property.id }}">{{ property.unit_number }} - {{ property.address }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="startDate">Start Date *</label>
+        <input type="date" id="startDate" name="start_date" required>
+      </div>
+      <div class="form-group">
+        <label for="endDate">End Date *</label>
+        <input type="date" id="endDate" name="end_date" required>
+      </div>
+      <div class="form-group">
+        <label for="rentAmount">Rent Amount (₵) *</label>
+        <input type="number" id="rentAmount" name="rent_amount" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label for="depositAmount">Deposit Amount (₵)</label>
+        <input type="number" id="depositAmount" name="deposit_amount" step="0.01" value="0">
+      </div>
+      <div id="errorMessage" class="error" style="display: none;"></div>
+      <button type="submit" class="button">Create Lease</button>
+    </form>
+  </div>
+</div>
+<script>
+  document.getElementById('leaseForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorDiv = document.getElementById('errorMessage');
+    const formData = {
+      property_id: document.getElementById('propertyId').value,
+      start_date: document.getElementById('startDate').value,
+      end_date: document.getElementById('endDate').value,
+      rent_amount: document.getElementById('rentAmount').value,
+      deposit_amount: document.getElementById('depositAmount').value,
+    };
+    try {
+      const response = await fetch('/leases/create/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body:JSON.stringify(formData)});
+      const data = await response.json();
+      if (data.success) window.location.href = `/leases/${data.lease_id}/detail/`;
+      else { errorDiv.textContent = data.error; errorDiv.style.display = 'block'; }
+    } catch (e) { errorDiv.textContent = 'Error'; errorDiv.style.display = 'block'; }
+  });
+</script>
+{% endblock %}

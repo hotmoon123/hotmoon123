@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Register - RentFlow{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 40px auto;">
+    <div class="card">
+        <h2>Register for RentFlow</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="userType">I am a</label>
+                <select id="userType" name="user_type" required>
+                    <option value="">Select...</option>
+                    <option value="landlord">Landlord</option>
+                    <option value="tenant">Tenant</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirm">Confirm Password</label>
+                <input type="password" id="passwordConfirm" name="password_confirm" required>
+            </div>
+            <div id="errorMessage" class="error" style="display: none;"></div>
+            <button type="submit" class="button" style="width: 100%; margin-bottom: 15px;">Register</button>
+        </form>
+        <p style="text-align: center; font-size: 14px;">
+            Already have an account? <a href="/login/" style="color: #0066cc;">Login here</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('registerForm');
+    const errorDiv = document.getElementById('errorMessage');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorDiv.style.display = 'none';
+
+        const password = document.getElementById('password').value;
+        const passwordConfirm = document.getElementById('passwordConfirm').value;
+
+        if (password !== passwordConfirm) {
+            errorDiv.textContent = 'Passwords do not match';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        const formData = {
+            user_type: document.getElementById('userType').value,
+            first_name: document.getElementById('firstName').value,
+            last_name: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: password,
+            password_confirm: passwordConfirm,
+        };
+
+        try {
+            const response = await fetch('/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                window.location.href = data.redirect;
+            } else {
+                errorDiv.textContent = data.error || 'Registration failed';
+                errorDiv.style.display = 'block';
+            }
+        } catch (error) {
+            errorDiv.textContent = 'An error occurred. Please try again.';
+            errorDiv.style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Leases - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Leases</h1></div>
+<div class="card">
+  {% if leases %}
+    <table class="table">
+      <thead><tr><th>Property</th><th>Tenant</th><th>Status</th><th>Start</th><th>End</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for lease in leases %}
+          <tr>
+            <td>{{ lease.property.unit_number }}</td>
+            <td>{{ lease.tenant.first_name }} {{ lease.tenant.last_name }}</td>
+            <td><span class="badge {{ lease.status }}">{{ lease.get_status_display }}</span></td>
+            <td>{{ lease.start_date }}</td>
+            <td>{{ lease.end_date }}</td>
+            <td><a href="/leases/{{ lease.id }}/detail/">View</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No leases found.</p>
+  {% endif %}
+  {% if request.session.user_role == 'landlord' %}
+    <a href="/leases/create/" class="button" style="margin-top: 20px;">Create Lease</a>
+  {% endif %}
+</div>
+{% endblock %}

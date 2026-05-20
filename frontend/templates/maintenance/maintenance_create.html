@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Submit Maintenance - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Submit Maintenance Request</h1></div>
+<div style="max-width: 600px;"><div class="card">
+  <form id="maintenanceForm">
+    <div class="form-group">
+      <label for="title">Issue Title *</label>
+      <input type="text" id="title" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description *</label>
+      <textarea id="description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="priority">Priority</label>
+      <select id="priority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+        <option value="emergency">Emergency</option>
+      </select>
+    </div>
+    <div id="errorMessage" class="error" style="display: none;"></div>
+    <button type="submit" class="button">Submit Request</button>
+  </form>
+</div></div>
+<script>
+  document.getElementById('maintenanceForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {property_id:'', title:document.getElementById('title').value, description:document.getElementById('description').value, priority:document.getElementById('priority').value};
+    try {
+      const r = await fetch('/maintenance/create/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body:JSON.stringify(data)});
+      const resp = await r.json();
+      if (resp.success) window.location.href = '/maintenance/list/';
+    } catch (e) {}
+  });
+</script>
+{% endblock %}

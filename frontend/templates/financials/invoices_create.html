@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Create Invoice - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Create Invoice</h1></div>
+<div style="max-width: 600px;"><div class="card">
+  <form id="invoiceForm">
+    <div class="form-group">
+      <label for="leaseId">Lease *</label>
+      <select id="leaseId" required>
+        <option>Select...</option>
+        {% for lease in leases %}
+          <option value="{{ lease.id }}">{{ lease.property.unit_number }} - {{ lease.tenant.email }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="amount">Amount (₵) *</label>
+      <input type="number" id="amount" step="0.01" required>
+    </div>
+    <div class="form-group">
+      <label for="dueDate">Due Date *</label>
+      <input type="date" id="dueDate" required>
+    </div>
+    <div class="form-group">
+      <label for="invoiceType">Type</label>
+      <select id="invoiceType">
+        <option value="rent">Rent</option>
+        <option value="utility">Utility</option>
+        <option value="penalty">Penalty</option>
+        <option value="deposit">Deposit</option>
+      </select>
+    </div>
+    <div id="errorMessage" class="error" style="display: none;"></div>
+    <button type="submit" class="button">Create Invoice</button>
+  </form>
+</div></div>
+<script>
+  document.getElementById('invoiceForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorDiv = document.getElementById('errorMessage');
+    const data = {lease_id:document.getElementById('leaseId').value, amount:document.getElementById('amount').value, due_date:document.getElementById('dueDate').value, invoice_type:document.getElementById('invoiceType').value};
+    try {
+      const r = await fetch('/invoices/create/', {method:'POST', headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')}, body:JSON.stringify(data)});
+      const resp = await r.json();
+      if (resp.success) window.location.href = '/invoices/list/';
+      else { errorDiv.textContent = resp.error; errorDiv.style.display = 'block'; }
+    } catch (e) { errorDiv.textContent = 'Error'; errorDiv.style.display = 'block'; }
+  });
+</script>
+{% endblock %}

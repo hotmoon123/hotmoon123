@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Invoices - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Invoices</h1></div>
+<div class="card">
+  {% if invoices %}
+    <table class="table">
+      <thead><tr><th>ID</th><th>Type</th><th>Amount</th><th>Due</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>
+        {% for invoice in invoices %}
+          <tr>
+            <td>#{{ invoice.id }}</td>
+            <td>{{ invoice.get_invoice_type_display }}</td>
+            <td>₵ {{ invoice.amount }}</td>
+            <td>{{ invoice.due_date }}</td>
+            <td><span class="badge {{ invoice.status }}">{{ invoice.get_status_display }}</span></td>
+            <td>View</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}<p>No invoices.</p>{% endif %}
+  {% if request.session.user_role == 'landlord' %}
+    <a href="/invoices/create/" class="button" style="margin-top: 20px;">Create Invoice</a>
+  {% endif %}
+</div>
+{% endblock %}
