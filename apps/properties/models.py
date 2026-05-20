@@ -1,11 +1,12 @@
 from django.db import models
+from apps.users.models import Landlord
+
 
 class Building(models.Model):
-    """Parent group for properties (e.g., 'Sunset Apartments')."""
-    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='buildings')
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE, related_name='buildings')
     name = models.CharField(max_length=255)
     address = models.TextField()
-    description = models.TextField(blank=True, null=True, default='')
+    description = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -13,36 +14,43 @@ class Building(models.Model):
         db_table = 'buildings'
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.landlord.email})"
+
 
 class Property(models.Model):
-    """Individual rental units."""
+    PROPERTY_TYPE_CHOICES = [
+        ('apartment', 'Apartment'),
+        ('house', 'House'),
+        ('duplex', 'Duplex'),
+        ('bungalow', 'Bungalow'),
+        ('commercial', 'Commercial'),
+        ('other', 'Other'),
+    ]
     STATUS_CHOICES = [
         ('available', 'Available'),
         ('occupied', 'Occupied'),
         ('maintenance', 'Under Maintenance'),
-    ]
-    TYPE_CHOICES = [
-        ('apartment', 'Apartment'),
-        ('house', 'House'),
-        ('office', 'Office'),
-        ('studio', 'Studio'),
+        ('unavailable', 'Unavailable'),
     ]
 
-    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='properties')
-    building = models.ForeignKey(Building, on_delete=models.SET_NULL, null=True, blank=True, related_name='units')
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE, related_name='properties')
+    building = models.ForeignKey(Building, on_delete=models.SET_NULL, null=True, blank=True, related_name='properties')
     unit_number = models.CharField(max_length=50)
-    address = models.TextField(blank=True, default='', help_text='Street / area when not using a building record.')
-    property_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='apartment')
-    rent_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    property_type = models.CharField(max_length=20, choices=PROPERTY_TYPE_CHOICES, default='apartment')
+    address = models.TextField()
+    city = models.CharField(max_length=100)
+    bedrooms = models.IntegerField(default=1)
+    bathrooms = models.IntegerField(default=1)
+    square_feet = models.IntegerField(default=0)
+    monthly_rent = models.DecimalField(max_digits=12, decimal_places=2)
+    description = models.TextField(blank=True, default='')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
-    description = models.TextField(blank=True, null=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'properties'
-        verbose_name_plural = 'properties'
+        unique_together = ('landlord', 'unit_number')
 
     def __str__(self):
-        return f"{self.unit_number} - {self.building.name if self.building else 'Standalone'}"
+        return f"{self.unit_number} - {self.address}"

@@ -1,1 +1,0 @@
-{"nodes": [{"id": "views", "label": "views.py", "file_type": "code", "source_file": "apps/maintenance/views.py", "source_location": "L1"}], "edges": [{"source": "views", "target": "django_shortcuts", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "apps/maintenance/views.py", "source_location": "L1", "weight": 1.0}]}

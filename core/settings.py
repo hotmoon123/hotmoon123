@@ -6,8 +6,8 @@ from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-in-production')
+DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,testserver', cast=Csv())
 
 INSTALLED_APPS = [
@@ -23,12 +23,6 @@ INSTALLED_APPS = [
     'apps.leases',
     'apps.financials',
     'apps.maintenance',
-    'apps.notifications',
-    'apps.documents',
-    'apps.chat',
-    'apps.automation',
-    'apps.inspections',
-    'apps.notices',
 ]
 
 MIDDLEWARE = [
@@ -37,25 +31,11 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'apps.users.middleware.DualModelAuthMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Custom middleware
     'middleware.logging_middleware.RequestLoggingMiddleware',
-    'middleware.rate_limit_middleware.RateLimitMiddleware',
-    'middleware.authorization_middleware.RoleAuthorizationMiddleware',
+    'middleware.role_middleware.RoleMiddleware',
 ]
-
-AUTHENTICATION_BACKENDS = [
-    'apps.users.auth_backend.EmailBackend',
-]
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-    }
-}
 
 ROOT_URLCONF = 'core.urls'
 
@@ -100,7 +80,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Accra'
 USE_I18N = True
 USE_TZ = True
 
@@ -113,8 +93,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'users.Landlord'
-
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/landlord/dashboard/'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+AUTHENTICATION_BACKENDS = [
+    'apps.users.auth_backend.EmailBackend',
+]

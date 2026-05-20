@@ -1,9 +1,10 @@
 from django.db import models
+from apps.users.models import Landlord, Tenant
 from apps.leases.models import Lease
 from apps.properties.models import Property
 
+
 class Invoice(models.Model):
-    """Monthly billing for a lease."""
     TYPE_CHOICES = [
         ('rent', 'Rent'),
         ('utility', 'Utility'),
@@ -17,41 +18,46 @@ class Invoice(models.Model):
         ('overdue', 'Overdue'),
     ]
 
-    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='issued_invoices')
-    tenant = models.ForeignKey('users.Tenant', on_delete=models.CASCADE, related_name='received_invoices')
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE, related_name='issued_invoices')
+    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE, related_name='received_invoices')
     lease = models.ForeignKey(Lease, on_delete=models.CASCADE, related_name='invoices')
     rental_property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='invoices', null=True, blank=True)
-    
     amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     amount_paid = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     due_date = models.DateField()
     paid_at = models.DateTimeField(null=True, blank=True)
-    
     invoice_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='rent')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='unpaid')
-    
     description = models.CharField(max_length=255, blank=True, null=True)
-    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'invoices'
 
-    def __str__(self):
-        return f"Invoice {self.id}: {self.tenant.email} - {self.status}"
-    
     @property
     def balance_due(self):
         return self.amount - self.amount_paid
 
+    def __str__(self):
+        return f"Invoice {self.id}: {self.tenant.email} - {self.status}"
+
 
 class Transaction(models.Model):
-    """Payment transaction record."""
+    MOMO_PROVIDER_CHOICES = [
+        ('mtn', 'MTN Mobile Money'),
+        ('vodafone', 'Vodafone Cash'),
+        ('telecel', 'Telecel Cash'),
+        ('bank', 'Bank Transfer'),
+    ]
+
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='transactions')
-    tenant = models.ForeignKey('users.Tenant', on_delete=models.CASCADE, related_name='payment_transactions')
-    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='received_transactions')
+    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE, related_name='payment_transactions')
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE, related_name='received_transactions')
     amount = models.DecimalField(max_digits=12, decimal_places=2)
+    momo_provider = models.CharField(max_length=20, choices=MOMO_PROVIDER_CHOICES, null=True, blank=True)
+    momo_number = models.CharField(max_length=30, blank=True)
+    transaction_reference = models.CharField(max_length=255, blank=True, unique=True)
     gateway_reference = models.CharField(max_length=255, blank=True, default='')
     idempotency_key = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -60,11 +66,10 @@ class Transaction(models.Model):
         db_table = 'transactions'
 
     def __str__(self):
-        return f"Transaction {self.gateway_reference}: {self.amount}"
+        return f"Transaction {self.transaction_reference}: {self.amount} GHS"
 
 
 class Expense(models.Model):
-    """Property expense tracking."""
     CATEGORY_CHOICES = [
         ('maintenance', 'Maintenance'),
         ('repair', 'Repair'),
@@ -74,7 +79,7 @@ class Expense(models.Model):
         ('other', 'Other'),
     ]
 
-    landlord = models.ForeignKey('users.Landlord', on_delete=models.CASCADE, related_name='expenses')
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE, related_name='expenses')
     rental_property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='expenses', null=True, blank=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
@@ -88,20 +93,22 @@ class Expense(models.Model):
         db_table = 'expenses'
 
     def __str__(self):
-        return f"Expense: {self.category} - {self.amount}"
+        return f"Expense: {self.category} - {self.amount} GHS"
 
 
 class PaymentMethod(models.Model):
-    """Tenant payment methods (cards, etc.)."""
-    TYPE_CHOICES = [
-        ('card', 'Credit/Debit Card'),
+    METHOD_TYPE_CHOICES = [
+        ('mtn', 'MTN Mobile Money'),
+        ('vodafone', 'Vodafone Cash'),
+        ('telecel', 'Telecel Cash'),
         ('bank', 'Bank Account'),
-        ('mobile', 'Mobile Money'),
+        ('card', 'Credit/Debit Card'),
     ]
 
-    tenant = models.ForeignKey('users.Tenant', on_delete=models.CASCADE, related_name='payment_methods')
-    method_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='card')
-    provider = models.CharField(max_length=100, default='stripe')  # stripe, paystack, etc.
+    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE, related_name='payment_methods')
+    method_type = models.CharField(max_length=20, choices=METHOD_TYPE_CHOICES, default='mtn')
+    provider = models.CharField(max_length=100, default='mtn')
+    momo_number = models.CharField(max_length=30, blank=True)
     last_four = models.CharField(max_length=4, default='0000')
     exp_month = models.IntegerField(null=True, blank=True)
     exp_year = models.IntegerField(null=True, blank=True)
@@ -115,4 +122,4 @@ class PaymentMethod(models.Model):
         db_table = 'payment_methods'
 
     def __str__(self):
-        return f"{self.tenant.email} - {self.method_type} ending in {self.last_four}"
+        return f"{self.tenant.email} - {self.get_method_type_display()}"
