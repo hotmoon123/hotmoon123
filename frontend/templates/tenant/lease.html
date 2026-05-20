@@ -1,33 +1,141 @@
 {% extends "base_tenant.html" %}
 
-{% block title %}Lease — RentFlow{% endblock %}
+{% block title %}My Lease — RentFlow{% endblock %}
+
+{% block page_title %}Lease Agreement{% endblock %}
 
 {% block content %}
-<div class="page-header">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
     <div>
-        <h1 class="page-title">Lease details</h1>
-        <p class="page-subtitle">Review your agreement, rental terms, and upcoming renewal timeline.</p>
+        <h1 style="margin: 0; font-size: 28px; color: var(--text-primary); font-weight: 700;">Lease Details</h1>
+        <p style="margin: 8px 0 0 0; color: var(--text-secondary); font-size: 14px;">Review your rental agreement and terms</p>
     </div>
-    <a href="/tenant/lease/download/" class="button">Download lease</a>
+    <a href="/tenant/lease/download/" class="btn-glass-primary" style="padding: 12px 24px; text-decoration: none; display: inline-flex; align-items: center; font-size: 14px;">
+        <i class="ph ph-download" style="margin-right: 8px;"></i>Download
+    </a>
 </div>
 
-<div class="grid-cols-2">
-    <div class="card">
-        <h2 class="card-title">Lease summary</h2>
-        <div class="input-group">
-            <div class="form-group"><label>Property</label><input value="{{ lease.property_name }}" disabled></div>
-            <div class="form-group"><label>Unit</label><input value="{{ lease.unit_name }}" disabled></div>
-            <div class="form-group"><label>Start date</label><input value="{{ lease.start_date|date:'M d, Y' }}" disabled></div>
-            <div class="form-group"><label>End date</label><input value="{{ lease.end_date|date:'M d, Y' }}" disabled></div>
-            <div class="form-group"><label>Monthly rent</label><input value="GHS {{ lease.monthly_rent }}" disabled></div>
+{% if lease %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px;">
+        <div class="glass-stat-card">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                <div>
+                    <p style="color: var(--text-secondary); margin: 0 0 12px 0; font-size: 14px;">Monthly Rent</p>
+                    <div style="font-size: 32px; font-weight: 700; color: var(--success-color); margin-bottom: 8px;">₵{{ lease.monthly_rent|default:"0.00" }}</div>
+                </div>
+                <div style="font-size: 24px; color: var(--success-color); opacity: 0.7;">
+                    <i class="ph ph-wallet"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-stat-card">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                <div>
+                    <p style="color: var(--text-secondary); margin: 0 0 12px 0; font-size: 14px;">Lease Status</p>
+                    <div style="font-size: 32px; font-weight: 700; color: var(--primary-light); margin-bottom: 8px;">{{ lease.get_status_display|default:"Active" }}</div>
+                </div>
+                <div style="font-size: 24px; color: var(--primary-light); opacity: 0.7;">
+                    <i class="ph ph-file-text"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-stat-card">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                <div>
+                    <p style="color: var(--text-secondary); margin: 0 0 12px 0; font-size: 14px;">Days Remaining</p>
+                    <div style="font-size: 32px; font-weight: 700; color: var(--secondary-color); margin-bottom: 8px;">{{ days_remaining|default:"0" }}</div>
+                </div>
+                <div style="font-size: 24px; color: var(--secondary-color); opacity: 0.7;">
+                    <i class="ph ph-hourglass"></i>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="card">
-        <h2 class="card-title">Payment cadence</h2>
-        <div class="form-group"><label>Next payment</label><input value="GHS {{ lease.next_payment_amount }}" disabled></div>
-        <div class="form-group"><label>Next due</label><input value="{{ lease.next_payment_due|date:'M d, Y' }}" disabled></div>
-        <div class="form-group"><label>Lease status</label><input value="{{ lease.status }}" disabled></div>
-        <div class="form-group"><label>Security deposit</label><input value="GHS {{ lease.deposit_amount }}" disabled></div>
+
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 40px;">
+        <div class="glass-card">
+            <h2 style="margin: 0 0 24px 0; font-size: 18px; color: var(--text-primary);">Lease Summary</h2>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Property</p>
+                    <p style="margin: 6px 0 0 0; color: var(--text-primary); font-weight: 500; font-size: 16px;">{{ lease.property_name|default:"N/A" }}</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+                        <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Start Date</p>
+                        <p style="margin: 6px 0 0 0; color: var(--text-primary); font-weight: 500;">{{ lease.start_date|date:"M d, Y"|default:"N/A" }}</p>
+                    </div>
+                    <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+                        <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">End Date</p>
+                        <p style="margin: 6px 0 0 0; color: var(--text-primary); font-weight: 500;">{{ lease.end_date|date:"M d, Y"|default:"N/A" }}</p>
+                    </div>
+                </div>
+
+                <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Unit</p>
+                    <p style="margin: 6px 0 0 0; color: var(--text-primary); font-weight: 500; font-size: 16px;">{{ lease.unit_number|default:"N/A" }}</p>
+                </div>
+
+                <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Security Deposit</p>
+                    <p style="margin: 6px 0 0 0; color: var(--text-primary); font-weight: 500; font-size: 16px;">₵{{ lease.deposit_amount|default:"0.00" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2 style="margin: 0 0 24px 0; font-size: 18px; color: var(--text-primary);">Payment Schedule</h2>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="padding: 16px; background: rgba(0, 168, 107, 0.1); border-left: 3px solid var(--success-color); border-radius: 8px;">
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Monthly Payment</p>
+                    <p style="margin: 6px 0 0 0; color: var(--success-color); font-weight: 600; font-size: 18px;">₵{{ lease.monthly_rent|default:"0.00" }}</p>
+                </div>
+
+                <div style="padding: 16px; background: rgba(240, 165, 0, 0.1); border-left: 3px solid var(--warning-color); border-radius: 8px;">
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Next Due</p>
+                    <p style="margin: 6px 0 0 0; color: var(--warning-color); font-weight: 600;">{{ lease.next_payment_due|date:"M d, Y"|default:"N/A" }}</p>
+                </div>
+
+                <div style="padding: 16px; background: rgba(96, 165, 250, 0.1); border-left: 3px solid var(--info-color); border-radius: 8px;">
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Payment Frequency</p>
+                    <p style="margin: 6px 0 0 0; color: var(--info-color); font-weight: 600;">{{ lease.payment_frequency|default:"Monthly" }}</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <div class="glass-card">
+        <h2 style="margin: 0 0 24px 0; font-size: 18px; color: var(--text-primary);">Terms & Conditions</h2>
+        <div style="padding: 20px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+            <p style="margin: 0 0 16px 0;">
+                This lease agreement outlines the terms and conditions for your tenancy. Please review all terms carefully before signing.
+            </p>
+            <ul style="margin: 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">Rent is due on the {{ lease.rent_due_day|default:"1st" }} of each month</li>
+                <li style="margin-bottom: 8px;">Late payment fees apply after {{ lease.grace_period|default:"5" }} days</li>
+                <li style="margin-bottom: 8px;">Property maintenance is the responsibility of the landlord</li>
+                <li style="margin-bottom: 8px;">Tenant must maintain the unit in good condition</li>
+                <li>Either party may terminate with {{ lease.notice_period|default:"30" }} days written notice</li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 32px;">
+        <a href="/tenant/lease/download/" class="btn-glass-primary" style="flex: 1; padding: 12px 24px; text-decoration: none; text-align: center; font-size: 14px;">
+            <i class="ph ph-download" style="margin-right: 8px;"></i>Download PDF
+        </a>
+        <a href="/tenant/chat/" class="btn-glass-secondary" style="flex: 1; padding: 12px 24px; text-decoration: none; text-align: center; font-size: 14px;">
+            <i class="ph ph-chat-dots" style="margin-right: 8px;"></i>Contact Landlord
+        </a>
+    </div>
+{% else %}
+    <div class="glass-card" style="padding: 60px 40px; text-align: center;">
+        <div style="font-size: 48px; margin-bottom: 16px;">📋</div>
+        <h2 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 18px;">No active lease</h2>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 14px;">You don't have an active lease agreement</p>
+    </div>
+{% endif %}
 {% endblock %}
