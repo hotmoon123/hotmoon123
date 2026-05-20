@@ -10,7 +10,9 @@
       "Bash(mysql -u root -e \"DROP DATABASE IF EXISTS rent_lease_db;\")",
       "Bash(mysql -u root -e \"CREATE DATABASE rent_lease_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\")",
       "Bash(sudo /opt/lampp/lampp start)",
-      "Bash(awk '{print $NF}')"
+      "Bash(awk '{print $NF}')",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Add comprehensive frontend specification documentation *)"
     ]
   }
 }

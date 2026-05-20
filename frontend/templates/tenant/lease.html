@@ -1,35 +1,33 @@
 {% extends "base_tenant.html" %}
 
-{% block title %}My Lease - RentFlow{% endblock %}
+{% block title %}Lease — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Lease Agreement</h1>
-    <p>Your rental contract and terms</p>
+    <div>
+        <h1 class="page-title">Lease details</h1>
+        <p class="page-subtitle">Review your agreement, rental terms, and upcoming renewal timeline.</p>
+    </div>
+    <a href="/tenant/lease/download/" class="button">Download lease</a>
 </div>
 
-<div class="grid grid-2">
+<div class="grid-cols-2">
     <div class="card">
-        <h2>Lease Details</h2>
-        <p><strong>Property:</strong> <span class="text-muted">Not assigned</span></p>
-        <p><strong>Landlord:</strong> <span class="text-muted">Not assigned</span></p>
-        <p><strong>Start Date:</strong> <span class="text-muted">—</span></p>
-        <p><strong>End Date:</strong> <span class="text-muted">—</span></p>
-        <p><strong>Monthly Rent:</strong> <span class="font-bold">₵ 0.00</span></p>
-        <p><strong>Deposit Amount:</strong> <span class="font-bold">₵ 0.00</span></p>
-        <p><strong>Status:</strong> <span class="badge badge-warning">Pending Signature</span></p>
+        <h2 class="card-title">Lease summary</h2>
+        <div class="input-group">
+            <div class="form-group"><label>Property</label><input value="{{ lease.property_name }}" disabled></div>
+            <div class="form-group"><label>Unit</label><input value="{{ lease.unit_name }}" disabled></div>
+            <div class="form-group"><label>Start date</label><input value="{{ lease.start_date|date:'M d, Y' }}" disabled></div>
+            <div class="form-group"><label>End date</label><input value="{{ lease.end_date|date:'M d, Y' }}" disabled></div>
+            <div class="form-group"><label>Monthly rent</label><input value="GHS {{ lease.monthly_rent }}" disabled></div>
+        </div>
     </div>
-
     <div class="card">
-        <h2>Actions</h2>
-        <button class="button button-block">📄 View Full Agreement</button>
-        <button class="button button-block" style="margin-top: 1rem;">✍️ Sign Lease</button>
-        <button class="button button-secondary button-block" style="margin-top: 1rem;">📥 Download PDF</button>
+        <h2 class="card-title">Payment cadence</h2>
+        <div class="form-group"><label>Next payment</label><input value="GHS {{ lease.next_payment_amount }}" disabled></div>
+        <div class="form-group"><label>Next due</label><input value="{{ lease.next_payment_due|date:'M d, Y' }}" disabled></div>
+        <div class="form-group"><label>Lease status</label><input value="{{ lease.status }}" disabled></div>
+        <div class="form-group"><label>Security deposit</label><input value="GHS {{ lease.deposit_amount }}" disabled></div>
     </div>
-</div>
-
-<div class="card">
-    <h2>Lease Terms</h2>
-    <p class="text-muted">No lease agreement assigned yet. Your landlord will send you a lease agreement to review and sign.</p>
 </div>
 {% endblock %}

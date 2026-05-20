@@ -1,31 +1,75 @@
 {% extends "base_landlord.html" %}
 
-{% block title %}Messages - RentFlow{% endblock %}
+{% block title %}Chat — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Messages</h1>
-    <p>Communicate directly with your tenants</p>
+    <div>
+        <h1 class="page-title">Communication Center</h1>
+        <p class="page-subtitle">Centralize landlord-to-tenant messaging, notices, and support threads.</p>
+    </div>
 </div>
 
-<div class="grid grid-3" style="gap: 0;">
-    <div class="card" style="border-radius: 8px 0 0 8px; margin-bottom: 0;">
-        <h3>Conversations</h3>
-        <div style="margin-top: 1rem;">
-            <div style="padding: 0.75rem; border-bottom: 1px solid var(--color-border); cursor: pointer;">
-                <p class="mb-0 font-semibold">No conversations</p>
-                <p class="mb-0 text-muted" style="font-size: 0.875rem;">Start a new conversation</p>
+<div class="card-grid card-grid-2">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">Recent messages</h2>
+                <p class="card-meta">Live communication from tenants and service teams.</p>
             </div>
         </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tenant</th>
+                        <th>Subject</th>
+                        <th>Last message</th>
+                        <th>Viewed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for thread in chat_threads %}
+                    <tr>
+                        <td>{{ thread.tenant_name }}</td>
+                        <td>{{ thread.subject }}</td>
+                        <td>{{ thread.last_message|truncatechars:40 }}</td>
+                        <td>{{ thread.viewed|yesno:'Yes,No' }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No chat threads yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="card" style="border-radius: 0; margin-bottom: 0; grid-column: 2 / 4; min-height: 400px; display: flex; flex-direction: column;">
-        <h3>Messages</h3>
-        <div style="flex: 1; color: var(--color-text-light); display: flex; align-items: center; justify-content: center;">
-            Select a conversation to view messages
-        </div>
-        <div style="border-top: 1px solid var(--color-border); padding-top: 1rem;">
-            <input type="text" placeholder="Type message..." style="margin-bottom: 0;">
-        </div>
+    <div class="card">
+        <h2 class="card-title">Composer</h2>
+        <form class="form-card" method="POST" action="/landlord/chat/">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="recipient">Send message to</label>
+                <select id="recipient" name="recipient">
+                    <option value="" selected>Select tenant or team</option>
+                    {% for tenant in tenants %}
+                    <option value="{{ tenant.id }}">{{ tenant.full_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" type="text" placeholder="Maintenance request, Lease update, etc.">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Write your message..."></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="button">Send message</button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

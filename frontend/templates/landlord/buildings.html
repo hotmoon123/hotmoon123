@@ -1,54 +1,52 @@
 {% extends "base_landlord.html" %}
 
-{% block title %}Buildings - RentFlow{% endblock %}
+{% block title %}Buildings — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div>
-        <h1>Buildings</h1>
-        <p>Manage your property buildings and complexes</p>
+        <h1 class="page-title">Buildings Portfolio</h1>
+        <p class="page-subtitle">Manage every block, structure, and building asset in a single elegant view.</p>
     </div>
-    <a href="#" class="button">+ Add Building</a>
-</div>
-
-<div class="grid grid-2">
-    <div class="card">
-        <div class="card-header">
-            <h3>Building Name</h3>
-            <span class="badge badge-active">Active</span>
-        </div>
-        <div class="card-body">
-            <p><strong>Address:</strong> TBD</p>
-            <p><strong>Units:</strong> 0</p>
-            <p><strong>Occupancy:</strong> 0%</p>
-        </div>
-        <div class="card-footer flex flex-between">
-            <a href="#" class="button button-small">View</a>
-            <a href="#" class="button button-small button-secondary">Edit</a>
-        </div>
-    </div>
+    <a href="/properties/create/" class="button">Add new building</a>
 </div>
 
 <div class="card">
     <div class="card-header">
-        <h2>All Buildings</h2>
+        <div>
+            <h2 class="card-title">Active buildings</h2>
+            <p class="card-meta">Track occupancy, maintenance status, and monthly revenue for each building.</p>
+        </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Building Name</th>
-                <th>Address</th>
-                <th>Units</th>
-                <th>Occupancy</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="6" class="text-center text-muted">No buildings added yet. <a href="#">Add one</a></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Building name</th>
+                    <th>Units</th>
+                    <th>City</th>
+                    <th>Occupancy</th>
+                    <th>Monthly revenue</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for building in buildings %}
+                <tr>
+                    <td>{{ building.name }}</td>
+                    <td>{{ building.unit_count }}</td>
+                    <td>{{ building.city }}</td>
+                    <td><span class="badge badge-info">{{ building.occupancy_rate }}%</span></td>
+                    <td>GHS {{ building.monthly_revenue }}</td>
+                    <td><span class="badge {% if building.status == 'active' %}badge-success{% elif building.status == 'maintenance' %}badge-warning{% else %}badge-danger{% endif %}">{{ building.status|title }}</span></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No buildings have been added yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

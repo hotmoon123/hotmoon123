@@ -1,20 +1,31 @@
 {% extends "base_tenant.html" %}
 
-{% block title %}Notice Board - RentFlow{% endblock %}
+{% block title %}Notice Board — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Notice Board</h1>
-    <p>Announcements from your landlord</p>
+    <div>
+        <h1 class="page-title">Notice board</h1>
+        <p class="page-subtitle">Read official announcements from your landlord and property management team.</p>
+    </div>
 </div>
 
-<div class="card">
-    <h2>Important Notices</h2>
-    <p class="text-muted" style="margin-top: 1rem;">No notices posted yet. Your landlord will share announcements here.</p>
-</div>
-
-<div class="card">
-    <h2>Previous Notices</h2>
-    <p class="text-muted">No previous notices available.</p>
+<div class="card-grid card-grid-2">
+    {% for notice in notices %}
+    <article class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">{{ notice.title }}</h2>
+                <p class="card-meta">Published on {{ notice.created_at|date:'M d, Y' }} • {{ notice.category }}</p>
+            </div>
+        </div>
+        <p class="text-muted">{{ notice.summary|truncatechars:140 }}</p>
+        <a href="/tenant/notice-board/{{ notice.id }}/" class="button button-secondary">Read more</a>
+    </article>
+    {% empty %}
+    <div class="card">
+        <p class="text-center text-muted">No notices have been shared yet.</p>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}

@@ -15,9 +15,7 @@ from apps.maintenance import views as maintenance_views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # ═══════════════════════════════════════════════════════════════
-    # PUBLIC PAGES (Guest Access)
-    # ═══════════════════════════════════════════════════════════════
+    # PUBLIC PAGES
     path('', user_views.home_view, name='home'),
     path('login/', user_views.login_view, name='login'),
     path('register/', user_views.register_view, name='register'),
@@ -25,18 +23,14 @@ urlpatterns = [
     path('reset-password/', user_views.reset_password_view, name='reset_password'),
     path('logout/', user_views.logout_view, name='logout'),
 
-    # ═══════════════════════════════════════════════════════════════
-    # AUTHENTICATION ACTIONS (POST → JsonResponse)
-    # ═══════════════════════════════════════════════════════════════
+    # AUTHENTICATION ACTIONS
     path('auth/register/', user_views.register_view, name='auth_register'),
     path('auth/login/', user_views.login_view, name='auth_login'),
     path('auth/logout/', user_views.logout_view, name='auth_logout'),
     path('auth/forgot-password/', user_views.forgot_password_action_view, name='auth_forgot_password'),
     path('auth/reset-password/', user_views.reset_password_action_view, name='auth_reset_password'),
 
-    # ═══════════════════════════════════════════════════════════════
-    # LANDLORD DASHBOARD & PROPERTIES (Function-Based Views + View-Level Security)
-    # ═══════════════════════════════════════════════════════════════
+    # LANDLORD DASHBOARD
     path('landlord/dashboard/', property_views.landlord_dashboard_view, name='landlord_dashboard'),
     path('landlord/properties/', property_views.properties_list_view, name='landlord_properties'),
     path('landlord/buildings/', property_views.buildings_view, name='landlord_buildings'),
@@ -52,45 +46,7 @@ urlpatterns = [
     path('landlord/automations/', property_views.automations_view, name='landlord_automations'),
     path('landlord/settings/', property_views.settings_view, name='landlord_settings'),
 
-    # ═══════════════════════════════════════════════════════════════
-    # PROPERTIES (CRUD Operations)
-    # ═══════════════════════════════════════════════════════════════
-    path('properties/list/', property_views.properties_list_view, name='properties_list'),
-    path('properties/create/', property_views.properties_create_view, name='properties_create'),
-    path('properties/<uuid:property_id>/detail/', property_views.properties_detail_view, name='properties_detail'),
-    path('properties/<uuid:property_id>/update/', property_views.properties_update_view, name='properties_update'),
-    path('properties/<uuid:property_id>/delete/', property_views.properties_delete_view, name='properties_delete'),
-
-    # ═══════════════════════════════════════════════════════════════
-    # LEASES
-    # ═══════════════════════════════════════════════════════════════
-    path('leases/list/', lease_views.leases_list_view, name='leases_list'),
-    path('leases/create/', lease_views.leases_create_view, name='leases_create'),
-    path('leases/<uuid:lease_id>/detail/', lease_views.leases_detail_view, name='leases_detail'),
-    path('leases/<uuid:lease_id>/sign/', lease_views.leases_sign_view, name='leases_sign'),
-    path('leases/<uuid:lease_id>/invite/', lease_views.leases_invite_view, name='leases_invite'),
-
-    # ═══════════════════════════════════════════════════════════════
-    # FINANCIALS (Invoices, Expenses, Payments)
-    # ═══════════════════════════════════════════════════════════════
-    path('invoices/list/', financial_views.invoices_list_view, name='invoices_list'),
-    path('invoices/create/', financial_views.invoices_create_view, name='invoices_create'),
-    path('invoices/<uuid:invoice_id>/pay/', financial_views.invoices_pay_view, name='invoices_pay'),
-    path('expenses/list/', financial_views.expenses_list_view, name='expenses_list'),
-    path('expenses/create/', financial_views.expenses_create_view, name='expenses_create'),
-    path('payments/process-momo/', financial_views.process_momo_payment, name='process_momo'),
-
-    # ═══════════════════════════════════════════════════════════════
-    # MAINTENANCE
-    # ═══════════════════════════════════════════════════════════════
-    path('maintenance/list/', maintenance_views.maintenance_list_view, name='maintenance_list'),
-    path('maintenance/create/', maintenance_views.maintenance_create_view, name='maintenance_create'),
-    path('maintenance/<uuid:ticket_id>/detail/', maintenance_views.maintenance_detail_view, name='maintenance_detail'),
-    path('maintenance/<uuid:ticket_id>/update/', maintenance_views.maintenance_update_view, name='maintenance_update'),
-
-    # ═══════════════════════════════════════════════════════════════
     # TENANT DASHBOARD
-    # ═══════════════════════════════════════════════════════════════
     path('tenant/dashboard/', user_views.tenant_dashboard_view, name='tenant_dashboard'),
     path('tenant/payments/', user_views.tenant_payments_view, name='tenant_payments'),
     path('tenant/lease/', user_views.tenant_lease_view, name='tenant_lease'),
@@ -101,9 +57,36 @@ urlpatterns = [
     path('tenant/payment-methods/', user_views.tenant_payment_methods_view, name='tenant_payment_methods'),
     path('tenant/profile/', user_views.tenant_profile_view, name='tenant_profile'),
     path('tenant/history/', user_views.tenant_history_view, name='tenant_history'),
+
+    # PROPERTIES
+    path('properties/list/', property_views.properties_list_view, name='properties_list'),
+    path('properties/create/', property_views.properties_create_view, name='properties_create'),
+    path('properties/<uuid:property_id>/detail/', property_views.properties_detail_view, name='properties_detail'),
+    path('properties/<uuid:property_id>/update/', property_views.properties_update_view, name='properties_update'),
+    path('properties/<uuid:property_id>/delete/', property_views.properties_delete_view, name='properties_delete'),
+
+    # LEASES
+    path('leases/list/', lease_views.leases_list_view, name='leases_list'),
+    path('leases/create/', lease_views.leases_create_view, name='leases_create'),
+    path('leases/<uuid:lease_id>/detail/', lease_views.leases_detail_view, name='leases_detail'),
+    path('leases/<uuid:lease_id>/sign/', lease_views.leases_sign_view, name='leases_sign'),
+    path('leases/<uuid:lease_id>/invite/', lease_views.leases_invite_view, name='leases_invite'),
+
+    # FINANCIALS
+    path('invoices/list/', financial_views.invoices_list_view, name='invoices_list'),
+    path('invoices/create/', financial_views.invoices_create_view, name='invoices_create'),
+    path('invoices/<uuid:invoice_id>/pay/', financial_views.invoices_pay_view, name='invoices_pay'),
+    path('expenses/list/', financial_views.expenses_list_view, name='expenses_list'),
+    path('expenses/create/', financial_views.expenses_create_view, name='expenses_create'),
+    path('payments/process-momo/', financial_views.process_momo_payment, name='process_momo'),
+
+    # MAINTENANCE
+    path('maintenance/list/', maintenance_views.maintenance_list_view, name='maintenance_list'),
+    path('maintenance/create/', maintenance_views.maintenance_create_view, name='maintenance_create'),
+    path('maintenance/<uuid:ticket_id>/detail/', maintenance_views.maintenance_detail_view, name='maintenance_detail'),
+    path('maintenance/<uuid:ticket_id>/update/', maintenance_views.maintenance_update_view, name='maintenance_update'),
 ]
 
-# Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

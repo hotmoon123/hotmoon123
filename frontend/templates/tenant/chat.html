@@ -1,22 +1,46 @@
 {% extends "base_tenant.html" %}
 
-{% block title %}Messages - RentFlow{% endblock %}
+{% block title %}Chat — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Messages with Landlord</h1>
-    <p>Direct communication channel</p>
+    <div>
+        <h1 class="page-title">Tenant chat</h1>
+        <p class="page-subtitle">Keep feedback, maintenance requests and landlord conversations organized in one flow.</p>
+    </div>
 </div>
 
-<div class="card" style="min-height: 500px; display: flex; flex-direction: column;">
-    <div style="flex: 1; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border); overflow-y: auto;">
-        <p class="text-center text-muted" style="padding-top: 2rem;">No messages yet. Start a conversation with your landlord.</p>
-    </div>
-    <div style="padding-top: 1rem;">
-        <div class="form-group" style="margin-bottom: 0;">
-            <input type="text" placeholder="Type your message here..." style="margin-bottom: 0;">
+<div class="card">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">Messages</h2>
+            <p class="card-meta">Latest tenant messages and landlord replies.</p>
         </div>
-        <button class="button button-small" style="margin-top: 0.5rem;">Send Message</button>
+        <a href="/tenant/chat/compose/" class="button">New message</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Conversation</th>
+                    <th>Last update</th>
+                    <th>Unread</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for thread in chat_threads %}
+                <tr>
+                    <td>{{ thread.subject }}</td>
+                    <td>{{ thread.updated_at|date:'M d, Y' }}</td>
+                    <td><span class="badge {% if thread.unread_count > 0 %}badge-warning{% else %}badge-success{% endif %}">{{ thread.unread_count }}</span></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">No conversations yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}

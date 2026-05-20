@@ -1,65 +1,64 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}RentFlow — Tenant Portal{% endblock %}</title>
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/fluency/48/rent.png">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- NAVIGATION BAR -->
     <nav>
-        <div class="brand">
-            🏠 RentFlow
-        </div>
+        <div class="brand"><span>🏠</span> RentFlow Tenant</div>
         <div class="nav-links">
             <a href="/tenant/dashboard/">Dashboard</a>
             <a href="/tenant/payments/">Payments</a>
-            <a href="/tenant/lease/">My Lease</a>
+            <a href="/tenant/lease/">Lease</a>
             <a href="/tenant/maintenance/">Maintenance</a>
         </div>
         <div class="nav-right">
-            <a href="/tenant/profile/">👤 Profile</a>
-            <a href="/logout/">🚪 Logout</a>
+            <a href="/tenant/profile/">Profile</a>
+            <a href="/logout/">Logout</a>
         </div>
     </nav>
 
-    <!-- SIDEBAR NAVIGATION (Simple for Tenants) -->
     <aside class="sidebar">
-        <h3 style="margin-bottom: 1.5rem; color: var(--color-blue-dark);">Menu</h3>
+        <h3>Tenant Portal</h3>
         <ul class="sidebar-nav">
             <li><a href="/tenant/dashboard/" class="{% if request.resolver_match.url_name == 'tenant_dashboard' %}active{% endif %}">📊 Dashboard</a></li>
             <li><a href="/tenant/payments/" class="{% if 'payments' in request.path %}active{% endif %}">💰 Payments</a></li>
-            <li><a href="/tenant/lease/" class="{% if 'lease' in request.path and 'history' not in request.path %}active{% endif %}">📑 My Lease</a></li>
-            <li><a href="/tenant/maintenance/" class="{% if 'maintenance' in request.path and 'landlord' not in request.path %}active{% endif %}">🔧 Maintenance</a></li>
-            <li><a href="/tenant/chat/" class="{% if 'chat' in request.path and 'landlord' not in request.path %}active{% endif %}">💬 Messages</a></li>
-            <li><a href="/tenant/notice-board/" class="{% if 'notice' in request.path %}active{% endif %}">📌 Notices</a></li>
+            <li><a href="/tenant/lease/" class="{% if 'lease' in request.path and 'history' not in request.path %}active{% endif %}">📑 Lease</a></li>
+            <li><a href="/tenant/maintenance/" class="{% if 'maintenance' in request.path %}active{% endif %}">🔧 Maintenance</a></li>
+            <li><a href="/tenant/chat/" class="{% if 'chat' in request.path %}active{% endif %}">💬 Chat</a></li>
+            <li><a href="/tenant/notice-board/" class="{% if 'notice-board' in request.path %}active{% endif %}">📌 Notices</a></li>
             <li><a href="/tenant/compliance/" class="{% if 'compliance' in request.path %}active{% endif %}">📋 Compliance</a></li>
             <li><a href="/tenant/payment-methods/" class="{% if 'payment-methods' in request.path %}active{% endif %}">💳 Payment Methods</a></li>
-            <li><a href="/tenant/profile/" class="{% if 'profile' in request.path %}active{% endif %}">👤 My Profile</a></li>
+            <li><a href="/tenant/profile/" class="{% if 'profile' in request.path %}active{% endif %}">👤 Profile</a></li>
             <li><a href="/tenant/history/" class="{% if 'history' in request.path %}active{% endif %}">📜 History</a></li>
         </ul>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main-content">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-
-        {% block content %}{% endblock %}
+        <div class="main-inner container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags|default:'info' }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 RentFlow CRM. Powered by Regional Maritime University. All rights reserved.</p>
+    <footer class="footer">
+        © 2026 RentFlow CRM · Regional Maritime University · RMU BCE0000725 | BIT00021427 | BIT3105227
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/js/main.js"></script>
     {% block extra_js %}{% endblock %}
 </body>

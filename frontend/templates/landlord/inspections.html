@@ -1,36 +1,44 @@
 {% extends "base_landlord.html" %}
 
-{% block title %}Property Inspections - RentFlow{% endblock %}
+{% block title %}Inspections — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div>
-        <h1>Property Inspections</h1>
-        <p>Schedule and track property inspections</p>
+        <h1 class="page-title">Inspection log</h1>
+        <p class="page-subtitle">Review inspection schedules, outcomes, and maintenance follow-up tasks.</p>
     </div>
-    <a href="#" class="button">📅 Schedule Inspection</a>
+    <a href="/landlord/inspections/new/" class="button">Schedule inspection</a>
 </div>
 
 <div class="card">
-    <div class="card-header">
-        <h2>Inspection Schedule</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Inspection</th>
+                    <th>Property</th>
+                    <th>Date</th>
+                    <th>Result</th>
+                    <th>Next step</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inspection in inspections %}
+                <tr>
+                    <td>{{ inspection.title }}</td>
+                    <td>{{ inspection.property_name }}</td>
+                    <td>{{ inspection.date|date:'M d, Y' }}</td>
+                    <td>{{ inspection.result }}</td>
+                    <td>{{ inspection.next_action }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No inspections scheduled.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Property</th>
-                <th>Inspection Type</th>
-                <th>Scheduled Date</th>
-                <th>Inspector</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="6" class="text-center text-muted">No inspections scheduled yet.</td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 {% endblock %}

@@ -3,289 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Rent & Lease Management{% endblock %}</title>
-    <link rel="stylesheet" href="/static/css/design_system.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-        }
-
-        nav {
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 60px;
-        }
-
-        nav a {
-            color: #333;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 14px;
-        }
-
-        nav a:hover {
-            color: #0066cc;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        .header {
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #0066cc;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .button:hover {
-            background: #0052a3;
-        }
-
-        .button.secondary {
-            background: #f0f0f0;
-            color: #333;
-        }
-
-        .button.secondary:hover {
-            background: #e0e0e0;
-        }
-
-        .button.danger {
-            background: #cc0000;
-        }
-
-        .button.danger:hover {
-            background: #990000;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            font-family: inherit;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #0066cc;
-            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-        }
-
-        .error {
-            color: #cc0000;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .success {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        .table th {
-            background: #f5f5f5;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid #ddd;
-        }
-
-        .table td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .table tr:hover {
-            background: #f9f9f9;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .badge.pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .badge.active {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .badge.paid {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .badge.unpaid {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .badge.partial {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .badge.overdue {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        footer {
-            background: #fff;
-            border-top: 1px solid #ddd;
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-            margin-top: 40px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .stat-card h3 {
-            color: #666;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .stat-card .value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #0066cc;
-        }
-    </style>
+    <title>{% block title %}RentFlow CRM{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/fluency/48/rent.png">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <nav>
-        <div style="display: flex; align-items: center;">
-            <a href="/" style="font-weight: 600; font-size: 16px;">RentFlow</a>
-        </div>
-        <div>
-            {% if request.session.user_role %}
-                <a href="/{% if request.session.user_role == 'landlord' %}landlord{% else %}tenant{% endif %}/dashboard/">Dashboard</a>
-                {% if request.session.user_role == 'landlord' %}
-                    <a href="/properties/list/">Properties</a>
-                    <a href="/leases/list/">Leases</a>
-                    <a href="/invoices/list/">Invoices</a>
-                    <a href="/maintenance/list/">Maintenance</a>
-                {% else %}
-                    <a href="/leases/list/">My Leases</a>
-                    <a href="/invoices/list/">My Invoices</a>
-                    <a href="/maintenance/list/">Maintenance</a>
-                {% endif %}
-                <a href="/logout/">Logout</a>
-            {% else %}
-                <a href="/login/">Login</a>
-                <a href="/register/">Register</a>
-            {% endif %}
+        <div class="brand"><span>🏢</span> RentFlow CRM</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
         </div>
     </nav>
-
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-
-    <footer>
-        <p>&copy; 2026 RentFlow. All rights reserved.</p>
+    <main class="auth-shell">
+        <div class="auth-card animate__animated animate__fadeInUp">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    <footer class="footer">
+        RentFlow CRM · Built for Ghanaian landlords and tenants · RMU BCE0000725 | BIT00021427 | BIT3105227
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/js/main.js"></script>
     {% block extra_js %}{% endblock %}
 </body>

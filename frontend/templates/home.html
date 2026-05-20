@@ -1,44 +1,41 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome to RentFlow{% endblock %}
+{% block title %}RentFlow CRM — Modern Rental Management{% endblock %}
 
 {% block content %}
 <div class="header">
-    <h1>Welcome to RentFlow</h1>
-    <p>Manage your rental properties and leases with ease</p>
+    <h1>RentFlow: Modern rental management for landlords and tenants</h1>
+    <p>Powerful property operations, lease tracking, billing, and maintenance workflows wrapped in a polished dashboard experience.</p>
 </div>
 
 <div class="grid">
     <div class="card">
-        <h3>For Landlords</h3>
-        <p style="color: #666; margin: 10px 0;">Manage properties, leases, invoices, and maintenance requests.</p>
-        <a href="/register/" class="button" style="margin-top: 10px;">Register as Landlord</a>
+        <h3>Landlords</h3>
+        <p>Manage buildings, tenants, leases, invoices and maintenance from one enterprise-ready platform.</p>
+        <a href="/register/" class="button">Register as Landlord</a>
     </div>
     <div class="card">
-        <h3>For Tenants</h3>
-        <p style="color: #666; margin: 10px 0;">View your leases, pay invoices, and submit maintenance requests.</p>
-        <a href="/register/" class="button" style="margin-top: 10px;">Register as Tenant</a>
+        <h3>Tenants</h3>
+        <p>View your lease, pay invoices, request service, and stay informed with tenant-focused tools.</p>
+        <a href="/register/" class="button">Register as Tenant</a>
     </div>
 </div>
 
 <div class="card" style="margin-top: 40px;">
-    <h2>Features</h2>
-    <ul style="list-style: none;">
-        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
-            <strong>Property Management</strong> - Add and manage multiple properties
-        </li>
-        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
-            <strong>Lease Creation</strong> - Create and manage lease agreements
-        </li>
-        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
-            <strong>Invoicing</strong> - Generate and track invoices
-        </li>
-        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
-            <strong>Payment Tracking</strong> - Track payments via MoMo and other methods
-        </li>
-        <li style="padding: 10px 0;">
-            <strong>Maintenance Requests</strong> - Submit and track maintenance issues
-        </li>
-    </ul>
+    <h2>Why RentFlow?</h2>
+    <div class="grid">
+        <div class="stat-card">
+            <h3>Control all workflows</h3>
+            <p>One coherent system for property operations, lease management, invoicing and repair tracking.</p>
+        </div>
+        <div class="stat-card">
+            <h3>Enterprise polish</h3>
+            <p>A crisp white/navy design system built for clarity, trust, and fast decision-making.</p>
+        </div>
+        <div class="stat-card">
+            <h3>Tenant-first</h3>
+            <p>Tenants get a clean portal for payments, notices, maintenance and lease details.</p>
+        </div>
+    </div>
 </div>
 {% endblock %}

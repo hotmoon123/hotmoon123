@@ -1,32 +1,51 @@
 {% extends "base_tenant.html" %}
 
-{% block title %}Compliance Documents - RentFlow{% endblock %}
+{% block title %}Compliance — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Compliance Documents</h1>
-    <p>Required documents and certifications</p>
+    <div>
+        <h1 class="page-title">Compliance checklist</h1>
+        <p class="page-subtitle">Complete tenant requirements, rules, and documentation tasks for your lease.</p>
+    </div>
 </div>
 
 <div class="card">
-    <div class="card-header">
-        <h2>Document Requirements</h2>
+    <h2 class="card-title">Required actions</h2>
+    <div class="input-group">
+        {% for item in compliance_items %}
+        <label class="form-group"><input type="checkbox" {% if item.completed %}checked{% endif %} disabled> {{ item.label }}</label>
+        {% empty %}
+        <p class="text-muted">No compliance items available.</p>
+        {% endfor %}
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Document</th>
-                <th>Document Type</th>
-                <th>Required By</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="5" class="text-center text-muted">No documents required at this time.</td>
-            </tr>
-        </tbody>
-    </table>
+</div>
+
+<div class="card">
+    <h2 class="card-title">Document status</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Document</th>
+                    <th>Status</th>
+                    <th>Uploaded</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in compliance_documents %}
+                <tr>
+                    <td>{{ doc.name }}</td>
+                    <td><span class="badge {% if doc.status == 'Verified' %}badge-success{% else %}badge-warning{% endif %}">{{ doc.status }}</span></td>
+                    <td>{{ doc.uploaded_at|date:'M d, Y' }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">No documents uploaded.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

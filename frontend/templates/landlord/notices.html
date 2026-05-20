@@ -1,35 +1,42 @@
 {% extends "base_landlord.html" %}
 
-{% block title %}Notices - RentFlow{% endblock %}
+{% block title %}Notices — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div>
-        <h1>Notices</h1>
-        <p>Send important announcements to your tenants</p>
+        <h1 class="page-title">Notice board</h1>
+        <p class="page-subtitle">Create and publish announcements for tenants, property teams, and managers.</p>
     </div>
-    <a href="#" class="button">📨 Send Notice</a>
+    <a href="/landlord/notices/new/" class="button">New notice</a>
 </div>
 
 <div class="card">
-    <div class="card-header">
-        <h2>Notice History</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Headline</th>
+                    <th>Published</th>
+                    <th>Target group</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notice in notices %}
+                <tr>
+                    <td>{{ notice.title }}</td>
+                    <td>{{ notice.created_at|date:'M d, Y' }}</td>
+                    <td>{{ notice.target }}</td>
+                    <td><span class="badge {% if notice.active %}badge-success{% else %}badge-warning{% endif %}">{{ notice.active|yesno:'Active,Draft' }}</span></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No notices published yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Notice Title</th>
-                <th>Recipients</th>
-                <th>Date Sent</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="5" class="text-center text-muted">No notices sent yet.</td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 {% endblock %}

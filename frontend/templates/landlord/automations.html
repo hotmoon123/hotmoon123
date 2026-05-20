@@ -1,36 +1,55 @@
 {% extends "base_landlord.html" %}
 
-{% block title %}Automations - RentFlow{% endblock %}
+{% block title %}Automations — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div>
-        <h1>Automation Rules</h1>
-        <p>Automate repetitive tasks and workflows</p>
+        <h1 class="page-title">Automations</h1>
+        <p class="page-subtitle">Build recurring checklists, notification flows, and action triggers for your property operations.</p>
     </div>
-    <a href="#" class="button">➕ Create Rule</a>
+    <a href="/landlord/automations/new/" class="button">Create automation</a>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        <h2>Active Rules</h2>
+<div class="grid-cols-2">
+    <div class="card">
+        <h2 class="card-title">Active workflows</h2>
+        <p class="card-meta">Current automation rules managing reminders and tenant alerts.</p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Trigger</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flow in automations %}
+                    <tr>
+                        <td>{{ flow.name }}</td>
+                        <td>{{ flow.trigger }}</td>
+                        <td><span class="badge {% if flow.enabled %}badge-success{% else %}badge-warning{% endif %}">{{ flow.enabled|yesno:'Enabled,Paused' }}</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center">No automation rules configured.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Rule Name</th>
-                <th>Trigger Event</th>
-                <th>Action</th>
-                <th>Frequency</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="6" class="text-center text-muted">No automation rules created yet.</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <h2 class="card-title">Workflow preview</h2>
+        <p class="card-meta">Instantly see the latest action results from your automation engine.</p>
+        <ul class="input-group">
+            {% for action in automation_events %}
+            <li class="status-pill {% if action.status == 'sent' %}positive{% elif action.status == 'pending' %}warning{% else %}danger{% endif %}">{{ action.summary }}</li>
+            {% empty %}
+            <li class="text-center text-muted">No automation events to display.</li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 {% endblock %}

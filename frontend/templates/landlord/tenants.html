@@ -1,36 +1,67 @@
 {% extends "base_landlord.html" %}
 
-{% block title %}Tenants - RentFlow{% endblock %}
+{% block title %}Tenants — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div>
-        <h1>Tenants</h1>
-        <p>View all tenants across your properties</p>
+        <h1 class="page-title">Tenant Directory</h1>
+        <p class="page-subtitle">Review all active leases, contact details, and move-in status in one structured panel.</p>
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        <h2>Active Tenants</h2>
-        <input type="text" placeholder="Search tenants..." style="width: 250px;">
+<div class="card-grid card-grid-2">
+    <div class="card">
+        <h2 class="card-title">Tenant snapshot</h2>
+        <p class="card-meta">Quick metrics for occupancy, renewals, and arrears.</p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total tenants</h3>
+                <div class="value">{{ tenants_count|default:'0' }}</div>
+            </div>
+            <div class="stat-card">
+                <h3>Onboarded this month</h3>
+                <div class="value">{{ tenants_new|default:'0' }}</div>
+            </div>
+            <div class="stat-card">
+                <h3>Lease renewals</h3>
+                <div class="value">{{ renewal_count|default:'0' }}</div>
+            </div>
+            <div class="stat-card">
+                <h3>Rent overdue</h3>
+                <div class="value">GHS {{ overdue_amount|default:'0.00' }}</div>
+            </div>
+        </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Property</th>
-                <th>Lease Status</th>
-                <th>Contact</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="6" class="text-center text-muted">No tenants assigned yet.</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <h2 class="card-title">Latest applicants</h2>
+        <p class="card-meta">Recent tenant applications awaiting verification.</p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Unit</th>
+                        <th>Lease status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tenant in tenants|slice:':5' %}
+                    <tr>
+                        <td>{{ tenant.full_name }}</td>
+                        <td>{{ tenant.unit_reference }}</td>
+                        <td><span class="badge badge-info">{{ tenant.status }}</span></td>
+                        <td><a href="/landlord/tenants/?tenant={{ tenant.id }}" class="button button-secondary">Review</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No tenant records available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {% endblock %}

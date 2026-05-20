@@ -1,40 +1,31 @@
 {% extends "base_tenant.html" %}
 
-{% block title %}Payment Methods - RentFlow{% endblock %}
+{% block title %}Payment Methods — RentFlow{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div>
-        <h1>Payment Methods</h1>
-        <p>Manage your saved payment options</p>
+        <h1 class="page-title">Payment methods</h1>
+        <p class="page-subtitle">Store your mobile money accounts, bank transfers, or card details securely.</p>
     </div>
-    <a href="#" class="button">➕ Add Payment Method</a>
+    <a href="/tenant/payment-methods/add/" class="button">Add payment method</a>
 </div>
 
-<div class="card">
-    <h2>Saved Payment Methods</h2>
-    <p class="text-muted" style="margin-top: 1rem;">No payment methods saved yet. Add one to make payments easier.</p>
-</div>
-
-<div class="card">
-    <h2>Available Payment Options</h2>
-    <div class="grid grid-2">
-        <div style="padding: 1rem; border: 1px solid var(--color-border); border-radius: 6px;">
-            <h3>📱 MTN Mobile Money</h3>
-            <p class="text-muted">Pay directly from your MTN mobile money account</p>
+<div class="grid-cols-2">
+    {% for method in payment_methods %}
+    <div class="card">
+        <h2 class="card-title">{{ method.type }}</h2>
+        <p class="card-meta">{{ method.provider }} • Expires {{ method.expiry }}</p>
+        <div class="input-group">
+            <div class="form-group"><label>Account</label><input value="{{ method.account }}" disabled></div>
+            <div class="form-group"><label>Default</label><input value="{{ method.is_default|yesno:'Yes,No' }}" disabled></div>
         </div>
-        <div style="padding: 1rem; border: 1px solid var(--color-border); border-radius: 6px;">
-            <h3>📱 Telecel Cash</h3>
-            <p class="text-muted">Pay using Telecel Cash mobile money service</p>
-        </div>
-        <div style="padding: 1rem; border: 1px solid var(--color-border); border-radius: 6px;">
-            <h3>📱 Vodafone Cash</h3>
-            <p class="text-muted">Pay via Vodafone Cash mobile money</p>
-        </div>
-        <div style="padding: 1rem; border: 1px solid var(--color-border); border-radius: 6px;">
-            <h3>🏦 Bank Transfer</h3>
-            <p class="text-muted">Direct bank-to-bank transfer option</p>
-        </div>
+        <a href="/tenant/payment-methods/{{ method.id }}/edit/" class="button button-secondary">Edit method</a>
     </div>
+    {% empty %}
+    <div class="card">
+        <p class="text-center text-muted">No payment methods saved yet.</p>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
