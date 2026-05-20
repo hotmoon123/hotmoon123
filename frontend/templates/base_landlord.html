@@ -5,64 +5,227 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}RentFlow — Landlord Dashboard{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- ── GOOGLE FONTS ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- ── CORE CSS ── -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- ── PHOSPHOR ICONS ── -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+    <!-- ── CHART.JS ── -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- ── AOS (SCROLL ANIMATIONS) ── -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <!-- ── ANIMATE.CSS ── -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- ── TOASTIFY (NOTIFICATIONS) ── -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- ── FLATPICKR (DATE PICKER) ── -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- ── COUNTUP.JS (NUMBER COUNTERS) ── -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.min.js"></script>
+
+    <!-- ── FAVICON ── -->
     <link rel="icon" type="image/x-icon" href="https://img.icons8.com/fluency/48/rent.png">
+
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <nav>
-        <div class="brand"><span>🏢</span> RentFlow Landlord</div>
-        <div class="nav-links">
-            <a href="/landlord/dashboard/">Dashboard</a>
-            <a href="/landlord/properties/">Properties</a>
-            <a href="/landlord/leases/">Leases</a>
-            <a href="/landlord/maintenance/">Maintenance</a>
+    <!-- ── BACKGROUND ORBS (PARALLAX DEPTH) ── -->
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <div class="app-layout">
+        <!-- ══════════════════════════════════════════════════════════
+             SIDEBAR NAVIGATION (GLASS)
+             ══════════════════════════════════════════════════════════ -->
+        <aside class="sidebar glass-sidebar">
+            <div class="sidebar-logo">
+                <span style="font-size: 24px; margin-right: 8px;">🏢</span>
+                <span class="sidebar-logo-text">
+                    Rent<span class="sidebar-logo-dot">Flow</span>
+                </span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <!-- ── MAIN SECTION ── -->
+                <div class="nav-section-label">Main</div>
+                <a href="/landlord/dashboard/" class="nav-item {% if request.resolver_match.url_name == 'landlord_dashboard' %}active{% endif %}">
+                    <i class="ph ph-chart-bar-horizontal"></i>
+                    Dashboard
+                </a>
+
+                <!-- ── PROPERTIES SECTION ── -->
+                <div class="nav-section-label" style="margin-top: 20px;">Properties</div>
+                <a href="/landlord/properties/" class="nav-item {% if 'properties' in request.path %}active{% endif %}">
+                    <i class="ph ph-house"></i>
+                    Properties
+                </a>
+                <a href="/landlord/buildings/" class="nav-item {% if 'buildings' in request.path %}active{% endif %}">
+                    <i class="ph ph-buildings"></i>
+                    Buildings
+                </a>
+
+                <!-- ── LEASE SECTION ── -->
+                <div class="nav-section-label" style="margin-top: 20px;">Leases & Tenants</div>
+                <a href="/landlord/leases/" class="nav-item {% if 'leases' in request.path %}active{% endif %}">
+                    <i class="ph ph-file-text"></i>
+                    Leases
+                </a>
+                <a href="/landlord/tenants/" class="nav-item {% if 'tenants' in request.path %}active{% endif %}">
+                    <i class="ph ph-users"></i>
+                    Tenants
+                </a>
+
+                <!-- ── FINANCIALS SECTION ── -->
+                <div class="nav-section-label" style="margin-top: 20px;">Financials</div>
+                <a href="/landlord/financials/" class="nav-item {% if 'financials' in request.path %}active{% endif %}">
+                    <i class="ph ph-wallet"></i>
+                    Financials
+                </a>
+                <a href="/landlord/analytics/" class="nav-item {% if 'analytics' in request.path %}active{% endif %}">
+                    <i class="ph ph-chart-line"></i>
+                    Analytics
+                </a>
+
+                <!-- ── OPERATIONS SECTION ── -->
+                <div class="nav-section-label" style="margin-top: 20px;">Operations</div>
+                <a href="/landlord/maintenance/" class="nav-item {% if 'maintenance' in request.path %}active{% endif %}">
+                    <i class="ph ph-wrench"></i>
+                    Maintenance
+                </a>
+                <a href="/landlord/chat/" class="nav-item {% if 'chat' in request.path %}active{% endif %}">
+                    <i class="ph ph-chat-dots"></i>
+                    Messages
+                </a>
+                <a href="/landlord/documents/" class="nav-item {% if 'documents' in request.path %}active{% endif %}">
+                    <i class="ph ph-file"></i>
+                    Documents
+                </a>
+
+                <!-- ── MANAGEMENT SECTION ── -->
+                <div class="nav-section-label" style="margin-top: 20px;">Management</div>
+                <a href="/landlord/notices/" class="nav-item {% if 'notices' in request.path %}active{% endif %}">
+                    <i class="ph ph-bell"></i>
+                    Notices
+                </a>
+                <a href="/landlord/inspections/" class="nav-item {% if 'inspections' in request.path %}active{% endif %}">
+                    <i class="ph ph-magnifying-glass"></i>
+                    Inspections
+                </a>
+                <a href="/landlord/automations/" class="nav-item {% if 'automations' in request.path %}active{% endif %}">
+                    <i class="ph ph-gear"></i>
+                    Automations
+                </a>
+
+                <!-- ── SETTINGS SECTION ── -->
+                <div class="nav-section-label" style="margin-top: 20px;">Settings</div>
+                <a href="/landlord/settings/" class="nav-item {% if 'settings' in request.path %}active{% endif %}">
+                    <i class="ph ph-sliders-horizontal"></i>
+                    Settings
+                </a>
+                <a href="/logout/" class="nav-item">
+                    <i class="ph ph-sign-out"></i>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- ══════════════════════════════════════════════════════════
+             MAIN CONTENT AREA
+             ══════════════════════════════════════════════════════════ -->
+        <div class="main-content">
+            <!-- ── TOP BAR (GLASS) ── -->
+            <div class="topbar glass-navbar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <h2 style="margin: 0; font-size: 18px; color: rgba(255,255,255,0.90);">
+                        {% block page_title %}Landlord Dashboard{% endblock %}
+                    </h2>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <!-- Notifications -->
+                    <button style="background: none; border: none; color: rgba(255,255,255,0.70); cursor: pointer; font-size: 20px; transition: color 0.25s ease;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='rgba(255,255,255,0.70)'">
+                        <i class="ph ph-bell"></i>
+                    </button>
+
+                    <!-- User Avatar -->
+                    <div class="avatar" title="Profile">
+                        {{ request.session.user_name|first|upper }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── PAGE CONTENT ── -->
+            <div class="page-content">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="glass-alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
+                            <i class="ph ph-check-circle"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </div>
         </div>
-        <div class="nav-right">
-            <a href="/landlord/settings/">Settings</a>
-            <a href="/logout/">Logout</a>
-        </div>
-    </nav>
+    </div>
 
-    <aside class="sidebar">
-        <h3>Landlord Control</h3>
-        <ul class="sidebar-nav">
-            <li><a href="/landlord/dashboard/" class="{% if request.resolver_match.url_name == 'landlord_dashboard' %}active{% endif %}">📊 Dashboard</a></li>
-            <li><a href="/landlord/properties/" class="{% if 'properties' in request.path %}active{% endif %}">🏠 Properties</a></li>
-            <li><a href="/landlord/buildings/" class="{% if 'buildings' in request.path %}active{% endif %}">🏗️ Buildings</a></li>
-            <li><a href="/landlord/leases/" class="{% if 'leases' in request.path %}active{% endif %}">📄 Leases</a></li>
-            <li><a href="/landlord/tenants/" class="{% if 'tenants' in request.path %}active{% endif %}">👥 Tenants</a></li>
-            <li><a href="/landlord/financials/" class="{% if 'financials' in request.path %}active{% endif %}">💰 Financials</a></li>
-            <li><a href="/landlord/analytics/" class="{% if 'analytics' in request.path %}active{% endif %}">📈 Analytics</a></li>
-            <li><a href="/landlord/documents/" class="{% if 'documents' in request.path %}active{% endif %}">📄 Documents</a></li>
-            <li><a href="/landlord/chat/" class="{% if 'chat' in request.path %}active{% endif %}">💬 Chat</a></li>
-            <li><a href="/landlord/notices/" class="{% if 'notices' in request.path %}active{% endif %}">📌 Notices</a></li>
-            <li><a href="/landlord/inspections/" class="{% if 'inspections' in request.path %}active{% endif %}">🔍 Inspections</a></li>
-            <li><a href="/landlord/automations/" class="{% if 'automations' in request.path %}active{% endif %}">⚙️ Automations</a></li>
-            <li><a href="/landlord/settings/" class="{% if 'settings' in request.path %}active{% endif %}">⚙️ Settings</a></li>
-        </ul>
-    </aside>
+    <!-- ── SHARED JAVASCRIPT ── -->
+    <script src="{% static 'js/main.js' %}"></script>
 
-    <main class="main-content">
-        <div class="main-inner container">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags|default:'info' }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            {% block content %}{% endblock %}
-        </div>
-    </main>
+    <!-- ── INITIALIZE AOS (ANIMATIONS ON SCROLL) ── -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 600,
+                easing: 'ease-out-cubic',
+                once: true
+            });
 
-    <footer class="footer">
-        © 2026 RentFlow CRM · Regional Maritime University · RMU BCE0000725 | BIT00021427 | BIT3105227
-    </footer>
+            // Initialize Phosphor Icons
+            PIcon.replace();
+        });
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/static/js/main.js"></script>
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function showToast(message, type = 'success') {
+            const colors = {
+                success: '#34D399',
+                error:   '#F87171',
+                warning: '#FCD34D',
+                info:    '#60A5FA',
+            };
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: 'top',
+                position: 'right',
+                style: { background: colors[type] || colors.info },
+                stopOnFocus: true,
+            }).showToast();
+        }
+    </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>
