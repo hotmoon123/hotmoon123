@@ -1,97 +1,139 @@
-{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — RentFlow CRM</title>
 
-{% block title %}Register - RentFlow{% endblock %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
 
-{% block content %}
-<div style="max-width: 400px; margin: 40px auto;">
-    <div class="card">
-        <h2>Register for RentFlow</h2>
-        <form id="registerForm">
-            <div class="form-group">
-                <label for="userType">I am a</label>
-                <select id="userType" name="user_type" required>
-                    <option value="">Select...</option>
-                    <option value="landlord">Landlord</option>
-                    <option value="tenant">Tenant</option>
-                </select>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/fluency/48/rent.png">
+</head>
+<body>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <div class="auth-page">
+        <div class="auth-card">
+            <div style="text-align: center; margin-bottom: 32px;">
+                <div style="font-size: 32px; margin-bottom: 12px;">🏢</div>
+                <h1 style="font-size: 24px; font-weight: 700; color: var(--text-primary); margin: 0;">RentFlow</h1>
+                <p style="color: var(--text-secondary); font-size: 14px; margin: 8px 0 0 0;">Property Management System</p>
             </div>
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="first_name" required>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="userType">Account Type</label>
+                    <select id="userType" name="user_type" class="glass-select" required>
+                        <option value="">Select your role...</option>
+                        <option value="landlord">Landlord</option>
+                        <option value="tenant">Tenant</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="first_name" class="glass-input" placeholder="John" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="last_name" class="glass-input" placeholder="Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="glass-input" placeholder="john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="glass-input" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="passwordConfirm">Confirm Password</label>
+                    <input type="password" id="passwordConfirm" name="password_confirm" class="glass-input" placeholder="••••••••" required>
+                </div>
+
+                <div id="errorMessage" class="glass-alert alert-danger" style="display: none; margin-bottom: 20px;">
+                    <i class="ph ph-warning-circle"></i>
+                    <span id="errorText"></span>
+                </div>
+
+                <button type="submit" class="btn-glass-primary" style="width: 100%; margin-bottom: 16px;">
+                    <i class="ph ph-user-plus" style="margin-right: 8px;"></i>
+                    Create Account
+                </button>
+            </form>
+
+            <div style="text-align: center; padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 20px;">
+                <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">Already have an account?</p>
+                <a href="/login/" class="btn-glass-secondary" style="text-decoration: none; display: inline-block; margin-top: 12px;">Sign In</a>
             </div>
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="last_name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="passwordConfirm">Confirm Password</label>
-                <input type="password" id="passwordConfirm" name="password_confirm" required>
-            </div>
-            <div id="errorMessage" class="error" style="display: none;"></div>
-            <button type="submit" class="button" style="width: 100%; margin-bottom: 15px;">Register</button>
-        </form>
-        <p style="text-align: center; font-size: 14px;">
-            Already have an account? <a href="/login/" style="color: #0066cc;">Login here</a>
-        </p>
+        </div>
     </div>
-</div>
 
-<script>
-    const form = document.getElementById('registerForm');
-    const errorDiv = document.getElementById('errorMessage');
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.style.display = 'none';
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        errorDiv.style.display = 'none';
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('passwordConfirm').value;
 
-        const password = document.getElementById('password').value;
-        const passwordConfirm = document.getElementById('passwordConfirm').value;
-
-        if (password !== passwordConfirm) {
-            errorDiv.textContent = 'Passwords do not match';
-            errorDiv.style.display = 'block';
-            return;
-        }
-
-        const formData = {
-            user_type: document.getElementById('userType').value,
-            first_name: document.getElementById('firstName').value,
-            last_name: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            password: password,
-            password_confirm: passwordConfirm,
-        };
-
-        try {
-            const response = await fetch('/auth/register/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken'),
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                window.location.href = data.redirect;
-            } else {
-                errorDiv.textContent = data.error || 'Registration failed';
-                errorDiv.style.display = 'block';
+            if (password !== passwordConfirm) {
+                document.getElementById('errorText').textContent = 'Passwords do not match';
+                errorDiv.style.display = 'flex';
+                return;
             }
-        } catch (error) {
-            errorDiv.textContent = 'An error occurred. Please try again.';
-            errorDiv.style.display = 'block';
-        }
-    });
-</script>
-{% endblock %}
+
+            const formData = {
+                user_type: document.getElementById('userType').value,
+                first_name: document.getElementById('firstName').value,
+                last_name: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                password: password,
+                password_confirm: passwordConfirm,
+            };
+
+            try {
+                const response = await fetch('/auth/register/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showToast('Registration successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/login/';
+                    }, 1500);
+                } else {
+                    document.getElementById('errorText').textContent = data.error || 'Registration failed. Please try again.';
+                    errorDiv.style.display = 'flex';
+                }
+            } catch (error) {
+                document.getElementById('errorText').textContent = 'An error occurred. Please try again.';
+                errorDiv.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
