@@ -2,51 +2,121 @@
 
 {% block title %}Maintenance — RentFlow{% endblock %}
 
+{% block page_title %}Maintenance Requests{% endblock %}
+
 {% block content %}
-<div class="page-header">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
     <div>
-        <h1 class="page-title">Maintenance requests</h1>
-        <p class="page-subtitle">Report an issue, check progress, and view service updates.</p>
+        <h1 style="margin: 0; font-size: 28px; color: var(--text-primary); font-weight: 700;">Maintenance Requests</h1>
+        <p style="margin: 8px 0 0 0; color: var(--text-secondary); font-size: 14px;">Report and track property maintenance issues</p>
     </div>
-    <a href="/tenant/maintenance/submit/" class="button">New request</a>
+    <a href="/tenant/maintenance/submit/" class="btn-glass-primary" style="padding: 12px 24px; text-decoration: none; display: inline-flex; align-items: center; font-size: 14px;">
+        <i class="ph ph-plus" style="margin-right: 8px;"></i>New Request
+    </a>
 </div>
 
-<div class="grid-cols-2">
-    <div class="card">
-        <h2 class="card-title">Your tickets</h2>
-        <div class="table-responsive">
-            <table class="table">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+    <div class="glass-card" style="padding: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <p style="color: var(--text-secondary); margin: 0 0 8px 0; font-size: 13px;">Total Requests</p>
+                <p style="font-size: 24px; font-weight: 700; color: var(--text-primary); margin: 0;">{{ total_requests|default:0 }}</p>
+            </div>
+            <i class="ph ph-wrench" style="font-size: 32px; color: var(--primary-light); opacity: 0.5;"></i>
+        </div>
+    </div>
+    <div class="glass-card" style="padding: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <p style="color: var(--text-secondary); margin: 0 0 8px 0; font-size: 13px;">In Progress</p>
+                <p style="font-size: 24px; font-weight: 700; color: var(--warning-color); margin: 0;">{{ in_progress_count|default:0 }}</p>
+            </div>
+            <i class="ph ph-hourglass" style="font-size: 32px; color: var(--warning-color); opacity: 0.5;"></i>
+        </div>
+    </div>
+    <div class="glass-card" style="padding: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <p style="color: var(--text-secondary); margin: 0 0 8px 0; font-size: 13px;">Resolved</p>
+                <p style="font-size: 24px; font-weight: 700; color: var(--success-color); margin: 0;">{{ resolved_count|default:0 }}</p>
+            </div>
+            <i class="ph ph-check-circle" style="font-size: 32px; color: var(--success-color); opacity: 0.5;"></i>
+        </div>
+    </div>
+</div>
+
+{% if maintenance_tickets %}
+    <div class="glass-card">
+        <h2 style="margin: 0 0 24px 0; font-size: 18px; color: var(--text-primary);">Your Requests</h2>
+        <div style="overflow-x: auto;">
+            <table class="glass-table">
                 <thead>
                     <tr>
-                        <th>Request</th>
+                        <th>Ticket ID</th>
+                        <th>Issue</th>
                         <th>Submitted</th>
                         <th>Status</th>
+                        <th>Priority</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for ticket in maintenance_tickets %}
-                    <tr>
-                        <td>{{ ticket.issue }}</td>
-                        <td>{{ ticket.created_at|date:'M d' }}</td>
-                        <td><span class="badge {% if ticket.status == 'Resolved' %}badge-success{% elif ticket.status == 'In Progress' %}badge-warning{% else %}badge-danger{% endif %}">{{ ticket.status }}</span></td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="3" class="text-center">No maintenance tickets found.</td>
-                    </tr>
+                        <tr>
+                            <td style="font-weight: 500; font-size: 13px;">#{{ ticket.id }}</td>
+                            <td>{{ ticket.issue|truncatewords:5 }}</td>
+                            <td style="font-size: 13px;">{{ ticket.created_at|date:"M d, Y" }}</td>
+                            <td>
+                                <span class="badge badge-{% if ticket.status == 'resolved' %}success{% elif ticket.status == 'in_progress' %}warning{% else %}info{% endif %}" style="font-size: 12px;">
+                                    {{ ticket.get_status_display|default:ticket.status }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge badge-{% if ticket.priority == 'urgent' %}danger{% elif ticket.priority == 'high' %}warning{% else %}info{% endif %}" style="font-size: 12px;">
+                                    {{ ticket.get_priority_display|default:ticket.priority }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="/tenant/maintenance/{{ ticket.id }}/" style="color: var(--primary-light); text-decoration: none; font-size: 13px;">
+                                    <i class="ph ph-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="card">
-        <h2 class="card-title">Maintenance guide</h2>
-        <p class="card-meta">Quick help articles for the most common property support requests.</p>
-        <ul class="input-group">
-            <li>How to request urgent repairs</li>
-            <li>Preparing your apartment for inspection</li>
-            <li>Understanding your maintenance timeline</li>
-        </ul>
+{% else %}
+    <div class="glass-card" style="padding: 60px 40px; text-align: center;">
+        <div style="font-size: 48px; margin-bottom: 16px;">🔧</div>
+        <h2 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 18px;">No maintenance requests</h2>
+        <p style="margin: 0 0 24px 0; color: var(--text-secondary); font-size: 14px;">Submit a request when you need maintenance</p>
+        <a href="/tenant/maintenance/submit/" class="btn-glass-primary" style="padding: 12px 24px; text-decoration: none; display: inline-flex; align-items: center; font-size: 14px;">
+            <i class="ph ph-plus" style="margin-right: 8px;"></i>Submit Request
+        </a>
+    </div>
+{% endif %}
+
+<div class="glass-card" style="margin-top: 32px;">
+    <h2 style="margin: 0 0 24px 0; font-size: 18px; color: var(--text-primary);">Common Issues & Tips</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <div style="padding: 16px; background: rgba(52, 211, 153, 0.1); border-radius: 12px; border-left: 3px solid var(--success-color);">
+            <p style="margin: 0 0 8px 0; color: var(--text-primary); font-weight: 500; font-size: 14px;">🚰 Plumbing Issues</p>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Report leaks, slow drains, or water pressure issues immediately.</p>
+        </div>
+        <div style="padding: 16px; background: rgba(245, 158, 11, 0.1); border-radius: 12px; border-left: 3px solid var(--warning-color);">
+            <p style="margin: 0 0 8px 0; color: var(--text-primary); font-weight: 500; font-size: 14px;">❄️ HVAC Problems</p>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Heating, cooling, or ventilation issues require urgent attention.</p>
+        </div>
+        <div style="padding: 16px; background: rgba(96, 165, 250, 0.1); border-radius: 12px; border-left: 3px solid var(--info-color);">
+            <p style="margin: 0 0 8px 0; color: var(--text-primary); font-weight: 500; font-size: 14px;">💡 Electrical</p>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Non-working outlets, lights, or switches should be reported ASAP.</p>
+        </div>
+        <div style="padding: 16px; background: rgba(236, 72, 153, 0.1); border-radius: 12px; border-left: 3px solid var(--danger-color);">
+            <p style="margin: 0 0 8px 0; color: var(--text-primary); font-weight: 500; font-size: 14px;">🔥 Safety Issues</p>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 13px;">Fire hazards, gas leaks, or security concerns need immediate action.</p>
+        </div>
     </div>
 </div>
 {% endblock %}
