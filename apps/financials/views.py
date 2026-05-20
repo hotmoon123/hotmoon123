@@ -183,3 +183,53 @@ def expenses_create_view(request):
     )
 
     return JsonResponse({'success': True, 'expense_id': str(expense.id)})
+
+
+@require_http_methods(["GET"])
+def financials_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    invoices = Invoice.objects.filter(landlord=landlord)
+    expenses = Expense.objects.filter(landlord=landlord)
+
+    context = {
+        'landlord': landlord,
+        'invoices': invoices,
+        'expenses': expenses,
+        'total_revenue': sum(inv.amount for inv in invoices),
+        'total_expenses': sum(exp.amount for exp in expenses),
+    }
+    return render(request, 'landlord/financials.html', context)
+
+
+@require_http_methods(["POST"])
+@csrf_protect
+def process_momo_payment(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    try:
+        data = json.loads(request.body)
+    except:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    phone_number = data.get('phone_number', '').strip()
+    amount = data.get('amount')
+    provider = data.get('provider', 'mtn')
+
+    if not phone_number or not amount:
+        return JsonResponse({'error': 'Phone number and amount are required'}, status=400)
+
+    # TODO: Integrate with actual MoMo payment gateway (MTN, Telecel, Vodafone)
+    return JsonResponse({'success': True, 'message': 'Payment initiated'})

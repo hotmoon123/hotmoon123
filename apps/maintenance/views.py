@@ -132,3 +132,33 @@ def maintenance_update_view(request, ticket_id):
     ticket.save()
 
     return JsonResponse({'success': True})
+
+
+@require_http_methods(["GET"])
+def maintenance_landlord_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    tickets = MaintenanceTicket.objects.filter(landlord=landlord)
+    context = {'landlord': landlord, 'tickets': tickets}
+    return render(request, 'landlord/maintenance.html', context)
+
+
+@require_http_methods(["GET"])
+def maintenance_tenant_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    tickets = MaintenanceTicket.objects.filter(tenant=tenant)
+    context = {'tenant': tenant, 'tickets': tickets}
+    return render(request, 'tenant/maintenance.html', context)

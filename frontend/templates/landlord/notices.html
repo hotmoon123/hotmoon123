@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Notices - RentFlow{% endblock %}
+{% block content %}
+<div class="header">
+    <div style="display: flex; justify-content: space-between;">
+        <h1>Notices</h1>
+        <a href="#" class="button">Send Notice</a>
+    </div>
+</div>
+<div class="card">
+    <table class="table">
+        <thead><tr><th>Notice</th><th>Recipients</th><th>Date Sent</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr><td>No notices sent</td><td>-</td><td>-</td><td>-</td></tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

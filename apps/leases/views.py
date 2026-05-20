@@ -119,3 +119,56 @@ def leases_sign_view(request, lease_id):
     lease.save()
 
     return JsonResponse({'success': True})
+
+
+@require_http_methods(["GET"])
+def leases_landlord_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    leases = Lease.objects.filter(landlord=landlord)
+    context = {'leases': leases, 'landlord': landlord}
+    return render(request, 'landlord/leases.html', context)
+
+
+@require_http_methods(["POST"])
+@csrf_protect
+def leases_invite_view(request, lease_id):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    lease = get_object_or_404(Lease, id=lease_id, landlord=landlord)
+
+    try:
+        data = json.loads(request.body)
+    except:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    email = data.get('email', '').strip()
+
+    if not email:
+        return JsonResponse({'error': 'Email is required'}, status=400)
+
+    # Create invitation token
+    import secrets
+    token = secrets.token_urlsafe(32)
+
+    invitation = Invitation.objects.create(
+        lease=lease,
+        landlord=landlord,
+        email=email,
+        token_hash=token,
+        expires_at=timezone.now() + timezone.timedelta(days=7)
+    )
+
+    return JsonResponse({'success': True, 'invitation_id': str(invitation.id)})

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Rental History - RentFlow{% endblock %}
+{% block content %}
+<div class="header"><h1>Rental History</h1></div>
+<div class="card">
+    <h2>Your Rental History</h2>
+    <div style="display: grid; gap: 20px;">
+        <div style="padding: 15px; border: 1px solid #ddd; border-radius: 4px;">
+            <p><strong>Current Property:</strong> TBD</p>
+            <p><strong>Landlord:</strong> TBD</p>
+            <p><strong>Period:</strong> TBD</p>
+            <p><strong>Status:</strong> <span class="badge active">Active</span></p>
+        </div>
+    </div>
+    <p style="color: #666; font-size: 14px; margin-top: 20px;">No previous rental history.</p>
+</div>
+{% endblock %}

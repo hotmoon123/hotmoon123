@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Payment Methods - RentFlow{% endblock %}
+{% block content %}
+<div class="header">
+    <div style="display: flex; justify-content: space-between;">
+        <h1>Payment Methods</h1>
+        <a href="#" class="button">Add Payment Method</a>
+    </div>
+</div>
+<div class="card">
+    <h2>Saved Payment Methods</h2>
+    <p style="color: #666; font-size: 14px;">No payment methods saved yet.</p>
+    <div style="margin-top: 20px;">
+        <h3>Available Methods</h3>
+        <ul style="list-style: none;">
+            <li style="padding: 10px 0; border-bottom: 1px solid #eee;">MTN Mobile Money</li>
+            <li style="padding: 10px 0; border-bottom: 1px solid #eee;">Telecel Cash</li>
+            <li style="padding: 10px 0; border-bottom: 1px solid #eee;">Vodafone Cash</li>
+            <li style="padding: 10px 0;">Bank Transfer</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

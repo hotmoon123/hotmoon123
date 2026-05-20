@@ -126,3 +126,175 @@ def tenant_dashboard_view(request):
         'unpaid_invoices': invoices.filter(status__in=['unpaid', 'overdue']),
     }
     return render(request, 'tenant/dashboard.html', context)
+
+
+def forgot_password_view(request):
+    return render(request, 'public/forgot_password.html')
+
+
+def reset_password_view(request):
+    return render(request, 'public/reset_password.html')
+
+
+def forgot_password_action_view(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+    except:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    email = data.get('email', '').strip()
+
+    if not email:
+        return JsonResponse({'error': 'Email is required'}, status=400)
+
+    # Check if email exists in Landlord or Tenant
+    landlord_exists = Landlord.objects.filter(email=email).exists()
+    tenant_exists = Tenant.objects.filter(email=email).exists()
+
+    if not (landlord_exists or tenant_exists):
+        return JsonResponse({'error': 'No account found with this email'}, status=404)
+
+    # TODO: Implement actual email sending with token generation
+    return JsonResponse({'success': True})
+
+
+def reset_password_action_view(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+    except:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    token = data.get('token', '').strip()
+    password = data.get('password', '')
+    password_confirm = data.get('password_confirm', '')
+
+    if not token or not password or not password_confirm:
+        return JsonResponse({'error': 'Missing required fields'}, status=400)
+
+    if password != password_confirm:
+        return JsonResponse({'error': 'Passwords do not match'}, status=400)
+
+    # TODO: Implement token validation and password reset
+    return JsonResponse({'success': True})
+
+
+def tenant_payments_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    from apps.financials.models import Transaction
+    payments = Transaction.objects.filter(tenant=tenant).order_by('-created_at')
+
+    context = {'tenant': tenant, 'payments': payments}
+    return render(request, 'tenant/payments.html', context)
+
+
+def tenant_lease_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    from apps.leases.models import Lease
+    lease = Lease.objects.filter(tenant=tenant).first()
+
+    context = {'tenant': tenant, 'lease': lease}
+    return render(request, 'tenant/lease.html', context)
+
+
+def tenant_chat_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'tenant': tenant}
+    return render(request, 'tenant/chat.html', context)
+
+
+def tenant_notice_board_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'tenant': tenant}
+    return render(request, 'tenant/notice_board.html', context)
+
+
+def tenant_compliance_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'tenant': tenant}
+    return render(request, 'tenant/compliance.html', context)
+
+
+def tenant_payment_methods_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    from apps.financials.models import PaymentMethod
+    methods = PaymentMethod.objects.filter(tenant=tenant)
+
+    context = {'tenant': tenant, 'payment_methods': methods}
+    return render(request, 'tenant/payment_methods.html', context)
+
+
+def tenant_profile_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'tenant': tenant}
+    return render(request, 'tenant/profile.html', context)
+
+
+def tenant_history_view(request):
+    if request.session.get('user_role') != 'tenant':
+        return redirect('/login/')
+
+    try:
+        tenant = Tenant.objects.get(pk=request.session.get('_auth_user_id'))
+    except Tenant.DoesNotExist:
+        return redirect('/login/')
+
+    from apps.leases.models import Lease
+    leases = Lease.objects.filter(tenant=tenant)
+
+    context = {'tenant': tenant, 'leases': leases}
+    return render(request, 'tenant/history.html', context)

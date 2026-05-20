@@ -148,3 +148,127 @@ def properties_delete_view(request, property_id):
     property_obj.delete()
 
     return JsonResponse({'success': True})
+
+
+def buildings_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    buildings = Building.objects.filter(landlord=landlord)
+    context = {'landlord': landlord, 'buildings': buildings}
+    return render(request, 'landlord/buildings.html', context)
+
+
+def tenants_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    from apps.leases.models import Lease
+    from apps.users.models import Tenant
+
+    leases = Lease.objects.filter(landlord=landlord).select_related('tenant')
+    tenants = [lease.tenant for lease in leases if lease.tenant]
+
+    context = {'landlord': landlord, 'tenants': tenants}
+    return render(request, 'landlord/tenants.html', context)
+
+
+def chat_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'landlord': landlord}
+    return render(request, 'landlord/chat.html', context)
+
+
+def documents_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'landlord': landlord}
+    return render(request, 'landlord/documents.html', context)
+
+
+def analytics_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'landlord': landlord}
+    return render(request, 'landlord/analytics.html', context)
+
+
+def notices_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'landlord': landlord}
+    return render(request, 'landlord/notices.html', context)
+
+
+def inspections_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'landlord': landlord}
+    return render(request, 'landlord/inspections.html', context)
+
+
+def automations_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'landlord': landlord}
+    return render(request, 'landlord/automations.html', context)
+
+
+def settings_view(request):
+    if request.session.get('user_role') != 'landlord':
+        return redirect('/login/')
+
+    try:
+        landlord = Landlord.objects.get(pk=request.session.get('_auth_user_id'))
+    except Landlord.DoesNotExist:
+        return redirect('/login/')
+
+    context = {'landlord': landlord}
+    return render(request, 'landlord/settings.html', context)
