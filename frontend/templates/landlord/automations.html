@@ -1,17 +1,35 @@
-{% extends "base.html" %}
+{% extends "base_landlord.html" %}
+
 {% block title %}Automations - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header">
-    <div style="display: flex; justify-content: space-between;">
-        <h1>Automations</h1>
-        <a href="#" class="button">Create Rule</a>
+<div class="page-header">
+    <div>
+        <h1>Automation Rules</h1>
+        <p>Automate repetitive tasks and workflows</p>
     </div>
+    <a href="#" class="button">➕ Create Rule</a>
 </div>
+
 <div class="card">
+    <div class="card-header">
+        <h2>Active Rules</h2>
+    </div>
     <table class="table">
-        <thead><tr><th>Rule Name</th><th>Trigger</th><th>Action</th><th>Status</th><th>Actions</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Rule Name</th>
+                <th>Trigger Event</th>
+                <th>Action</th>
+                <th>Frequency</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
-            <tr><td>No rules created</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+            <tr>
+                <td colspan="6" class="text-center text-muted">No automation rules created yet.</td>
+            </tr>
         </tbody>
     </table>
 </div>

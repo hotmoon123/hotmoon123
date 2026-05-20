@@ -1,13 +1,22 @@
-{% extends "base.html" %}
+{% extends "base_tenant.html" %}
+
 {% block title %}Messages - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header"><h1>Messages with Landlord</h1></div>
-<div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
-    <div class="card" style="max-height: 500px; display: flex; flex-direction: column;">
-        <div style="flex: 1; overflow-y: auto; margin-bottom: 20px; color: #666; font-size: 14px;">
-            No messages yet. Start a conversation with your landlord.
+<div class="page-header">
+    <h1>Messages with Landlord</h1>
+    <p>Direct communication channel</p>
+</div>
+
+<div class="card" style="min-height: 500px; display: flex; flex-direction: column;">
+    <div style="flex: 1; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border); overflow-y: auto;">
+        <p class="text-center text-muted" style="padding-top: 2rem;">No messages yet. Start a conversation with your landlord.</p>
+    </div>
+    <div style="padding-top: 1rem;">
+        <div class="form-group" style="margin-bottom: 0;">
+            <input type="text" placeholder="Type your message here..." style="margin-bottom: 0;">
         </div>
-        <input type="text" placeholder="Type message..." style="padding: 10px; border: 1px solid #ddd;">
+        <button class="button button-small" style="margin-top: 0.5rem;">Send Message</button>
     </div>
 </div>
 {% endblock %}

@@ -1,12 +1,35 @@
-{% extends "base.html" %}
+{% extends "base_landlord.html" %}
+
 {% block title %}Tenants - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header"><h1>Tenants</h1></div>
+<div class="page-header">
+    <div>
+        <h1>Tenants</h1>
+        <p>View all tenants across your properties</p>
+    </div>
+</div>
+
 <div class="card">
+    <div class="card-header">
+        <h2>Active Tenants</h2>
+        <input type="text" placeholder="Search tenants..." style="width: 250px;">
+    </div>
     <table class="table">
-        <thead><tr><th>Name</th><th>Email</th><th>Property</th><th>Status</th><th>Actions</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Property</th>
+                <th>Lease Status</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
-            <tr><td>No tenants yet</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+            <tr>
+                <td colspan="6" class="text-center text-muted">No tenants assigned yet.</td>
+            </tr>
         </tbody>
     </table>
 </div>

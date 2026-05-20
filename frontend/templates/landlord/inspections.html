@@ -1,17 +1,35 @@
-{% extends "base.html" %}
+{% extends "base_landlord.html" %}
+
 {% block title %}Property Inspections - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header">
-    <div style="display: flex; justify-content: space-between;">
+<div class="page-header">
+    <div>
         <h1>Property Inspections</h1>
-        <a href="#" class="button">Schedule Inspection</a>
+        <p>Schedule and track property inspections</p>
     </div>
+    <a href="#" class="button">📅 Schedule Inspection</a>
 </div>
+
 <div class="card">
+    <div class="card-header">
+        <h2>Inspection Schedule</h2>
+    </div>
     <table class="table">
-        <thead><tr><th>Property</th><th>Type</th><th>Date</th><th>Inspector</th><th>Status</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Inspection Type</th>
+                <th>Scheduled Date</th>
+                <th>Inspector</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
-            <tr><td>No inspections scheduled</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+            <tr>
+                <td colspan="6" class="text-center text-muted">No inspections scheduled yet.</td>
+            </tr>
         </tbody>
     </table>
 </div>

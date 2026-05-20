@@ -1,17 +1,35 @@
-{% extends "base.html" %}
+{% extends "base_landlord.html" %}
+
 {% block title %}Documents - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header">
-    <div style="display: flex; justify-content: space-between;">
+<div class="page-header">
+    <div>
         <h1>Documents</h1>
-        <a href="#" class="button">Upload Document</a>
+        <p>Manage contracts, agreements, and legal documents</p>
     </div>
+    <a href="#" class="button">📤 Upload Document</a>
 </div>
+
 <div class="card">
+    <div class="card-header">
+        <h2>Document Library</h2>
+        <input type="text" placeholder="Search documents..." style="width: 250px;">
+    </div>
     <table class="table">
-        <thead><tr><th>Document</th><th>Type</th><th>Date</th><th>Actions</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Document Name</th>
+                <th>Type</th>
+                <th>Date Uploaded</th>
+                <th>Size</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
-            <tr><td>No documents</td><td>-</td><td>-</td><td>-</td></tr>
+            <tr>
+                <td colspan="5" class="text-center text-muted">No documents uploaded yet.</td>
+            </tr>
         </tbody>
     </table>
 </div>

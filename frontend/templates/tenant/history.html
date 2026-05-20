@@ -1,17 +1,42 @@
-{% extends "base.html" %}
+{% extends "base_tenant.html" %}
+
 {% block title %}Rental History - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header"><h1>Rental History</h1></div>
+<div class="page-header">
+    <h1>Rental History</h1>
+    <p>Your rental record and past properties</p>
+</div>
+
 <div class="card">
-    <h2>Your Rental History</h2>
-    <div style="display: grid; gap: 20px;">
-        <div style="padding: 15px; border: 1px solid #ddd; border-radius: 4px;">
-            <p><strong>Current Property:</strong> TBD</p>
-            <p><strong>Landlord:</strong> TBD</p>
-            <p><strong>Period:</strong> TBD</p>
-            <p><strong>Status:</strong> <span class="badge active">Active</span></p>
-        </div>
+    <h2>Current Property</h2>
+    <div style="padding: 1.5rem; background: var(--color-bg-light); border-radius: 6px; margin-top: 1rem;">
+        <p class="text-muted">No active rental assigned yet.</p>
     </div>
-    <p style="color: #666; font-size: 14px; margin-top: 20px;">No previous rental history.</p>
+</div>
+
+<div class="card">
+    <h2>Previous Properties</h2>
+    <p class="text-muted" style="margin-top: 1rem;">No previous rental history available.</p>
+</div>
+
+<div class="card">
+    <h2>Rental References</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Property Address</th>
+                <th>Landlord</th>
+                <th>Period</th>
+                <th>Reason for Leaving</th>
+                <th>Reference Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="5" class="text-center text-muted">No rental history to display.</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 {% endblock %}

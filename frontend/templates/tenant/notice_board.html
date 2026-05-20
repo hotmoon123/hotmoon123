@@ -1,9 +1,20 @@
-{% extends "base.html" %}
+{% extends "base_tenant.html" %}
+
 {% block title %}Notice Board - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header"><h1>Notice Board</h1></div>
+<div class="page-header">
+    <h1>Notice Board</h1>
+    <p>Announcements from your landlord</p>
+</div>
+
 <div class="card">
-    <h2>Notices from Landlord</h2>
-    <p style="color: #666; font-size: 14px;">No notices posted yet.</p>
+    <h2>Important Notices</h2>
+    <p class="text-muted" style="margin-top: 1rem;">No notices posted yet. Your landlord will share announcements here.</p>
+</div>
+
+<div class="card">
+    <h2>Previous Notices</h2>
+    <p class="text-muted">No previous notices available.</p>
 </div>
 {% endblock %}

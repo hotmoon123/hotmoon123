@@ -1,17 +1,34 @@
-{% extends "base.html" %}
+{% extends "base_landlord.html" %}
+
 {% block title %}Notices - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header">
-    <div style="display: flex; justify-content: space-between;">
+<div class="page-header">
+    <div>
         <h1>Notices</h1>
-        <a href="#" class="button">Send Notice</a>
+        <p>Send important announcements to your tenants</p>
     </div>
+    <a href="#" class="button">📨 Send Notice</a>
 </div>
+
 <div class="card">
+    <div class="card-header">
+        <h2>Notice History</h2>
+    </div>
     <table class="table">
-        <thead><tr><th>Notice</th><th>Recipients</th><th>Date Sent</th><th>Status</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Notice Title</th>
+                <th>Recipients</th>
+                <th>Date Sent</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
-            <tr><td>No notices sent</td><td>-</td><td>-</td><td>-</td></tr>
+            <tr>
+                <td colspan="5" class="text-center text-muted">No notices sent yet.</td>
+            </tr>
         </tbody>
     </table>
 </div>

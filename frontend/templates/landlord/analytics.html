@@ -1,8 +1,14 @@
-{% extends "base.html" %}
+{% extends "base_landlord.html" %}
+
 {% block title %}Analytics - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header"><h1>Analytics & Reports</h1></div>
-<div class="grid">
+<div class="page-header">
+    <h1>Analytics & Reports</h1>
+    <p>Performance metrics and financial insights</p>
+</div>
+
+<div class="grid grid-4">
     <div class="stat-card">
         <h3>Total Revenue</h3>
         <div class="value">₵ 0.00</div>
@@ -13,15 +19,41 @@
     </div>
     <div class="stat-card">
         <h3>Occupancy Rate</h3>
-        <div class="value">0%</div>
+        <div class="value">0<span class="unit">%</span></div>
     </div>
     <div class="stat-card">
         <h3>Maintenance Requests</h3>
         <div class="value">0</div>
     </div>
 </div>
-<div class="card" style="margin-top: 30px;">
-    <h2>Revenue Trend</h2>
-    <p style="color: #666;">Analytics data will appear here</p>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Revenue Trend</h2>
+    </div>
+    <div class="card-body" style="min-height: 300px; display: flex; align-items: center; justify-content: center; color: var(--color-text-light);">
+        Chart data will appear here
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <h2>Payment Status</h2>
+        <div style="margin-top: 1rem;">
+            <p class="flex flex-between"><span>Fully Paid</span> <strong>0</strong></p>
+            <p class="flex flex-between"><span>Partially Paid</span> <strong>0</strong></p>
+            <p class="flex flex-between"><span>Pending</span> <strong>0</strong></p>
+            <p class="flex flex-between"><span>Overdue</span> <strong>0</strong></p>
+        </div>
+    </div>
+    <div class="card">
+        <h2>Property Status</h2>
+        <div style="margin-top: 1rem;">
+            <p class="flex flex-between"><span>Available</span> <strong>0</strong></p>
+            <p class="flex flex-between"><span>Occupied</span> <strong>0</strong></p>
+            <p class="flex flex-between"><span>Maintenance</span> <strong>0</strong></p>
+            <p class="flex flex-between"><span>Unavailable</span> <strong>0</strong></p>
+        </div>
+    </div>
 </div>
 {% endblock %}

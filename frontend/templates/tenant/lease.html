@@ -1,19 +1,35 @@
-{% extends "base.html" %}
+{% extends "base_tenant.html" %}
+
 {% block title %}My Lease - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header"><h1>Lease Agreement</h1></div>
-<div class="card" style="max-width: 600px;">
-    <h2>Lease Details</h2>
-    <p><strong>Property:</strong> TBD</p>
-    <p><strong>Landlord:</strong> TBD</p>
-    <p><strong>Start Date:</strong> TBD</p>
-    <p><strong>End Date:</strong> TBD</p>
-    <p><strong>Monthly Rent:</strong> ₵ 0.00</p>
-    <p><strong>Deposit:</strong> ₵ 0.00</p>
-    <p><strong>Status:</strong> <span class="badge pending">Pending Signature</span></p>
-    <div style="margin-top: 20px;">
-        <a href="#" class="button">View Full Agreement</a>
-        <a href="#" class="button">Sign Lease</a>
+<div class="page-header">
+    <h1>Lease Agreement</h1>
+    <p>Your rental contract and terms</p>
+</div>
+
+<div class="grid grid-2">
+    <div class="card">
+        <h2>Lease Details</h2>
+        <p><strong>Property:</strong> <span class="text-muted">Not assigned</span></p>
+        <p><strong>Landlord:</strong> <span class="text-muted">Not assigned</span></p>
+        <p><strong>Start Date:</strong> <span class="text-muted">—</span></p>
+        <p><strong>End Date:</strong> <span class="text-muted">—</span></p>
+        <p><strong>Monthly Rent:</strong> <span class="font-bold">₵ 0.00</span></p>
+        <p><strong>Deposit Amount:</strong> <span class="font-bold">₵ 0.00</span></p>
+        <p><strong>Status:</strong> <span class="badge badge-warning">Pending Signature</span></p>
     </div>
+
+    <div class="card">
+        <h2>Actions</h2>
+        <button class="button button-block">📄 View Full Agreement</button>
+        <button class="button button-block" style="margin-top: 1rem;">✍️ Sign Lease</button>
+        <button class="button button-secondary button-block" style="margin-top: 1rem;">📥 Download PDF</button>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Lease Terms</h2>
+    <p class="text-muted">No lease agreement assigned yet. Your landlord will send you a lease agreement to review and sign.</p>
 </div>
 {% endblock %}

@@ -1,12 +1,31 @@
-{% extends "base.html" %}
+{% extends "base_tenant.html" %}
+
 {% block title %}Compliance Documents - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header"><h1>Compliance Documents</h1></div>
+<div class="page-header">
+    <h1>Compliance Documents</h1>
+    <p>Required documents and certifications</p>
+</div>
+
 <div class="card">
+    <div class="card-header">
+        <h2>Document Requirements</h2>
+    </div>
     <table class="table">
-        <thead><tr><th>Document</th><th>Type</th><th>Required By</th><th>Status</th><th>Actions</th></tr></thead>
+        <thead>
+            <tr>
+                <th>Document</th>
+                <th>Document Type</th>
+                <th>Required By</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
-            <tr><td>No documents required</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+            <tr>
+                <td colspan="5" class="text-center text-muted">No documents required at this time.</td>
+            </tr>
         </tbody>
     </table>
 </div>

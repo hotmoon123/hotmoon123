@@ -1,0 +1,86 @@
+{% extends "base_landlord.html" %}
+
+{% block title %}Financials - RentFlow{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Financial Dashboard</h1>
+        <p>Track revenue, invoices, and expenses</p>
+    </div>
+    <div>
+        <a href="/invoices/create/" class="button">+ New Invoice</a>
+        <a href="/expenses/create/" class="button button-secondary">+ New Expense</a>
+    </div>
+</div>
+
+<div class="grid grid-4">
+    <div class="stat-card">
+        <h3>Total Revenue</h3>
+        <div class="value">₵ 0.00</div>
+    </div>
+    <div class="stat-card">
+        <h3>Paid Invoices</h3>
+        <div class="value">0</div>
+    </div>
+    <div class="stat-card">
+        <h3>Pending Amount</h3>
+        <div class="value">₵ 0.00</div>
+    </div>
+    <div class="stat-card">
+        <h3>Total Expenses</h3>
+        <div class="value">₵ 0.00</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Recent Invoices</h2>
+        <a href="/invoices/list/" class="button button-small">View All</a>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Invoice ID</th>
+                    <th>Tenant</th>
+                    <th>Amount</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No invoices yet. <a href="/invoices/create/">Create one</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Recent Expenses</h2>
+        <a href="/expenses/list/" class="button button-small">View All</a>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Property</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No expenses recorded yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

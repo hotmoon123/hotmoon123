@@ -1,16 +1,31 @@
-{% extends "base.html" %}
-{% block title %}Chat - RentFlow{% endblock %}
+{% extends "base_landlord.html" %}
+
+{% block title %}Messages - RentFlow{% endblock %}
+
 {% block content %}
-<div class="header"><h1>Messages</h1></div>
-<div style="display: grid; grid-template-columns: 250px 1fr; gap: 20px;">
-    <div class="card" style="max-height: 500px; overflow-y: auto;">
+<div class="page-header">
+    <h1>Messages</h1>
+    <p>Communicate directly with your tenants</p>
+</div>
+
+<div class="grid grid-3" style="gap: 0;">
+    <div class="card" style="border-radius: 8px 0 0 8px; margin-bottom: 0;">
         <h3>Conversations</h3>
-        <div style="font-size: 14px; color: #666;">No conversations yet</div>
+        <div style="margin-top: 1rem;">
+            <div style="padding: 0.75rem; border-bottom: 1px solid var(--color-border); cursor: pointer;">
+                <p class="mb-0 font-semibold">No conversations</p>
+                <p class="mb-0 text-muted" style="font-size: 0.875rem;">Start a new conversation</p>
+            </div>
+        </div>
     </div>
-    <div class="card" style="max-height: 500px; display: flex; flex-direction: column;">
+    <div class="card" style="border-radius: 0; margin-bottom: 0; grid-column: 2 / 4; min-height: 400px; display: flex; flex-direction: column;">
         <h3>Messages</h3>
-        <div style="flex: 1; overflow-y: auto; font-size: 14px; color: #666;">Select a conversation</div>
-        <input type="text" placeholder="Type message..." style="padding: 10px; border: 1px solid #ddd; margin-top: auto;">
+        <div style="flex: 1; color: var(--color-text-light); display: flex; align-items: center; justify-content: center;">
+            Select a conversation to view messages
+        </div>
+        <div style="border-top: 1px solid var(--color-border); padding-top: 1rem;">
+            <input type="text" placeholder="Type message..." style="margin-bottom: 0;">
+        </div>
     </div>
 </div>
 {% endblock %}
