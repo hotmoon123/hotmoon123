@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">StitchLedger splash mark</title>
+  <desc id="desc">A deep green tailoring scissors mark for use on a cream launch screen.</desc>
+  <g fill="none" stroke="#275C46" stroke-width="62" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="351" cy="367" r="108"/>
+    <circle cx="351" cy="657" r="108"/>
+    <path d="M427 444 L520 525 L752 320"/>
+    <path d="M427 580 L520 525 L752 730"/>
+  </g>
+  <circle cx="520" cy="525" r="35" fill="#275C46"/>
+  <path d="M742 315 L785 354" stroke="#275C46" stroke-width="28" stroke-linecap="square"/>
+</svg>

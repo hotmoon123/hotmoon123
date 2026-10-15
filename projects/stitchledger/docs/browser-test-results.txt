@@ -1,0 +1,1 @@
+PASS: desktop demo, order creation, deposit, balance payment, production transitions, collection, template amount, CSV download, mobile 390px no horizontal overflow, search/filter, no uncaught browser errors. Chromium only; not native device validation.

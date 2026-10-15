@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "StitchLedger",
+    "slug": "stitchledger",
+    "version": "0.2.4",
+    "orientation": "portrait",
+    "scheme": "stitchledger",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.caleb.stitchledger",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false
+        },
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.caleb.stitchledger",
+      "permissions": [
+        "POST_NOTIFICATIONS"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon-foreground.png",
+        "monochromeImage": "./assets/brand-mark.png",
+        "backgroundColor": "#275C46"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "name": "StitchLedger"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#275C46",
+          "defaultChannel": "stitchledger-order-reminders"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#F6F5F0",
+          "imageWidth": 160
+        }
+      ]
+    ],
+    "icon": "./assets/icon.png"
+  }
+}

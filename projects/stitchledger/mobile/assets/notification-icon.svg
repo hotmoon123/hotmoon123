@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-label="StitchLedger notification icon">
+  <g fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="28" cy="30" r="13"/>
+    <circle cx="28" cy="66" r="13"/>
+    <path d="M38 40 L50 48 L76 25"/>
+    <path d="M38 56 L50 48 L76 71"/>
+  </g>
+  <circle cx="50" cy="48" r="5" fill="#FFFFFF"/>
+</svg>

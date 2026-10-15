@@ -1,0 +1,14 @@
+node_modules/
+.venv/
+__pycache__/
+.pytest_cache/
+.expo/
+.env
+.env.local
+backend/data/
+*.sqlite3*
+*.db
+backups/
+native-js-export/
+android/
+ios/

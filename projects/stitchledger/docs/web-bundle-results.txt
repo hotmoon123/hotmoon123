@@ -1,0 +1,19 @@
+
+> stitchledger-mobile@0.2.0 export:web
+> expo export --platform web --output-dir ../web-build
+
+Starting Metro Bundler
+
+Web Bundled 1776ms index.ts (261 modules)
+
+› Assets (1):
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Ionicons.b4eb097d35f44ed943676fd56f6bdc51.ttf (390KB)
+
+› web bundles (1):
+_expo/static/js/web/index-0455176dfbb8ad9b37bf1e9f651ae664.js (507KB)
+
+› Files (2):
+index.html (1.2KB)
+metadata.json (49B)
+
+Exported: ../web-build
