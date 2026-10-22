@@ -35,6 +35,18 @@ I read the uploaded reference files and kept the principles that apply to a pers
 | Case-study structure (Problem → Decision → Result) | Outcome-framed case studies are the strongest portfolio format. | `prompter.md` "portfolio/case-study thinking" |
 | Works without JavaScript | Progressive enhancement; the content is never hidden behind JS. | `MD files for development.md` non-functional requirements |
 
+## Before you launch
+
+Based on the launch and growth stages in the idea-to-product guides:
+
+1. **Benchmark first.** Pick 5 portfolios in your field that you admire or compete with. For each, note: what they lead with, how many projects they show, whether outcomes are stated, and how long it takes to reach a contact link. Then write one sentence on the gap you can own. Do this by hand; the slash-style prompt codes in the uploads are conventions, not built-in features, so they will not run this for you.
+2. **Check the page on a real phone** at 320 px width and in both light and dark mode.
+3. **Replace every placeholder.** Search for `[` in `index.html`. Nothing in square brackets should go live.
+4. **Set the social preview.** Fill in the `og:` tags and the `og:url`. Add a 1200×630 image only if it is real work or a real photo.
+5. **Test the contact link** by sending yourself an email from it.
+6. **Run a quick accessibility check** with your browser's built-in Lighthouse or accessibility audit. Fix anything it flags in contrast, labels, or focus order.
+7. **Publish** on a static host of your choice (for example GitHub Pages or Netlify). Both serve this folder as-is.
+
 ## What I did not take
 
 - The Django/rent-lease product docs in `docs/` are about a different system. They were not used.
