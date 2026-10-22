@@ -35,6 +35,19 @@ I read the uploaded reference files and kept the principles that apply to a pers
 | Case-study structure (Problem → Decision → Result) | Outcome-framed case studies are the strongest portfolio format. | `prompter.md` "portfolio/case-study thinking" |
 | Works without JavaScript | Progressive enhancement; the content is never hidden behind JS. | `MD files for development.md` non-functional requirements |
 
+## Security
+
+This is a static site with no server code, no database, and no secrets, so the attack surface is small. Still:
+
+- `_headers` sets a strict Content Security Policy. The page uses only external `styles.css` and `script.js`, with no inline scripts or styles, so the policy works without exceptions. If you add an inline script or a third-party embed, you must update the policy.
+- Do not add API keys, tokens, or private email addresses to the HTML or JavaScript. Anything in the page is public.
+- The contact email is visible in the HTML, so expect some spam. You can reduce it with a contact form from a form service, which adds a third-party dependency and should go into the CSP.
+- Only link to external sites you trust, and add `rel="noopener"` to any link that opens in a new tab.
+
+## Visitor flows
+
+`docs/visitor-flows.md` maps who visits the site, what each visitor is trying to do, and the path from landing to contact. Use it to check that every section supports one of those paths.
+
 ## Before you launch
 
 Based on the launch and growth stages in the idea-to-product guides:
