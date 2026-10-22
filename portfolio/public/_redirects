@@ -1,2 +1,0 @@
-# Netlify: serve index.html for every route so deep links such as /projects/slug work.
-/*    /index.html   200
