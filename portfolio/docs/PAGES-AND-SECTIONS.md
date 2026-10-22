@@ -81,7 +81,7 @@ Navigation has six items. Your sketch lists "My tech stack" and "Experience" sep
   - A summary, and the technologies
   - A "Show details" disclosure with the problem, your contribution, the features and any links
 - **Projects:**
-  1. **Rent & Lease Management System**, status Implemented. Group project, early 2026. You developed the backend. Technologies: Python, Django, HTML, CSS, JavaScript. Link to the repository.
+  1. **Rent & Lease Management System**, status Implemented. Group project. You developed the backend. Technologies: Python, Django, HTML, CSS, JavaScript. Link to the repository.
   2. **StitchLedger**, status In progress. A personal project for fashion designers. Technology is marked "to be confirmed" and the features are labelled "Planned features".
 - **Behaviour:** the disclosure uses `aria-expanded` and `aria-controls`. The repository link opens in a new tab and says so.
 - **Placeholder art:** until you add a screenshot, each card shows its label ("R&L", "SL") in place of an image. To add a screenshot, put the file in `public/images/` and set `image` and `imageAlt` in `src/data/projects.ts`.
@@ -97,7 +97,7 @@ Navigation has six items. Your sketch lists "My tech stack" and "Experience" sep
 - **Purpose:** show your study and project experience in order.
 - **Content:** three entries:
   1. Current — Information Technology, Regional Maritime University
-  2. Early 2026 — Backend developer, group project, Rent & Lease Management System (authentication, verification and WebSocket chat)
+  2. Group project — Backend developer, group project, Rent & Lease Management System (authentication, verification and WebSocket chat)
   3. In progress — Developer, StitchLedger
 - **Rule:** no years, grades, employers or certificates are invented. Add them only when you give them to me.
 
@@ -138,14 +138,14 @@ Navigation has six items. Your sketch lists "My tech stack" and "Experience" sep
 
 ## Open items (need your answer before publishing)
 
-1. **Study year and dates:** question 4 was cut off in your reply. Tell me whether to show your current year of study, and whether you want a LinkedIn link.
-2. **Screenshots:** add real screenshots for both projects when you have them.
-3. **Rent & Lease status:** the repository's frontend spec says "production ready". This site says "Implemented", which is what you described. Tell me if you want a different label.
-4. **Rent & Lease database:** the Django settings use SQLite, so MySQL is not listed as a tool for this project. Confirm this is right.
-5. **Final domain:** the canonical URL in `index.html` is a placeholder (`https://example.com/`). Replace it with your domain.
+1. **Screenshots:** add real screenshots for both projects when you have them.
+2. **Rent & Lease status:** the repository's frontend spec says "production ready". This site says "Implemented", which is what you described. Tell me if you want a different label.
+3. **Rent & Lease database:** the Django settings use SQLite, so MySQL is not listed as a tool for this project. Confirm this is right.
+4. **Final domain:** to be decided after the build. the canonical URL in `index.html` is a placeholder (`https://example.com/`). Replace it with your domain.
 
 ## Answered
 
+- No years are shown on the site. No LinkedIn link (you don't have one). Domain to be decided after the build.
 - Rent & Lease repository is public: `github.com/hotmoon123/hotmoon123`.
 - Rent & Lease backend work: authentication, account verification and the WebSocket connection for chat.
 - StitchLedger stack: React Native, Python (Django), FastAPI and OpenRouter.

@@ -6,7 +6,7 @@ export const projects: Project[] = [
     id: 'rent-lease',
     title: 'Rent & Lease Management System',
     status: 'Implemented',
-    period: 'Group project · early 2026',
+    period: 'Group project',
     role: 'Backend developer (group project)',
     summary:
       'A web application that helps landlords and tenants track properties, leases and rent, with an in-app chat so they can communicate directly.',
@@ -14,7 +14,7 @@ export const projects: Project[] = [
     problem:
       'Landlords and tenants need one place to track properties, leases and rent, and a direct way to communicate about them.',
     contribution:
-      'I developed the backend of the system as part of a group project completed in early 2026. My work covered user authentication, account verification and the WebSocket connection that powers the chat.',
+      'I developed the backend of the system as part of a group project. My work covered user authentication, account verification and the WebSocket connection that powers the chat.',
     featuresLabel: 'Key features',
     features: [
       'Track properties and their details',

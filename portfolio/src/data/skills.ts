@@ -58,7 +58,7 @@ export const timeline: TimelineItem[] = [
   },
   {
     id: 'rent-lease',
-    label: 'Early 2026',
+    label: 'Group project',
     title: 'Backend developer, group project',
     organisation: 'Rent & Lease Management System',
     description: 'Developed the backend of a web application for landlords and tenants to manage properties, leases and rent.',
