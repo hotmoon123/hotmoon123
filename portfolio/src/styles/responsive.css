@@ -1,0 +1,103 @@
+/* Responsive layout. Mobile first: the base styles target 320px wide screens. */
+
+@media (min-width: 640px) {
+  .actions .btn {
+    flex: 0 0 auto;
+  }
+
+  .skill-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .copy-email {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (min-width: 860px) {
+  .about-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-grid {
+    grid-template-columns: 1.4fr 1fr;
+  }
+
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .skill-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .hero-visual {
+    height: min(46vw, 560px);
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .site-nav,
+  .site-nav[data-open='true'] {
+    display: block;
+    position: static;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .site-nav ul {
+    display: flex;
+    gap: var(--space-1);
+    padding: 0;
+  }
+
+  .site-nav a {
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    font-size: 0.95rem;
+  }
+
+  .site-nav a[aria-current='true'] {
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+  }
+
+  .site-nav a:hover {
+    background: transparent;
+    color: var(--lime);
+  }
+}
+
+@media (min-width: 1200px) {
+  .skill-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-title {
+    font-size: 2.35rem;
+  }
+
+  .actions .btn {
+    flex: 1 1 100%;
+  }
+}

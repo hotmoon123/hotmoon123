@@ -1,0 +1,56 @@
+/* Design tokens. Palette from the approved direction: charcoal, warm ivory, electric lime, slate. */
+
+:root {
+  --charcoal: #17191c;
+  --ivory: #f4f1e8;
+  --lime: #c5f467;
+  --slate: #777f8c; /* decorative only: below text contrast on ivory */
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  --max-width: 1160px;
+  --radius: 14px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Default (dark) theme values. Light sections override these below. */
+  --bg: var(--charcoal);
+  --fg: var(--ivory);
+  --muted: #a9aeb7; /* about 7.5:1 on charcoal */
+  --surface: #20232a;
+  --rule: rgb(244 241 232 / 0.14);
+  --accent: var(--lime);
+  --accent-ink: var(--charcoal);
+  --focus: var(--lime);
+}
+
+.theme-dark {
+  --bg: var(--charcoal);
+  --fg: var(--ivory);
+  --muted: #a9aeb7;
+  --surface: #20232a;
+  --rule: rgb(244 241 232 / 0.14);
+  --accent: var(--lime);
+  --accent-ink: var(--charcoal);
+  --focus: var(--lime);
+}
+
+.theme-light {
+  --bg: var(--ivory);
+  --fg: var(--charcoal);
+  --muted: #4f5561; /* about 6.9:1 on ivory */
+  --surface: #fffdf6;
+  --rule: rgb(23 25 28 / 0.16);
+  --accent: var(--charcoal);
+  --accent-ink: var(--ivory);
+  --focus: var(--charcoal);
+}
