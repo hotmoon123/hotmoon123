@@ -12,7 +12,7 @@ python3 -m http.server 8080 --bind 0.0.0.0
 
 ## Make it yours
 
-1. Replace every bracketed placeholder in `index.html` (`[Your Name]`, `[Project one name]`, and so on). Search for `[` to find them all.
+1. Replace every bracketed placeholder in the HTML files (`[Your Name]`, `[Project one name]`, and so on). Search the whole folder for `[` to find them all. Also replace the domain in `sitemap.xml` and `robots.txt`.
 2. Keep three case studies. Each one should answer: the problem, the decision you made, and the result.
 3. Remove any section you cannot fill with real material. An honest short page beats a padded one.
 4. Change the accent colour once, in the `:root` tokens at the top of `styles.css`.
@@ -35,17 +35,58 @@ I read the uploaded reference files and kept the principles that apply to a pers
 | Case-study structure (Problem → Decision → Result) | Outcome-framed case studies are the strongest portfolio format. | `prompter.md` "portfolio/case-study thinking" |
 | Works without JavaScript | Progressive enhancement; the content is never hidden behind JS. | `MD files for development.md` non-functional requirements |
 
+## Pages
+
+Full page-by-page and section-by-section details, with the sketch board, are in `docs/pages-and-sections.md`.
+
+Built from the essential pages in the portfolio guide (priority *Essential* and *High*). Conditional and optional pages are not built yet, on purpose.
+
+| File | Purpose | Guide section |
+|---|---|---|
+| `index.html` | Home: hero, featured projects, short about, capabilities, contact call to action | 3 |
+| `projects/index.html` | Project listing | 6 |
+| `projects/project-one.html`, `-two`, `-three` | Case study template: overview, status, problem, decisions, challenges, security, testing, results, limits | 7, 12 |
+| `about.html` | Story, working principles, experience and education | 4, 8, 9 |
+| `skills.html` | Skill groups, each tied to the project that used it, plus what you are learning now | 5 |
+| `experience.html` | Work, practical experience, education, and certifications | 6, 8, 9 |
+| `contact.html` | Contact details and what to include in a message. No form (see Security) | 18 |
+| `privacy.html` | Privacy notice. Must match what the site actually does | 20 |
+| `404.html` | Friendly not-found page | 23 |
+| `sitemap.xml`, `robots.txt` | Search engine discovery. Update the domain | 26 |
+
+Not built yet, and why:
+
+- **Resume PDF, Services, Testimonials, Blog, Research, Achievements, FAQ, Case Studies index.** Each needs real content or a real file. Add one only when you have that content; a blank page works against you.
+- **Admin dashboard, CMS, Terms.** Not needed for a static site. Add Terms only if you sell services or accept submissions.
+
+Each HTML file contains its own header and footer, so a navigation change must be made in every file. That is a deliberate trade-off: no build step, and the site stays deployable as plain files. If the number of pages grows, move to a static site generator.
+
+## Security
+
+This is a static site with no server code, no database, and no secrets, so the attack surface is small. Still:
+
+- `_headers` sets a strict Content Security Policy. The page uses only external `styles.css` and `script.js`, with no inline scripts or styles, so the policy works without exceptions. If you add an inline script or a third-party embed, you must update the policy.
+- Do not add API keys, tokens, or private email addresses to the HTML or JavaScript. Anything in the page is public.
+- The contact email is visible in the HTML, so expect some spam. You can reduce it with a contact form from a form service, which adds a third-party dependency and should go into the CSP.
+- Only link to external sites you trust, and add `rel="noopener"` to any link that opens in a new tab.
+
+## Visitor flows
+
+`docs/visitor-flows.md` maps who visits the site, what each visitor is trying to do, and the path from landing to contact. Use it to check that every section supports one of those paths.
+
 ## Before you launch
 
 Based on the launch and growth stages in the idea-to-product guides:
 
 1. **Benchmark first.** Pick 5 portfolios in your field that you admire or compete with. For each, note: what they lead with, how many projects they show, whether outcomes are stated, and how long it takes to reach a contact link. Then write one sentence on the gap you can own. Do this by hand; the slash-style prompt codes in the uploads are conventions, not built-in features, so they will not run this for you.
 2. **Check the page on a real phone** at 320 px width and in both light and dark mode.
-3. **Replace every placeholder.** Search for `[` in `index.html`. Nothing in square brackets should go live.
-4. **Set the social preview.** Fill in the `og:` tags and the `og:url`. Add a 1200×630 image only if it is real work or a real photo.
+3. **Replace every placeholder.** Search the folder for `[`. Nothing in square brackets should go live.
+4. **Set the social preview.** Fill in the `og:` tags and the `og:url` on every page. Add a 1200×630 image only if it is real work or a real photo.
 5. **Test the contact link** by sending yourself an email from it.
 6. **Run a quick accessibility check** with your browser's built-in Lighthouse or accessibility audit. Fix anything it flags in contrast, labels, or focus order.
-7. **Publish** on a static host of your choice (for example GitHub Pages or Netlify). Both serve this folder as-is.
+7. **Run the 60-second check.** Open every page at 100% zoom, view it on a phone, squint to check the hierarchy, read the headline aloud, and ask whether you would be proud to show it.
+8. **Check permissions.** Confirm in writing that you may show any client work. Many client contracts reserve portfolio-use rights, so remove or anonymise anything you are not cleared to show.
+9. **Publish** on a static host of your choice (for example GitHub Pages or Netlify). Both serve this folder as-is.
 
 ## What I did not take
 

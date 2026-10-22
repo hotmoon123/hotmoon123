@@ -3,130 +3,146 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>[Your Name] · Portfolio</title>
-  <meta name="description" content="[One sentence: what you do, for whom, and the result you are known for.]">
+  <title>Home · [Your Name]</title>
+  <meta name="description" content="Portfolio of [Your Name]: [one-line positioning].">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="[Your Name] · Portfolio">
-  <meta property="og:description" content="[Same one-sentence description as above.]">
-  <meta property="og:url" content="[https://your-domain.example]">
-  <!-- Replace with a real 1200x630 image only once you have one; remove this line until then. -->
-  <!-- <meta property="og:image" content="[https://your-domain.example/og.png]"> -->
+  <meta property="og:title" content="Home · [Your Name]">
+  <meta property="og:description" content="Portfolio of [Your Name]: [one-line positioning].">
+  <meta property="og:url" content="[https://your-domain.example/index.html]">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%239e3b1e'/%3E%3Ctext x='16' y='22' font-size='16' font-family='Georgia,serif' text-anchor='middle' fill='%23f4f1ea'%3EA%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body id="top">
   <a class="skip-link" href="#main">Skip to content</a>
-
   <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="[Your Name], back to top">[Your Name]</a>
+    <a class="wordmark" href="index.html" aria-label="[Your Name], home">[Your Name]</a>
     <nav aria-label="Primary">
       <ul>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="projects/">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="main">
-    <section class="hero" id="top" aria-labelledby="hero-title">
+    <section class="hero" aria-labelledby="hero-title">
       <p class="eyebrow">[Your role] · [City, Country]</p>
-      <h1 id="hero-title">I design and build <span class="accent">[the thing you do best]</span> for [who you help].</h1>
-      <p class="lede">[Two sentences: the problem you solve, and one concrete result from your work. Replace this with your own words.]</p>
+      <h1 id="hero-title">I build <span class="accent">[what you build]</span> for [who it is for].</h1>
+      <p class="lede">[Two sentences: the problem you solve, and one concrete, verifiable result.]</p>
       <div class="actions">
-        <a class="btn btn-primary" href="#work">See selected work</a>
-        <a class="btn btn-ghost" href="#contact">Start a conversation</a>
+        <a class="btn btn-primary" href="projects/">View my work</a>
+        <a class="btn btn-ghost" href="contact.html">Contact me</a>
+        <a class="btn btn-ghost" href="[resume.pdf]">Download CV</a>
       </div>
     </section>
 
-    <section id="work" class="section" aria-labelledby="work-title">
+    <section class="section" aria-labelledby="stack-title">
       <div class="section-head">
-        <h2 id="work-title">Selected work</h2>
-        <p>Three projects, each with the problem, the decision that mattered, and the result.</p>
+        <h2 id="stack-title">My technology stack</h2>
+        <p>The four languages I use most, each linked to the skills page.</p>
       </div>
+      <ul class="tech-grid">
+        <li class="tech"><h3><a href="skills.html#python">Python</a></h3><p>Automation, scripting, data processing, and application logic.</p></li>
+        <li class="tech"><h3><a href="skills.html#php">PHP</a></h3><p>Server-side logic, form handling, APIs, and database-backed websites.</p></li>
+        <li class="tech"><h3><a href="skills.html#mysql">MySQL</a></h3><p>Relational data modelling, SQL queries, constraints, joins, and transactions.</p></li>
+        <li class="tech"><h3><a href="skills.html#cpp">C++</a></h3><p>Algorithms, data structures, object-oriented programming, and systems fundamentals.</p></li>
+      </ul>
+    </section>
 
+    <section class="section" aria-labelledby="featured-title">
+      <div class="section-head">
+        <h2 id="featured-title">Featured projects</h2>
+        <p>Three projects chosen for relevance. <a href="projects/">See all projects</a>.</p>
+      </div>
       <ol class="cases">
-        <li class="case">
+        <li class="card">
           <article>
-            <p class="case-meta">[Year] · [Client or context] · [Your role]</p>
-            <h3>[Project one name]</h3>
-            <p>[What was broken or missing, in one or two sentences.]</p>
-            <dl>
-              <div><dt>Problem</dt><dd>[Short statement]</dd></div>
-              <div><dt>Decision</dt><dd>[The key choice you made and why]</dd></div>
-              <div><dt>Result</dt><dd>[A measurable outcome, or an honest qualitative one]</dd></div>
-            </dl>
-            <a class="case-link" href="#contact">Ask about this project <span aria-hidden="true">→</span></a>
+            <p class="case-meta">[Year] · [Type: client / academic / personal] · [Your role]</p>
+            <h3><a href="projects/project-one.html">[Project 1 name]</a></h3>
+            <p>[One or two sentences: the problem it solves and who it is for.]</p>
+            <p class="tags" aria-label="Technologies">
+              <span>[Tech 1]</span><span>[Tech 2]</span><span>[Tech 3]</span>
+            </p>
+            <p class="status">Status: <strong>[Prototype / In use / Shipped]</strong></p>
+            <a class="case-link" href="projects/project-one.html">Read the case study <span aria-hidden="true">→</span></a>
           </article>
         </li>
-        <li class="case">
+        <li class="card">
           <article>
-            <p class="case-meta">[Year] · [Client or context] · [Your role]</p>
-            <h3>[Project two name]</h3>
-            <p>[What was broken or missing, in one or two sentences.]</p>
-            <dl>
-              <div><dt>Problem</dt><dd>[Short statement]</dd></div>
-              <div><dt>Decision</dt><dd>[The key choice you made and why]</dd></div>
-              <div><dt>Result</dt><dd>[A measurable outcome, or an honest qualitative one]</dd></div>
-            </dl>
-            <a class="case-link" href="#contact">Ask about this project <span aria-hidden="true">→</span></a>
+            <p class="case-meta">[Year] · [Type: client / academic / personal] · [Your role]</p>
+            <h3><a href="projects/project-two.html">[Project 2 name]</a></h3>
+            <p>[One or two sentences: the problem it solves and who it is for.]</p>
+            <p class="tags" aria-label="Technologies">
+              <span>[Tech 1]</span><span>[Tech 2]</span><span>[Tech 3]</span>
+            </p>
+            <p class="status">Status: <strong>[Prototype / In use / Shipped]</strong></p>
+            <a class="case-link" href="projects/project-two.html">Read the case study <span aria-hidden="true">→</span></a>
           </article>
         </li>
-        <li class="case">
+        <li class="card">
           <article>
-            <p class="case-meta">[Year] · [Client or context] · [Your role]</p>
-            <h3>[Project three name]</h3>
-            <p>[What was broken or missing, in one or two sentences.]</p>
-            <dl>
-              <div><dt>Problem</dt><dd>[Short statement]</dd></div>
-              <div><dt>Decision</dt><dd>[The key choice you made and why]</dd></div>
-              <div><dt>Result</dt><dd>[A measurable outcome, or an honest qualitative one]</dd></div>
-            </dl>
-            <a class="case-link" href="#contact">Ask about this project <span aria-hidden="true">→</span></a>
+            <p class="case-meta">[Year] · [Type: client / academic / personal] · [Your role]</p>
+            <h3><a href="projects/project-three.html">[Project 3 name]</a></h3>
+            <p>[One or two sentences: the problem it solves and who it is for.]</p>
+            <p class="tags" aria-label="Technologies">
+              <span>[Tech 1]</span><span>[Tech 2]</span><span>[Tech 3]</span>
+            </p>
+            <p class="status">Status: <strong>[Prototype / In use / Shipped]</strong></p>
+            <a class="case-link" href="projects/project-three.html">Read the case study <span aria-hidden="true">→</span></a>
           </article>
         </li>
       </ol>
     </section>
 
-    <section id="about" class="section split" aria-labelledby="about-title">
+    <section class="section split" aria-labelledby="approach-title">
+      <div class="section-head"><h2 id="approach-title">How I build software</h2></div>
+      <ol class="steps">
+        <li><strong>Understand the requirement.</strong> Write down who needs the system and what it must do.</li>
+        <li><strong>Design before coding.</strong> Sketch the data model and the flow between components.</li>
+        <li><strong>Implement in small steps.</strong> Keep each change testable and reviewable.</li>
+        <li><strong>Test and check security.</strong> Validate input, use prepared SQL statements, and test the failure paths.</li>
+        <li><strong>Review and improve.</strong> Record what went wrong and what I would change.</li>
+      </ol>
+    </section>
+
+    <section class="section split" aria-labelledby="about-preview-title">
       <div class="section-head">
-        <h2 id="about-title">About</h2>
+        <h2 id="about-preview-title">About</h2>
       </div>
       <div class="prose">
-        <p>[A short, specific paragraph in your own voice: how you got here, what you care about in your craft, and what kind of work you want more of.]</p>
-        <p>[Optional second paragraph: how you work with clients or teams, such as your process, communication style, or how you handle feedback.]</p>
+        <p>[A short, specific paragraph in your own voice: what you do and the kind of problems you enjoy.]</p>
+        <p><a href="about.html">Read my full story and working style</a></p>
       </div>
     </section>
 
-    <section id="services" class="section" aria-labelledby="services-title">
+    <section class="section" aria-labelledby="services-title">
       <div class="section-head">
         <h2 id="services-title">What I do</h2>
-        <p>Keep this list short. Only include work you can show.</p>
+        <p>Areas I can demonstrate through my projects. Remove this section if you do not offer paid work yet.</p>
       </div>
       <ul class="services">
-        <li><h3>[Service one]</h3><p>[One line on what the client gets.]</p></li>
-        <li><h3>[Service two]</h3><p>[One line on what the client gets.]</p></li>
-        <li><h3>[Service three]</h3><p>[One line on what the client gets.]</p></li>
+        <li><h3>Backend and database-driven apps</h3><p>PHP and MySQL applications with validated forms and secure queries. [Link to project.]</p></li>
+        <li><h3>Scripting and automation</h3><p>Python tools that process data and remove repetitive work. [Link to project.]</p></li>
+        <li><h3>Algorithms and problem solving</h3><p>C++ implementations of data structures and algorithms. [Link to project.]</p></li>
       </ul>
     </section>
 
-    <section id="contact" class="section contact" aria-labelledby="contact-title">
-      <h2 id="contact-title">Let's talk about your next project.</h2>
+    <section class="section contact" aria-labelledby="cta-title">
+      <h2 id="cta-title">Let's talk about your next project.</h2>
       <p>Tell me what you are building, who it is for, and when you need it. I usually reply within [two working days].</p>
-      <p class="contact-links">
-        <a href="mailto:[you@example.com]">[you@example.com]</a>
-        <a href="[https://www.linkedin.com/in/your-handle]">LinkedIn</a>
-        <a href="[https://github.com/your-handle]">GitHub</a>
-      </p>
+      <p class="contact-links"><a href="contact.html">Go to the contact page</a></p>
     </section>
+
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> [Your Name]. Built by hand, no template.</p>
+    <p>© <span id="year"></span> [Your Name]. Built by hand, no template. <a href="privacy.html">Privacy</a></p>
     <a href="#top">Back to top ↑</a>
   </footer>
 
