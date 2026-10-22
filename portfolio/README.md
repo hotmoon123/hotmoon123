@@ -1,101 +1,112 @@
-# Personal Portfolio — Starter
+# Software Engineer Portfolio
 
-A dependency-free static portfolio (HTML, CSS, a small JS file). No build step, no framework, no packages to install.
+A static, frontend-only portfolio built with **React + TypeScript**, **Anime.js** for motion, and **Three.js** for the hero scene.
+All content is hardcoded in TypeScript files. There is no backend, no database, and no server-side code.
 
-## Preview locally
+## Stack
+
+| Layer | Tool | Used for |
+|---|---|---|
+| UI | React 19, React Router 7 | Pages, components, client-side routes |
+| Language | TypeScript (strict) | Typed content model and components |
+| Motion | Anime.js 4 | Hero word reveal, scroll reveals, page fade |
+| 3D | Three.js | Animated wireframe scene in the hero |
+| Build | Vite | Static build to `dist/` |
+
+## Run it
 
 ```bash
-cd portfolio
-python3 -m http.server 8080 --bind 0.0.0.0
-# open http://localhost:8080
+npm install
+npm run dev        # http://localhost:5173
+npm run typecheck  # TypeScript only
+npm run build      # typecheck + production build to dist/
+npm run preview    # serve dist/ on http://localhost:4173
 ```
 
-## Make it yours
+## Where to edit content
 
-1. Replace every bracketed placeholder in the HTML files (`[Your Name]`, `[Project one name]`, and so on). Search the whole folder for `[` to find them all. Also replace the domain in `sitemap.xml` and `robots.txt`.
-2. Keep three case studies. Each one should answer: the problem, the decision you made, and the result.
-3. Remove any section you cannot fill with real material. An honest short page beats a padded one.
-4. Change the accent colour once, in the `:root` tokens at the top of `styles.css`.
-5. Add real images to `assets/` only when they add information (a screenshot, a diagram, a before/after). Compress them first.
+Everything you need to change is in `src/data/`:
 
-## Design decisions (and where they came from)
+| File | Edit it to change |
+|---|---|
+| `site.ts` | Name, role, tagline, email, GitHub and LinkedIn links, availability, navigation |
+| `projects.ts` | Projects, status, technologies, case-study sections, code samples |
+| `skills.ts` | Python, PHP, MySQL, C++ capability lists and the projects that prove them |
+| `experience.ts` | Experience timeline, education, certifications, services |
+| `articles.ts` | Articles. Only items with `published: true` appear on the site |
+| `types.ts` | The shape of each content type. Change it here first if you add a field |
 
-I read the uploaded reference files and kept the principles that apply to a personal site. I left out the parts about SaaS products, CRMs, and the Django rental app in this repo.
+Replace every bracketed placeholder (`[ ... ]`). Search the `src/` folder for `[` to find them.
 
-| Decision | Why | Source in the uploads |
-|---|---|---|
-| One hero idea and one primary action (*See selected work*) | A portfolio has one job: get the visitor to the work. | `prompter.md` decision rules; `ULTIMATE_DESIGN_SYSTEM.md` "one primary action per screen" |
-| Real, specific content with no lorem ipsum, no fake testimonials, no fake metrics | Anti-generic and ethics rules: never fabricate proof. | `prompter.md` anti-AI rules; `MB atelier design.md` "never fabricate…" |
-| No stock hero photo, gradient blobs, or glassmorphism | Named as "AI landing page" clichés to avoid. | `prompter.md` anti-AI rules; `software prompt.md` style taxonomy |
-| Warm paper, ink, and one ember accent, with a serif display face and a system sans body | Restrained palette with 60/30/10 weighting. Each choice can be explained in one sentence. | `prompter.md` colour rules; `ULTIMATE_DESIGN_SYSTEM.md` typography |
-| All text pairs ≥ 4.5:1 contrast in light and dark mode | WCAG 2.2 AA is listed as non-negotiable. | `prompter.md` technical non-negotiables; `ULTIMATE_DESIGN_SYSTEM.md` accessibility |
-| 16 px body, 1.6 line height, 45–75 character measure, 44 px tap targets | Readability and touch standards from the same docs. | `prompter.md` technical non-negotiables; `prompter.md` "tap targets 44 pt" |
-| Dark mode designed separately, not inverted | Explicitly required. | `prompter.md` colour rules |
-| Motion is subtle, runs once, and is off for `prefers-reduced-motion` | Motion over 500 ms and scroll-jacking are called out as things to avoid. | `prompter.md` anti-AI rules; `ULTIMATE_DESIGN_SYSTEM.md` reduced-motion rule |
-| Case-study structure (Problem → Decision → Result) | Outcome-framed case studies are the strongest portfolio format. | `prompter.md` "portfolio/case-study thinking" |
-| Works without JavaScript | Progressive enhancement; the content is never hidden behind JS. | `MD files for development.md` non-functional requirements |
+### Project status
+
+Use only these labels, and only when they are true:
+`Planned` · `In progress` · `Implemented` · `Tested` · `Deployed`
+
+### Adding a screenshot
+
+1. Put the image in `public/images/`, for example `public/images/examination-system.png`.
+2. In `projects.ts`, set `image: '/images/examination-system.png'` on that project.
+
+### Adding the CV
+
+Put the PDF at `public/resume.pdf`. The Experience and Resume pages link to it.
 
 ## Pages
 
-Full page-by-page and section-by-section details, with the sketch board, are in `docs/pages-and-sections.md`.
-
-Built from the essential pages in the portfolio guide (priority *Essential* and *High*). Conditional and optional pages are not built yet, on purpose.
-
-| File | Purpose | Guide section |
+| Route | Page | Scrollable sections |
 |---|---|---|
-| `index.html` | Home: hero, featured projects, short about, capabilities, contact call to action | 3 |
-| `projects/index.html` | Project listing | 6 |
-| `projects/project-one.html`, `-two`, `-three` | Case study template: overview, status, problem, decisions, challenges, security, testing, results, limits | 7, 12 |
-| `about.html` | Story, working principles, experience and education | 4, 8, 9 |
-| `skills.html` | Skill groups, each tied to the project that used it, plus what you are learning now | 5 |
-| `experience.html` | Work, practical experience, education, and certifications | 6, 8, 9 |
-| `contact.html` | Contact details and what to include in a message. No form (see Security) | 18 |
-| `privacy.html` | Privacy notice. Must match what the site actually does | 20 |
-| `404.html` | Friendly not-found page | 23 |
-| `sitemap.xml`, `robots.txt` | Search engine discovery. Update the domain | 26 |
+| `/` | Home | Hero (Three.js + Anime.js), technology stack, featured projects, interests, experience highlights, call to action |
+| `/about` | About | Journey, engineering philosophy, goals and learning |
+| `/skills` | Skills | Core languages, database, engineering practice and tools |
+| `/projects` | Projects | Project grid with language filters and an empty state |
+| `/projects/:slug` | Project details | Problem, objectives, features, architecture, database, code sample, decisions, testing, results, limitations, future work |
+| `/experience` | Experience | Timeline with context, actions and outcomes |
+| `/education` | Education | Qualifications, certifications (completed only) |
+| `/resume` | Resume | Summary, skills, projects, education, PDF download |
+| `/case-studies` | Case studies | Projects marked `hasCaseStudy` |
+| `/articles` | Articles | Published articles only |
+| `/services` | Services | Services, process, quote request |
+| `/contact` | Contact | Contact methods, what to expect, privacy note |
+| `*` | Not found | Custom 404 with links back in |
 
-Not built yet, and why:
+The design reference is `docs/pages-and-sections.md` and the sketch board in `docs/sketches/`.
 
-- **Resume PDF, Services, Testimonials, Blog, Research, Achievements, FAQ, Case Studies index.** Each needs real content or a real file. Add one only when you have that content; a blank page works against you.
-- **Admin dashboard, CMS, Terms.** Not needed for a static site. Add Terms only if you sell services or accept submissions.
+## Accessibility and motion
 
-Each HTML file contains its own header and footer, so a navigation change must be made in every file. That is a deliberate trade-off: no build step, and the site stays deployable as plain files. If the number of pages grows, move to a static site generator.
+- Skip link, landmarks, one `h1` per page, labelled sections, visible focus rings, 44px minimum tap targets.
+- `prefers-reduced-motion` turns off Anime.js reveals, the hero animation, page fades, and the Three.js loop. The static hero still renders.
+- The Three.js scene is decorative (`aria-hidden`). The page works without WebGL.
+- Scroll reveals watch for content added later, so lazy-loaded pages still reveal.
+
+## Deploying (static hosting)
+
+The build output is the `dist/` folder. Any static host works.
+
+- **Netlify:** build command `npm run build`, publish directory `dist`. `public/_redirects` handles deep links.
+- **Vercel:** the build is detected automatically. `vercel.json` handles deep links and sets security headers.
+- **GitHub Pages:** set `base: '/your-repo-name/'` in `vite.config.ts`. GitHub Pages does not support client-side routing without a fallback, so copy `dist/index.html` to `dist/404.html` after building.
+
+Always use HTTPS in production.
+
+## Performance
+
+- The Three.js scene is in its own chunk (about 130 KB gzip) and loads only on the home page.
+- The scene pauses when off-screen or when the tab is hidden, and caps the pixel ratio at 1.5.
+- Images should be compressed before you add them. Use `loading="lazy"` (already set on project images).
 
 ## Security
 
-This is a static site with no server code, no database, and no secrets, so the attack surface is small. Still:
+- Nothing secret belongs in this project. Anything in the bundle can be read by a visitor.
+- The contact page uses a `mailto:` link, so there is no form and nothing to protect on the server.
+- If you later add a form, you need a form service or a backend, and you must update the privacy notice.
 
-- `_headers` sets a strict Content Security Policy. The page uses only external `styles.css` and `script.js`, with no inline scripts or styles, so the policy works without exceptions. If you add an inline script or a third-party embed, you must update the policy.
-- Do not add API keys, tokens, or private email addresses to the HTML or JavaScript. Anything in the page is public.
-- The contact email is visible in the HTML, so expect some spam. You can reduce it with a contact form from a form service, which adds a third-party dependency and should go into the CSP.
-- Only link to external sites you trust, and add `rel="noopener"` to any link that opens in a new tab.
+## Checks before publishing
 
-## Visitor flows
-
-`docs/visitor-flows.md` maps who visits the site, what each visitor is trying to do, and the path from landing to contact. Use it to check that every section supports one of those paths.
-
-## Before you launch
-
-Based on the launch and growth stages in the idea-to-product guides:
-
-1. **Benchmark first.** Pick 5 portfolios in your field that you admire or compete with. For each, note: what they lead with, how many projects they show, whether outcomes are stated, and how long it takes to reach a contact link. Then write one sentence on the gap you can own. Do this by hand; the slash-style prompt codes in the uploads are conventions, not built-in features, so they will not run this for you.
-2. **Check the page on a real phone** at 320 px width and in both light and dark mode.
-3. **Replace every placeholder.** Search the folder for `[`. Nothing in square brackets should go live.
-4. **Set the social preview.** Fill in the `og:` tags and the `og:url` on every page. Add a 1200×630 image only if it is real work or a real photo.
-5. **Test the contact link** by sending yourself an email from it.
-6. **Run a quick accessibility check** with your browser's built-in Lighthouse or accessibility audit. Fix anything it flags in contrast, labels, or focus order.
-7. **Run the 60-second check.** Open every page at 100% zoom, view it on a phone, squint to check the hierarchy, read the headline aloud, and ask whether you would be proud to show it.
-8. **Check permissions.** Confirm in writing that you may show any client work. Many client contracts reserve portfolio-use rights, so remove or anonymise anything you are not cleared to show.
-9. **Publish** on a static host of your choice (for example GitHub Pages or Netlify). Both serve this folder as-is.
-
-## What I did not take
-
-- The Django/rent-lease product docs in `docs/` are about a different system. They were not used.
-- The AI portfolio-builder TRD in `MD files for development.md` describes a multi-user SaaS. It is useful later if you want a generator, but it is more than a personal site needs.
-- Brand-strategy and business frameworks are useful for positioning, but I did not invent a brand identity. Add one when you have decided your positioning.
-
-## Open questions for you
-
-- Your name, role, city, and the one-sentence positioning you want to be known for.
-- Three projects you can show publicly, with the outcomes you are willing to state.
-- Whether you want a custom domain and a contact form (a form needs a backend or a form service; `mailto:` is the zero-dependency option used here).
+- [ ] `npm run build` succeeds with no TypeScript errors
+- [ ] Every `[placeholder]` is replaced
+- [ ] Every project status is true
+- [ ] `public/resume.pdf` is current and matches the Resume page
+- [ ] Email, GitHub and LinkedIn links point to your accounts
+- [ ] Check on a phone, a tablet, and a laptop, in light and with reduced motion on
+- [ ] Deep links such as `/projects/examination-system` open directly after deploy

@@ -1,3 +1,5 @@
+> **Update:** the site is now a React + TypeScript app (see `README.md`). The page and section list below still describes the content plan. The static HTML pages it once described were replaced by React routes with the same names: `/`, `/about`, `/skills`, `/projects`, `/projects/:slug`, `/experience`, `/education`, `/resume`, `/case-studies`, `/articles`, `/services`, `/contact`, and a 404 page.
+
 # Portfolio: pages, scrollable sections, and sketches
 
 A portfolio for a software engineer who works with **Python, PHP, MySQL, and C++**.
