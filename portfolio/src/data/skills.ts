@@ -13,8 +13,8 @@ export const skills: Skill[] = [
     id: 'python',
     name: 'Python',
     kind: 'Language',
-    description: 'The main language of my backend work on the Rent & Lease Management System.',
-    projectIds: ['rent-lease'],
+    description: 'The main language of my backend work on Rent & Lease and StitchLedger.',
+    projectIds: ['rent-lease', 'stitch-ledger'],
   },
   {
     id: 'php',
@@ -41,8 +41,8 @@ export const skills: Skill[] = [
     id: 'django',
     name: 'Django',
     kind: 'Framework',
-    description: 'The Python web framework behind the Rent & Lease backend.',
-    projectIds: ['rent-lease'],
+    description: 'The Python web framework behind the Rent & Lease backend and the StitchLedger back end.',
+    projectIds: ['rent-lease', 'stitch-ledger'],
   },
 ];
 
@@ -68,7 +68,7 @@ export const timeline: TimelineItem[] = [
     label: 'In progress',
     title: 'Developer',
     organisation: 'StitchLedger · personal project',
-    description: 'Building a tool that helps fashion designers track money and time and plan daily tasks.',
+    description: 'Building a tool that helps fashion designers track money and time and plan daily tasks, with React Native and Python.',
   },
 ];
 

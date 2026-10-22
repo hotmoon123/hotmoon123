@@ -97,7 +97,7 @@ Navigation has six items. Your sketch lists "My tech stack" and "Experience" sep
 - **Purpose:** show your study and project experience in order.
 - **Content:** three entries:
   1. Current — Information Technology, Regional Maritime University
-  2. Early 2026 — Backend developer, group project, Rent & Lease Management System
+  2. Early 2026 — Backend developer, group project, Rent & Lease Management System (authentication, verification and WebSocket chat)
   3. In progress — Developer, StitchLedger
 - **Rule:** no years, grades, employers or certificates are invented. Add them only when you give them to me.
 
@@ -138,13 +138,14 @@ Navigation has six items. Your sketch lists "My tech stack" and "Experience" sep
 
 ## Open items (need your answer before publishing)
 
-1. **Rent & Lease repository:** the link points to `github.com/hotmoon123/hotmoon123`, which contains the Django project. Please confirm this is the public repository you want linked.
-2. **Rent & Lease status:** the repository's frontend spec says "production ready". This site says "Implemented", which is what you described. Tell me if you want a different label.
-3. **Rent & Lease database:** the Django settings use SQLite. MySQL is therefore not listed as a tool for this project.
-4. **Rent & Lease contribution:** the site says you developed the backend. Tell me two or three backend tasks you did, so the case study can be specific.
-5. **StitchLedger technology:** the stack is "to be confirmed". Tell me the tools you are using.
-6. **Screenshots:** add real screenshots for both projects when you have them.
-7. **Study year and dates:** add your current year of study if you want it shown.
-8. **LinkedIn:** not included, because no link was given.
-9. **Photo and CV:** neither is included, as you said. A placeholder code card is used in About.
-10. **Final domain:** the canonical URL in `index.html` is a placeholder (`https://example.com/`). Replace it with your domain.
+1. **Study year and dates:** question 4 was cut off in your reply. Tell me whether to show your current year of study, and whether you want a LinkedIn link.
+2. **Screenshots:** add real screenshots for both projects when you have them.
+3. **Rent & Lease status:** the repository's frontend spec says "production ready". This site says "Implemented", which is what you described. Tell me if you want a different label.
+4. **Rent & Lease database:** the Django settings use SQLite, so MySQL is not listed as a tool for this project. Confirm this is right.
+5. **Final domain:** the canonical URL in `index.html` is a placeholder (`https://example.com/`). Replace it with your domain.
+
+## Answered
+
+- Rent & Lease repository is public: `github.com/hotmoon123/hotmoon123`.
+- Rent & Lease backend work: authentication, account verification and the WebSocket connection for chat.
+- StitchLedger stack: React Native, Python (Django), FastAPI and OpenRouter.
