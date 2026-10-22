@@ -58,7 +58,9 @@ Based on the launch and growth stages in the idea-to-product guides:
 4. **Set the social preview.** Fill in the `og:` tags and the `og:url`. Add a 1200×630 image only if it is real work or a real photo.
 5. **Test the contact link** by sending yourself an email from it.
 6. **Run a quick accessibility check** with your browser's built-in Lighthouse or accessibility audit. Fix anything it flags in contrast, labels, or focus order.
-7. **Publish** on a static host of your choice (for example GitHub Pages or Netlify). Both serve this folder as-is.
+7. **Run the 60-second check.** Open every page at 100% zoom, view it on a phone, squint to check the hierarchy, read the headline aloud, and ask whether you would be proud to show it.
+8. **Check permissions.** Confirm in writing that you may show any client work. Many client contracts reserve portfolio-use rights, so remove or anonymise anything you are not cleared to show.
+9. **Publish** on a static host of your choice (for example GitHub Pages or Netlify). Both serve this folder as-is.
 
 ## What I did not take
 
