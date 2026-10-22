@@ -37,6 +37,8 @@ I read the uploaded reference files and kept the principles that apply to a pers
 
 ## Pages
 
+Full page-by-page and section-by-section details, with the sketch board, are in `docs/pages-and-sections.md`.
+
 Built from the essential pages in the portfolio guide (priority *Essential* and *High*). Conditional and optional pages are not built yet, on purpose.
 
 | File | Purpose | Guide section |
@@ -46,6 +48,7 @@ Built from the essential pages in the portfolio guide (priority *Essential* and 
 | `projects/project-one.html`, `-two`, `-three` | Case study template: overview, status, problem, decisions, challenges, security, testing, results, limits | 7, 12 |
 | `about.html` | Story, working principles, experience and education | 4, 8, 9 |
 | `skills.html` | Skill groups, each tied to the project that used it, plus what you are learning now | 5 |
+| `experience.html` | Work, practical experience, education, and certifications | 6, 8, 9 |
 | `contact.html` | Contact details and what to include in a message. No form (see Security) | 18 |
 | `privacy.html` | Privacy notice. Must match what the site actually does | 20 |
 | `404.html` | Friendly not-found page | 23 |
@@ -53,7 +56,7 @@ Built from the essential pages in the portfolio guide (priority *Essential* and 
 
 Not built yet, and why:
 
-- **Resume PDF, Services, Testimonials, Blog, Research, Achievements, FAQ.** Each needs real content or a real file. Add one only when you have that content; a blank page works against you.
+- **Resume PDF, Services, Testimonials, Blog, Research, Achievements, FAQ, Case Studies index.** Each needs real content or a real file. Add one only when you have that content; a blank page works against you.
 - **Admin dashboard, CMS, Terms.** Not needed for a static site. Add Terms only if you sell services or accept submissions.
 
 Each HTML file contains its own header and footer, so a navigation change must be made in every file. That is a deliberate trade-off: no build step, and the site stays deployable as plain files. If the number of pages grows, move to a static site generator.
