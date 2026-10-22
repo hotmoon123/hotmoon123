@@ -6,7 +6,7 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !('IntersectionObserver' in window)) return;
 
-  var targets = document.querySelectorAll('.case, .services li, .prose, .contact');
+  var targets = document.querySelectorAll('.case, .card, .services li, .skill-group, .case-section, .prose, .contact');
   targets.forEach(function (el) { el.classList.add('reveal'); });
 
   var io = new IntersectionObserver(function (entries) {

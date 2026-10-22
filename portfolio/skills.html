@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skills · [Your Name]</title>
+  <meta name="description" content="Skills by [Your Name], each linked to the project where it was used.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Skills · [Your Name]">
+  <meta property="og:description" content="Skills by [Your Name], each linked to the project where it was used.">
+  <meta property="og:url" content="[https://your-domain.example/skills.html]">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%239e3b1e'/%3E%3Ctext x='16' y='22' font-size='16' font-family='Georgia,serif' text-anchor='middle' fill='%23f4f1ea'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="index.html" aria-label="[Your Name], home">[Your Name]</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="projects/">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html" aria-current="page">Skills</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero hero-compact" aria-labelledby="skills-title">
+      <p class="eyebrow">Skills</p>
+      <h1 id="skills-title">What I use, and where I have used it</h1>
+      <p class="lede">Every area links to evidence. If a skill has no project behind it, it does not appear here.</p>
+    </section>
+
+    <section class="section" aria-labelledby="groups-title">
+      <h2 id="groups-title" class="visually-hidden">Skill groups</h2>
+      <div class="skill-grid">
+      <div class="skill-group">
+        <h3>Frontend</h3>
+        <ul class="tags-list"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>[Framework]</li></ul>
+        <p class="evidence">Evidence: [Project one], [Project two]</p>
+      </div>
+      <div class="skill-group">
+        <h3>Backend</h3>
+        <ul class="tags-list"><li>[Language]</li><li>[Framework]</li><li>REST APIs</li><li>Authentication</li></ul>
+        <p class="evidence">Evidence: [Project name]</p>
+      </div>
+      <div class="skill-group">
+        <h3>Databases</h3>
+        <ul class="tags-list"><li>[Database]</li><li>Relational modelling</li><li>Indexes</li></ul>
+        <p class="evidence">Evidence: [Project name]</p>
+      </div>
+      <div class="skill-group">
+        <h3>Security</h3>
+        <ul class="tags-list"><li>Input validation</li><li>Access control</li><li>HTTP security headers</li></ul>
+        <p class="evidence">Evidence: [Project name, or “studied, not yet applied in a project”]</p>
+      </div>
+      <div class="skill-group">
+        <h3>Engineering</h3>
+        <ul class="tags-list"><li>Git</li><li>Testing</li><li>[Deployment tool]</li></ul>
+        <p class="evidence">Evidence: [Project name]</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="learning-title">
+      <div class="section-head">
+        <h2 id="learning-title">Currently learning</h2>
+        <p>Listed separately so it is not mistaken for experience.</p>
+      </div>
+      <ul class="plain-list">
+        <li>[Topic and the project you are using to learn it]</li>
+      </ul>
+    </section>
+
+    <section class="section contact" aria-labelledby="skills-cta">
+      <h2 id="skills-cta">See the skills in use.</h2>
+      <p class="contact-links"><a href="projects/">Browse projects</a></p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> [Your Name]. Built by hand, no template. <a href="privacy.html">Privacy</a></p>
+    <a href="#top">Back to top ↑</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

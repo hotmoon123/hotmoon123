@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Replace [https://your-domain.example] with your real domain before publishing. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>[https://your-domain.example/]</loc></url>
+  <url><loc>[https://your-domain.example/projects/]</loc></url>
+  <url><loc>[https://your-domain.example/projects/project-one.html]</loc></url>
+  <url><loc>[https://your-domain.example/projects/project-two.html]</loc></url>
+  <url><loc>[https://your-domain.example/projects/project-three.html]</loc></url>
+  <url><loc>[https://your-domain.example/about.html]</loc></url>
+  <url><loc>[https://your-domain.example/skills.html]</loc></url>
+  <url><loc>[https://your-domain.example/contact.html]</loc></url>
+  <url><loc>[https://your-domain.example/privacy.html]</loc></url>
+</urlset>
