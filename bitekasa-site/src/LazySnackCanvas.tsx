@@ -1,8 +1,24 @@
-import { Suspense, lazy, useEffect, useRef, useState, type PointerEvent } from 'react';
+import { Component, Suspense, lazy, useEffect, useRef, useState, type ErrorInfo, type PointerEvent, type ReactNode } from 'react';
 import { useReducedMotion } from 'motion/react';
 
 type PointerPosition = { x: number; y: number };
 const ThreeAccent = lazy(() => import('./ThreeAccent'));
+
+class Optional3DErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch(error: Error, _info: ErrorInfo) {
+    console.warn('Optional BiteKasa 3D accent unavailable; keeping the product image visible.', error);
+  }
+
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
 
 export default function LazySnackCanvas() {
   const container = useRef<HTMLDivElement>(null);
@@ -40,9 +56,11 @@ export default function LazySnackCanvas() {
   return (
     <div ref={container} className="absolute inset-0" onPointerMove={handlePointerMove} aria-hidden="true">
       {nearViewport && (
-        <Suspense fallback={null}>
-          <ThreeAccent reducedMotion={Boolean(reduceMotion)} pointer={pointer} />
-        </Suspense>
+        <Optional3DErrorBoundary>
+          <Suspense fallback={null}>
+            <ThreeAccent reducedMotion={Boolean(reduceMotion)} pointer={pointer} />
+          </Suspense>
+        </Optional3DErrorBoundary>
       )}
     </div>
   );
