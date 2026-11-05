@@ -38,11 +38,21 @@ This playbook assumes no followers data, no analytics and no creator budget. Whe
 
 **Status of the profile on 5 Nov 2026:** photo set (logo), name added, **bio missing**, 1 link missing — Instagram shows “3 of 4 complete”.
 
-**Name field** (searchable, 30-character limit) — copy this:
+**Name field** (searchable, **30-character limit**) — copy this:
 ```
-BiteKasa | Samosas Accra
+BiteKasa Samosas & Rolls Accra
 ```
-24 characters. The name field is what Instagram search matches, so it carries the category words; the username stays `bitekasa`. If you want “Spring Rolls” in there instead, the closest that fits is `BiteKasa Samosas & Rolls` (24).
+Exactly 30 characters. Instagram rejects anything longer.
+
+The requested wording — `BiteKasa | Spring rolls & Samosas Accra` — is **39 characters and will not fit**. Brand name, both product words and the city need 31 letters before separators, so one element has to give. Options that fit:
+
+| Name field | Chars | What you keep | What you lose |
+|---|---|---|---|
+| `BiteKasa Samosas & Rolls Accra` | 30 | Brand, both products, city | “Spring” spelled out in full |
+| `BiteKasa \| Spring Rolls Accra` | 29 | Brand, “Spring Rolls”, city | “Samosas” |
+| `Spring Rolls & Samosas \| Accra` | 30 | Both products, city | Brand in the name field (still visible as `@bitekasa`) |
+
+Recommendation: the first. Search on Instagram matches the name field, so it should read like what a customer would type — and a customer in Accra types “samosa”, not “BiteKasa”. The username already carries the brand.
 
 **Bio** (150-character limit) — copy this:
 ```
