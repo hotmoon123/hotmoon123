@@ -36,17 +36,30 @@ This playbook assumes no followers data, no analytics and no creator budget. Whe
 
 ## 2. Profile setup (do first, 20 minutes)
 
-**Status of the profile on "'`'"5 Nov 2026, 22:06"'`'" — checked against the owner’s screenshots:**
+**Status of the profile — updated 5 Nov 2026, 22:15, from the owner's screenshots:**
 
 | Field | State | Action |
 |---|---|---|
 | Profile picture | BiteKasa logo | Keep |
 | Username | `bitekasa` | Keep |
-| **Name** | `Biteskasa` — wrong capitalisation | **Fix:** `BiteKasa Samosas & Rolls Accra` |
-| **Bio** | Set, 129-character variant with both numbers | Done |
-| **Link** | Empty (“Add link”) | **Add** the website URL |
-| **Account type** | **Personal** — “Switch to professional account” is still offered | Switch to Professional → Business |
+| **Name** | `BiteKasa Samosas & Spring Rolls` — spelling fixed, 31 characters, **no city** | Optional: swap to `BiteKasa Samosas & Rolls Accra` (30) if local discovery matters more than the full “Spring Rolls” wording |
+| **Bio** | Set — 129-character variant with both numbers | Optional: `Accra · WhatsApp: …` brings the city back at 137 characters |
+| **Link** | In progress — URL typed without `https://`, title blank, primary toggle off | Add the scheme, a title, and turn on “Show as primary link” |
+| **Account type** | Switching to professional; category screen open | Pick the category that matches fulfilment (see below) |
 | Banners | None | Skip; decorative |
+
+**Category choice.** The list Instagram offers for Food & beverage does not contain “home-based snack maker”, so pick the closest true statement, not the most impressive one:
+
+| Option | Choose it if | Do not choose it if |
+|---|---|---|
+| Food delivery service | You deliver orders to customers | Customers collect |
+| Food Stand | You sell from a fixed stand or table | There is no regular stand |
+| Food Wholesaler | You supply other businesses in bulk | You sell to households |
+| Food Truck | You sell from a vehicle | — |
+| Fast food restaurant | You have premises customers can enter | You cook at home |
+| Health Food Store / Health Food Restaurant | Never, for now | The products are fried pastry; a “health” label is an unsubstantiated claim |
+
+If both collection and delivery happen, `Food delivery service` is the least misleading, because it describes a service rather than a premises.
 
 **Name field** (searchable, **30-character limit**) — copy this:
 ```
