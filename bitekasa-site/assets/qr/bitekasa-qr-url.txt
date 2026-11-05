@@ -1,0 +1,6 @@
+BiteKasa website QR link
+
+https://hotmoon123.github.io/hotmoon123/
+
+Encoding: QR, error correction Q, 4-module quiet zone (8 in the standalone print file).
+Generated: 2026-11-05
