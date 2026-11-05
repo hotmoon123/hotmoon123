@@ -34,6 +34,10 @@ jobs:
         run: npm ci
       - name: Type-check
         run: npm run typecheck
+      - name: Automated tests and coverage gate
+        run: npm run test:coverage
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
       - name: Build production site
         run: npm run build -- --base=/hotmoon123/
         env:

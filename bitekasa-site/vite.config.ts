@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -7,6 +7,18 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     allowedHosts: true,
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+    restoreMocks: true,
+    clearMocks: true,
+    coverage: {
+      provider: 'v8',
+      include: ['src/App.tsx', 'src/AnalyticsConsent.tsx'],
+      reporter: ['text', 'json-summary', 'html'],
+      thresholds: { statements: 80, branches: 50, functions: 75, lines: 85 },
+    },
   },
   build: {
     rollupOptions: {

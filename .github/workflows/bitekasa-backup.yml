@@ -19,7 +19,7 @@ jobs:
       - name: Create source and Git history archives
         run: |
           git bundle create bitekasa-git-history.bundle --all
-          tar -czf bitekasa-site-source.tar.gz bitekasa-site docs/BITEKASA_STARTER_BRIEF.md docs/BITEKASA_HOSTING_AND_GROWTH_RUNBOOK.md
+          tar -czf bitekasa-site-source.tar.gz bitekasa-site docs/BITEKASA_STARTER_BRIEF.md docs/BITEKASA_HOSTING_AND_GROWTH_RUNBOOK.md docs/BITEKASA_QA_TEST_PLAN.md docs/BITEKASA_RELIABILITY_RUNBOOK.md docs/INCIDENT_POSTMORTEM_TEMPLATE.md
       - name: Retain backup artifacts
         uses: actions/upload-artifact@v4
         with:

@@ -6,9 +6,9 @@ This is a static-site deployment, not a rented server. GitHub Pages serves the b
 
 ## 1. What is prepared in the repository
 
-- Pull-request CI: locked `npm ci`, TypeScript check, production dependency audit, production build and output checks.
+- Pull-request CI: locked `npm ci`, TypeScript check, component tests with coverage, full dependency audit, production build and output checks.
 - GitHub Pages workflow: builds the Vite app with the repository path base and deploys the static `dist` output after a push to `main`.
-- Public-site smoke check: daily checks for the home page, three service pages, privacy notice, `robots.txt`, and sitemap. GitHub Actions failures are visible in the repository's Actions tab and GitHub notifications.
+- Public-site smoke check: hourly checks for the home page, three service pages, privacy notice, `robots.txt`, and sitemap, with a per-run Actions summary. GitHub Actions failures are visible in the repository's Actions tab and GitHub notifications; this is not a 24/7 provider-independent monitor.
 - Weekly backup job: creates a Git-history bundle and source/artwork archive as GitHub Actions artifacts retained for 90 days. This is a recovery convenience, not a separate-provider/off-site backup.
 - Dependabot weekly update proposals for npm packages and GitHub Actions.
 - Separate crawlable pages for fried, unfried, and frozen product options, linked to one another and back to packs/contact.
@@ -104,7 +104,11 @@ Files ending `-website-qr.png` are new QR variants; source artwork is unchanged.
 - **Unexpected tracking:** remove `VITE_GA_MEASUREMENT_ID` from repository variables, redeploy, review the GA property and privacy notice, then re-test in a clean browser.
 - **GitHub account compromise:** use GitHub's account recovery/security controls, revoke sessions/tokens from the account, review repository collaborators/workflows, and restore from trusted history. Never put recovery codes or tokens into issues or commits.
 
-## 10. Current limits / actions still requiring the owner
+## 10. QA and reliability operations
+
+See `docs/BITEKASA_QA_TEST_PLAN.md` for acceptance criteria, test cases, automated coverage and manual UAT gates. See `docs/BITEKASA_RELIABILITY_RUNBOOK.md` for proposed SLIs/SLOs, synthetic-check limitations, capacity notes, incident steps and safe resilience exercises. Use `docs/INCIDENT_POSTMORTEM_TEMPLATE.md` only if an incident occurs; there has been no production incident to report.
+
+## 11. Current limits / actions still requiring the owner
 
 - GitHub Pages needs the workflow merged and the Pages source enabled; deployment is not yet confirmed live.
 - Google Search Console, Bing Webmaster Tools, GA4 and Google Business Profile require owner account sign-in and verification; they are not connected here.
