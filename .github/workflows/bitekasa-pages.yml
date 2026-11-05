@@ -1,0 +1,73 @@
+name: Deploy BiteKasa to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'bitekasa-site/**'
+      - '.github/workflows/bitekasa-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bitekasa-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bitekasa-site
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: bitekasa-site/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Type-check
+        run: npm run typecheck
+      - name: Build production site
+        run: npm run build -- --base=/hotmoon123/
+        env:
+          VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
+      - name: Enforce compressed bundle budgets
+        run: npm run check:bundle
+      - name: Check SEO metadata and sitemap
+        run: npm run check:seo
+      - name: Verify required pages and discovery files
+        run: |
+          test -s dist/index.html
+          test -s dist/services/fried/index.html
+          test -s dist/services/unfried/index.html
+          test -s dist/services/frozen/index.html
+          test -s dist/robots.txt
+          test -s dist/sitemap.xml
+          test -s dist/privacy.html
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: bitekasa-site/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
