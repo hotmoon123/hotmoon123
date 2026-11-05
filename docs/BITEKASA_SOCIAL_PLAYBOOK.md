@@ -58,9 +58,18 @@ Recommendation: the first. Search on Instagram matches the name field, so it sho
 ```
 Samosas & spring rolls — hot, crispy, fresh.
 Silver GH₵100 · Golden GH₵200 · Premium GH₵250
-Order on WhatsApp 👇
+Order on WhatsApp: 0595 638 696 · 0552 727 051
 ```
-108 characters, three lines, prices verified against the website.
+138 characters, three lines, prices verified against the website.
+
+Shorter alternative if you change the prices later (129 characters):
+```
+Samosas & spring rolls — hot, crispy, fresh.
+Silver GH₵100 · Golden GH₵200 · Premium GH₵250
+WhatsApp: 0595 638 696 / 0552 727 051
+```
+
+Notes on the numbers: Instagram does not make phone numbers in the bio tappable, which is why the website link must stay in the link field — that is where the tap-to-WhatsApp button lives. Also add 0595 638 696 to the profile's **Contact → Call** button, and use 0552 727 051 as the secondary line.
 
 **Link:** `https://hotmoon123.github.io/hotmoon123/`
 One link only. Use the website rather than `wa.me` — the site carries all three packs, both phone numbers and the WhatsApp button, so it serves every visitor. The link here and the URL encoded in the QR code must stay identical.
