@@ -36,7 +36,17 @@ This playbook assumes no followers data, no analytics and no creator budget. Whe
 
 ## 2. Profile setup (do first, 20 minutes)
 
-**Status of the profile on 5 Nov 2026:** photo set (logo), name added, **bio missing**, 1 link missing — Instagram shows “3 of 4 complete”.
+**Status of the profile on "'`'"5 Nov 2026, 22:06"'`'" — checked against the owner’s screenshots:**
+
+| Field | State | Action |
+|---|---|---|
+| Profile picture | BiteKasa logo | Keep |
+| Username | `bitekasa` | Keep |
+| **Name** | `Biteskasa` — wrong capitalisation | **Fix:** `BiteKasa Samosas & Rolls Accra` |
+| **Bio** | Set, 129-character variant with both numbers | Done |
+| **Link** | Empty (“Add link”) | **Add** the website URL |
+| **Account type** | **Personal** — “Switch to professional account” is still offered | Switch to Professional → Business |
+| Banners | None | Skip; decorative |
 
 **Name field** (searchable, **30-character limit**) — copy this:
 ```
