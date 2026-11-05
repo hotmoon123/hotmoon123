@@ -69,7 +69,7 @@ Latest local execution after the changes:
 - Coverage: **96.05% lines, 92.04% statements, 96.87% functions, 71.73% branches** for `App.tsx` and `AnalyticsConsent.tsx`; configured gates are 85/80/75/50 respectively.
 - `npm audit --audit-level=high`: **pass, zero vulnerabilities across the dependency tree**.
 - GitHub Pages build, `check:bundle`, `check:seo`, QR decode and local route smoke: **pass**.
-- Most recent observed PR CI before the Vitest addition: **pass**. CI must be rerun after the test workflow change.
+- GitHub Actions PR validation is configured in this revision; verify the latest required check on the pull request before merge.
 - Public deployment, browser matrix, accessibility audit, GTmetrix, real contact verification, and Search Console/Bing validation: **not run**; see launch gates.
 
 ## 5. Defect reporting and triage
