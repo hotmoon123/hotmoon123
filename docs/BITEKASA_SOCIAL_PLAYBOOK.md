@@ -54,6 +54,22 @@ The requested wording — `BiteKasa | Spring rolls & Samosas Accra` — is **39 
 
 Recommendation: the first. Search on Instagram matches the name field, so it should read like what a customer would type — and a customer in Accra types “samosa”, not “BiteKasa”. The username already carries the brand.
 
+#### Why not put the owner's personal name in the name field?
+
+It is a real strategy choice, not a technical one. The name field has one job and only 30 characters, and it can do one of three things:
+
+| It can… | Works when | Costs |
+|---|---|---|
+| Reinforce the brand | Always, mildly | Uses characters a searcher would have typed anyway |
+| Carry search keywords | Always — this is how discovery actually happens | No brand reinforcement |
+| Carry a person's name | **Only if customers already know that person's name** | Brand and category both lose space |
+
+BiteKasa is currently found through the flyer, the QR, WhatsApp forwards and word of mouth — every one of those says **BiteKasa**, not a person's name. A name field reading something else breaks that chain at the exact moment someone searches for what they just saw on paper.
+
+Put the owner's name in the name field only if **that name is how customers already refer to the business** — “Auntie Ama's samosas” rather than “BiteKasa samosas”. Founder-led food brands do succeed this way, but the recognition has to exist first; it cannot be installed by the profile.
+
+If it does exist, a name-first field fits: `Ama's Samosas & Rolls | Accra` (29 characters). If it does not, use `BiteKasa Samosas & Rolls Accra` and let the personal story live in the captions, the Reels and the WhatsApp replies, where it builds warmth without spending the characters.
+
 **Bio** (150-character limit) — copy this:
 ```
 Samosas & spring rolls — hot, crispy, fresh.
