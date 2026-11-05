@@ -7,7 +7,8 @@
 
 | File | Use it for | Size |
 |---|---|---|
-| `bitekasa-offer-flyer-qr-footer.png` | **Print this flyer.** Original artwork with an added cream footer band holding the QR. Nothing on the artwork is covered. | 1024 × 1816 px |
+| `bitekasa-offer-flyer-qr-footer.png` | Print flyer, packs version (Silver/Golden/Premium). Original artwork plus a cream footer band holding the QR. | 1024 × 1816 px |
+| `bitekasa-premium-flyer-qr.png` | Print flyer, “Upgrade to the Premium Pack” version. The AI-composed QR in the supplied artwork was replaced with a real code in the same footprint. | 1664 × 2496 px |
 | `bitekasa-qr-print-2400.png` | Standalone QR for layout/design work or a print shop. | 2400 × 2400 px, 600 dpi metadata |
 | `bitekasa-qr-vector.svg` | Vector QR — scales to any size without blurring. Give this to a printer or designer. | vector |
 | `bitekasa-qr-scan-card.png` | QR with a “Scan to view” caption, for a table card, poster or social post. | 2000 × 2380 px |
@@ -15,6 +16,8 @@
 `make_qr.py` and `make_flyer_qr.py` regenerate the images; the URL is set once at the top of each file.
 
 **Superseded:** `../bitekasa-offer-flyer-website-qr.png` places the QR over the Premium card and hides part of “70 PIECES + 1 LITRE COKE”. Use the footer version above for print.
+
+**Replaced:** the QR drawn into the supplied “Upgrade to the Premium Pack” artwork did not decode in ZXing or OpenCV — it was an image-model approximation, not an encoded symbol. `bitekasa-premium-flyer-qr.png` keeps that layout and swaps in a real code (333 px footprint, 4-module quiet zone, error correction Q).
 
 ## Verification performed
 
