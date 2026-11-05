@@ -29,9 +29,9 @@ jobs:
         working-directory: bitekasa-site
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -43,7 +43,7 @@ jobs:
       - name: Run automated tests and collect coverage
         run: npm run test:coverage
       - name: Archive coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: bitekasa-test-coverage-${{ github.run_id }}
           path: bitekasa-site/coverage
