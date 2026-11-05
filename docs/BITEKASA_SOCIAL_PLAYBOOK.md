@@ -36,15 +36,29 @@ This playbook assumes no followers data, no analytics and no creator budget. Whe
 
 ## 2. Profile setup (do first, 20 minutes)
 
-**Name field (searchable):** `BiteKasa | Samosas & Spring Rolls · Accra`
-**Bio:**
+**Status of the profile on 5 Nov 2026:** photo set (logo), name added, **bio missing**, 1 link missing — Instagram shows “3 of 4 complete”.
+
+**Name field** (searchable, 30-character limit) — copy this:
 ```
-Samosas & spring rolls — hot, crispy, fresh
+BiteKasa | Samosas Accra
+```
+24 characters. The name field is what Instagram search matches, so it carries the category words; the username stays `bitekasa`. If you want “Spring Rolls” in there instead, the closest that fits is `BiteKasa Samosas & Rolls` (24).
+
+**Bio** (150-character limit) — copy this:
+```
+Samosas & spring rolls — hot, crispy, fresh.
 Silver GH₵100 · Golden GH₵200 · Premium GH₵250
 Order on WhatsApp 👇
 ```
-**Link:** the website (the QR and the bio link must point to the same URL)
-**Category:** Food & beverage / Local business
+108 characters, three lines, prices verified against the website.
+
+**Link:** `https://hotmoon123.github.io/hotmoon123/`
+One link only. Use the website rather than `wa.me` — the site carries all three packs, both phone numbers and the WhatsApp button, so it serves every visitor. The link here and the URL encoded in the QR code must stay identical.
+
+**Category:** Food & beverage → *Food Stand* or *Local Business* (whichever Instagram offers; do not select a category implying a restaurant location you do not have).
+
+**Contact buttons:** add the WhatsApp number 0595 638 696 and the second line 0552 727 051 if Instagram allows both.
+
 **Highlights:** `Packs` · `How to order` · `Menu` · `Reviews` (only once real reviews exist)
 
 ---
@@ -148,3 +162,53 @@ Track weekly in a sheet — six columns only:
 - Follower counts, reach, engagement or sales — no data exists yet.
 - “Viral”, “trending”, “best in Accra”.
 - That posting this calendar produces orders. It produces a consistent presence; the measurement table is how you find out what works.
+
+
+---
+
+## 10. Baseline recorded 5 November 2026, and what it means
+
+The owner supplied Instagram Insights screenshots. Recorded as-is, not interpreted upwards:
+
+| Metric | Value | Note |
+|---|---|---|
+| Followers | **3** | Below Instagram's 100-follower threshold for audience demographics |
+| Views, 30 days | **13** | 12 attributed to posts, ~1 elsewhere; Stories: none |
+| Viewers, 30 days | **2** | Two accounts saw the content |
+| Interactions, 30 days | **9** | Likes and profile taps |
+| Posts visible on the grid | **2** | Newest: 1 view, 6 days old |
+| Best-performing post | **11 views, 2 likes, 0 comments, 0 saves, 0 shares** | |
+| Follower/non-follower split | 100% followers on one screen; 44.4% / 55.6% on another | The screenshots appear to cover different date ranges; do not quote a single split |
+| Profile completion | 3 of 4 | Bio and link missing |
+
+### The honest diagnosis
+
+At three followers and roughly eleven views on the best post, the account is **not being distributed** — this is a cold start, not a content-quality problem. Two posts in a month is not a presence, and static “price poster” images almost never travel beyond existing followers. Posting a third poster will produce the same result.
+
+Three things, in this order, change that:
+
+1. **Make the profile convertible first.** A visitor arriving from a flyer or a WhatsApp forward currently has no bio, no prices and no link. Fix that in minutes — the copy above.
+2. **Get the first 50 followers from people who already know BiteKasa.** Existing customers, the church network, family, the WhatsApp contacts who have ordered before. That is what makes the follow graph real. Sharing the profile link in WhatsApp status is the highest-yield action available this week.
+3. **Post video, not posters.** Reels are the only organic surface that shows content to non-followers. Kitchen clips — folding, frying, packing — at 3 posts a week for four weeks. The pack/price information belongs in the caption and carousel, not as the hook.
+
+### What to do this week
+
+| Day | Action | Why |
+|---|---|---|
+| Today | Paste name, bio and link; add contact buttons | Converts existing traffic |
+| Today | Share the profile link in WhatsApp status + to the last 20 people who ordered | First real follower base |
+| Today | Archive the two image posts described below | Removes a credibility risk |
+| Day 2–3 | Film one 15-second clip: folding or frying, no talking | First Reel; test whether non-followers appear |
+| Day 4 | Post it with the “How to order” caption | Measures whether distribution moves at all |
+| Day 5–7 | Two more clips; reply to every comment and DM same day | Consistency + response signal |
+| Day 7 | Record the six numbers again in the table in section 7 | First real comparison point |
+
+**Target for 30 days — deliberately modest:** 50 followers, at least one post with more views than followers, and 10 tracked enquiries. Not “viral”. If the enquiry count is zero after four weeks of consistent video, the problem is the offer or the audience, not the posting schedule — and that is worth knowing.
+
+### Two posts that should come down
+
+Both visible posts use an image of a **generated-looking woman holding the product**. She is not a customer, not the owner, and not a staff member. Presenting her beside BiteKasa packs implies an endorsement or a real customer story that does not exist — a consumer-protection risk, and against Instagram's policy on AI-generated content when it is not disclosed.
+
+They also carry copy that was already rejected for the flyer: **“MORE BITES. MORE COKE. MORE VALUE.”**
+
+Recommendation: archive both, replace with real photography or video of actual BiteKasa products. If any generated image is kept anywhere, disclose it in the caption and in Instagram's AI-generated content flag. Never caption a generated image as “our customer”.
