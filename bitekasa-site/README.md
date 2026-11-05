@@ -1,16 +1,14 @@
 # BiteKasa — React landing page
 
-A responsive, component-based marketing website for BiteKasa, built with React and TypeScript, Tailwind CSS, Motion for React, and Three.js through React Three Fiber. It presents the corrected advertised packs, clarifies that product mix and condition must be confirmed, and drives enquiries to WhatsApp or phone. It is not e-commerce: there is no cart, payment system, backend, inventory, analytics, or customer-data storage.
+A responsive, component-based marketing website for BiteKasa, built with React and TypeScript, Tailwind CSS, Motion for React, and a small icon system. It presents the corrected advertised packs, clarifies that product mix and condition must be confirmed, and drives enquiries to WhatsApp or phone. It is not e-commerce: there is no cart, payment system, backend, inventory, or customer-data storage. Optional GA4 tracking is disabled unless configured by the owner and explicitly accepted by a visitor.
 
 ## Stack
 
 - **React 19 + TypeScript** for typed, reusable page components.
 - **Tailwind CSS 4** for responsive layout and the approved brand tokens.
 - **Motion** (`motion/react`) for short, reduced-motion-aware entrance reveals.
-- **Three.js via React Three Fiber** for one low-poly samosa accent. Its canvas is intersection-lazy-loaded, small, and subordinate to the food photo.
+- **Lucide React** and **React Icons** for consistent interface and social-brand icons.
 - **Vite 8** for local development and production builds.
-
-No additional component or icon library is used; small icons are inline SVGs.
 
 ## Run locally
 
@@ -22,7 +20,7 @@ npm install
 npm run dev
 ```
 
-Vite binds to `0.0.0.0` for preview compatibility. Run `npm run typecheck` for TypeScript validation, `npm run build` for a production build, and `npm run preview` to inspect that build.
+Vite binds to `0.0.0.0` for preview compatibility. Run `npm run typecheck` for TypeScript validation, `npm run build` for a production build, then `npm run check:bundle` and `npm run check:seo` for the compressed-asset budget and metadata/sitemap checks. Use `npm run preview` to inspect the build.
 
 ## Brand palette
 
@@ -46,4 +44,10 @@ Verify both telephone numbers, whether either is WhatsApp-enabled, current price
 
 `assets/premium-combo-poster.png` and `assets/bitekasa-logo.jpg` remain unchanged owner-approved source images. The supplied master logo, including its “BITES” subline, is used in the site and corrected flyer. The site links to Instagram `@bitekasa` based on the owner-provided profile screenshot; confirm that the spelling and destination are correct. `assets/bitekasa-offer-flyer.png` is a corrected copy of the owner-approved 2:3 poster composition (1024 × 1536), with the rejected upgrade copy removed and Golden changed to 50 pieces. Feed and Story exports fit the complete artwork without cropping: `assets/bitekasa-instagram-feed-4x5.png` (1080 × 1350) and `assets/bitekasa-instagram-story-9x16.png` (1080 × 1920). These raster files are for digital use, not print-preflighted artwork.
 
-See `../docs/BITEKASA_STARTER_BRIEF.md` for business facts and assumptions, `../docs/BITEKASA_ORDER_WORKFLOW.md` for the proposed workflow, and `../docs/BITEKASA_INSTAGRAM_POST_PACK.md` for posting guidance.
+See `../docs/BITEKASA_STARTER_BRIEF.md` for business facts and assumptions, `../docs/BITEKASA_ORDER_WORKFLOW.md` for the proposed workflow, `../docs/BITEKASA_INSTAGRAM_POST_PACK.md` for posting guidance, and `../docs/BITEKASA_HOSTING_AND_GROWTH_RUNBOOK.md` for Pages, Search Console, Bing, GA4, business-profile, directory, backup, security, and QR rollout instructions.
+
+## SEO pages, privacy, and QR artwork
+
+The home page has linked service pages at `/services/fried/`, `/services/unfried/`, and `/services/frozen/`. Crawl metadata and sitemap are included in the production build. The Analytics banner appears only if `VITE_GA_MEASUREMENT_ID` is configured; it injects GA4 only after explicit visitor consent. See `public/privacy.html` and the runbook before enabling it.
+
+New QR exports ending in `-website-qr.png` point to `https://hotmoon123.github.io/hotmoon123/`. Do not print or circulate those QR exports until GitHub Pages is enabled, that exact URL is confirmed live, and a physical proof scan succeeds. Original flyer and social artwork remain unchanged.

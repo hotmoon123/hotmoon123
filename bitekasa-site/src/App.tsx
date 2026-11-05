@@ -1,14 +1,45 @@
 import { useEffect, useState, type ReactNode } from 'react';
+import { ArrowRight, Menu, MessageCircle, Phone, X } from 'lucide-react';
+import { SiInstagram } from 'react-icons/si';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import AnalyticsConsent from './AnalyticsConsent';
 import logo from '../assets/bitekasa-logo.jpg';
 import friedFood from '../assets/food-fried.jpg';
 import unfriedFood from '../assets/food-unfried.jpg';
 import frozenFood from '../assets/food-frozen.jpg';
-import LazySnackCanvas from './LazySnackCanvas';
 import './styles.css';
 
 const INSTAGRAM_URL = 'https://www.instagram.com/bitekasa/';
+const SITE_BASE = import.meta.env.BASE_URL;
 const WHATSAPP_NUMBER = '233595638696';
+
+type ServiceSlug = 'fried' | 'unfried' | 'frozen';
+
+const SERVICE_PAGES: Record<ServiceSlug, { label: string; title: string; description: string; image: string; alt: string }> = {
+  fried: {
+    label: 'Fried',
+    title: 'Fried samosas & spring rolls',
+    description: 'Ask BiteKasa about fried samosas and spring rolls, current availability, pack options and the product mix before ordering.',
+    image: 'fried',
+    alt: 'Illustrative image of fried samosas and spring rolls.',
+  },
+  unfried: {
+    label: 'Unfried',
+    title: 'Unfried samosas & spring rolls',
+    description: 'Ask BiteKasa about prepared, unfried samosas and spring rolls. Confirm current availability, pack options and product mix before ordering.',
+    image: 'unfried',
+    alt: 'Illustrative image of unfried samosas and spring rolls.',
+  },
+  frozen: {
+    label: 'Frozen',
+    title: 'Frozen samosas & spring rolls',
+    description: 'Ask BiteKasa about rolled and frozen samosas and spring rolls. Confirm current availability, pack options and product mix before ordering.',
+    image: 'frozen',
+    alt: 'Illustrative image of frozen, unfried samosas and spring rolls.',
+  },
+};
+
+const SERVICE_IMAGES = { fried: friedFood, unfried: unfriedFood, frozen: frozenFood };
 const PHONE_NUMBERS = [
   { label: '0595 638 696', href: 'tel:+233595638696' },
   { label: '0552 727 051', href: 'tel:+233552727051' },
@@ -30,14 +61,6 @@ const PACKS: Pack[] = [
 const whatsappLink = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-function Arrow({ className = 'h-4 w-4' }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M4.5 10h10m-4-4 4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const reduceMotion = useReducedMotion();
   return (
@@ -58,9 +81,9 @@ function Header() {
   const reduceMotion = useReducedMotion();
   const closeMenu = () => setOpen(false);
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'Packs', href: '#packs' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Home', href: `${SITE_BASE}#home` },
+    { label: 'Packs', href: `${SITE_BASE}#packs` },
+    { label: 'Contact', href: `${SITE_BASE}#contact` },
   ];
 
   useEffect(() => {
@@ -74,12 +97,12 @@ function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-red/15 bg-cream">
       <div className="mx-auto flex h-[66px] max-w-7xl items-center justify-between px-4 sm:px-7 lg:px-12">
-        <a href="#home" onClick={closeMenu} aria-label="BiteKasa home" className="flex items-center">
+        <a href={`${SITE_BASE}#home`} onClick={closeMenu} aria-label="BiteKasa home" className="flex items-center">
           <img src={logo} alt="BiteKasa BITES logo" className="h-[56px] w-[56px] object-contain" />
         </a>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
           {navItems.map((item) => <a key={item.href} href={item.href} className="nav-link">{item.label}</a>)}
-          <a href={whatsappLink('Hello BiteKasa! I would like to ask about your packs and current availability.')} target="_blank" rel="noopener noreferrer" className="header-cta">Order on WhatsApp</a>
+          <a href={whatsappLink('Hello BiteKasa! I would like to ask about your packs and current availability.')} target="_blank" rel="noopener noreferrer" className="header-cta"><MessageCircle aria-hidden="true" size={16} />Order on WhatsApp</a>
         </nav>
         <button
           type="button"
@@ -89,9 +112,7 @@ function Header() {
           aria-controls="mobile-menu"
           onClick={() => setOpen((current) => !current)}
         >
-          <span className={open ? 'menu-line menu-line-open-top' : 'menu-line'} />
-          <span className={open ? 'menu-line opacity-0' : 'menu-line'} />
-          <span className={open ? 'menu-line menu-line-open-bottom' : 'menu-line'} />
+          {open ? <X aria-hidden="true" size={20} strokeWidth={1.8} /> : <Menu aria-hidden="true" size={20} strokeWidth={1.8} />}
         </button>
       </div>
       <AnimatePresence>
@@ -105,11 +126,11 @@ function Header() {
             transition={{ duration: reduceMotion ? 0 : 0.18 }}
             className="overflow-hidden border-t border-red/15 bg-cream px-4 md:hidden"
           >
-            <div className="flex flex-col py-2">
+            <div className="flex flex-col gap-1 py-2">
               {navItems.map((item) => (
                 <a key={item.href} href={item.href} onClick={closeMenu} className="mobile-nav-link">{item.label}</a>
               ))}
-              <a href={whatsappLink('Hello BiteKasa! I would like to ask about your packs and current availability.')} target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="mobile-menu-cta">Order on WhatsApp</a>
+              <a href={whatsappLink('Hello BiteKasa! I would like to ask about your packs and current availability.')} target="_blank" rel="noopener noreferrer" onClick={closeMenu} className="mobile-menu-cta"><MessageCircle aria-hidden="true" size={16} />Order on WhatsApp</a>
             </div>
           </motion.nav>
         )}
@@ -136,7 +157,6 @@ function Hero() {
             fetchPriority="high"
           />
           <figcaption className="image-disclosure">Illustrative product image</figcaption>
-          <div className="three-accent" aria-hidden="true"><LazySnackCanvas /></div>
         </motion.figure>
 
         <div className="order-2 md:order-2">
@@ -147,9 +167,9 @@ function Hero() {
             <p className="hero-description">Ask about fried, unfried and frozen options.</p>
             <div className="hero-actions">
               <a className="whatsapp-button" href={whatsappLink('Hello BiteKasa! I would like to ask about your packs and current availability.')} target="_blank" rel="noopener noreferrer">
-                Order on WhatsApp <Arrow />
+                <MessageCircle aria-hidden="true" size={17} />Order on WhatsApp <ArrowRight aria-hidden="true" size={17} />
               </a>
-              <a className="call-button" href={PHONE_NUMBERS[0].href}>Call Us</a>
+              <a className="call-button" href={PHONE_NUMBERS[0].href}><Phone aria-hidden="true" size={16} />Call Us</a>
             </div>
           </Reveal>
         </div>
@@ -158,10 +178,9 @@ function Hero() {
   );
 }
 
-function ProductPack({ pack, index }: { pack: Pack; index: number }) {
+function ProductPack({ pack }: { pack: Pack }) {
   return (
-    <Reveal delay={index * 0.06} className={`product-pack ${pack.className}`}>
-      <span className="pack-index">0{index + 1}</span>
+    <Reveal className={`product-pack ${pack.className}`}>
       <h3 className="pack-name">{pack.name}</h3>
       <p className="pack-price">{pack.price}</p>
       <p className="pack-description">{pack.description}</p>
@@ -172,7 +191,7 @@ function ProductPack({ pack, index }: { pack: Pack; index: number }) {
         className="pack-link"
         aria-label={`Ask about the ${pack.name} pack on WhatsApp`}
       >
-        Ask about this pack <Arrow className="h-4 w-4" />
+        Ask about this pack <ArrowRight aria-hidden="true" size={16} />
       </a>
     </Reveal>
   );
@@ -190,7 +209,7 @@ function Packs() {
           <p className="section-intro">Pack details and product condition can be confirmed with your enquiry.</p>
         </Reveal>
         <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
-          {PACKS.map((pack, index) => <ProductPack key={pack.name} pack={pack} index={index} />)}
+          {PACKS.map((pack) => <ProductPack key={pack.name} pack={pack} />)}
         </div>
         <Reveal className="product-state-note">
           <p>Ask about fried, unfried and frozen options. Confirm which products are available and the pack mix when ordering.</p>
@@ -201,10 +220,10 @@ function Packs() {
 }
 
 function ProductOptions() {
-  const options = [
-    { name: 'FRIED', image: friedFood, alt: 'Illustrative image of fried samosas and spring rolls.', state: 'Fried' },
-    { name: 'UNFRIED', image: unfriedFood, alt: 'Illustrative image of unfried samosas and spring rolls.', state: 'Prepared, not yet fried' },
-    { name: 'FROZEN', image: frozenFood, alt: 'Illustrative image of frozen, unfried samosas and spring rolls.', state: 'Rolled and frozen before frying' },
+  const options: { slug: ServiceSlug; name: string; image: string; alt: string; state: string }[] = [
+    { slug: 'fried', name: 'FRIED', image: friedFood, alt: 'Illustrative image of fried samosas and spring rolls.', state: 'Fried' },
+    { slug: 'unfried', name: 'UNFRIED', image: unfriedFood, alt: 'Illustrative image of unfried samosas and spring rolls.', state: 'Prepared, not yet fried' },
+    { slug: 'frozen', name: 'FROZEN', image: frozenFood, alt: 'Illustrative image of frozen, unfried samosas and spring rolls.', state: 'Rolled and frozen before frying' },
   ];
   return (
     <section className="bg-cream px-4 py-11 sm:px-7 sm:py-16 lg:px-12">
@@ -221,6 +240,9 @@ function ProductOptions() {
                 <p className="image-disclosure">Illustrative image</p>
                 <h3 className="option-name">{option.name}</h3>
                 <p className="option-state">{option.state}</p>
+                <a className="option-detail-link" href={`${SITE_BASE}services/${option.slug}/`}>
+                  Learn more about {option.name.toLowerCase()} options <ArrowRight aria-hidden="true" size={15} />
+                </a>
               </div>
             </Reveal>
           ))}
@@ -228,6 +250,73 @@ function ProductOptions() {
         <p className="illustration-note">Generated examples, not verified photographs of BiteKasa products.</p>
       </div>
     </section>
+  );
+}
+
+function ServicePage({ slug }: { slug: ServiceSlug }) {
+  const page = SERVICE_PAGES[slug];
+  const otherServices = (Object.keys(SERVICE_PAGES) as ServiceSlug[]).filter((item) => item !== slug);
+  const message = `Hello BiteKasa! I would like to ask about ${page.label.toLowerCase()} samosas and spring rolls. Please confirm current availability, pack options and product mix.`;
+
+  return (
+    <>
+      <AnalyticsConsent />
+      <Header />
+      <main>
+        <section className="bg-cream px-4 py-10 sm:px-7 sm:py-16 lg:px-12">
+          <div className="mx-auto grid max-w-7xl items-center gap-8 md:grid-cols-2 md:gap-12">
+            <Reveal>
+              <a href={`${SITE_BASE}#home`} className="service-back-link">BiteKasa home <ArrowRight aria-hidden="true" size={14} /></a>
+              <p className="eyebrow mt-5">PRODUCT PREPARATION OPTION</p>
+              <h1 className="section-title mt-2">{page.title}.</h1>
+              <p className="hero-description mt-4">{page.description}</p>
+              <p className="image-disclosure mt-4">Illustrative image; not a verified BiteKasa product photograph.</p>
+              <div className="hero-actions">
+                <a className="whatsapp-button" href={whatsappLink(message)} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle aria-hidden="true" size={17} />Ask about availability <ArrowRight aria-hidden="true" size={17} />
+                </a>
+                <a className="call-button" href={`${SITE_BASE}#packs`}>View packs</a>
+              </div>
+            </Reveal>
+            <Reveal>
+              <img src={SERVICE_IMAGES[slug]} alt={page.alt} className="hero-image" />
+              <p className="image-disclosure">Illustrative example</p>
+            </Reveal>
+          </div>
+        </section>
+        <section className="bg-paper px-4 py-10 sm:px-7 sm:py-14 lg:px-12">
+          <div className="mx-auto max-w-7xl">
+            <Reveal>
+              <p className="eyebrow">EXPLORE PREPARATION OPTIONS</p>
+              <h2 className="section-title mt-2">Other options to ask about.</h2>
+              <p className="section-intro mt-3">Current stock, quantities, pack mix and collection or delivery details are confirmed directly with BiteKasa.</p>
+            </Reveal>
+            <div className="service-cross-links mt-7">
+              {otherServices.map((other) => (
+                <a key={other} href={`${SITE_BASE}services/${other}/`}>
+                  <span>{SERVICE_PAGES[other].label} options</span>
+                  <ArrowRight aria-hidden="true" size={16} />
+                </a>
+              ))}
+              <a href={`${SITE_BASE}#packs`}><span>View BiteKasa packs</span><ArrowRight aria-hidden="true" size={16} /></a>
+            </div>
+          </div>
+        </section>
+        <section className="cta-section px-4 py-10 sm:px-7 sm:py-14 lg:px-12">
+          <div className="mx-auto max-w-7xl">
+            <p className="eyebrow eyebrow-light">CONFIRM BEFORE ORDERING</p>
+            <h2 className="cta-title">Ask BiteKasa<br />about this option.</h2>
+            <div className="hero-actions">
+              <a className="whatsapp-button" href={whatsappLink(message)} target="_blank" rel="noopener noreferrer">
+                <MessageCircle aria-hidden="true" size={17} />WhatsApp BiteKasa <ArrowRight aria-hidden="true" size={17} />
+              </a>
+              <a className="instagram-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><SiInstagram aria-hidden="true" size={16} />Instagram · @bitekasa</a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }
 
@@ -242,14 +331,14 @@ function CTASection() {
         </Reveal>
         <Reveal delay={0.05} className="cta-actions">
           <a className="whatsapp-button cta-whatsapp" href={whatsappLink('Hello BiteKasa! I would like to ask about your packs and current availability.')} target="_blank" rel="noopener noreferrer">
-            Order on WhatsApp <Arrow />
+            <MessageCircle aria-hidden="true" size={17} />Order on WhatsApp <ArrowRight aria-hidden="true" size={17} />
           </a>
           {PHONE_NUMBERS.map((phone) => (
             <a className="phone-link" key={phone.label} href={phone.href}>
-              <span>Call Us</span><strong>{phone.label}</strong><Arrow />
+              <Phone aria-hidden="true" size={16} /><strong>{phone.label}</strong><ArrowRight aria-hidden="true" size={16} />
             </a>
           ))}
-          <a className="instagram-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">Instagram · @bitekasa <Arrow /></a>
+          <a className="instagram-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"><SiInstagram aria-hidden="true" size={16} />Instagram · @bitekasa <ArrowRight aria-hidden="true" size={16} /></a>
         </Reveal>
       </div>
     </section>
@@ -260,7 +349,7 @@ function Footer() {
   return (
     <footer className="site-footer px-4 py-5 sm:px-7 lg:px-12">
       <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <a href="#home" className="footer-brand">BiteKasa</a>
+        <a href={`${SITE_BASE}#home`} className="footer-brand">BiteKasa</a>
         <p className="footer-note">Pack details and product condition should be confirmed when ordering.</p>
         <small className="footer-copyright">© 2026 BiteKasa.</small>
       </div>
@@ -269,8 +358,12 @@ function Footer() {
 }
 
 export default function App() {
+  const serviceMatch = window.location.pathname.match(/\/services\/(fried|unfried|frozen)\/?$/);
+  if (serviceMatch) return <ServicePage slug={serviceMatch[1] as ServiceSlug} />;
+
   return (
     <>
+      <AnalyticsConsent />
       <Header />
       <main>
         <Hero />

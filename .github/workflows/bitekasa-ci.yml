@@ -1,0 +1,60 @@
+name: BiteKasa CI
+
+on:
+  pull_request:
+    paths:
+      - 'bitekasa-site/**'
+      - '.github/workflows/bitekasa-ci.yml'
+      - '.github/workflows/bitekasa-pages.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'bitekasa-site/**'
+      - '.github/workflows/bitekasa-ci.yml'
+      - '.github/workflows/bitekasa-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bitekasa-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bitekasa-site
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: bitekasa-site/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Type-check
+        run: npm run typecheck
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+      - name: Build for GitHub Pages
+        run: npm run build -- --base=/hotmoon123/
+      - name: Enforce compressed bundle budgets
+        run: npm run check:bundle
+      - name: Check SEO metadata and sitemap
+        run: npm run check:seo
+      - name: Check deployment outputs
+        run: |
+          test -s dist/index.html
+          test -s dist/services/fried/index.html
+          test -s dist/services/unfried/index.html
+          test -s dist/services/frozen/index.html
+          test -s dist/robots.txt
+          test -s dist/sitemap.xml
+          test -s dist/privacy.html
+          grep -q 'https://hotmoon123.github.io/hotmoon123/' dist/index.html

@@ -1,0 +1,31 @@
+name: BiteKasa source backup
+
+on:
+  schedule:
+    - cron: '41 5 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out full repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create source and Git history archives
+        run: |
+          git bundle create bitekasa-git-history.bundle --all
+          tar -czf bitekasa-site-source.tar.gz bitekasa-site docs/BITEKASA_STARTER_BRIEF.md docs/BITEKASA_HOSTING_AND_GROWTH_RUNBOOK.md
+      - name: Retain backup artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: bitekasa-backup-${{ github.run_id }}
+          path: |
+            bitekasa-git-history.bundle
+            bitekasa-site-source.tar.gz
+          retention-days: 90
+          if-no-files-found: error

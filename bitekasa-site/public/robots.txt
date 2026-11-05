@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hotmoon123.github.io/hotmoon123/sitemap.xml
