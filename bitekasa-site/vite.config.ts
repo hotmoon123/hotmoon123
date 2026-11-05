@@ -6,7 +6,11 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: '0.0.0.0',
-    allowedHosts: true,
+    allowedHosts: ['.e2b.app'],
+  },
+  preview: {
+    host: '0.0.0.0',
+    allowedHosts: ['.e2b.app'],
   },
   test: {
     environment: 'jsdom',
