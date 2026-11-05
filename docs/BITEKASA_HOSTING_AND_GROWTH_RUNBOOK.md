@@ -95,6 +95,12 @@ A public GTmetrix report cannot be produced before deployment, and this environm
 
 Files ending `-website-qr.png` are new QR variants; source artwork is unchanged. The standalone `assets/bitekasa-website-qr.png` and three artwork variants encode `https://hotmoon123.github.io/hotmoon123/`. QR files should be tested with multiple phone cameras after Pages is live. Print a proof at the intended final size and scan it from paper before bulk printing. If using a custom domain later, decide whether the old GitHub URL will remain permanently redirected before reprinting.
 
+### Print-ready QR pack (`bitekasa-site/assets/qr/`)
+
+The recommended print file is `bitekasa-offer-flyer-qr-footer.png`: the original flyer artwork plus a cream footer band holding the QR, so nothing on the artwork is covered. `bitekasa-qr-vector.svg` and `bitekasa-qr-print-2400.png` are standalone sources for design work. `bitekasa-qr-scan-card.png` adds a “Scan to view” caption. All encode the same URL. The earlier `bitekasa-offer-flyer-website-qr.png` is superseded because its overlay hides part of the Premium pack text; it is kept only for history.
+
+Never ask an AI image generator to draw, restyle or “add” the QR code to a flyer. Diffusion models repaint the pattern and the printed result does not encode the URL. Generate the artwork without a code, then place the real SVG/PNG as a separate layer in a layout tool, export at 300 dpi, and scan a paper proof with at least two phones before a bulk print run. Keep the white quiet zone, keep the code at least 2 cm wide on the printed sheet, and do not stretch it.
+
 ## 9. Backups and incident response
 
 - Every source change should be reviewed and merged through GitHub PRs; Git history is the primary source backup.
