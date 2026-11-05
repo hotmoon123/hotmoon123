@@ -13,7 +13,7 @@ This playbook assumes no followers data, no analytics and no creator budget. Whe
 | Gate | State today |
 |---|---|
 | Flyer QR decodes to the live site | **Fixed.** The QR in the supplied “Premium Pack” artwork was an image-model approximation and did not decode; `bitekasa-site/assets/qr/bitekasa-premium-flyer-qr.png` replaces it. Software-verified only — a paper proof still needed |
-| Golden pack count matches everywhere | **Open.** Flyer says **55 pieces**, the website says **50 pieces**. Pick one and update the other before publishing |
+| Golden pack count matches everywhere | **Resolved 5 Nov 2026 — 55 pieces.** Website updated. Older flyer derivatives and the 4:5/9:16 exports still show 50 and must not be reposted |
 | Prices match site, flyer and captions | Silver GH₵100 / Golden GH₵200 / Premium GH₵250 — confirm |
 | Both phone numbers current, and which is WhatsApp | Confirm; the flyer shows 0595 638 696 and 0552 727 051 |
 | Claim wording | No health, “best”, “authentic”, or origin claims without evidence |
@@ -60,7 +60,7 @@ Post 4–5 times a week, at a consistent time. Reels out-reach stills; carousels
 | 3 | Still | How to order | “Ordering takes one message” | “WhatsApp 0595 638 696” |
 | 4 | Reel | Pack truth | “GH₵250 gets you 70 pieces and a 1 litre Coke” | “Tap the link in bio to see all packs” |
 | 5 | Story set (3 frames) | Proof & community | Customer message (with permission) | “Poll: which pack next?” |
-| 6 | Carousel | Pack truth | “Price per piece, honestly” | “Silver GH₵3.33 · Golden GH₵4 · Premium GH₵3.57” |
+| 6 | Carousel | Pack truth | “Price per piece, honestly” | “Silver GH₵3.33 · Golden GH₵3.64 · Premium GH₵3.57” |
 | 7 | Reel | Kitchen & craft | “Frozen, unfried, or fried — what's the difference?” | “Ask us which suits your event” |
 | 8 | Still | How to order | “Collection, delivery, or event order?” | “Message us first — we'll confirm” |
 | 9 | Reel | Pack truth | “Upgrade to the Premium Pack” | “WhatsApp us the pack name” |
@@ -79,7 +79,7 @@ Post 4–5 times a week, at a consistent time. Reels out-reach stills; carousels
 > **Pack truth**
 > Three packs, three jobs.
 > Silver — GH₵100, 30 pieces. For one household, one evening.
-> Golden — GH₵200, 50 pieces + 500 ml Coke. For a small gathering.
+> Golden — GH₵200, 55 pieces + 500 ml Coke. For a small gathering.
 > Premium — GH₵250, 70 pieces + 1 litre Coke. For the table everyone circles.
 > Pack contents and availability confirmed when you order.
 

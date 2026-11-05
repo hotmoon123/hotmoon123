@@ -7,8 +7,8 @@
 
 | File | Use it for | Size |
 |---|---|---|
-| `bitekasa-offer-flyer-qr-footer.png` | Print flyer, packs version (Silver/Golden/Premium). Original artwork plus a cream footer band holding the QR. | 1024 × 1816 px |
-| `bitekasa-premium-flyer-qr.png` | Print flyer, “Upgrade to the Premium Pack” version. The AI-composed QR in the supplied artwork was replaced with a real code in the same footprint. | 1664 × 2496 px |
+| `bitekasa-offer-flyer-qr-footer.png` | Print flyer, packs version. **Shows Golden 50 — superseded 5 Nov 2026 when the owner confirmed 55. Do not print.** Kept only as a layout reference. | 1024 × 1816 px |
+| `bitekasa-premium-flyer-qr.png` | **Print this flyer.** “Upgrade to the Premium Pack” version, Golden 55. The AI-composed QR in the supplied artwork was replaced with a real code in the same footprint. | 1664 × 2496 px |
 | `bitekasa-qr-print-2400.png` | Standalone QR for layout/design work or a print shop. | 2400 × 2400 px, 600 dpi metadata |
 | `bitekasa-qr-vector.svg` | Vector QR — scales to any size without blurring. Give this to a printer or designer. | vector |
 | `bitekasa-qr-scan-card.png` | QR with a “Scan to view” caption, for a table card, poster or social post. | 2000 × 2380 px |

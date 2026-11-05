@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-**Known from the accessible shared chats:** BiteKasa sells samosas and spring rolls; products may be fried, unfried, or rolled and frozen before frying; current sales are through the owner’s church and home; the advertised offers are Silver (GH₵100 / 30 pieces), Golden (GH₵200 / 50 pieces + 500 ml Coca-Cola), and Premium (GH₵250 / 70 pieces + 1 litre Coca-Cola). The exact product split and which product conditions the pack prices cover are not stated. Contact numbers and WhatsApp status require owner confirmation.
+**Known from the accessible shared chats:** BiteKasa sells samosas and spring rolls; products may be fried, unfried, or rolled and frozen before frying; current sales are through the owner’s church and home; the advertised offers are Silver (GH₵100 / 30 pieces), Golden (GH₵200 / 55 pieces + 500 ml Coca-Cola), and Premium (GH₵250 / 70 pieces + 1 litre Coca-Cola). The exact product split and which product conditions the pack prices cover are not stated. Contact numbers and WhatsApp status require owner confirmation.
 
 **Everything below is a proposed control:** qualify an enquiry, verify uncertain details before promising, record accepted orders and actual outcomes, and use measured results to improve the process. Owner confirmation is required before treating this as the business’s real workflow.
 

@@ -54,7 +54,7 @@ type Pack = {
 
 const PACKS: Pack[] = [
   { name: 'SILVER', price: 'GH₵100', description: '30 pieces', className: 'pack-silver' },
-  { name: 'GOLDEN', price: 'GH₵200', description: '50 pieces + 500 ml Coca-Cola', className: 'pack-golden' },
+  { name: 'GOLDEN', price: 'GH₵200', description: '55 pieces + 500 ml Coca-Cola', className: 'pack-golden' },
   { name: 'PREMIUM', price: 'GH₵250', description: '70 pieces + 1 litre Coca-Cola', className: 'pack-premium' },
 ];
 
