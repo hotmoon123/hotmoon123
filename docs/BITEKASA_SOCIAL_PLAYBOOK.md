@@ -45,8 +45,13 @@ This playbook assumes no followers data, no analytics and no creator budget. Whe
 | **Name** | `BiteKasa Samosas & Spring Rolls` — spelling fixed, 31 characters, **no city** | Optional: swap to `BiteKasa Samosas & Rolls Accra` (30) if local discovery matters more than the full “Spring Rolls” wording |
 | **Bio** | Set — 129-character variant with both numbers | Optional: `Accra · WhatsApp: …` brings the city back at 137 characters |
 | **Link** | In progress — URL typed without `https://`, title blank, primary toggle off | Add the scheme, a title, and turn on “Show as primary link” |
-| **Account type** | Switching to professional; category screen open | Pick the category that matches fulfilment (see below) |
+| **Account type** | **Business** — switched 5 Nov 2026; profile category `Food & Drink` | Done |
+| **Contact info** | Displayed: `essonprincess947@gmail.com` and GH +233 595638696 | Phone good; **personal Gmail now public** — see privacy note |
 | Banners | None | Skip; decorative |
+
+**Privacy note.** Turning on “Display contact info” publishes the email address on the profile. A personal Gmail address on a public business profile invites spam and links the account to a personal identity. Either hide the email and keep only the phone button, or create a business address (for example `bitekasa.gh@gmail.com`) and use that instead. The phone number should stay visible — it is the ordering route.
+
+**Category.** `Food & Drink` is the broad category. If Instagram offers a specific business category later (Edit profile → Category), set the one that matches how customers actually get the food — see the table below. “Food & Drink” on its own is honest but says nothing a customer is searching for.
 
 **Category choice.** The list Instagram offers for Food & beverage does not contain “home-based snack maker”, so pick the closest true statement, not the most impressive one:
 
