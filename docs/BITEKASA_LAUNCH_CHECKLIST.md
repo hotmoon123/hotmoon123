@@ -24,29 +24,58 @@ Not customer-facing. It means the site now has automated checks that fail before
 
 ---
 
-## ⬜ Step 3 — Add the website link to Instagram (do this now)
+## ✅ Step 3 — Website link added to Instagram
 
-Profile → **Edit profile** → scroll **below the bio** → **Links** → **Add link**
+**Done by the owner, 6 Nov 2026, 07:43.** Instagram confirmed with “You added a link to your bio.”
 
-| Field | Value |
+| Check | Result |
 |---|---|
-| URL | `https://hotmoon123.github.io/hotmoon123/` |
-| Title | `Packs, prices & how to order` |
-| Show as primary link | **ON** |
+| Link row on profile | ✅ visible under the bio: `hotmoon123.github.io/hotmoon123` |
+| Links screen | ✅ `Packs, price & how to order` with the URL beneath |
+| Title used | `Packs, price & how to order` (owner typed “price”, not “prices”) — readable, no need to re-edit |
+| Primary link | assumed on; only one link exists, so it is the primary by default |
+| What visitors land on | the live site, now showing Golden **55** (Step 1) |
 
-Tap **Done** on the link panel, then **Done/Save** on the Edit profile screen. Two saves.
+**The traffic path is now open.** Everything below converts that traffic or feeds it.
 
-**Done looks like:** the title appears as a tappable line under your bio, and tapping it opens the site showing **55**.
 
-**This is the step that unblocks everything else.** No traffic can become an order until it exists.
 
 ---
 
-## ⬜ Step 4 — Archive the generated-woman post
+## ⬜ Step 4 — Archive the generated-woman post (DO THIS NEXT)
+
+### Tap-by-tap
+
+**Which post:** the one showing a woman holding a BiteKasa pack alongside the GH₵250 card. It is the leftmost tile in your grid.
+
+**If it is a normal post**
+1. Profile → tap that tile to open it full screen.
+2. Tap **⋯** (three dots, top right).
+3. Tap **Archive**. If a second sheet appears, tap **Archive** again / **Archive this post**.
+4. You return to the profile. A toast reads **“Post archived”** or **“Only you can see this post.”**
+
+**If it is a Reel**
+1. Profile → **Reels** tab → open the Reel.
+2. Tap **⋯** → **Archive**.
+   (If your build only offers *Manage* → **Delete**, stop — do not delete. Use the *Your activity → Posts* route instead: Settings and activity → **Your activity** → **Posts** → find it → ⋯ → **Archive**.)
+
+**Where it goes**
+Profile → **☰** (top right) → **Archive** → **Posts archive**. It stays there, with its insights intact, and can be restored at any time with ⋯ → **Show on profile**.
+
+**Never tap Delete.** Deleting is irreversible after 30 days and destroys the record you may need if a customer asks what was advertised.
+
+**Verify when done**
+- [ ] Grid's leftmost tile is now the Premium poster
+- [ ] The woman is gone from the profile
+- [ ] The Reel is still visible and still has its 1 like / 1 save
+- [ ] Edit profile → **AI-generated profile** is **OFF**, and that is now accurate
+
 
 Open the post → **⋯** (top right) → **Archive**. Not delete — archive is reversible and keeps the insights.
 
 **Done looks like:** the grid's first post is the hand-pickup Reel.
+
+**Why this also fixes a labelling problem:** Edit profile contains an **AI-generated profile** toggle. It labels profiles that *feature an AI-generated person*. It is currently **OFF**, and while the generated-woman post is live that is an inaccurate label. Archiving the post makes OFF correct. Do not delete the post and keep it in the grid with the toggle off — that is the version a customer can call out.
 
 ---
 
@@ -130,3 +159,24 @@ Without this, the site is invisible to Google no matter how many flyers you prin
 Three Reels a week, stories daily, following `BITEKASA_NEXT_ACTIONS.md` §3–4.
 
 Sunday night, five numbers: reach · link taps · saves/shares · net followers · DM/WhatsApp enquiries.
+
+---
+
+## Appendix — the “Set up your professional account” 8-step list, explained
+
+Instagram shows this list to every new professional account. **Ticking a step does not increase reach.** It is a product tour, and three of the eight are sales pitches. Only two have real value for BiteKasa.
+
+| # | Step | What it actually does | Cost | Verdict |
+|---|---|---|---|---|
+| 1 | **Complete your profile** | Name, bio, photo, category, contact | free | ✅ Done — and the link now makes it genuinely true |
+| 2 | **Get inspired** | Opens a feed of other professionals' content | free | ⏭ Skip, or 5 minutes for ideas. No business effect |
+| 3 | **Get Meta Verified** | Paid badge, impersonation protection, priority support | **recurring monthly fee** | ⏭ Skip for now. You already have **Meta One subscribed** — check what it covers before paying twice |
+| 4 | **Grow your audience** | Opens *Invite friends* — sends invites by WhatsApp, SMS, email, QR | free | ✅ **Do this today.** The only step that moves the follower count |
+| 5 | **Introduce yourself** | Opens the post composer to share a brand post | free | ✅ Already satisfied — you have 3 posts. Use it for Friday's Reel if you want the tick |
+| 6 | **Explore tools and insights** | Opens the Professional dashboard | free | ✅ **Do this weekly.** This is where the five numbers live |
+| 7 | **Tell us your goals** | Asks what you want (messages, followers, sales); tunes in-app tips | free | ⏭ Optional, 30 s, harmless. Pick “get more customers/messages”, never “grow followers” |
+| 8 | **Learn about how ads work** | Education on turning posts into ads | free | ⏭ Skip. Nothing is worth amplifying until one organic Reel beats 4 followers |
+
+**Order that is worth the time:** 4 → 6 → 5 (as Friday's post) → 7 maybe → ignore 2, 3, 8.
+
+**The honest framing:** the checklist is designed to keep you in the app and to sell verification and ads. Its only two genuinely useful items are *Invite friends* and *Insights*. Do those, ignore the tick count.

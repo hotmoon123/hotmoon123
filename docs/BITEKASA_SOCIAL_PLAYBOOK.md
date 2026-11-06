@@ -44,7 +44,7 @@ This playbook assumes no followers data, no analytics and no creator budget. Whe
 | Username | `bitekasa` | Keep |
 | **Name** | `BiteKasa Samosas & Spring Rolls` — spelling fixed, 31 characters, **no city** | Optional: swap to `BiteKasa Samosas & Rolls Accra` (30) if local discovery matters more than the full “Spring Rolls” wording |
 | **Bio** | Set — 129-character variant with both numbers | Optional: `Accra · WhatsApp: …` brings the city back at 137 characters |
-| **Link** | In progress — URL typed without `https://`, title blank, primary toggle off | Add the scheme, a title, and turn on “Show as primary link” |
+| **Link** | **Live since 6 Nov 2026, 07:43** — `Packs, price & how to order` → `hotmoon123.github.io/hotmoon123` | Done. Optional: amend title to “prices” |
 | **Account type** | **Business** — switched 5 Nov 2026, **professional account confirmed 6 Nov 2026**; profile category `Food & Drink` | Done |
 | **Contact info** | Displayed: `essonprincess947@gmail.com` and GH +233 595638696 | Phone good; **personal Gmail now public** — see privacy note |
 | Banners | None | Skip; decorative |
