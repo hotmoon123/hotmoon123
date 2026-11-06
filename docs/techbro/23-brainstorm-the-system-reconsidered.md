@@ -536,7 +536,7 @@ this week, and none of them is answerable by me without inventing.
 
 ---
 
-## 23.18 Correction 4 — the "300 roles" claim does not cover the roles you named
+## 23.17 Correction 4 — the "300 roles" claim does not cover the roles you named
 
 I audited `01-role-catalog.md` against the role list in your own prompt. This is the result and it is
 not good.
@@ -657,7 +657,7 @@ that the client's decision survives it.
 
 `THE_COMPLETE_STACK.md` §9 contains the SDLC role table — and it lists **23 roles**, including one
 printed **twice** (Engineering Manager / Tech Lead). That duplication is a small thing. The real
-question it forces is the one `23.18` dodged:
+question it forces is the one `23.17` dodged:
 
 > **Why does `23` §23.6 recommend launching on roughly 12 roles when `01` catalogues 300?**
 
@@ -697,4 +697,4 @@ waiting list rather than a promise. That is the difference between a catalogue a
 9. **Nine screens**, not 42; **zero** for the first month. `[D]`
 10. Net take is **~3.5%, not 10%** — re-base the economics before building anything. `[I]`
 10b. **The "300 roles" claim misses 18 of the 57 roles you named by hand** — structural validation is
-    not coverage validation, and I presented one as the other. `[F]` §23.18
+    not coverage validation, and I presented one as the other. `[F]` §23.17
