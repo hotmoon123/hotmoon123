@@ -3,7 +3,7 @@ import { ArrowRight, Menu, MessageCircle, Phone, X } from 'lucide-react';
 import { SiInstagram } from 'react-icons/si';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import AnalyticsConsent from './AnalyticsConsent';
-import LogoReveal from './LogoReveal';
+import LogoIntro from './LogoIntro';
 import logo from '../assets/bitekasa-logo.jpg';
 import friedFood from '../assets/food-fried.jpg';
 import unfriedFood from '../assets/food-unfried.jpg';
@@ -364,13 +364,13 @@ export default function App() {
 
   return (
     <>
+      <LogoIntro />
       <AnalyticsConsent />
       <Header />
       <main>
         <Hero />
         <Packs />
         <ProductOptions />
-        <LogoReveal />
         <CTASection />
       </main>
       <Footer />

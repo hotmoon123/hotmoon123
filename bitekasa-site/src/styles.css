@@ -171,47 +171,60 @@ img { display: block; max-width: 100%; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-/* Liquid Glass Logo (ReactDrops) — brand reveal band
+/* Liquid Glass Logo (ReactDrops) — opening splash
    Component source: bitekasa-site/src/components/liquid-glass-logo.*
-   Sizes come from the component's own measured fitting; this only frames it. */
-.logo-reveal {
-  background: #000000;
-  padding: 22px 16px 26px;
-}
-.logo-reveal-heading {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
-.logo-reveal-stage {
-  position: relative;
+   Shown once per session, dismissible, and skipped for reduced motion. */
+.logo-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 320px;
-  max-width: 720px;
-  margin: 0 auto;
-  border-radius: var(--radius-ui);
-  overflow: hidden;
+  background: #000000;
+  opacity: 1;
+  transition: opacity 240ms ease-out;
 }
-.logo-reveal-stage .liquid-glass-logo {
-  width: 100%;
+.logo-intro.is-leaving {
+  opacity: 0;
+  pointer-events: none;
 }
-.logo-reveal-still {
+.logo-intro-stage {
+  width: min(720px, 92vw);
+  height: min(560px, 78vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-intro-stage .liquid-glass-logo { width: 100%; height: 100%; }
+.logo-intro-still {
   display: block;
   width: auto;
-  height: 255px;
-  max-width: 76%;
+  height: min(320px, 42vh);
+  max-width: 80%;
   object-fit: contain;
 }
-
-@media (max-width: 640px) {
-  .logo-reveal-stage { min-height: 260px; }
-  .logo-reveal-still { height: 180px; }
+.logo-intro-skip {
+  position: absolute;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 1px solid rgb(247 238 219 / 45%);
+  border-radius: 999px;
+  background: transparent;
+  color: #F7EEDB;
+  font: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.logo-intro-skip:hover { border-color: #F7EEDB; }
+.logo-intro-skip:focus-visible {
+  outline: 3px solid #D5A12E;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-intro { transition: none; }
 }

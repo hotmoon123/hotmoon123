@@ -1,14 +1,14 @@
 # ReactDrops × BiteKasa — logo animation documentation
 
-> **Status: installed and live on the site.** Source pulled from the registry item `liquid-glass-logo` (four files, ~97 KB of TS/CSS, zero npm dependencies) into `bitekasa-site/src/components/`, mounted through `src/LogoReveal.tsx` as a black brand-reveal band between the product options and the closing call to action.
+> **Status: installed and live on the site.** Source pulled from the registry item `liquid-glass-logo` (four files, ~97 KB of TS/CSS, zero npm dependencies) into `bitekasa-site/src/components/`, mounted through `src/LogoIntro.tsx` as a full-screen opening splash that plays once per session before the site appears.
 >
 > | Check | Result |
 > |---|---|
 > | Typecheck | pass |
-> | Tests | 10 pass (2 new for the reveal) |
+> | Tests | 14 pass (6 for the splash) |
 > | Main JS | **118.5 KiB gzip** / 150 KiB budget |
 > | Glass chunk | 53.7 kB raw, **18.9 KiB gzip**, lazy — never in main |
-> | Logo asset | 35.8 kB (512 px, quantised) |
+> | Logo asset | 46.6 kB (441 × 512, quantised) |
 > | Reduced motion | renders the finished logo still |
 > | WebGL missing | falls back to `<img>` of the mark |
 
@@ -231,19 +231,31 @@ const LiquidGlassLogo = lazy(() => import('./components/liquid-glass-logo'));
 
 All four keep the ReactDrops Component License 1.0 header intact, as the licence requires.
 
-### How it is wired
+### Where it sits now: opening splash, not a page band
 
-`src/LogoReveal.tsx`:
+The reveal was first placed as a section between the product options and the closing CTA. The owner rejected that placement — it sat inside the page and repeated what the splash should do. It is now a **preloader** that plays before the site, and nothing else.
 
-- **Owner's configuration, applied as given** — `theme="light"`, `depth={2.9}`, `ending="logo"`, `style={{ height: 480 }}`, with `background="#000000"` added so the band stays black (the light theme would otherwise paint it `#e2e2e5`), and `logoColor="original"` so the artwork is not recoloured to a flat silhouette.
-- **`logoSize={384}` / `logoScale={0.9}`** — the only departure from the snippet. At the default 256 px plate the 1,254 px-wide lockup draws its phone numbers at roughly 9 px. 384 px keeps them legible inside the 480 px band. Revert both numbers for a literal reproduction.
-- **`React.lazy` + `Suspense`** — the ~92 KB engine is its own chunk (`liquid-glass-logo-*.js`, 18.9 KiB gzip). Main stays at 118.5 KiB gzip against the 150 KiB CI gate.
-- **`IntersectionObserver` at 0.35 threshold** — the canvas mounts only when the band is on screen, so the 1.8 s reveal plays where a visitor can see it instead of finishing above the fold.
-- **Static `<img>` before mount, during load, and when WebGL is unavailable** — the brand is never a blank box.
-- **`ending="logo"`** — the sequence stops on the original logo at its normal size. No second text reveal, no wordmark.
-- **`aria-label`** on the canvas container, heading visually hidden.
+`src/LogoIntro.tsx`:
 
-The logo passed to the component is **the owner's full lockup**, `assets/bitekasa-logo-full.png` — crown, samosa, spring roll, “BiteKasa”, BITES, tagline and both phone numbers, with the cream background knocked out to transparency so it can sit on black (775 × 900, 115 kB).
+- **Fixed overlay, black, full viewport** (`position: fixed; inset: 0; z-index: 100`), rendered above the page. The page itself renders underneath the whole time, so no content or image load is blocked.
+- **Auto-dismisses after 2.1 s**, or immediately on tap, scroll, wheel, `Esc`, `Enter`, `Space`, or the visible **“Enter site”** button. The button is first in the tab order (44 px target, gold focus ring).
+- **Once per session** via `sessionStorage` — a return visit is never delayed again. `?intro=1` replays it, `?intro=0` suppresses it.
+- **`prefers-reduced-motion: reduce`** shows the still artwork for 1.2 s instead of the droplet animation, with no cross-fade.
+- **Fallbacks:** module load pending, WebGL unavailable, or a slow network all render the same still `<img>`.
+- **Owner's configuration kept:** `ending="logo"`, `theme="light"`, `depth={2.9}`, `logoColor="original"`, `finalLogoScale={1}`, `background="#000000"`, `logoSize={384}`, `logoScale={0.9}`. The sequence still ends on the original logo alone at normal size with no second text reveal.
+- **Focus** returns to whatever was focused before the splash appeared, and body scroll is locked only while it is up.
+
+### Budget
+
+| Item | Value |
+|---|---|
+| Main JS | 118.8 KiB gzip / 150 KiB gate |
+| Glass engine chunk | 53.7 kB raw, **18.9 KiB gzip**, `React.lazy` |
+| Logo asset | `bitekasa-logo-full.png`, 441 × 512, **46.6 kB** |
+
+The engine is still lazy: the splash paints the still immediately, then swaps in the canvas once the chunk lands.
+
+The logo passed to the component is **the owner's full lockup**, `assets/bitekasa-logo-full.png` — crown, samosa, spring roll, “BiteKasa”, BITES, tagline and both phone numbers, with the cream background knocked out to transparency so it can sit on black (441 × 512, 47 kB — sized for the 346 px the plate actually draws).
 
 `assets/bitekasa-logo-mark.png` (crown + samosa + roll only, 512 px, 36 kB) is kept for places where the full lockup would be too small to read — favicons, the Instagram avatar, small UI slots.
 
