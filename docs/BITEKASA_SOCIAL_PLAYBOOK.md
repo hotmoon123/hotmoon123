@@ -348,3 +348,78 @@ Most people watch with sound off; the prices must be readable without audio.
 ### Alt text (Instagram's “Write alt text”)
 
 “BiteKasa flyer with Silver, Golden and Premium packs beside a box of samosas; a hand lifts one samosa out of the box.”
+
+---
+
+## 12. Where the website link goes
+
+One URL, many surfaces. Every one below is free; the first three matter far more than the rest.
+
+| # | Surface | How to add it | Why it matters |
+|---|---|---|---|
+| 1 | **Instagram bio link** | Edit profile → Links → Add link → paste `https://hotmoon123.github.io/hotmoon123/`, title `Packs, prices & how to order`, toggle **Show as primary link** | The only clickable link on Instagram |
+| 2 | **Instagram Story link sticker** | Story → sticker icon → Link → paste URL | Business accounts only — **you have one now**. This is how you send people from a Story to the site |
+| 3 | **WhatsApp Business profile** | WhatsApp Business → Settings → Business profile → **Website** field; also set the catalogue/greeting message | Most orders already happen here; this turns a chat into a shop |
+| 4 | WhatsApp saved reply | Business settings → Quick replies → `/packs` → “Packs & prices: https://hotmoon123.github.io/hotmoon123/” | Answers “how much?” in one tap |
+| 5 | Instagram DM saved reply | Business tools → Saved replies → same text | Same reason, inside Instagram |
+| 6 | Instagram “Email / Contact” button | Already live — keep the phone button on | Fallback when the link is missed |
+| 7 | Facebook Page (when created) | Page → About → Website | Cheap second discovery surface |
+| 8 | Google Business Profile (if eligible) | Website field | Shows in Maps and Search |
+| 9 | Directory listings | Website field on each | Consistency + discovery |
+| 10 | QR on the flyer | Already encoded | Print → site |
+| 11 | Order slips / receipts / business card | Printed URL under the QR | Repeat customers |
+
+**Captions do not need the URL.** Instagram captions are not clickable, and a pasted URL looks like spam. Use “link in bio” in the caption and put the real link in the bio and in Story stickers.
+
+**Keep one canonical URL.** No shorteners, no `http://` variants, no trailing-slash differences. Everything — QR, bio, WhatsApp, listings — points at the same string.
+
+---
+
+## 13. Growth sprint: the four levers that actually move a cold account
+
+Baseline to beat (5 Nov 2026): 3–4 followers, 13 views in 30 days, 0 saves, 0 shares, 2 posts.
+
+### Lever 1 — Borrow an audience (fastest, free)
+
+You do not have an audience; other people do.
+
+- **WhatsApp status, daily.** Post the flyer or a clip with “Packs from GH₵100 — link in bio”. Status views are the largest audience BiteKasa already has access to.
+- **Ask past customers directly.** One message: “We now have a website with the packs and prices — would you follow @bitekasa?” Ask, don't spam.
+- **Church and community groups** you are already part of — with the group admin's permission.
+- **Follow and genuinely engage** with Accra food pages, campus pages, church pages. Comment as a business, never with a sales pitch.
+- **Cross-post to Facebook.** The owner's personal network is likely on Facebook, and a Page post reaches people Instagram never will.
+
+### Lever 2 — Make content the algorithm can distribute
+
+Static posters cannot recruit followers; that is now measured, not assumed.
+
+- **3 Reels a week minimum.** Folding, frying, packing, the pick-up, the crunch. 6–15 seconds, vertical, real sound.
+- **First frame must move.** No logo intros.
+- **Prices on screen**, because most people watch muted.
+- **Trending audio** where it fits; keep the real food sound on top.
+- **3–5 hashtags**, local: `#AccraFood #GhanaFood #Samosas #AccraEats`.
+
+### Lever 3 — Turn attention into orders
+
+- **Two taps maximum:** bio link → site → WhatsApp button.
+- **Every caption ends with the number**: WhatsApp 0595 638 696.
+- **Reply within the hour** during the day. Reply speed is a ranking signal and a conversion signal.
+- **Story daily**: poll (“Golden or Premium?”), question box (“what should we fry next?”), behind-the-scenes. Stories keep existing followers warm between Reels.
+
+### Lever 4 — Paid, only after evidence
+
+- **Do not boost until one organic Reel outperforms the follower count.** That post tells you the offer and the format work.
+- Then **GH₵20–50** on that post, targeting Accra, ages 18–45, food interest. Objective: messages, not likes.
+- **Read the result honestly:** cost per DM. If a GH₵50 boost produces 2 enquiries, the creative is the problem, not the budget.
+
+### What not to do
+
+- **No bought followers or engagement.** They poison the audience signal and can get the account limited.
+- **No follow-for-follow sprees.** Instagram treats it as spam and it recruits people who will never order.
+- **No daily posting of flyers.** Two posters produced 13 views in a month — the format is the ceiling.
+- **No hashtag walls.** 30 hashtags is a spam signal, not reach.
+- **No “best in Accra” or health claims.** Unsubstantiated claims are a consumer-protection problem in Ghana.
+
+### Honest 30-day target
+
+**50 followers, one Reel that beats the follower count, 10 tracked enquiries.** Not viral. If after four weeks of consistent video and daily status the enquiries are still zero, the constraint is the offer or the audience — and that is worth knowing before spending money on ads.
