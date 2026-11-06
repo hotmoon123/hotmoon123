@@ -44,6 +44,33 @@ Not customer-facing. It means the site now has automated checks that fail before
 
 ## ⬜ Step 4 — Archive the generated-woman post (DO THIS NEXT)
 
+### Tap-by-tap
+
+**Which post:** the one showing a woman holding a BiteKasa pack alongside the GH₵250 card. It is the leftmost tile in your grid.
+
+**If it is a normal post**
+1. Profile → tap that tile to open it full screen.
+2. Tap **⋯** (three dots, top right).
+3. Tap **Archive**. If a second sheet appears, tap **Archive** again / **Archive this post**.
+4. You return to the profile. A toast reads **“Post archived”** or **“Only you can see this post.”**
+
+**If it is a Reel**
+1. Profile → **Reels** tab → open the Reel.
+2. Tap **⋯** → **Archive**.
+   (If your build only offers *Manage* → **Delete**, stop — do not delete. Use the *Your activity → Posts* route instead: Settings and activity → **Your activity** → **Posts** → find it → ⋯ → **Archive**.)
+
+**Where it goes**
+Profile → **☰** (top right) → **Archive** → **Posts archive**. It stays there, with its insights intact, and can be restored at any time with ⋯ → **Show on profile**.
+
+**Never tap Delete.** Deleting is irreversible after 30 days and destroys the record you may need if a customer asks what was advertised.
+
+**Verify when done**
+- [ ] Grid's leftmost tile is now the Premium poster
+- [ ] The woman is gone from the profile
+- [ ] The Reel is still visible and still has its 1 like / 1 save
+- [ ] Edit profile → **AI-generated profile** is **OFF**, and that is now accurate
+
+
 Open the post → **⋯** (top right) → **Archive**. Not delete — archive is reversible and keeps the insights.
 
 **Done looks like:** the grid's first post is the hand-pickup Reel.
