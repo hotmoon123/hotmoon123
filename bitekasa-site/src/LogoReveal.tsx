@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import logoMark from '../assets/bitekasa-logo-mark.png';
+import logoFull from '../assets/bitekasa-logo-full.png';
 
 /**
  * ReactDrops "Liquid Glass Logo" — installed from
@@ -16,6 +16,7 @@ const LiquidGlassLogo = lazy(() =>
 );
 
 const supportsIntersectionObserver = typeof IntersectionObserver !== 'undefined';
+const LOGO_ALT = 'BiteKasa logo — samosas, spring rolls, hot, crispy, fresh';
 
 export default function LogoReveal() {
   const section = useRef<HTMLDivElement>(null);
@@ -44,39 +45,29 @@ export default function LogoReveal() {
       <div ref={section} className="logo-reveal-stage">
         <Suspense
           fallback={
-            <img
-              className="logo-reveal-still"
-              src={logoMark}
-              alt="BiteKasa crown, samosa and spring roll mark"
-              width={220}
-              height={220}
-            />
+            <img className="logo-reveal-still" src={logoFull} alt={LOGO_ALT} width={220} height={255} />
           }
         >
           {inView ? (
             <LiquidGlassLogo
-              logo={logoMark}
+              logo={logoFull}
               ending="logo"
-              theme="dark"
+              theme="light"
+              depth={2.9}
               background="#000000"
               logoColor="original"
               logoRelief={0}
               finalLogoScale={1}
-              logoScale={0.72}
+              logoSize={384}
+              logoScale={0.9}
               speed={1}
               loop={false}
               maxDpr={1.75}
               style={{ height: 480 }}
-              aria-label="BiteKasa — samosas and spring rolls"
+              aria-label="BiteKasa — samosas and spring rolls, hot, crispy, fresh"
             />
           ) : (
-            <img
-              className="logo-reveal-still"
-              src={logoMark}
-              alt="BiteKasa crown, samosa and spring roll mark"
-              width={220}
-              height={220}
-            />
+            <img className="logo-reveal-still" src={logoFull} alt={LOGO_ALT} width={220} height={255} />
           )}
         </Suspense>
       </div>

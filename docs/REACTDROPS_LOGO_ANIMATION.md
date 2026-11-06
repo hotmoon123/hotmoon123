@@ -235,11 +235,16 @@ All four keep the ReactDrops Component License 1.0 header intact, as the licence
 
 `src/LogoReveal.tsx`:
 
-- **`React.lazy` + `Suspense`** — the ~92 KB engine is its own chunk (`liquid-glass-logo-*.js`, 18.9 KiB gzip). The main bundle stays at 118.5 KiB gzip against the 150 KiB CI gate.
-- **`IntersectionObserver` at 0.35 threshold** — the canvas only mounts when the band is actually on screen, so the 1.8 s reveal plays where a visitor can see it instead of finishing above the fold.
-- **Static `<img>` before mount, during load and when WebGL is unavailable** — the brand is never a blank box.
+- **Owner's configuration, applied as given** — `theme="light"`, `depth={2.9}`, `ending="logo"`, `style={{ height: 480 }}`, with `background="#000000"` added so the band stays black (the light theme would otherwise paint it `#e2e2e5`), and `logoColor="original"` so the artwork is not recoloured to a flat silhouette.
+- **`logoSize={384}` / `logoScale={0.9}`** — the only departure from the snippet. At the default 256 px plate the 1,254 px-wide lockup draws its phone numbers at roughly 9 px. 384 px keeps them legible inside the 480 px band. Revert both numbers for a literal reproduction.
+- **`React.lazy` + `Suspense`** — the ~92 KB engine is its own chunk (`liquid-glass-logo-*.js`, 18.9 KiB gzip). Main stays at 118.5 KiB gzip against the 150 KiB CI gate.
+- **`IntersectionObserver` at 0.35 threshold** — the canvas mounts only when the band is on screen, so the 1.8 s reveal plays where a visitor can see it instead of finishing above the fold.
+- **Static `<img>` before mount, during load, and when WebGL is unavailable** — the brand is never a blank box.
 - **`ending="logo"`** — the sequence stops on the original logo at its normal size. No second text reveal, no wordmark.
-- **`background="#000000"`, `logoColor="original"`, `logoRelief={0}`, `finalLogoScale={1}`** — black band, unaltered artwork colours, no recoloured silhouette.
-- **`aria-label="BiteKasa — samosas and spring rolls"`**, heading visually hidden — the canvas is decorative but the section is announced.
+- **`aria-label`** on the canvas container, heading visually hidden.
 
-The logo passed to the component is `assets/bitekasa-logo-mark.png`: the crown + samosa + roll, knocked out to transparency from the owner's original JPEG and cut to 512 px / 35.8 kB. The full lockup (with the BITES subline and both phone numbers) was deliberately **not** used — inside a 256 px plate the numbers become illegible. Swapping to the full lockup is one line in `LogoReveal.tsx` if that is ever wanted.
+The logo passed to the component is **the owner's full lockup**, `assets/bitekasa-logo-full.png` — crown, samosa, spring roll, “BiteKasa”, BITES, tagline and both phone numbers, with the cream background knocked out to transparency so it can sit on black (775 × 900, 115 kB).
+
+`assets/bitekasa-logo-mark.png` (crown + samosa + roll only, 512 px, 36 kB) is kept for places where the full lockup would be too small to read — favicons, the Instagram avatar, small UI slots.
+
+**Verified by compositing the artwork on black:** the cream knockout leaves a thin light fringe that reads as a rim light, so the dark-brown “BITES” and the brown illustration outlines stay legible instead of disappearing. Preview: `/home/user/preview-logo-on-black.png` (scratch, not committed).

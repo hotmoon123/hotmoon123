@@ -10,7 +10,7 @@ describe('LogoReveal', () => {
 
   it('shows a still of the project logo before the glass animation mounts', () => {
     render(<LogoReveal />);
-    const stills = screen.getAllByAltText('BiteKasa crown, samosa and spring roll mark');
+    const stills = screen.getAllByAltText('BiteKasa logo — samosas, spring rolls, hot, crispy, fresh');
     expect(stills.length).toBeGreaterThan(0);
     expect(stills[0]).toHaveAttribute('src');
   });
