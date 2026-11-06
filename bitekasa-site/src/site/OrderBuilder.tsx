@@ -87,51 +87,53 @@ export default function OrderBuilder() {
           </fieldset>
         </Reveal>
 
-        <div className="builder-summary" aria-live="polite">
-          {summary.isEmpty ? (
-            <p className="builder-empty">Add a pack above to see your total.</p>
-          ) : (
-            <>
-              <p className="builder-total">
-                {cedi(summary.total)}
-                <span className="builder-total-meta">
-                  {summary.packCount} {summary.packCount === 1 ? 'pack' : 'packs'} · {summary.pieceCount} pieces
-                </span>
-              </p>
-              <p className="builder-note">Prices are confirmed on WhatsApp before you pay.</p>
-            </>
-          )}
+        <div className="builder-footer">
+          <div className="builder-summary" aria-live="polite">
+            {summary.isEmpty ? (
+              <p className="builder-empty">Add a pack above to see your total.</p>
+            ) : (
+              <>
+                <p className="builder-total">
+                  {cedi(summary.total)}
+                  <span className="builder-total-meta">
+                    {summary.packCount} {summary.packCount === 1 ? 'pack' : 'packs'} · {summary.pieceCount} pieces
+                  </span>
+                </p>
+                <p className="builder-note">Prices are confirmed on WhatsApp before you pay.</p>
+              </>
+            )}
         </div>
 
-        <div className="builder-actions">
-          {summary.isEmpty ? (
-            <button type="button" className="builder-cta" disabled>
-              <MessageCircle aria-hidden="true" size={17} />
-              Send order on WhatsApp
-            </button>
-          ) : (
-            <a
-              className="builder-cta"
-              href={whatsappHref(message)}
-              target="_blank"
-              rel="noopener noreferrer"
+          <div className="builder-actions">
+            {summary.isEmpty ? (
+              <button type="button" className="builder-cta" disabled>
+                <MessageCircle aria-hidden="true" size={17} />
+                Send order on WhatsApp
+              </button>
+            ) : (
+              <a
+                className="builder-cta"
+                href={whatsappHref(message)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle aria-hidden="true" size={17} />
+                Send order on WhatsApp <ArrowRight aria-hidden="true" size={17} />
+              </a>
+            )}
+
+            <button
+              type="button"
+              className="builder-reset"
+              onClick={() => setSelection(EMPTY)}
+              disabled={summary.isEmpty}
             >
-              <MessageCircle aria-hidden="true" size={17} />
-              Send order on WhatsApp <ArrowRight aria-hidden="true" size={17} />
-            </a>
-          )}
-
-          <button
-            type="button"
-            className="builder-reset"
-            onClick={() => setSelection(EMPTY)}
-            disabled={summary.isEmpty}
-          >
-            <RotateCcw aria-hidden="true" size={15} />
-            Clear
-          </button>
+              <RotateCcw aria-hidden="true" size={15} />
+              Clear
+            </button>
         </div>
 
+        </div>
         {!summary.isEmpty && (
           <details className="builder-preview">
             <summary>Preview the message</summary>

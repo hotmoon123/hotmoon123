@@ -85,16 +85,17 @@
   --measure: 34rem;     /* comfortable reading width */
   --content: 76rem;
 
-  /* --- Radius: editorial, tight ---------------------------- */
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-pill: 999px;
+  /* --- Radius: soft, consistent per element type ------------ */
+  --radius-xs: 6px;    /* chips, tags, tiny controls */
+  --radius-sm: 12px;   /* buttons, inputs, steppers */
+  --radius-md: 18px;   /* cards, images, panels */
+  --radius-lg: 24px;   /* large containers, consent panel */
+  --radius-pill: 999px;/* primary actions, badges */
 
   /* --- Elevation: warm, minimal ---------------------------- */
-  --shadow-card: 0 1px 0 rgb(36 27 24 / 6%);
-  --shadow-lift: 0 18px 44px -32px rgb(36 27 24 / 55%);
-  --shadow-float: 0 12px 34px -18px rgb(36 27 24 / 45%);
+  --shadow-card: 0 1px 2px rgb(36 27 24 / 5%);
+  --shadow-lift: 0 10px 30px -24px rgb(36 27 24 / 45%);
+  --shadow-float: 0 16px 40px -26px rgb(36 27 24 / 40%);
 
   /* --- Motion: short, eased, never looping ----------------- */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);

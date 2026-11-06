@@ -1,5 +1,6 @@
 import AnalyticsConsent from './AnalyticsConsent';
 import LogoIntro from './LogoIntro';
+import useHashNavigation from './lib/hash-nav';
 import { PREPARATIONS, type PreparationSlug } from './data/catalogue';
 import ContactCta from './site/ContactCta';
 import Faq from './site/Faq';
@@ -38,6 +39,8 @@ function HomePage() {
 }
 
 export default function App() {
+  useHashNavigation();
+
   const match = window.location.pathname.match(/\/services\/([a-z]+)\/?$/);
   const slug = match?.[1] as PreparationSlug | undefined;
 
