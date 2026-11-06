@@ -1,0 +1,100 @@
+# 99 — Sources, Citations & Assumption Register
+
+> Generated from `tools/data/sources.yaml`. Citation discipline for this pack:
+> **a claim that is not in this file is not cited as fact.** If it cannot be sourced,
+> it is written as `H-###` in the assumption register below and tested, not asserted.
+
+**Sources:** 57 &nbsp;|&nbsp; **verified:** 54 &nbsp;|&nbsp; **flagged unverified:** 3
+
+## A. Verified sources
+
+| ID | Source | Year | Claim used (in our words) | Link |
+| --- | --- | ---: | --- | --- |
+| S1 | Business Model Generation (Business Model Canvas / Lean Canvas) — *Osterwalder & Pigneur; Ash Maurya* | 2010 | Nine-block canvas for describing, testing and pivoting a business model. | <https://www.strategyzer.com/library/business-model-generation> |
+| S2 | Data Protection Act, 2012 (Act 843), Ghana — *Parliament of Ghana / Data Protection Commission* | 2012 | Section 27(1) requires every data controller to register with the DPC before processing personal data; registration is valid for two years. Eight data protection principles; data subject rights; penalties include fines and imprisonment. | <https://www.dataprotection.org.gh/> |
+| S3 | Data Protection Commission — registration guidance (cross-border transfer) — *Data Protection Commission, Ghana* | n.d. | Transfers of personal data out of Ghana are permitted only on adequacy, appropriate safeguards, or binding corporate rules; government data is not hosted outside Ghana. | <https://www.dataprotection.org.gh/> |
+| S5 | Payment Systems and Services Act, 2019 (Act 987) — *Bank of Ghana* | 2019 | A body corporate may not operate a payment system or provide a payment service without a licence from the Bank of Ghana. Licence categories include PSP Standard, Medium, Enhanced, and Dedicated Electronic Money Issuer (DEMI); licence valid five years. | <https://www.bog.gov.gh/> |
+| S6 | Electronic Transfer Levy (Repeal) Act, 2025 (Act 1128) — *Parliament of Ghana / GRA* | 2025 | The 1% E-Levy on electronic transfers was repealed effective 2 April 2025. Do not build pricing models that assume an e-levy charge. | <https://gra.gov.gh/> |
+| S7 | ISO/IEC/IEEE 29148:2018 — Requirements engineering — *ISO/IEC/IEEE* | 2018 | Defines characteristics of good requirements (necessary, unambiguous, complete, singular, feasible, verifiable, traceable) and SRS structure. | <https://www.iso.org/standard/72089.html> |
+| S8 | ISO/IEC 25010:2023 — SQuaRE product quality model — *ISO/IEC* | 2023 | Nine quality characteristics including functional suitability, performance efficiency, compatibility, usability, reliability, security, maintainability, flexibility, safety. | <https://www.iso.org/standard/78176.html> |
+| S9 | C4 model for visualising software architecture — *Simon Brown* | n.d. | Four zoom levels: Context, Container, Component, Code; notation-independent and diagram-as-code friendly. | <https://c4model.com/> |
+| S10 | OpenAPI Specification 3.1 — *OpenAPI Initiative (Linux Foundation)* | n.d. | Machine-readable HTTP API contract; 3.1 aligns with JSON Schema 2020-12. | <https://spec.openapis.org/oas/v3.1.0.html> |
+| S11 | Paystack Split Payments and delayed settlement — *Paystack* | n.d. | Split payments route a charge between a main account and a subaccount; subaccounts can be set to manual settlement to hold a vendor share. Paystack states it does not provide true escrow, release is one-directional, and refunds on settled splits come from the main balance. | <https://paystack.com/docs/payments/split-payments/> |
+| S12 | WCAG 2.2 — Web Content Accessibility Guidelines — *W3C* | 2023 | Success criteria at A/AA/AAA for perceivable, operable, understandable, robust interfaces; AA is the practical legal baseline in most markets. | <https://www.w3.org/TR/WCAG22/> |
+| S13 | Nielsen Norman Group — usability testing with 5 users — *Jakob Nielsen* | 2000 | Most usability problems surface with a small number of participants per round; iterate with several small rounds rather than one large one. | <https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/> |
+| S14 | STRIDE threat modelling — *Microsoft* | n.d. | Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege. | <https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats> |
+| S15 | LINDDUN privacy threat modelling — *DistriNet, KU Leuven* | n.d. | Linking, Identifying, Non-repudiation, Detecting, Data disclosure, Unawareness, Non-compliance. | <https://linddun.org/> |
+| S16 | NIST AI Risk Management Framework (AI RMF 1.0) and Generative AI Profile — *NIST* | 2023 | Four functions — Govern, Map, Measure, Manage — for trustworthy AI; the Generative AI Profile (NIST AI 600-1, 2024) adds GenAI-specific risks. | <https://www.nist.gov/itl/ai-risk-management-framework> |
+| S17 | ISTQB Certified Tester Foundation Level syllabus (v4.0) — *ISTQB* | 2023 | Risk-based testing, test levels, test types, and the seven testing principles. | <https://www.istqb.org/> |
+| S18 | App Store Review Guidelines — *Apple* | n.d. | 3.1.3(d): real-time person-to-person services may use payment methods other than IAP. 3.1.3(e): goods and services consumed outside the app must not use IAP. 1.2 requires filtering objectionable material and reporting mechanisms for user-generated content. | <https://developer.apple.com/app-store/review/guidelines/> |
+| S19 | Google Play Payments policy and Data safety section — *Google* | n.d. | Play billing is required for digital goods/features used in-app; it must not be used for physical goods or real-world services. Developers must declare data collection and sharing in the Data safety form. | <https://support.google.com/googleplay/android-developer/answer/9858738> |
+| S20 | OWASP Application Security Verification Standard 5.0.0 — *OWASP* | 2025 | 17 chapters (V1–V17) of testable web/API security requirements; cite requirements with the version, e.g. v5.0.0-8.2.1. | <https://owasp.org/www-project-application-security-verification-standard/> |
+| S21 | OWASP Mobile Application Security Verification Standard 2.1.0 — *OWASP MAS* | 2024 | 24 controls in 8 groups: STORAGE, CRYPTO, AUTH, NETWORK, PLATFORM, CODE, RESILIENCE, PRIVACY. Verification levels were replaced by MAS testing profiles (L1, L2, R, P) from MASTG. | <https://mas.owasp.org/MASVS/> |
+| S22 | CVSS v4.0 Specification — *FIRST* | 2023 | Framework for rating severity of vulnerabilities; base, threat, environmental metric groups. | <https://www.first.org/cvss/v4-0/> |
+| S23 | PagerDuty Incident Response documentation — *PagerDuty* | n.d. | Incident roles (commander, communications lead, scribe), severity levels, and blameless postmortem practice. | <https://response.pagerduty.com/> |
+| S24 | NIST SP 800-40 Rev.4 — Guide to Enterprise Patch Management — *NIST* | 2022 | Risk-based patch management: inventory, prioritisation by severity and exposure, maintenance windows, verification. | <https://csrc.nist.gov/pubs/sp/800/40/r4/final> |
+| S25 | ISO/IEC 29147:2018 — Vulnerability disclosure — *ISO/IEC* | 2018 | Reception and remediation of vulnerability reports; coordinated disclosure. | <https://www.iso.org/standard/72311.html> |
+| S26 | Google SRE Workbook — Postmortem culture, SLOs and error budgets — *Google* | n.d. | SLOs double as error budgets; blameless postmortems optimise the system, not individuals. | <https://sre.google/workbook/> |
+| S27 | Record retention under Ghana Revenue Administration Act, 2016 (Act 915) s.27(3) — *Ghana Revenue Authority* | n.d. | Electronic transaction records must be kept for at least six years; payment platforms must retain and produce them. | <https://gra.gov.gh/> |
+| S28 | OWASP Automated Threats to Web Applications (OAT-001 to OAT-020) — *OWASP* | n.d. | Catalogue of automated threats including credential stuffing, scraping, carding and account creation. | <https://owasp.org/www-project-automated-threats-to-web-applications/> |
+| S29 | WCAG-EM 1.0 — Website Accessibility Conformance Evaluation Methodology — *W3C* | 2014 | Structured evaluation methodology; sample selection and conformance claims. | <https://www.w3.org/TR/WCAG-EM/> |
+| S30 | ISO/IEC 27001:2022 — Information security management systems — *ISO/IEC* | 2022 | 93 controls in four themes: organisational, people, physical, technological. | <https://www.iso.org/standard/27001> |
+| S31 | GitLab Well-Architected / Google Cloud Architecture Framework pillars — *Google Cloud* | n.d. | Pillars: operational excellence, security/privacy/compliance, reliability, cost optimisation, performance optimisation, sustainability. | <https://cloud.google.com/architecture/framework> |
+| S32 | Twelve-Factor App — *Adam Wiggins / Heroku* | 2011 | Twelve practices for build/run parity, config in the environment, stateless processes, logs as event streams. | <https://12factor.net/> |
+| S33 | OWASP Top 10:2021 — *OWASP* | 2021 | Broken access control first; includes cryptographic failures, injection, insecure design, misconfiguration, vulnerable components, identification/authentication failures, integrity failures, logging failures, SSRF. | <https://owasp.org/Top10/> |
+| S34 | OWASP API Security Top 10:2023 — *OWASP* | 2023 | Includes BOLA (object-level authorisation), broken authentication, unrestricted resource consumption, and unsafe consumption of APIs. | <https://owasp.org/API-Security/> |
+| S36 | Ghana Card (National Identification Authority) as primary national ID — *National Identification Authority, Ghana* | n.d. | Ghana Card is the national identity document used for KYC; NIA issues it and operates verification services. | <https://nia.gov.gh/> |
+| S38 | Google Play Console — app testing tracks and staged rollout — *Google* | n.d. | Internal, closed and open testing tracks; staged rollout percentages with halt ability. | <https://support.google.com/googleplay/android-developer/answer/9859348> |
+| S39 | Apple — TestFlight and phased release — *Apple* | n.d. | TestFlight for beta distribution; phased release over seven days for App Store updates. | <https://developer.apple.com/testflight/> |
+| S40 | Django documentation — security, migrations, testing — *Django Software Foundation* | n.d. | Django 5.2 is an LTS release (April 2025) with three years of security support; includes CSRF, SQL-injection protections, and a migration system. | <https://docs.djangoproject.com/en/5.2/> |
+| S41 | Expo documentation — EAS Build, EAS Update, OTA — *Expo* | n.d. | EAS Build compiles native apps in the cloud; EAS Update delivers JS/asset updates over the air within store policy. | <https://docs.expo.dev/eas/> |
+| S42 | PostgreSQL 17 documentation — *PostgreSQL Global Development Group* | 2024 | Open-source relational database; 17 is the current major release line documented here. | <https://www.postgresql.org/docs/17/> |
+| S43 | Celery documentation — *Celery project* | n.d. | Distributed task queue for background jobs; requires a broker such as Redis or RabbitMQ. | <https://docs.celeryq.dev/> |
+| S44 | Coverage.py / mutation testing (PIT, Stryker) as test-adequacy measures — *Tooling docs* | n.d. | Line coverage measures execution, not assertion quality; mutation score is a stronger adequacy signal. | <https://coverage.readthedocs.io/> |
+| S45 | Agile Manifesto and Scrum Guide 2020 — *Beck et al.; Schwaber & Sutherland* | n.d. | Iterative delivery, empiricism, and the Scrum accountabilities/events/artefacts. | <https://scrumguides.org/scrum-guide.html> |
+| S46 | DORA — Accelerate metrics — *Google Cloud DORA* | n.d. | Four keys: deployment frequency, lead time for changes, change failure rate, time to restore service. | <https://dora.dev/guides/dora-metrics-four-keys/> |
+| S47 | Story mapping (Jeff Patton) — *Jeff Patton* | n.d. | Two-dimensional backlog: user activities across the top, depth of implementation below. | <https://www.jpattonassociates.com/the-new-backlog/> |
+| S48 | Revised Bloom's Taxonomy — *Anderson & Krathwohl* | 2001 | Six cognitive levels: Remember, Understand, Apply, Analyse, Evaluate, Create. | <https://www.uky.edu/~rsand1/china2018/texts/Anderson-Krathwohl%20-%20A%20taxonomy%20for%20learning%20teaching%20and%20assessing.pdf> |
+| S49 | Lean Startup — build-measure-learn, validated learning — *Eric Ries* | 2011 | Hypothesis-driven experiments and pivot/persevere decisions. | <http://theleanstartup.com/> |
+| S50 | Nielsen 10 usability heuristics — *Jakob Nielsen* | 1994 | Ten general principles for interaction design and heuristic evaluation. | <https://www.nngroup.com/articles/ten-usability-heuristics/> |
+| S51 | Upwork pricing and freelancer service fees (2026) — *Upwork / third-party fee analyses* | 2026 | Freelancers pay a per-contract service fee reported in the 0–15% range with most contracts around 10% in 2026; clients pay a marketplace fee of roughly 5% plus a one-time contract initiation fee. Sources disagree on whether the 10% is now flat — treat the exact rate as needing confirmation from Upwork's own help centre. | <https://www.upwork.com/i/pricing> |
+| S52 | Toptal screening and pricing structure (2026) — *Toptal / third-party reviews* | n.d. | Toptal accepts fewer than ~3% of applicants via a multi-stage screen including a live interview and a test project; freelancers pay no fee and Toptal bills clients an undisclosed markup (reported 30–50%) on top of a $60–$200+/hr rate, plus a monthly platform subscription. | <https://www.toptal.com/top-3-percent> |
+| S53 | Braintrust fee model — *Braintrust* | n.d. | Braintrust charges talent 0% and clients a flat 10% fee, with token-based (BTRST) community governance. | <https://www.usebraintrust.com/> |
+| S54 | Fiverr seller commission and buyer service fee (2026) — *Fiverr / third-party fee analyses* | n.d. | Fiverr charges sellers a flat 20% commission on order value; buyers pay a 5.5% service fee plus a small-order fee on orders under $200; earnings clear after 14 days (7 for higher tiers). | <https://www.fiverr.com/support/articles/360010560118> |
+| S55 | Andela business model and engagement terms (2026) — *Andela / third-party reviews* | n.d. | Andela (founded Lagos 2014) places vetted engineers — acceptance reported near 0.5% — into client teams on long contracts (commonly 12-month minimums) at roughly $6,000–$14,000 per developer per month; talent are contractors, not employees; no short-term freelance tier; revenue is majority enterprise in North America and Western Europe. | <https://www.andela.com/> |
+| S56 | Stripe merchant availability in Ghana — *Stripe / Paystack* | n.d. | Stripe does not support Ghana as a direct merchant country; Ghana is reached through Stripe's extended network via Paystack (a Stripe company). A Ghana-registered company cannot open a standard Stripe account, and Stripe Connect Custom is therefore not directly available to a Ghanaian entity. | <https://stripe.com/global> |
+| S57 | African and Ghanaian freelance platforms (landscape) — *Tech In Africa / Truelancer / Twine listings* | n.d. | Ghana-focused and pan-African freelance platforms exist (e.g. CediJob, Gebeya, TERAWORK, Findworka, Solangigs) alongside global platforms listing Accra-based developers; public listings show Accra developers priced from about $2–$10/hr upward, anchoring local talent to global low-price competition. | <https://www.truelancer.com/software-development-freelancers-in-accra> |
+
+## B. Flagged as unverified (cited for principles only — confirm before relying on them)
+
+| ID | Source | Why flagged |
+| --- | --- | --- |
+| S4 | Constitution of the Republic of Ghana, 1992 — Article 18 (privacy of home and property) | Foundation for privacy protection; read through Act 843 in practice. Text not re-read for this pack. |
+| S35 | NIST SP 800-63B-4 — Digital Identity Guidelines (authentication) | Authenticator and session requirements. Revision status should be confirmed before certification; cited for principles only. |
+| S37 | Mobile Money interoperability in Ghana (GhIPSS / BoG) | Interoperability across MTN MoMo, Telecel Cash and AT Money is live for transfers. Provider specifics must be re-checked before integrating. |
+
+## C. Assumption register (things we do **not** know yet)
+
+Each assumption gets a test, an owner and a date. An assumption that has not been tested
+by its review date escalates to the risk register, it does not quietly become a fact.
+
+| ID | Assumption | Why it matters | Test | Owner | Review |
+| --- | --- | --- | --- | --- | --- |
+| H-001 | Tech workers in Accra will pay a 10% service fee rather than transact off-platform with someone they met here | The entire revenue model | Price-sensitivity test in onboarding + off-platform leakage cohort analysis | D024 | v1 + 30 days |
+| H-002 | There is enough local demand for specialist work (mobile, data, security) to keep verified supply utilised at ≥55% | Liquidity is the only real moat | Measure match-fill rate per skill per week | D177 | weekly from launch |
+| H-003 | Employers will pay into escrow before work starts when the platform offers milestone release | Determines whether we can be paid at all | Compare deposit rate with and without escrow messaging (A/B) | D030 | v1 + 45 days |
+| H-004 | Mobile money settlement (MoMo) is acceptable to workers and does not add meaningful friction | Payout design | Measure payout failure rate and time-to-cash by rail | D023 | v1 + 14 days |
+| H-005 | A payment provider's delayed-settlement split is sufficient to approximate escrow without a BoG payment licence | Legal exposure | Written position from counsel + provider compliance confirmation | D018 | before public launch |
+| H-006 | Users will complete KYC with a Ghana Card photo before their first paid match | Fraud control vs. conversion | Funnel conversion with hard vs. soft gate | D154 | v1 + 30 days |
+| H-007 | Verified skill assessment improves hire success enough to justify the cost | Quality positioning | Compare dispute rate and repeat-hire rate for assessed vs. unassessed talent | D277 | v2 |
+| H-008 | 6–10 person squads will form for larger jobs without a formal contracting entity | Bigger deal sizes | Count squad deals and completion rate | D303 | v2 |
+| H-009 | WhatsApp is a viable notification channel under our consent and cost model | Engagement | Delivery and opt-out rates vs push/SMS | D166 | v1 + 30 days |
+| H-010 | We can reach 1,000 verified workers within 90 days at ≤ GHS 25 CAC | Growth plan | Weekly cohort cost tracking | D229 | day 90 |
+
+## D. How to cite in this pack
+
+- Facts from a source: the source key in brackets, e.g. *(S2)*.
+- Numbers in models: every input cell names its source or is labelled `assumption`.
+- Predictions: never stated as fact; written as a range with the assumption it depends on.
+- Anything dated: the date in this file is the date the claim was checked, not the date the
+  law was passed. Re-verify regulatory items every quarter (see ART-070).

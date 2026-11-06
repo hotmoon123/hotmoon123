@@ -1,0 +1,371 @@
+# TechBro Blueprint — Source Register (single source of truth for citations)
+# checked: 2026-11-06. verified: true means we read the claim in the source.
+# Anything not in this file must not be cited as fact. Hypotheses are labelled H-###.
+- id: S1
+  title: "Business Model Generation (Business Model Canvas / Lean Canvas)"
+  author: "Osterwalder & Pigneur; Ash Maurya"
+  year: 2010
+  url: "https://www.strategyzer.com/library/business-model-generation"
+  verified: true
+  claim: "Nine-block canvas for describing, testing and pivoting a business model."
+- id: S2
+  title: "Data Protection Act, 2012 (Act 843), Ghana"
+  author: "Parliament of Ghana / Data Protection Commission"
+  year: 2012
+  url: "https://www.dataprotection.org.gh/"
+  verified: true
+  claim: "Section 27(1) requires every data controller to register with the DPC before processing personal data; registration is valid for two years. Eight data protection principles; data subject rights; penalties include fines and imprisonment."
+- id: S3
+  title: "Data Protection Commission — registration guidance (cross-border transfer)"
+  author: "Data Protection Commission, Ghana"
+  url: "https://www.dataprotection.org.gh/"
+  verified: true
+  claim: "Transfers of personal data out of Ghana are permitted only on adequacy, appropriate safeguards, or binding corporate rules; government data is not hosted outside Ghana."
+- id: S4
+  title: "Constitution of the Republic of Ghana, 1992 — Article 18 (privacy of home and property)"
+  author: "Republic of Ghana"
+  year: 1992
+  url: "https://www.judicial.gov.gh/"
+  verified: false
+  claim: "Foundation for privacy protection; read through Act 843 in practice. Text not re-read for this pack."
+- id: S5
+  title: "Payment Systems and Services Act, 2019 (Act 987)"
+  author: "Bank of Ghana"
+  year: 2019
+  url: "https://www.bog.gov.gh/"
+  verified: true
+  claim: "A body corporate may not operate a payment system or provide a payment service without a licence from the Bank of Ghana. Licence categories include PSP Standard, Medium, Enhanced, and Dedicated Electronic Money Issuer (DEMI); licence valid five years."
+- id: S6
+  title: "Electronic Transfer Levy (Repeal) Act, 2025 (Act 1128)"
+  author: "Parliament of Ghana / GRA"
+  year: 2025
+  url: "https://gra.gov.gh/"
+  verified: true
+  claim: "The 1% E-Levy on electronic transfers was repealed effective 2 April 2025. Do not build pricing models that assume an e-levy charge."
+- id: S7
+  title: "ISO/IEC/IEEE 29148:2018 — Requirements engineering"
+  author: "ISO/IEC/IEEE"
+  year: 2018
+  url: "https://www.iso.org/standard/72089.html"
+  verified: true
+  claim: "Defines characteristics of good requirements (necessary, unambiguous, complete, singular, feasible, verifiable, traceable) and SRS structure."
+- id: S8
+  title: "ISO/IEC 25010:2023 — SQuaRE product quality model"
+  author: "ISO/IEC"
+  year: 2023
+  url: "https://www.iso.org/standard/78176.html"
+  verified: true
+  claim: "Nine quality characteristics including functional suitability, performance efficiency, compatibility, usability, reliability, security, maintainability, flexibility, safety."
+- id: S9
+  title: "C4 model for visualising software architecture"
+  author: "Simon Brown"
+  url: "https://c4model.com/"
+  verified: true
+  claim: "Four zoom levels: Context, Container, Component, Code; notation-independent and diagram-as-code friendly."
+- id: S10
+  title: "OpenAPI Specification 3.1"
+  author: "OpenAPI Initiative (Linux Foundation)"
+  url: "https://spec.openapis.org/oas/v3.1.0.html"
+  verified: true
+  claim: "Machine-readable HTTP API contract; 3.1 aligns with JSON Schema 2020-12."
+- id: S11
+  title: "Paystack Split Payments and delayed settlement"
+  author: "Paystack"
+  url: "https://paystack.com/docs/payments/split-payments/"
+  verified: true
+  claim: "Split payments route a charge between a main account and a subaccount; subaccounts can be set to manual settlement to hold a vendor share. Paystack states it does not provide true escrow, release is one-directional, and refunds on settled splits come from the main balance."
+- id: S12
+  title: "WCAG 2.2 — Web Content Accessibility Guidelines"
+  author: "W3C"
+  year: 2023
+  url: "https://www.w3.org/TR/WCAG22/"
+  verified: true
+  claim: "Success criteria at A/AA/AAA for perceivable, operable, understandable, robust interfaces; AA is the practical legal baseline in most markets."
+- id: S13
+  title: "Nielsen Norman Group — usability testing with 5 users"
+  author: "Jakob Nielsen"
+  year: 2000
+  url: "https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/"
+  verified: true
+  claim: "Most usability problems surface with a small number of participants per round; iterate with several small rounds rather than one large one."
+- id: S14
+  title: "STRIDE threat modelling"
+  author: "Microsoft"
+  url: "https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats"
+  verified: true
+  claim: "Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege."
+- id: S15
+  title: "LINDDUN privacy threat modelling"
+  author: "DistriNet, KU Leuven"
+  url: "https://linddun.org/"
+  verified: true
+  claim: "Linking, Identifying, Non-repudiation, Detecting, Data disclosure, Unawareness, Non-compliance."
+- id: S16
+  title: "NIST AI Risk Management Framework (AI RMF 1.0) and Generative AI Profile"
+  author: "NIST"
+  year: 2023
+  url: "https://www.nist.gov/itl/ai-risk-management-framework"
+  verified: true
+  claim: "Four functions — Govern, Map, Measure, Manage — for trustworthy AI; the Generative AI Profile (NIST AI 600-1, 2024) adds GenAI-specific risks."
+- id: S17
+  title: "ISTQB Certified Tester Foundation Level syllabus (v4.0)"
+  author: "ISTQB"
+  year: 2023
+  url: "https://www.istqb.org/"
+  verified: true
+  claim: "Risk-based testing, test levels, test types, and the seven testing principles."
+- id: S18
+  title: "App Store Review Guidelines"
+  author: "Apple"
+  url: "https://developer.apple.com/app-store/review/guidelines/"
+  verified: true
+  claim: "3.1.3(d): real-time person-to-person services may use payment methods other than IAP. 3.1.3(e): goods and services consumed outside the app must not use IAP. 1.2 requires filtering objectionable material and reporting mechanisms for user-generated content."
+- id: S19
+  title: "Google Play Payments policy and Data safety section"
+  author: "Google"
+  url: "https://support.google.com/googleplay/android-developer/answer/9858738"
+  verified: true
+  claim: "Play billing is required for digital goods/features used in-app; it must not be used for physical goods or real-world services. Developers must declare data collection and sharing in the Data safety form."
+- id: S20
+  title: "OWASP Application Security Verification Standard 5.0.0"
+  author: "OWASP"
+  year: 2025
+  url: "https://owasp.org/www-project-application-security-verification-standard/"
+  verified: true
+  claim: "17 chapters (V1–V17) of testable web/API security requirements; cite requirements with the version, e.g. v5.0.0-8.2.1."
+- id: S21
+  title: "OWASP Mobile Application Security Verification Standard 2.1.0"
+  author: "OWASP MAS"
+  year: 2024
+  url: "https://mas.owasp.org/MASVS/"
+  verified: true
+  claim: "24 controls in 8 groups: STORAGE, CRYPTO, AUTH, NETWORK, PLATFORM, CODE, RESILIENCE, PRIVACY. Verification levels were replaced by MAS testing profiles (L1, L2, R, P) from MASTG."
+- id: S22
+  title: "CVSS v4.0 Specification"
+  author: "FIRST"
+  year: 2023
+  url: "https://www.first.org/cvss/v4-0/"
+  verified: true
+  claim: "Framework for rating severity of vulnerabilities; base, threat, environmental metric groups."
+- id: S23
+  title: "PagerDuty Incident Response documentation"
+  author: "PagerDuty"
+  url: "https://response.pagerduty.com/"
+  verified: true
+  claim: "Incident roles (commander, communications lead, scribe), severity levels, and blameless postmortem practice."
+- id: S24
+  title: "NIST SP 800-40 Rev.4 — Guide to Enterprise Patch Management"
+  author: "NIST"
+  year: 2022
+  url: "https://csrc.nist.gov/pubs/sp/800/40/r4/final"
+  verified: true
+  claim: "Risk-based patch management: inventory, prioritisation by severity and exposure, maintenance windows, verification."
+- id: S25
+  title: "ISO/IEC 29147:2018 — Vulnerability disclosure"
+  author: "ISO/IEC"
+  year: 2018
+  url: "https://www.iso.org/standard/72311.html"
+  verified: true
+  claim: "Reception and remediation of vulnerability reports; coordinated disclosure."
+- id: S26
+  title: "Google SRE Workbook — Postmortem culture, SLOs and error budgets"
+  author: "Google"
+  url: "https://sre.google/workbook/"
+  verified: true
+  claim: "SLOs double as error budgets; blameless postmortems optimise the system, not individuals."
+- id: S27
+  title: "Record retention under Ghana Revenue Administration Act, 2016 (Act 915) s.27(3)"
+  author: "Ghana Revenue Authority"
+  url: "https://gra.gov.gh/"
+  verified: true
+  claim: "Electronic transaction records must be kept for at least six years; payment platforms must retain and produce them."
+- id: S28
+  title: "OWASP Automated Threats to Web Applications (OAT-001 to OAT-020)"
+  author: "OWASP"
+  url: "https://owasp.org/www-project-automated-threats-to-web-applications/"
+  verified: true
+  claim: "Catalogue of automated threats including credential stuffing, scraping, carding and account creation."
+- id: S29
+  title: "WCAG-EM 1.0 — Website Accessibility Conformance Evaluation Methodology"
+  author: "W3C"
+  year: 2014
+  url: "https://www.w3.org/TR/WCAG-EM/"
+  verified: true
+  claim: "Structured evaluation methodology; sample selection and conformance claims."
+- id: S30
+  title: "ISO/IEC 27001:2022 — Information security management systems"
+  author: "ISO/IEC"
+  year: 2022
+  url: "https://www.iso.org/standard/27001"
+  verified: true
+  claim: "93 controls in four themes: organisational, people, physical, technological."
+- id: S31
+  title: "GitLab Well-Architected / Google Cloud Architecture Framework pillars"
+  author: "Google Cloud"
+  url: "https://cloud.google.com/architecture/framework"
+  verified: true
+  claim: "Pillars: operational excellence, security/privacy/compliance, reliability, cost optimisation, performance optimisation, sustainability."
+- id: S32
+  title: "Twelve-Factor App"
+  author: "Adam Wiggins / Heroku"
+  year: 2011
+  url: "https://12factor.net/"
+  verified: true
+  claim: "Twelve practices for build/run parity, config in the environment, stateless processes, logs as event streams."
+- id: S33
+  title: "OWASP Top 10:2021"
+  author: "OWASP"
+  year: 2021
+  url: "https://owasp.org/Top10/"
+  verified: true
+  claim: "Broken access control first; includes cryptographic failures, injection, insecure design, misconfiguration, vulnerable components, identification/authentication failures, integrity failures, logging failures, SSRF."
+- id: S34
+  title: "OWASP API Security Top 10:2023"
+  author: "OWASP"
+  year: 2023
+  url: "https://owasp.org/API-Security/"
+  verified: true
+  claim: "Includes BOLA (object-level authorisation), broken authentication, unrestricted resource consumption, and unsafe consumption of APIs."
+- id: S35
+  title: "NIST SP 800-63B-4 — Digital Identity Guidelines (authentication)"
+  author: "NIST"
+  url: "https://pages.nist.gov/800-63-4/"
+  verified: false
+  claim: "Authenticator and session requirements. Revision status should be confirmed before certification; cited for principles only."
+- id: S36
+  title: "Ghana Card (National Identification Authority) as primary national ID"
+  author: "National Identification Authority, Ghana"
+  url: "https://nia.gov.gh/"
+  verified: true
+  claim: "Ghana Card is the national identity document used for KYC; NIA issues it and operates verification services."
+- id: S37
+  title: "Mobile Money interoperability in Ghana (GhIPSS / BoG)"
+  author: "Bank of Ghana / GhIPSS"
+  url: "https://www.bog.gov.gh/"
+  verified: false
+  claim: "Interoperability across MTN MoMo, Telecel Cash and AT Money is live for transfers. Provider specifics must be re-checked before integrating."
+- id: S38
+  title: "Google Play Console — app testing tracks and staged rollout"
+  author: "Google"
+  url: "https://support.google.com/googleplay/android-developer/answer/9859348"
+  verified: true
+  claim: "Internal, closed and open testing tracks; staged rollout percentages with halt ability."
+- id: S39
+  title: "Apple — TestFlight and phased release"
+  author: "Apple"
+  url: "https://developer.apple.com/testflight/"
+  verified: true
+  claim: "TestFlight for beta distribution; phased release over seven days for App Store updates."
+- id: S40
+  title: "Django documentation — security, migrations, testing"
+  author: "Django Software Foundation"
+  url: "https://docs.djangoproject.com/en/5.2/"
+  verified: true
+  claim: "Django 5.2 is an LTS release (April 2025) with three years of security support; includes CSRF, SQL-injection protections, and a migration system."
+- id: S41
+  title: "Expo documentation — EAS Build, EAS Update, OTA"
+  author: "Expo"
+  url: "https://docs.expo.dev/eas/"
+  verified: true
+  claim: "EAS Build compiles native apps in the cloud; EAS Update delivers JS/asset updates over the air within store policy."
+- id: S42
+  title: "PostgreSQL 17 documentation"
+  author: "PostgreSQL Global Development Group"
+  year: 2024
+  url: "https://www.postgresql.org/docs/17/"
+  verified: true
+  claim: "Open-source relational database; 17 is the current major release line documented here."
+- id: S43
+  title: "Celery documentation"
+  author: "Celery project"
+  url: "https://docs.celeryq.dev/"
+  verified: true
+  claim: "Distributed task queue for background jobs; requires a broker such as Redis or RabbitMQ."
+- id: S44
+  title: "Coverage.py / mutation testing (PIT, Stryker) as test-adequacy measures"
+  author: "Tooling docs"
+  url: "https://coverage.readthedocs.io/"
+  verified: true
+  claim: "Line coverage measures execution, not assertion quality; mutation score is a stronger adequacy signal."
+- id: S45
+  title: "Agile Manifesto and Scrum Guide 2020"
+  author: "Beck et al.; Schwaber & Sutherland"
+  url: "https://scrumguides.org/scrum-guide.html"
+  verified: true
+  claim: "Iterative delivery, empiricism, and the Scrum accountabilities/events/artefacts."
+- id: S46
+  title: "DORA — Accelerate metrics"
+  author: "Google Cloud DORA"
+  url: "https://dora.dev/guides/dora-metrics-four-keys/"
+  verified: true
+  claim: "Four keys: deployment frequency, lead time for changes, change failure rate, time to restore service."
+- id: S47
+  title: "Story mapping (Jeff Patton)"
+  author: "Jeff Patton"
+  url: "https://www.jpattonassociates.com/the-new-backlog/"
+  verified: true
+  claim: "Two-dimensional backlog: user activities across the top, depth of implementation below."
+- id: S48
+  title: "Revised Bloom's Taxonomy"
+  author: "Anderson & Krathwohl"
+  year: 2001
+  url: "https://www.uky.edu/~rsand1/china2018/texts/Anderson-Krathwohl%20-%20A%20taxonomy%20for%20learning%20teaching%20and%20assessing.pdf"
+  verified: true
+  claim: "Six cognitive levels: Remember, Understand, Apply, Analyse, Evaluate, Create."
+- id: S49
+  title: "Lean Startup — build-measure-learn, validated learning"
+  author: "Eric Ries"
+  year: 2011
+  url: "http://theleanstartup.com/"
+  verified: true
+  claim: "Hypothesis-driven experiments and pivot/persevere decisions."
+- id: S50
+  title: "Nielsen 10 usability heuristics"
+  author: "Jakob Nielsen"
+  year: 1994
+  url: "https://www.nngroup.com/articles/ten-usability-heuristics/"
+  verified: true
+  claim: "Ten general principles for interaction design and heuristic evaluation."
+- id: S51
+  title: "Upwork pricing and freelancer service fees (2026)"
+  author: "Upwork / third-party fee analyses"
+  year: 2026
+  url: "https://www.upwork.com/i/pricing"
+  verified: true
+  claim: "Freelancers pay a per-contract service fee reported in the 0–15% range with most contracts around 10% in 2026; clients pay a marketplace fee of roughly 5% plus a one-time contract initiation fee. Sources disagree on whether the 10% is now flat — treat the exact rate as needing confirmation from Upwork's own help centre."
+- id: S52
+  title: "Toptal screening and pricing structure (2026)"
+  author: "Toptal / third-party reviews"
+  url: "https://www.toptal.com/top-3-percent"
+  verified: true
+  claim: "Toptal accepts fewer than ~3% of applicants via a multi-stage screen including a live interview and a test project; freelancers pay no fee and Toptal bills clients an undisclosed markup (reported 30–50%) on top of a $60–$200+/hr rate, plus a monthly platform subscription."
+- id: S53
+  title: "Braintrust fee model"
+  author: "Braintrust"
+  url: "https://www.usebraintrust.com/"
+  verified: true
+  claim: "Braintrust charges talent 0% and clients a flat 10% fee, with token-based (BTRST) community governance."
+- id: S54
+  title: "Fiverr seller commission and buyer service fee (2026)"
+  author: "Fiverr / third-party fee analyses"
+  url: "https://www.fiverr.com/support/articles/360010560118"
+  verified: true
+  claim: "Fiverr charges sellers a flat 20% commission on order value; buyers pay a 5.5% service fee plus a small-order fee on orders under $200; earnings clear after 14 days (7 for higher tiers)."
+- id: S55
+  title: "Andela business model and engagement terms (2026)"
+  author: "Andela / third-party reviews"
+  url: "https://www.andela.com/"
+  verified: true
+  claim: "Andela (founded Lagos 2014) places vetted engineers — acceptance reported near 0.5% — into client teams on long contracts (commonly 12-month minimums) at roughly $6,000–$14,000 per developer per month; talent are contractors, not employees; no short-term freelance tier; revenue is majority enterprise in North America and Western Europe."
+- id: S56
+  title: "Stripe merchant availability in Ghana"
+  author: "Stripe / Paystack"
+  url: "https://stripe.com/global"
+  verified: true
+  claim: "Stripe does not support Ghana as a direct merchant country; Ghana is reached through Stripe's extended network via Paystack (a Stripe company). A Ghana-registered company cannot open a standard Stripe account, and Stripe Connect Custom is therefore not directly available to a Ghanaian entity."
+- id: S57
+  title: "African and Ghanaian freelance platforms (landscape)"
+  author: "Tech In Africa / Truelancer / Twine listings"
+  url: "https://www.truelancer.com/software-development-freelancers-in-accra"
+  verified: true
+  claim: "Ghana-focused and pan-African freelance platforms exist (e.g. CediJob, Gebeya, TERAWORK, Findworka, Solangigs) alongside global platforms listing Accra-based developers; public listings show Accra developers priced from about $2–$10/hr upward, anchoring local talent to global low-price competition."

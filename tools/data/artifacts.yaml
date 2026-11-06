@@ -1,0 +1,120 @@
+# TechBro Blueprint — Artefact Manifest (single source of truth)
+# id   : stable integer, rendered as ART-###
+# name : artefact name
+# cell : discover | define | architect | build | assure | secure | deploy | sustain
+# owner: role id that is accountable (see roles/*.yaml)
+# dod  : definition of done — how we know it is finished and not fiction
+# std  : source key from sources.yaml, or null if it is an internal convention
+#
+# Rule: an artefact without a DoD is not an artefact, it is a wish.
+- {id: 1,   name: "Vision & Mission Canvas",                  cell: discover,  owner: D01,  std: null,     dod: "One page; names the user, the pain, the promise, and the 12-month bet; founder signs it."}
+- {id: 2,   name: "Lean Canvas",                               cell: discover,  owner: D04,  std: S1,       dod: "All 9 blocks filled; every 'unfair advantage' claim has evidence or is labelled a hypothesis."}
+- {id: 3,   name: "Business Model Canvas",                      cell: discover,  owner: D04,  std: S1,       dod: "Two canvases: MVP model and 24-month model; unit economics consistent with ART-011."}
+- {id: 4,   name: "Market Sizing Model (TAM/SAM/SOM)",           cell: discover,  owner: D06,  std: null,     dod: "Bottom-up build from public counts; every input has a source and a date; formula visible."}
+- {id: 5,   name: "Competitive Landscape Matrix",                cell: discover,  owner: D07,  std: null,     dod: ">=8 comparables (GH + Africa + global); columns are buyer-verifiable facts, not vibes."}
+- {id: 6,   name: "Persona & Two-Sided Ecosystem Map",           cell: discover,  owner: D09,  std: null,     dod: ">=3 personas per side; each persona tied to >=3 verbatim research quotes."}
+- {id: 7,   name: "Customer Journey Map (AS-IS / TO-BE)",        cell: discover,  owner: D14,  std: null,     dod: "Every step has emotion, failure mode, and the product countermeasure."}
+- {id: 8,   name: "Jobs-to-be-Done & Interview Synthesis",        cell: discover,  owner: D10,  std: null,     dod: ">=12 interviews documented; JTBD statements in 'when/ I want to/ so I can' form; raw notes retained."}
+- {id: 9,   name: "Product Strategy Brief",                      cell: discover,  owner: D01,  std: null,     dod: "States the wedge, the moat hypothesis, what we refuse to build, and the kill criteria."}
+- {id: 10,  name: "North Star Metric & KPI Tree",                cell: discover,  owner: D03,  std: null,     dod: "One NSM, 3 input metrics, formula and data source for each; reviewed monthly."}
+- {id: 11,  name: "Financial Model & Unit Economics",            cell: discover,  owner: D21,  std: null,     dod: "Take-rate scenarios, CAC/LTV, contribution margin per match; assumptions tab is editable."}
+- {id: 12,  name: "Funding & Grants Plan",                       cell: discover,  owner: D20,  std: null,     dod: "18-month cash need, sources (grant/equity/revenue), and the milestone each tranche buys."}
+- {id: 13,  name: "Regulatory & Licensing Map",                  cell: discover,  owner: D18,  std: "[S2,S5,S6]", dod: "Each obligation mapped: who, what filing, deadline, owner, evidence location."}
+- {id: 14,  name: "RAID Log (Risks/Assumptions/Issues/Deps)",    cell: discover,  owner: D56,  std: null,     dod: "Each entry has owner, probability, impact, mitigation, and review date."}
+- {id: 15,  name: "Assumptions & Evidence Log",                  cell: discover,  owner: D30,  std: null,     dod: "Every load-bearing assumption has a test, a result, and a verdict (supported/rejected)."}
+- {id: 16,  name: "Product Requirements Document (PRD)",         cell: define,    owner: D31,  std: null,     dod: "Problem, users, scope, out-of-scope, success metrics, open questions; versioned."}
+- {id: 17,  name: "Business Requirements Document (BRD)",        cell: define,    owner: D33,  std: null,     dod: "Business goals, constraints, stakeholders, and acceptance of the operating model."}
+- {id: 18,  name: "Software Requirements Specification",         cell: define,    owner: D35,  std: S7,       dod: "Functional + non-functional requirements, uniquely identified and verifiable."}
+- {id: 19,  name: "Capability Map (L0/L1/L2)",                   cell: define,    owner: D34,  std: null,     dod: "Every capability maps to a cell, a product area, and an owning role; no orphans."}
+- {id: 20,  name: "Domain Glossary / Ubiquitous Language",       cell: define,    owner: D48,  std: null,     dod: "Every term used in code, UI, and contracts has one definition; conflicts resolved."}
+- {id: 21,  name: "Role & Permission Matrix (RBAC/ABAC)",        cell: define,    owner: D34,  std: null,     dod: "Every actor x resource cell filled; least privilege; denied-by-default tested."}
+- {id: 22,  name: "User Story Map & Story Index",                cell: define,    owner: D32,  std: null,     dod: "Stories sliced by journey step; each has ID, Given/When/Then pointer, and priority."}
+- {id: 23,  name: "Use Case Catalogue",                          cell: define,    owner: D34,  std: null,     dod: "Main, alternate, and exception flows for each actor goal; postconditions stated."}
+- {id: 24,  name: "Business Rules Catalogue (Decision Tables)",   cell: define,    owner: D49,  std: null,     dod: "Each rule has ID, trigger, condition table, outcome, and a unit test reference."}
+- {id: 25,  name: "NFRs & Quality Attribute Scenarios",          cell: define,    owner: D36,  std: S8,       dod: "Each NFR is a measurable scenario (source/stimulus/response/measure), not an adjective."}
+- {id: 26,  name: "Definition of Ready / Done + AC Standard",    cell: define,    owner: D43,  std: null,     dod: "Adopted by the team; checked in every backlog review; violations logged."}
+- {id: 27,  name: "Release Roadmap & Scope (MoSCoW)",            cell: define,    owner: D31,  std: null,     dod: "MVP / v1 / v2 with dates and the one metric each release must move."}
+- {id: 28,  name: "Requirements Traceability Matrix",            cell: define,    owner: D33,  std: null,     dod: "Goal -> capability -> story -> test -> artefact; generated, not hand-maintained."}
+- {id: 29,  name: "Data Requirements & Privacy Impact Assessment", cell: define,  owner: D54,  std: "[S2,S3]",  dod: "Every field: purpose, lawful basis, retention, sharing, cross-border; approved by DPO."}
+- {id: 30,  name: "Analytics & Measurement Plan",                cell: define,    owner: D40,  std: null,     dod: "Event taxonomy with names, properties, owner, and the decision each metric informs."}
+- {id: 31,  name: "Architecture Decision Records (ADR index)",   cell: architect, owner: D66,  std: null,     dod: "Each ADR: context, options, decision, consequences, status, date; superseded ones kept."}
+- {id: 32,  name: "System Context Diagram (C4 L1)",              cell: architect, owner: D67,  std: S9,       dod: "Every external system and actor; trust boundary drawn; data flows labelled."}
+- {id: 33,  name: "Container & Deployment Diagram (C4 L2/L3)",   cell: architect, owner: D66,  std: S9,       dod: "Runtimes, protocols, stores, queues, and failure domains labelled; matches IaC."}
+- {id: 34,  name: "Domain Model & Bounded Contexts (DDD)",       cell: architect, owner: D70,  std: null,     dod: "Context map with relationships and ownership; aggregates named; invariants listed."}
+- {id: 35,  name: "Entity Relationship Diagram (ERD)",           cell: architect, owner: D77,  std: null,     dod: "Every table, key, cardinality, and constraint; generated from migrations."}
+- {id: 36,  name: "Data Dictionary",                             cell: architect, owner: D76,  std: null,     dod: "Every column: type, nullability, meaning, owner, PII flag, retention."}
+- {id: 37,  name: "API Specification (OpenAPI 3.1)",             cell: architect, owner: D71,  std: S10,      dod: "Lints clean; every endpoint has auth scope, error model, pagination, and rate limit."}
+- {id: 38,  name: "Event Catalogue & Async Contracts",           cell: architect, owner: D73,  std: null,     dod: "Each event: schema version, producer, consumers, idempotency key, replay policy."}
+- {id: 39,  name: "Matching & Ranking System Design",            cell: architect, owner: D84,  std: null,     dod: "Features, labels, objective, evaluation method, explainability, and cold-start plan."}
+- {id: 40,  name: "Trust & Reputation System Design",            cell: architect, owner: D62,  std: null,     dod: "Score inputs, weights, decay, appeal path, and anti-gaming controls documented."}
+- {id: 41,  name: "Payments, Escrow & Payout Design",            cell: architect, owner: D100, std: "[S5,S11]", dod: "Every money state transition, double-entry ledger, fees, refunds, and licence position."}
+- {id: 42,  name: "Dispute & Resolution Workflow Design",        cell: architect, owner: D62,  std: null,     dod: "Deadlines, evidence rules, decision authority, appeals, and payout effects per outcome."}
+- {id: 43,  name: "Notification & Engagement Architecture",      cell: architect, owner: D166, std: null,     dod: "Channel matrix (push/SMS/email/WhatsApp), cost per message, quiet hours, opt-out."}
+- {id: 44,  name: "Identity, KYC & Verification Design",         cell: architect, owner: D99,  std: "[S3]",     dod: "ID types accepted in GH, liveness method, manual review queue, data minimisation."}
+- {id: 45,  name: "Design System & UI Kit",                      cell: architect, owner: D106, std: S12,      dod: "Tokens (colour/type/space/elevation), components, states, and a11y annotations."}
+- {id: 46,  name: "Screen Inventory & Navigation Map",           cell: architect, owner: D105, std: null,     dod: "Every screen: purpose, entry points, states (empty/loading/error/offline), owner."}
+- {id: 47,  name: "Interaction Prototype & Usability Test Plan",  cell: architect, owner: D116, std: S13,      dod: "Clickable prototype; >=5 test participants; tasks, success criteria, findings log."}
+- {id: 48,  name: "Threat Model (STRIDE + LINDDUN)",            cell: secure,    owner: D187, std: "[S14,S15]", dod: "Assets, actors, trust boundaries, threats, mitigations, residual risk accepted by owner."}
+- {id: 49,  name: "Capacity, Cost & Scalability Model",         cell: architect, owner: D224, std: null,     dod: "Requests/GB per 1k users, cost per user, the first bottleneck, and the scale-out trigger."}
+- {id: 50,  name: "AI/ML System Design & Model Cards",         cell: architect, owner: D81,  std: S16,      dod: "Model purpose, data lineage, eval set, guardrails, fallback, monitoring, model card."}
+- {id: 51,  name: "Engineering Standards & Conventions",        cell: build,     owner: D120, std: null,     dod: "Style, lint, review rules, commit format, and error-handling policy enforced in CI."}
+- {id: 52,  name: "Repository Structure & Branching Model",     cell: build,     owner: D151, std: null,     dod: "Monorepo layout documented; branch protection on main; CODEOWNERS present."}
+- {id: 53,  name: "CI/CD Pipeline Specification",              cell: build,     owner: D150, std: null,     dod: "Every stage: trigger, timeout, artefacts, gates, and who can bypass (nobody)."}
+- {id: 54,  name: "Test Strategy & Master Test Plan",           cell: assure,    owner: D173, std: S17,      dod: "Risk-based; pyramid targets, coverage floors, environments, entry/exit criteria."}
+- {id: 55,  name: "Test Cases & Automation Matrix",            cell: assure,    owner: D141, std: null,     dod: "Each REQ has >=1 positive and >=1 negative test; automation status tracked."}
+- {id: 56,  name: "Synthetic Data & Test Fixtures Policy",      cell: assure,    owner: D216, std: null,     dod: "No production PII in non-prod; generators documented; refresh cadence set."}
+- {id: 57,  name: "Environment Matrix & Secrets Management",    cell: build,     owner: D91,  std: null,     dod: "dev/staging/prod parity table; secret storage, rotation, and access recorded."}
+- {id: 58,  name: "Release Notes & Changelog Standard",         cell: deploy,    owner: D217, std: null,     dod: "Every release has user-facing notes, migration steps, and rollback pointer."}
+- {id: 59,  name: "Mobile Store Readiness Checklist",           cell: deploy,    owner: D135, std: "[S18,S19]", dod: "Privacy labels, data-safety form, permissions justification, review notes, screenshots."}
+- {id: 60,  name: "Onboarding & Activation Funnel Spec",        cell: build,     owner: D40,  std: null,     dod: "Step-level funnel, drop-off hypotheses, and the experiment queue per step."}
+- {id: 61,  name: "Content & Localisation Style Guide",         cell: build,     owner: D53,  std: null,     dod: "Tone, reading level, en-GH conventions, which languages ship, and translation QA steps."}
+- {id: 62,  name: "Support Playbook & Macros",                  cell: deploy,    owner: D235, std: null,     dod: "Top 20 intents, macros, escalation matrix, and first-response SLA."}
+- {id: 63,  name: "Model Training & Evaluation Pack",           cell: build,     owner: D133, std: null,     dod: "Dataset snapshot hash, training config, eval metrics, and acceptance thresholds."}
+- {id: 64,  name: "Prompt & Agent Library",                     cell: build,     owner: D89,  std: S16,      dod: "Each prompt: purpose, version, test cases, eval score, cost, and rollback copy."}
+- {id: 65,  name: "Integration & Webhook Catalogue",            cell: build,     owner: D165, std: null,     dod: "Each external API: owner, auth, rate limits, retry policy, sandbox, and failure mode."}
+- {id: 66,  name: "Security Architecture Review",               cell: secure,    owner: D96,  std: "[S14,S20]", dod: "Every trust boundary has a control; gaps have an owner and a dated remediation."}
+- {id: 67,  name: "ASVS Verification Report",                   cell: secure,    owner: D177, std: S20,      dod: "Requirements cited by versioned ID; pass/fail/not-applicable with evidence per item."}
+- {id: 68,  name: "MASVS Verification Report",                  cell: secure,    owner: D179, std: S21,      dod: "Profile chosen (L1/L2/R/P); each control tested on device; evidence attached."}
+- {id: 69,  name: "Penetration Test Report & Remediation Log",  cell: secure,    owner: D182, std: S22,      dod: "Findings rated CVSS; owner, deadline, retest evidence for every item."}
+- {id: 70,  name: "Compliance Register & Evidence Pack",        cell: secure,    owner: D201, std: "[S2,S5,S6]", dod: "Each obligation: status, evidence file, expiry date, accountable person."}
+- {id: 71,  name: "Privacy Notice, Consent & DSAR Runbook",     cell: secure,    owner: D202, std: S2,       dod: "Notice matches data inventory; consent captured with proof; DSAR SLA and script tested."}
+- {id: 72,  name: "Fraud & Abuse Playbook",                     cell: secure,    owner: D195, std: null,     dod: "Scam patterns, signals, thresholds, actions, and false-positive handling documented."}
+- {id: 73,  name: "Incident Response Plan & Runbooks",          cell: secure,    owner: D192, std: S23,      dod: "Severity matrix, roles, comms templates, and a tabletop exercise record."}
+- {id: 74,  name: "DR/BCP Plan & Restore Evidence",             cell: deploy,    owner: D227, std: null,     dod: "RTO/RPO per system; last successful restore test dated; gaps funded."}
+- {id: 75,  name: "Vulnerability Management Policy",            cell: secure,    owner: D190, std: S24,      dod: "Scan cadence, triage SLAs by severity, exception process with expiry."}
+- {id: 76,  name: "Supply Chain Security Pack (SBOM)",          cell: secure,    owner: D188, std: null,     dod: "Dependency policy, licence check, SBOM per release, and provenance attestation."}
+- {id: 77,  name: "Vulnerability Disclosure Policy",            cell: secure,    owner: D191, std: S25,      dod: "Public contact, safe-harbour text, triage SLA, and a recognition scheme."}
+- {id: 78,  name: "Infrastructure as Code Specification",       cell: deploy,    owner: D91,  std: null,     dod: "All prod resources declared in code; drift detection on; no console-only changes."}
+- {id: 79,  name: "Observability & Alerting Design",            cell: deploy,    owner: D94,  std: null,     dod: "Golden signals, trace propagation, log schema, and alert routing with runbook links."}
+- {id: 80,  name: "SLO/SLI & Error Budget Policy",              cell: deploy,    owner: D94,  std: null,     dod: "SLOs per user journey; error budget; the behaviour when budget is exhausted."}
+- {id: 81,  name: "Launch Readiness Checklist (Go/No-Go)",      cell: deploy,    owner: D217, std: S26,      dod: "Weighted gate list; named sign-offs; no launch with an open critical item."}
+- {id: 82,  name: "Release & Rollback Runbook",                 cell: deploy,    owner: D218, std: null,     dod: "Staged rollout %, kill-switch, data migration reversal, and comms steps."}
+- {id: 83,  name: "On-call, Escalation & Postmortem Kit",       cell: deploy,    owner: D223, std: S23,      dod: "Rota, escalation ladder, blameless template, and action-item follow-through."}
+- {id: 84,  name: "Trust & Safety Operations Manual",           cell: deploy,    owner: D239, std: null,     dod: "Queues, SLAs, decision guidelines, appeal path, and quality sampling."}
+- {id: 85,  name: "Data Retention & Deletion Schedule",         cell: deploy,    owner: D203, std: "[S2,S27]", dod: "Per data class: retention period, legal basis, deletion mechanism, proof of deletion."}
+- {id: 86,  name: "Cost & Unit-Economics Dashboard",            cell: deploy,    owner: D225, std: null,     dod: "Infra + messaging + payment cost per active user and per matched job; alerting."}
+- {id: 87,  name: "Bot, Abuse & Rate-Limit Design",            cell: deploy,    owner: D180, std: S28,      dod: "Per-endpoint limits, challenge strategy, blocklist ops, and appeals."}
+- {id: 88,  name: "Growth Experiment Backlog",                  cell: sustain,   owner: D249, std: null,     dod: "Each experiment: hypothesis, metric, sample size, duration, and decision rule."}
+- {id: 89,  name: "Marketplace Liquidity Playbook",             cell: sustain,   owner: D240, std: null,     dod: "Supply/demand targets per city, match-fill rate dashboard, and intervention levers."}
+- {id: 90,  name: "Community & Events Playbook",                cell: sustain,   owner: D255, std: null,     dod: "Calendar, budget, host kit, and the metric each event moves."}
+- {id: 91,  name: "Brand, Naming & Positioning Kit",            cell: sustain,   owner: D282, std: null,     dod: "Shortlisted names screened for trademarks/domains; positioning statement; voice."}
+- {id: 92,  name: "Continuous Discovery Cadence",               cell: sustain,   owner: D31,  std: null,     dod: "Weekly customer touchpoint scheduled with notes; monthly insight digest."}
+- {id: 93,  name: "Quarterly OKR & Roadmap Review",             cell: sustain,   owner: D42,  std: null,     dod: "Objectives with measurable KRs; scoring recorded; next-quarter scope adjusted."}
+- {id: 94,  name: "Retrospective & Process Improvement Kit",    cell: sustain,   owner: D44,  std: null,     dod: "Cadence, format, and a tracked improvement backlog with owners."}
+- {id: 95,  name: "Training & Enablement Curriculum",           cell: sustain,   owner: D275, std: null,     dod: "Role-based paths, assessment, and refresh schedule for each internal role."}
+- {id: 96,  name: "Investor/Donor Reporting Pack",              cell: sustain,   owner: D288, std: null,     dod: "Monthly metrics, cohort retention, burn, and the ask; generated from dashboards."}
+- {id: 97,  name: "Skills Taxonomy & Level Framework",           cell: define,    owner: D48,  std: null,     dod: "Skill families, canonical names, aliases, and level descriptors for L1-L5."}
+- {id: 98,  name: "Assessment & Certification Design",          cell: sustain,   owner: D277, std: null,     dod: "Task bank, rubric, pass mark, proctoring rules, and appeal process."}
+- {id: 99,  name: "Impact Measurement Framework",               cell: sustain,   owner: D272, std: null,     dod: "Outcome definitions (jobs filled, income earned), attribution method, and data source."}
+- {id: 100, name: "Master Index & Reading Order",               cell: sustain,   owner: D31,  std: null,     dod: "Generated; every document has an owner, a status, and a next review date."}
+# --- Assure (extended): verification evidence that a marketplace cannot ship without ---
+- {id: 101, name: "Quality Dashboard & Defect Trend Report", cell: assure, owner: D121, std: null, dod: "Weekly; escape rate, defect age, severity mix, flake rate; reviewed in every go/no-go."}
+- {id: 102, name: "Accessibility Conformance Report (WCAG 2.2 AA)", cell: assure, owner: D128, std: "[S12,S29]", dod: "Sampled screens tested with TalkBack/VoiceOver; every failure has a ticket and an owner."}
+- {id: 103, name: "UAT Sign-off Pack", cell: assure, owner: D142, std: null, dod: "Business scenarios executed by real users; accepted defects listed; named sign-off."}
+- {id: 104, name: "Performance & Load Test Report", cell: assure, owner: D118, std: S31, dod: "Modelled peak tested at 2x forecast; p95 against SLO; the first bottleneck named."}
+- {id: 105, name: "Device & Network Compatibility Matrix", cell: assure, owner: D124, std: null, dod: "Top devices by market share for Ghana; 3G/4G/Wi-Fi paths; results per device and OS build."}
+- {id: 106, name: "Beta / Field Test Report", cell: assure, owner: D135, std: "[S38,S39]", dod: "Cohort size stated; crash-free rate; top 10 findings triaged; release verdict with evidence."}
+- {id: 107, name: "LLM Behavioural Test Suite & Golden Set", cell: assure, owner: D134, std: S16, dod: "Golden set versioned; rubric; regression thresholds; judge calibrated on a human-labelled sample."}
+- {id: 108, name: "Test Automation Health Report", cell: assure, owner: D139, std: S44, dod: "Flake rate, runtime, coverage of critical paths, and the cost per detected defect."}
+- {id: 109, name: "Test Environment & Data Readiness Report", cell: assure, owner: D127, std: null, dod: "Env parity gaps, synthetic data freshness, and evidence that no production PII is present."}
+- {id: 110, name: "Compliance Control Test Report", cell: assure, owner: D136, std: "[S2,S30]", dod: "Each control tested with evidence; exceptions have remediation owners and dates."}
