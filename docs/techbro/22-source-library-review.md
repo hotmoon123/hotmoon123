@@ -433,3 +433,55 @@ Across **65 files and ~4.6 MB**, the value distribution is now clear:
 rule*, not a template.** That is the pattern across all three batches and it is worth stating plainly:
 you do not need a 66th file. You need the ten laws, the seven evidence labels, the six documents and
 the eight structures — all of which you now have.
+
+
+---
+
+## 22.13 Update — the fourth batch (9 files, 6 new): the first batch that closed a real gap
+
+`[F]` Three of the nine were byte-identical to files already reviewed in §22.12 (`ULTIMATE-MASTER-PROMPT-senior-fullstack…`, `-graphic-designer`, `-software-network-security…`). Those are excluded here.
+
+| File | Lines | What it is | Verdict |
+| --- | ---: | --- | --- |
+| `ULTIMATE-MASTER-PROMPT-senior-uiux-wireframe-motion-designer` | 487 | Senior UI/UX prompt with motion and wireframe scope | **keep** — closest prompt to the app's actual craft |
+| `Basic Use Case Diagram` | 1,127 | UML 2.5.1 use-case notation, 11 shape definitions, actor left/right rule | **keep — used** |
+| `Basic Sequence Diagram` | 876 | 9 message types incl. async, create, destroy, activation boxes | **keep — used** |
+| `Basic Activity Diagram` | 1,508 | 11 shapes incl. fork/join/merge, decision, guard, swimlane | **keep — used** |
+| `Basic Process Flow Diagram` | 2,132 | process notation + the longest worked example of the five | keep |
+| `Basic Flowchart 6 Shapes` | 1,505 | the minimal 6-shape vocabulary | keep as the floor |
+
+### Why these five are different from everything else uploaded
+
+Across four batches and **74 files**, this is the first set that gave the pack something it **could not
+have generated itself**: a *precise, checkable notation*.
+
+Every prior batch supplied method (how to think), templates (what to fill in), or indexes (where to
+find things). All of that is advisory. UML notation is **constraining** — a sequence diagram with a
+sync arrow where an async one belongs is *wrong in a way a reader can point at*. That is a different
+category of contribution.
+
+The proof is immediate: `24-behavioural-model.md` now exists because these files made it possible to
+draw the six behaviours *to a standard* rather than sketch them. Three findings fell out that the prose
+had hidden:
+
+1. **The 90-second budget.** Drawing the matching fan-out forced a latency number that no chapter had
+   ever stated. `[A]`
+2. **The refund state is platform-funded, not a ledger reversal** — visible only when the payment
+   transitions are drawn adjacent to another (`24` §24.5).
+3. **The dispute asymmetry decision** — requester-wins-by-default — was not decided anywhere in 23
+   chapters and had to be decided to complete the activity diagram (`24` §24.6).
+
+### The pattern across all four batches, stated finally
+
+| Batch | Size | Genuinely new value | Category |
+| ---: | ---: | --- | --- |
+| 1 | 3.46 MB | 7-label evidence taxonomy · 8 structures · 6 pre-build documents · 40 named patterns | **method** |
+| 2 | 155 KB | competitor vocabulary (`/whitespace`, `/moat`, `/dodge`) | **vocabulary** |
+| 3 | 1.0 MB | ten laws (one of which the pack was breaking) | **rules** |
+| 4 | 270 KB | **UML notation** | **constraint** |
+
+> **The smaller the batch, the more it changed the work.** Batch 1 was 13× the size of batch 4 and
+> contributed method; batch 4 contributed the notation that turned method into specification.
+
+That is the opposite of the intuition that bigger libraries are more valuable, and it is the last thing
+worth recording about this library.
