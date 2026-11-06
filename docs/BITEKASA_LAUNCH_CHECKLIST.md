@@ -132,3 +132,24 @@ Without this, the site is invisible to Google no matter how many flyers you prin
 Three Reels a week, stories daily, following `BITEKASA_NEXT_ACTIONS.md` §3–4.
 
 Sunday night, five numbers: reach · link taps · saves/shares · net followers · DM/WhatsApp enquiries.
+
+---
+
+## Appendix — the “Set up your professional account” 8-step list, explained
+
+Instagram shows this list to every new professional account. **Ticking a step does not increase reach.** It is a product tour, and three of the eight are sales pitches. Only two have real value for BiteKasa.
+
+| # | Step | What it actually does | Cost | Verdict |
+|---|---|---|---|---|
+| 1 | **Complete your profile** | Name, bio, photo, category, contact | free | ✅ Done — and the link now makes it genuinely true |
+| 2 | **Get inspired** | Opens a feed of other professionals' content | free | ⏭ Skip, or 5 minutes for ideas. No business effect |
+| 3 | **Get Meta Verified** | Paid badge, impersonation protection, priority support | **recurring monthly fee** | ⏭ Skip for now. You already have **Meta One subscribed** — check what it covers before paying twice |
+| 4 | **Grow your audience** | Opens *Invite friends* — sends invites by WhatsApp, SMS, email, QR | free | ✅ **Do this today.** The only step that moves the follower count |
+| 5 | **Introduce yourself** | Opens the post composer to share a brand post | free | ✅ Already satisfied — you have 3 posts. Use it for Friday's Reel if you want the tick |
+| 6 | **Explore tools and insights** | Opens the Professional dashboard | free | ✅ **Do this weekly.** This is where the five numbers live |
+| 7 | **Tell us your goals** | Asks what you want (messages, followers, sales); tunes in-app tips | free | ⏭ Optional, 30 s, harmless. Pick “get more customers/messages”, never “grow followers” |
+| 8 | **Learn about how ads work** | Education on turning posts into ads | free | ⏭ Skip. Nothing is worth amplifying until one organic Reel beats 4 followers |
+
+**Order that is worth the time:** 4 → 6 → 5 (as Friday's post) → 7 maybe → ignore 2, 3, 8.
+
+**The honest framing:** the checklist is designed to keep you in the app and to sell verification and ads. Its only two genuinely useful items are *Invite friends* and *Insights*. Do those, ignore the tick count.
