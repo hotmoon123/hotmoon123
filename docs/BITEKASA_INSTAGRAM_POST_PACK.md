@@ -27,7 +27,7 @@ BiteKasa offers samosas and spring rolls.
 
 Choose from the packs shown:
 🥟 Silver — GH₵100 · 30 pieces
-🥟 Golden — GH₵200 · 50 pieces + 500 ml Coca-Cola
+🥟 Golden — GH₵200 · 55 pieces + 500 ml Coca-Cola
 🥟 Premium — GH₵250 · 70 pieces + 1 litre Coca-Cola
 
 For enquiries, contact:
@@ -47,7 +47,7 @@ The caption describes the offers shown on the current draft; it does not promise
 1. In Instagram, tap **Create (+)** and choose **Post** for the feed, rather than Reel if you want a static feed post.
 2. Select `bitekasa-instagram-feed-4x5.png`. Keep the image fitted; do not pinch-zoom or crop the frame, prices or contact numbers.
 3. Continue to the post-details/share screen. Paste the caption into Instagram’s caption field (the text is not part of the image).
-4. Check the preview, account/page, price, Golden quantity (**50**), phone numbers and caption. If Instagram offers an alt-text field, use: “BiteKasa samosas and spring rolls flyer showing Silver at GH₵100 for 30 pieces; Golden at GH₵200 for 50 pieces plus 500 ml Coca-Cola; Premium at GH₵250 for 70 pieces plus 1 litre Coca-Cola; call 0595 638 696 or 0552 727 051.”
+4. Check the preview, account/page, price, Golden quantity (**50**), phone numbers and caption. If Instagram offers an alt-text field, use: “BiteKasa samosas and spring rolls flyer showing Silver at GH₵100 for 30 pieces; Golden at GH₵200 for 55 pieces plus 500 ml Coca-Cola; Premium at GH₵250 for 70 pieces plus 1 litre Coca-Cola; call 0595 638 696 or 0552 727 051.”
 5. Share only after confirming that the listed offers and contacts are current.
 
 For a Story, choose `bitekasa-instagram-story-9x16.png` and keep the full canvas visible. No additional overlay is needed. For a Reel made from the still, use a gentle slow zoom or fade; do not cover the logo, prices, quantities or contacts with stickers or added text.
@@ -64,6 +64,6 @@ For a Story, choose `bitekasa-instagram-story-9x16.png` and keep the full canvas
 
 - Use the corrected poster-format derivative, not the unchanged supplied original, which contains superseded copy and quantity.
 - Do not restore “ONLY GH₵50 MORE”, “+15 PIECES”, “+500 ML MORE COKE”, “UPGRADE TO THE PREMIUM PACK” or “MORE BITES. MORE COKE. MORE VALUE.”
-- Golden is **50 pieces**, not 55.
+- Golden is **55 pieces** — owner confirmation, 5 November 2026. This reverses the earlier 50-piece correction, so any artwork or caption still showing 50 is out of date.
 - The food visual has not been verified as a photograph of current BiteKasa products, and the corrected flyer does not label it illustrative. Confirm its status with the owner before posting; if it is not a real current product photo, describe or replace it accurately. If any image was AI-generated or substantially altered, follow Instagram’s current in-app disclosure prompts and applicable policy.
 - Exact Instagram `@handle`, live contact details, offer availability and product-condition pricing remain owner-confirmation items.

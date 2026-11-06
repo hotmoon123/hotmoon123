@@ -35,7 +35,7 @@ MY CONTEXT (fill before running):
   Google Business Profile eligibility and service area are unconfirmed.
 ```
 
-**Commercial facts in use (owner-supplied):** Silver GH₵100 / 30 pieces · Golden GH₵200 / 50 pieces + 500 ml Coca-Cola · Premium GH₵250 / 70 pieces + 1 litre Coca-Cola. Digital palette: red `#A71920`, cream `#F7EEDB`, gold `#D5A12E`; logo keeps the “BITES” subline.
+**Commercial facts in use (owner-supplied):** Silver GH₵100 / 30 pieces · Golden GH₵200 / 55 pieces + 500 ml Coca-Cola · Premium GH₵250 / 70 pieces + 1 litre Coca-Cola. Digital palette: red `#A71920`, cream `#F7EEDB`, gold `#D5A12E`; logo keeps the “BITES” subline.
 
 ---
 
