@@ -224,13 +224,33 @@ meant for the page underneath is never eaten by the overlay.
 
 ### Icon set (favicon / app icons)
 
-Cut from the owner's full logo lockup: the **emblem only** (crown, samosa, spring
-roll), because the wordmark, BITES line, tagline and phone numbers are illegible
-below 64px. Backgrounds are brand cream `#F7EEDB`, so the icon reads on light and
-dark tab bars. Files live in `public/`:
+The icon is the owner's **full logo lockup** — crown, samosa, spring roll,
+BiteKasa wordmark, BITES, tagline and both phone numbers — on brand cream
+`#F7EEDB`. The owner chose the lockup over an emblem-only crop, so every size
+shows the same design.
 
-| File | Purpose |
+Because a detailed lockup cannot survive being upscaled, **each size is rendered
+from the 1254×1254 original** rather than enlarged from a small bitmap:
+
+| Frame | Source |
 |---|---|
+| 16px | the owner's supplied `favicon.ico` bitmap, kept pixel for pixel |
+| 32px, 48px | lockup rendered from the 1254px original |
+| 180px | lockup, opaque full-bleed square (iOS applies its own mask) |
+| 192px, 512px | lockup, 20% rounded corners, for install |
+| 512px maskable | lockup inside a 78% safe zone for Android |
+
+Files live in `public/`: `favicon.ico` (16/32/48), `favicon-32.png`,
+`apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `maskable-512.png`,
+`site.webmanifest`. Source artwork is the lockup supplied on 6 November 2026;
+the original file is never modified.
+
+Trade-off, stated plainly: at 16px the lockup reduces to a warm smudge with a red
+band — no detailed logo can do better at that size. It reads clearly from 32px up
+and is fully legible at 180px on a home screen. If tab clarity is ever preferred
+over the full lockup, swapping in the emblem crop is a one-file change.
+
+---|---|
 | `favicon.ico` | 16 / 32 / 48 multi-size, legacy tabs and bookmarks |
 | `favicon-32.png` | modern browsers |
 | `apple-touch-icon.png` | 180px, **opaque square** — iOS applies its own mask |
