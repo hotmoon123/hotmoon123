@@ -275,3 +275,76 @@ Both visible posts use an image of a **generated-looking woman holding the produ
 They also carry copy that was already rejected for the flyer: **“MORE BITES. MORE COKE. MORE VALUE.”**
 
 Recommendation: archive both, replace with real photography or video of actual BiteKasa products. If any generated image is kept anywhere, disclose it in the caption and in Instagram's AI-generated content flag. Never caption a generated image as “our customer”.
+
+---
+
+## 11. Video caption bank — “flyer + box + hand pickup”
+
+**The clip described:** the Premium flyer in frame, a box of samosas in front of it, one hand reaching in and lifting a samosa. Vertical, phone-shot.
+
+### Caption A — recommended
+
+```
+The flyer says it. The box proves it.
+
+Silver — GH₵100 · 30 pieces
+Golden — GH₵200 · 55 pieces + 500 ml Coke
+Premium — GH₵250 · 70 pieces + 1 litre Coke
+
+One hand, one samosa — and you already know how this ends.
+
+Order on WhatsApp: 0595 638 696 · 0552 727 051
+Accra 🇬🇭
+
+#BiteKasa #AccraFood #GhanaFood #Samosas #SpringRolls
+```
+
+### Caption B — price-first
+
+```
+GH₵100 gets you 30.
+GH₵200 gets you 55 and a 500 ml Coke.
+GH₵250 gets you 70 and a 1 litre Coke.
+
+That is the whole offer — no fine print, no deposit.
+
+Pick one and message us: 0595 638 696
+
+#BiteKasa #AccraEats #GhanaFood #Samosas
+```
+
+### Caption C — short, sound-led
+
+```
+That sound is a samosa leaving the box.
+
+Fried, unfried or frozen — ask us which suits your table.
+Packs from GH₵100.
+
+WhatsApp 0595 638 696
+
+#BiteKasa #AccraFood #Samosas #SpringRolls
+```
+
+### On-screen text (put it in the edit, not only the caption)
+
+| Timing | Text |
+|---|---|
+| 0–2 s | `Three packs. One box.` |
+| 2–5 s | `GH₵100 · GH₵200 · GH₵250` |
+| 5–8 s | `WhatsApp 0595 638 696` |
+
+Most people watch with sound off; the prices must be readable without audio.
+
+### Filming notes that decide whether it travels
+
+- **6–10 seconds.** Vertical 9:16. Phone at arm's length, window light, no filter.
+- **First frame:** food and hand already in motion. No logo intro, no title card — a static opening gets scrolled past.
+- **Keep the real sound.** The pick-up and crunch beat any music track. If music is added, keep it under the real audio.
+- **Cover frame:** the instant the samosa leaves the box.
+- **Do not feature the QR code.** A phone cannot scan a moving video, and a frozen frame of a code is worse than a link. Use the “link in bio” line instead.
+- **No claims** about freshness schedules, health, or “best in Accra”. Describe what is in the box and what it costs.
+
+### Alt text (Instagram's “Write alt text”)
+
+“BiteKasa flyer with Silver, Golden and Premium packs beside a box of samosas; a hand lifts one samosa out of the box.”
