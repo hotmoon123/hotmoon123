@@ -1,4 +1,4 @@
-# 00 — Artefact Index: 110 Deliverables That Define the System
+# 00 — Artefact Index: 114 Deliverables That Define the System
 
 > Generated from `tools/data/artifacts.yaml`. The eight cells are the SDLC itself
 > (see `02-sdlc-framework.md`). An artefact is real only when it satisfies its definition of done.
@@ -6,14 +6,14 @@
 | Cell | Artefacts |
 | --- | ---: |
 | discover | 15 |
-| define | 16 |
+| define | 18 |
 | architect | 19 |
 | build | 9 |
 | assure | 13 |
 | secure | 12 |
-| deploy | 14 |
-| sustain | 12 |
-| **total** | **110** |
+| deploy | 15 |
+| sustain | 13 |
+| **total** | **114** |
 
 ## Discover — 15 artefacts
 
@@ -35,7 +35,7 @@
 | ART-014 | **RAID Log (Risks/Assumptions/Issues/Deps)** | D056 Risk Manager | internal convention | Each entry has owner, probability, impact, mitigation, and review date. |
 | ART-015 | **Assumptions & Evidence Log** | D030 Experimentation & Evidence Lead | internal convention | Every load-bearing assumption has a test, a result, and a verdict (supported/rejected). |
 
-## Define — 16 artefacts
+## Define — 18 artefacts
 
 | ID | Artefact | Accountable owner | Standard / source | Definition of done |
 | --- | --- | --- | --- | --- |
@@ -55,6 +55,8 @@
 | ART-029 | **Data Requirements & Privacy Impact Assessment** | D054 Data Protection Officer | S2, S3 | Every field: purpose, lawful basis, retention, sharing, cross-border; approved by DPO. |
 | ART-030 | **Analytics & Measurement Plan** | D040 Product Analytics Lead | internal convention | Event taxonomy with names, properties, owner, and the decision each metric informs. |
 | ART-097 | **Skills Taxonomy & Level Framework** | D048 Domain Expert (Labour Market & Skills) | internal convention | Skill families, canonical names, aliases, and level descriptors for L1-L5. |
+| ART-111 | **Enterprise Readiness Plan (TOGAF/ITIL/SRE)** | D061 Solution Architect | internal convention | Every piece of the enterprise (governance, service, engineering, change) mapped to an artefact and an owner; nothing owned by a role that does not exist. |
+| ART-112 | **Multi-Readiness Certificate (8 dimensions)** | D004 Business Architect | internal convention | All 8 structures assessed with evidence per dimension; any dimension not met is named, not averaged away. |
 
 ## Architect — 19 artefacts
 
@@ -129,7 +131,7 @@
 | ART-076 | **Supply Chain Security Pack (SBOM)** | D188 Third-Party Risk Analyst | internal convention | Dependency policy, licence check, SBOM per release, and provenance attestation. |
 | ART-077 | **Vulnerability Disclosure Policy** | D191 BI / Reporting Developer | S25 | Public contact, safe-harbour text, triage SLA, and a recognition scheme. |
 
-## Deploy — 14 artefacts
+## Deploy — 15 artefacts
 
 | ID | Artefact | Accountable owner | Standard / source | Definition of done |
 | --- | --- | --- | --- | --- |
@@ -147,8 +149,9 @@
 | ART-085 | **Data Retention & Deletion Schedule** | D203 Records & Retention Manager | S2, S27 | Per data class: retention period, legal basis, deletion mechanism, proof of deletion. |
 | ART-086 | **Cost & Unit-Economics Dashboard** | D225 Cloud FinOps Analyst | internal convention | Infra + messaging + payment cost per active user and per matched job; alerting. |
 | ART-087 | **Bot, Abuse & Rate-Limit Design** | D180 Dispute Resolution Officer | S28 | Per-endpoint limits, challenge strategy, blocklist ops, and appeals. |
+| ART-114 | **Change Advisory & Risk Assessment Record** | D095 Release Manager | S36 | Risk class, rollback plan, blast radius, and approver named before any production change. |
 
-## Sustain — 12 artefacts
+## Sustain — 13 artefacts
 
 | ID | Artefact | Accountable owner | Standard / source | Definition of done |
 | --- | --- | --- | --- | --- |
@@ -164,4 +167,5 @@
 | ART-098 | **Assessment & Certification Design** | D277 Certification Board Chair | internal convention | Task bank, rubric, pass mark, proctoring rules, and appeal process. |
 | ART-099 | **Impact Measurement Framework** | D272 Impact Measurement Lead | internal convention | Outcome definitions (jobs filled, income earned), attribution method, and data source. |
 | ART-100 | **Master Index & Reading Order** | D031 Product Manager | internal convention | Generated; every document has an owner, a status, and a next review date. |
+| ART-113 | **Problem Record & Root-Cause Register** | D223 On-call & Incident Manager | S36 | Every recurring incident links to a problem record; each has root cause, workaround, permanent fix, and owner. |
 

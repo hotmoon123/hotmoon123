@@ -3,7 +3,7 @@
 > Generated from `tools/data/roles/*.yaml` by `tools/gen_blueprint.py`. Do not edit by hand:
 > edit the data and regenerate, otherwise the document and the truth diverge.
 
-**Roles:** 300 &nbsp;|&nbsp; **Families:** 19 &nbsp;|&nbsp; **Artefacts owned:** 110 &nbsp;|&nbsp; **Roles per artefact:** 2.7
+**Roles:** 300 &nbsp;|&nbsp; **Families:** 19 &nbsp;|&nbsp; **Artefacts owned:** 114 &nbsp;|&nbsp; **Roles per artefact:** 2.6
 
 Every role is a *job to be done*, not a headcount. In a 6-person startup one human holds
 15–25 of these hats; the catalogue exists so that when a hat is dropped, somebody can name
@@ -25,11 +25,11 @@ the hat, the output and the artefact that went missing. Columns:
 | 1 | Security | 38 | 12.7% | 52 |
 | 2 | Operations | 32 | 10.7% | 40 |
 | 3 | Quality | 29 | 9.7% | 44 |
-| 4 | Engineering | 27 | 9.0% | 35 |
-| 5 | Business | 21 | 7.0% | 30 |
+| 4 | Engineering | 27 | 9.0% | 37 |
+| 5 | Business | 21 | 7.0% | 31 |
 | 6 | Data | 16 | 5.3% | 23 |
 | 7 | AI | 15 | 5.0% | 21 |
-| 8 | Architecture | 14 | 4.7% | 22 |
+| 8 | Architecture | 14 | 4.7% | 23 |
 | 9 | Finance | 14 | 4.7% | 17 |
 | 10 | Growth | 13 | 4.3% | 14 |
 | 11 | Research | 13 | 4.3% | 15 |
@@ -181,7 +181,7 @@ being wrong is expensive and accountability cannot be delegated to a model.
 | D092 | **Site Reliability Engineer** | ART-080 | SLOs, incidents, capacity → Reliability improvements, error budget policy | SRE practice, load patterns, chaos testing | 5-Evaluate | AI correlates incidents and proposes guardrails; SRE approves | Availability vs SLO, MTTR |
 | D093 | **Platform Engineer** | ART-078 | Team needs, golden paths → Internal platforms, self-service tooling | Developer experience, abstractions, autoscaling | 3-Apply | AI generates service scaffolds from templates | Time from repo to production |
 | D094 | **Observability Engineer** | ART-079, ART-080 | Telemetry needs, incidents → Dashboards, alerts, trace propagation, log schema | OpenTelemetry, metrics design, alert tuning | 3-Apply | AI drafts dashboards and alert rules from SLOs; humans tune noise | Alert precision, MTTD |
-| D095 | **Release Manager** | ART-058, ART-082 | Change queue, readiness evidence → Release calendar, rollout plan, go/no-go | Change management, risk assessment | 3-Apply | AI assembles change logs and risk summaries | Change failure rate |
+| D095 | **Release Manager** | ART-058, ART-082, ART-114 | Change queue, readiness evidence → Release calendar, rollout plan, go/no-go | Change management, risk assessment | 3-Apply | AI assembles change logs and risk summaries | Change failure rate |
 | D098 | **Mobile App Developer (React Native)** | ART-046 | Designs, API contracts → App screens, offline behaviour, tests | React Native, Expo, native bridges | 3-Apply | AI scaffolds components and tests; devs verify on real low-end devices | Crash-free sessions, frame drops |
 | D099 | **Backend Developer (Python/Django/DRF)** | ART-037, ART-054, ART-044 | Specs, domain model → APIs, services, migrations, tests | Django, DRF, async tasks, SQL | 3-Apply | AI pair-programs and writes tests first; humans own data safety and design | Defect escape rate, test coverage of critical paths |
 | D100 | **Payments Engineer** | ART-041 | Payment design, provider APIs → Ledger implementation, payouts, reconciliation jobs | Double-entry ledgers, idempotency, PSP webhooks | 3-Apply | AI drafts idempotency and reconciliation tests; humans run money-path chaos drills | Reconciliation breaks, failed payouts |
@@ -200,7 +200,7 @@ being wrong is expensive and accountability cannot be delegated to a model.
 | D120 | **Code Review / Standards Owner** | ART-051 | PRs, incidents → Review standards, lint rules, escape analysis | Review discipline, static analysis | 5-Evaluate | AI pre-reviews for style and known bug classes; humans judge design | Review turnaround, defect escapes |
 | D166 | **Notification & Messaging Platform Engineer** | ART-043 | Channel requirements, cost limits → Delivery service, templates, quiet hours | Push/SMS/WhatsApp gateways, deliverability | 3-Apply | AI drafts templates and predicts cost per channel | Delivery rate, cost per notification |
 | D218 | **Rollout / Canary Manager** | ART-082 | Release plan, SLOs → Rollout increments, halt decisions | Progressive delivery, guardrail metrics | 4-Analyse | AI watches guardrail metrics and recommends halt | Blast radius per bad release |
-| D223 | **On-call & Incident Manager** | ART-083 | Alerts, rota → Incident command, escalation, postmortem scheduling | Incident command, calm decision-making | 4-Analyse | AI captures timeline and drafts postmortem; humans correct | MTTA/MTTR, repeat incidents |
+| D223 | **On-call & Incident Manager** | ART-083, ART-113 | Alerts, rota → Incident command, escalation, postmortem scheduling | Incident command, calm decision-making | 4-Analyse | AI captures timeline and drafts postmortem; humans correct | MTTA/MTTR, repeat incidents |
 | D224 | **Capacity & Performance Planner** | ART-049 | Growth forecasts, benchmarks → Capacity plan, scale-out triggers | Queueing theory, load modelling | 4-Analyse | AI simulates growth scenarios against current topology | Headroom maintained, cost per request |
 | D227 | **Disaster Recovery Engineer** | ART-074 | RTO/RPO, backups → Restore automation, drill evidence | Backup/restore, failover automation | 3-Apply | AI drafts restore scripts and verifies checksums | Last successful restore age |
 | D228 | **Data Centre / Hosting Coordinator** | ART-078 | Provider options, compliance → Hosting decision, region rationale | Provider comparison, data residency | 4-Analyse | AI compares provider compliance docs | Residency compliance |
@@ -209,7 +209,7 @@ being wrong is expensive and accountability cannot be delegated to a model.
 
 | ID | Role | Owns | Inputs → Outputs | Core skill | Bloom | AI leverage | KPI |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| D004 | **Business Architect** | ART-002, ART-003 | Strategy, market data, cost structure → Lean canvas, business model canvas, operating model | Business modelling, value chains, process design | 4-Analyse | AI runs scenario grids across price/take-rate assumptions | Model consistency, decision turnaround |
+| D004 | **Business Architect** | ART-002, ART-003, ART-112 | Strategy, market data, cost structure → Lean canvas, business model canvas, operating model | Business modelling, value chains, process design | 4-Analyse | AI runs scenario grids across price/take-rate assumptions | Model consistency, decision turnaround |
 | D019 | **Government & Public Sector Liaison** | ART-013 | Policy direction, agency programmes → Partnership pipeline, advocacy positions | Stakeholder management, public affairs | 3-Apply | AI drafts briefing packs from public policy documents | Partnerships signed, policy alignment |
 | D020 | **Fundraising & Grants Manager** | ART-012 | Milestones, cash need → Grant applications, investor pipeline, data room | Narrative, grant writing, diligence management | 5-Evaluate | AI assembles data-room answers from approved facts only | Capital raised, cost of capital, diligence pass rate |
 | D029 | **Strategy Consultant (External Advisor)** | ART-009 | Board questions, market data → Options papers with trade-offs | Structured problem solving, synthesis | 5-Evaluate | AI produces hypothesis trees; advisor stress-tests them | Decisions unblocked |
@@ -276,7 +276,7 @@ being wrong is expensive and accountability cannot be delegated to a model.
 
 | ID | Role | Owns | Inputs → Outputs | Core skill | Bloom | AI leverage | KPI |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| D061 | **Solution Architect** | ART-032, ART-033 | Requirements, NFRs, constraints → Solution design, integration plan, ADRs | Design patterns, integration, trade-off analysis | 6-Create | AI generates candidate designs and failure-mode lists; architect decides | Design rework after build start |
+| D061 | **Solution Architect** | ART-032, ART-033, ART-111 | Requirements, NFRs, constraints → Solution design, integration plan, ADRs | Design patterns, integration, trade-off analysis | 6-Create | AI generates candidate designs and failure-mode lists; architect decides | Design rework after build start |
 | D062 | **Trust & Reputation Architect** | ART-040, ART-042 | Marketplace abuse data, dispute outcomes → Reputation model, dispute workflow design | Incentive design, game theory, fairness | 6-Create | AI simulates gaming strategies against the scoring model | Dispute rate, repeat-offender containment |
 | D063 | **Enterprise Architect** | ART-019, ART-031 | Business capability map, portfolio → Target architecture, standards, roadmap alignment | Portfolio thinking, standards governance | 5-Evaluate | AI diffs current vs target architecture | Architecture conformance |
 | D064 | **Integration Architect** | ART-038, ART-065 | System context, partner APIs → Integration patterns, event contracts, retry policy | Messaging, idempotency, schema evolution | 6-Create | AI drafts adapter code and contract tests | Integration incident rate |

@@ -118,3 +118,7 @@
 - {id: 108, name: "Test Automation Health Report", cell: assure, owner: D139, std: S44, dod: "Flake rate, runtime, coverage of critical paths, and the cost per detected defect."}
 - {id: 109, name: "Test Environment & Data Readiness Report", cell: assure, owner: D127, std: null, dod: "Env parity gaps, synthetic data freshness, and evidence that no production PII is present."}
 - {id: 110, name: "Compliance Control Test Report", cell: assure, owner: D136, std: "[S2,S30]", dod: "Each control tested with evidence; exceptions have remediation owners and dates."}
+- {id: 111, name: "Enterprise Readiness Plan (TOGAF/ITIL/SRE)",    cell: define,  owner: D061, std: null,     dod: "Every piece of the enterprise (governance, service, engineering, change) mapped to an artefact and an owner; nothing owned by a role that does not exist."}
+- {id: 112, name: "Multi-Readiness Certificate (8 dimensions)",     cell: define,  owner: D004, std: null,     dod: "All 8 structures assessed with evidence per dimension; any dimension not met is named, not averaged away."}
+- {id: 113, name: "Problem Record & Root-Cause Register",            cell: sustain, owner: D223, std: "S36",     dod: "Every recurring incident links to a problem record; each has root cause, workaround, permanent fix, and owner."}
+- {id: 114, name: "Change Advisory & Risk Assessment Record",        cell: deploy,  owner: D095, std: "S36",     dod: "Risk class, rollback plan, blast radius, and approver named before any production change."}

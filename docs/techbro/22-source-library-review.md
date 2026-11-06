@@ -315,3 +315,61 @@ prepared to build something nobody buys.
 
 **Adopt the method. Keep the five source files, drop the concatenation. Then go and talk to five
 customers.**
+
+---
+
+## 22.11 Update — the second batch (15 files, 155 KB) and what it changed
+
+A second upload arrived with 15 more files totalling **155 KB / 2,900 lines** — 3% of the first
+batch's size, and almost all of it **index material rather than new method**. Verdict per group:
+
+| Group | Files | What it is | Verdict |
+| --- | ---: | --- | --- |
+| **Cheat-code indexes** | 8 | `MASTER-INDEX-all-codes`, `the-everything-master-codes`, `domain-cheat-codes-10-areas`, `business-*`, `computing-study`, `study-learn`, `collaborative-and-tool-codes`, `prompt-context-engineering-cheatcodes` | **One index, rest redundant.** Keep `MASTER-INDEX` only |
+| **Idea → product flows** | 3 | `idea-to-product`, `software-idea-to-product`, `business-idea-to-product` | Useful as a **checklist**, not a method |
+| **Competitor analysis** | 1 | `competitor-analysis-cheatcodes` | **Adopt the vocabulary** (see below) |
+| **Prompt frameworks** | 2 | `real-prompt-frameworks`, `prompt-and-context-engineering-guide` | The guide is the best of the batch |
+| **Codex roadmap** | 1 | `00-MASTER-CODEX-ROADMAP` | Duplicate of material already summarised in §22.4 |
+
+### The one genuinely important sentence in the batch
+
+`prompt-and-context-engineering-guide.md` contains the most intellectually honest paragraph in all
+30 uploaded files:
+
+> *"I **did** create many codes myself (e.g. `/business_fundamentals`, `/unit_economics`, `/dsa`).
+> These are **not documented AI features.** … nobody at OpenAI or Anthropic officially defined
+> `/business_fundamentals`. I was honest about those being additions I made to complete the flow."*
+
+And the conclusion: **"the `/` prefix does nothing. What actually improves output is prompt and
+context structure."**
+
+That is correct, and it matters for a project-level reason: **your library is 3.46 MB + 155 KB, and
+the slash codes inside it carry no mechanism.** Every improvement in this pack came from structure —
+evidence labels, stop rules, named patterns, the six documents — not from shortcut codes. Adopt the
+structure; drop the codes.
+
+### The one thing I am adopting: competitor vocabulary
+
+`competitor-analysis-cheatcodes.md` supplies six words the pack was missing, and they are sharper than
+what `19` used:
+
+| Term | What it forces you to state |
+| --- | --- |
+| **`/whitespace`** | the unfilled gap — not "we are better", but "nobody serves this" |
+| **`/moat`** | their defensible advantage, *and how to beat it* |
+| **`/dodge`** | where you must **not** compete head-on |
+| **`/assumptions`** | what their strategy depends on being true |
+| **`/redflag`** | their points of failure |
+| **`/counter_strategy`** | what they do if you succeed, and your answer |
+
+Applying `/dodge` to TechBro: **do not compete on fee, on catalogue breadth, or on vetting rigour** —
+Braintrust wins fee at 0%, Upwork wins breadth, Toptal and Growwr win rigour. The only undefended axis
+is **speed to unblock in a local payment context**, which is `23` §23.6.
+
+### And the honest limitation to record
+
+Like the first batch, this one contains **no market data at all** — the competitor file is a *method
+for analysing* competitors, not an analysis. It even says so: *"For real, current competitor data, pair
+these codes with live web search rather than relying on the model's memory."* `23` did exactly that,
+which is how S58–S62 came to exist.
+

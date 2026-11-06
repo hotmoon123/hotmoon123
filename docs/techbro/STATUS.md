@@ -1,30 +1,30 @@
 # Blueprint status
 
-Generated 300 roles, 110 artefacts, 62 sources.
+Generated 300 roles, 114 artefacts, 62 sources.
 
 | Check | Value | Where it comes from |
 | --- | ---: | --- |
 | Roles defined | 300 | tools/data/roles/*.yaml |
-| Artefacts defined | 110 | tools/data/artifacts.yaml |
-| Artefacts with DoD | 110 | validated at build |
+| Artefacts defined | 114 | tools/data/artifacts.yaml |
+| Artefacts with DoD | 114 | validated at build |
 | Sources registered | 62 | tools/data/sources.yaml |
 | Sources verified | 55 | checked 2026-11-06 |
 | Families | 19 | distinct disciplines |
 | Cells (SDLC stages) | 8 | discover, define, architect, build, assure, secure, deploy, sustain |
-| Roles per artefact | 2.7 | load indicator |
+| Roles per artefact | 2.6 | load indicator |
 
 ## Artefacts per cell
 
 | Cell | Count |
 | --- | ---: |
 | discover | 15 |
-| define | 16 |
+| define | 18 |
 | architect | 19 |
 | build | 9 |
 | assure | 13 |
 | secure | 12 |
-| deploy | 14 |
-| sustain | 12 |
+| deploy | 15 |
+| sustain | 13 |
 
 ## Roles per family
 

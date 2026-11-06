@@ -536,6 +536,80 @@ this week, and none of them is answerable by me without inventing.
 
 ---
 
+## 23.18 Correction 4 — the "300 roles" claim does not cover the roles you named
+
+I audited `01-role-catalog.md` against the role list in your own prompt. This is the result and it is
+not good.
+
+### What is true
+
+The generator validates **structure**: 300 ids D001–D300, no duplicates, no gaps, every role has an
+output, every artefact has an owner. That is what `ok: 300 roles` means. **It has never validated
+coverage** — whether the catalogue contains the roles you actually asked for.
+
+### What is false
+
+Of the **57 distinct roles you named by hand**, the catalogue covers **39** and **misses 18**:
+
+| Missing role | Why it matters here |
+| --- | --- |
+| **System Analyst** | a core SDLC function you named twice |
+| **System Designer** | you named it — and it is the discipline this whole project is |
+| **Software Developer / Engineer** (generic) | only the specialisations exist; the generic title does not |
+| **Information Security Engineer** | distinct from Security Engineer, and you named it |
+| **Cybersecurity Engineer** | you named it; only `Security Engineer` exists |
+| **System Administrator** | the person who actually runs small-business servers — a **sustain-wedge** buyer and seller |
+| **Electrical/Electronics Engineer** | you named it |
+| **Computer Architect** | you named it |
+| **Systems Engineer** | you named it (only `Systems Analyst` exists) |
+| **System Thinker** | you named it as a discipline |
+| **Mathematician** | you named it |
+| **Psychologist** | you named it |
+| **Physician** | you named it |
+| **Reverse Engineer** | you named it |
+| **Change Manager** | ITIL core role — central to the sustain wedge |
+| **Problem Manager** | ITIL core role — the role that owns recurring breakage |
+| **Business Manager** | only `Business Architect` exists |
+| **Business Administrator** | only `Business Architect` exists |
+
+The honest position: **39/57 named roles covered = 68%**, and the pack's headline "300 roles" is a
+*structural* achievement, not a *coverage* one. I wrote it as coverage. That was an overclaim, and it
+is the same class of error I criticised in `22` §22.5 — **size presented as completeness.**
+
+### Why this is not cosmetic
+
+`Physician`, `Mathematician` and `Psychologist` are in your prompt because you want the **reasoning
+disciplines**, not the medical profession. That is legitimate — but it means they are **lenses**, not
+**marketplace roles**, and they belong in a different table. Mixing lenses into a job catalogue is what
+made the gap invisible: a list that mixes jobs, disciplines and lenses **cannot be audited for
+coverage**, because there is no definition of what "complete" means.
+
+### The fix, in two parts
+
+**Part 1 — separate three kinds of row.** The catalogue conflates them:
+
+| Kind | Definition | Approx. today | Belongs in |
+| --- | --- | ---: | --- |
+| **Marketplace role** | someone who can be hired on the app | ~250 | `01` catalogue |
+| **Discipline / lens** | a way of thinking applied to the work | ~35 | a new `disciplines` table |
+| **Internal operator** | someone TechBro itself employs | ~15 | `14` team plan |
+
+**Part 2 — register the gaps.** 18 named roles are now logged as **coverage gaps** instead of being
+silently absent. Closing them is either a 20-minute data edit (`D301`–`D318`) or an explicit decision
+that a role is a lens, not a job. **I have not added them yet** — that is a decision about what the
+product sells, and `23.6` says the launch surface is 12 roles, not 318.
+
+### The methodological lesson, which is the real output
+
+> **A generator that says "ok" is validating the shape of the data, not the truth of the claim.**
+
+`gen_blueprint.py` will report `ok: 300 roles` for a catalogue of 300 roles even if all 300 are wrong.
+Structural validation and coverage validation are different instruments, and I only ever built the
+first. Any future completeness claim must be tested against **your own words**, not against the file's
+self-consistency.
+
+---
+
 ## 23.17 The whole brainstorm in ten lines
 
 1. You described an **unblocking network**, not a hiring marketplace — and Codementor, not Upwork, is
@@ -550,3 +624,5 @@ this week, and none of them is answerable by me without inventing.
 8. The **110 artefacts in `01` are the verification instrument** — proof, not paperwork. `[I]`
 9. **Nine screens**, not 42; **zero** for the first month. `[D]`
 10. Net take is **~3.5%, not 10%** — re-base the economics before building anything. `[I]`
+11. **The "300 roles" claim misses 18 of the 57 roles you named by hand** — structural validation is
+    not coverage validation, and I presented one as the other. `[F]` §23.18
