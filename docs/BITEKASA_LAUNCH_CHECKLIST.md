@@ -24,29 +24,31 @@ Not customer-facing. It means the site now has automated checks that fail before
 
 ---
 
-## ⬜ Step 3 — Add the website link to Instagram (do this now)
+## ✅ Step 3 — Website link added to Instagram
 
-Profile → **Edit profile** → scroll **below the bio** → **Links** → **Add link**
+**Done by the owner, 6 Nov 2026, 07:43.** Instagram confirmed with “You added a link to your bio.”
 
-| Field | Value |
+| Check | Result |
 |---|---|
-| URL | `https://hotmoon123.github.io/hotmoon123/` |
-| Title | `Packs, prices & how to order` |
-| Show as primary link | **ON** |
+| Link row on profile | ✅ visible under the bio: `hotmoon123.github.io/hotmoon123` |
+| Links screen | ✅ `Packs, price & how to order` with the URL beneath |
+| Title used | `Packs, price & how to order` (owner typed “price”, not “prices”) — readable, no need to re-edit |
+| Primary link | assumed on; only one link exists, so it is the primary by default |
+| What visitors land on | the live site, now showing Golden **55** (Step 1) |
 
-Tap **Done** on the link panel, then **Done/Save** on the Edit profile screen. Two saves.
+**The traffic path is now open.** Everything below converts that traffic or feeds it.
 
-**Done looks like:** the title appears as a tappable line under your bio, and tapping it opens the site showing **55**.
 
-**This is the step that unblocks everything else.** No traffic can become an order until it exists.
 
 ---
 
-## ⬜ Step 4 — Archive the generated-woman post
+## ⬜ Step 4 — Archive the generated-woman post (DO THIS NEXT)
 
 Open the post → **⋯** (top right) → **Archive**. Not delete — archive is reversible and keeps the insights.
 
 **Done looks like:** the grid's first post is the hand-pickup Reel.
+
+**Why this also fixes a labelling problem:** Edit profile contains an **AI-generated profile** toggle. It labels profiles that *feature an AI-generated person*. It is currently **OFF**, and while the generated-woman post is live that is an inaccurate label. Archiving the post makes OFF correct. Do not delete the post and keep it in the grid with the toggle off — that is the version a customer can call out.
 
 ---
 
