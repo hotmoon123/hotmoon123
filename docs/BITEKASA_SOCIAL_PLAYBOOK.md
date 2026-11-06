@@ -45,7 +45,7 @@ This playbook assumes no followers data, no analytics and no creator budget. Whe
 | **Name** | `BiteKasa Samosas & Spring Rolls` — spelling fixed, 31 characters, **no city** | Optional: swap to `BiteKasa Samosas & Rolls Accra` (30) if local discovery matters more than the full “Spring Rolls” wording |
 | **Bio** | Set — 129-character variant with both numbers | Optional: `Accra · WhatsApp: …` brings the city back at 137 characters |
 | **Link** | In progress — URL typed without `https://`, title blank, primary toggle off | Add the scheme, a title, and turn on “Show as primary link” |
-| **Account type** | **Business** — switched 5 Nov 2026; profile category `Food & Drink` | Done |
+| **Account type** | **Business** — switched 5 Nov 2026, **professional account confirmed 6 Nov 2026**; profile category `Food & Drink` | Done |
 | **Contact info** | Displayed: `essonprincess947@gmail.com` and GH +233 595638696 | Phone good; **personal Gmail now public** — see privacy note |
 | Banners | None | Skip; decorative |
 
@@ -423,3 +423,21 @@ Static posters cannot recruit followers; that is now measured, not assumed.
 ### Honest 30-day target
 
 **50 followers, one Reel that beats the follower count, 10 tracked enquiries.** Not viral. If after four weeks of consistent video and daily status the enquiries are still zero, the constraint is the offer or the audience — and that is worth knowing before spending money on ads.
+
+---
+
+## 14. What the professional account unlocked (use these today)
+
+The Business switch is not cosmetic. Five tools that did not exist two days ago:
+
+| Tool | Path | First use |
+|---|---|---|
+| **Link sticker in Stories** | Story → sticker → Link | Send Story viewers straight to the site — the fastest click path on the platform |
+| **Insights** | Professional dashboard → Insights | Weekly: reach, profile visits, external link taps, follower growth. These four numbers are the whole report |
+| **Saved replies** | Inbox → quick reply icon | Answer “how much?” with the price list + link in one tap |
+| **CTA buttons** | Edit profile → Contact options | Keep the phone button on; it is the fallback when the link is missed |
+| **Scheduled posts** | Professional dashboard → Scheduled content | Batch a week of posts in one sitting — removes the daily decision |
+
+**Read Insights honestly.** For a cold account the numbers will be small. Track: reach, profile visits, **link taps**, followers net. Link taps are the only number that maps to orders; likes do not.
+
+**Not worth buying yet:** Meta Verified (monthly fee, no reach guarantee) and ads (nothing proven to amplify).
