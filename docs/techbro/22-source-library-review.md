@@ -373,3 +373,63 @@ for analysing* competitors, not an analysis. It even says so: *"For real, curren
 these codes with live web search rather than relying on the model's memory."* `23` did exactly that,
 which is how S58–S62 came to exist.
 
+
+
+---
+
+## 22.12 Update — the third batch (20 files, 1.0 MB): what is new, what is already paid for
+
+The third upload is **1.0 MB / 15,700 lines** across 20 files. It is the most *internally coherent*
+batch so far and the least *new*: 18 of the 20 are the graphic-design codex volumes whose provenance
+`THE-GREAT-LOOP-GRAPHIC-DESIGN.md` already named explicitly in `22` §22.3.
+
+| Group | Files | Lines | Verdict |
+| --- | ---: | ---: | --- |
+| Graphic-design codex (13 volumes) | 13 | ~10,000 | **Already paid for.** The Great Loop digested them; read that instead |
+| Senior graphic-designer prompts | 3 | ~1,450 | Superseded by The Great Loop |
+| DaVinci Resolve codex | 1 | 1,304 | **Out of scope** — video post-production |
+| **THE_SEVEN_LAYERS** | 1 | 738 | **Keep — ten laws, one of which indicts this pack** |
+| **THE_COMPLETE_STACK** | 1 | 665 | **Keep — §9 role table + §10 SDLC order** |
+| Senior software/network/security prompts | 2 | 1,036 | Reference only |
+
+### The ten laws, and the one I broke
+
+`THE_SEVEN_LAYERS.md` closes with ten laws that "don't care about your stack". Eight are things this
+pack already obeys (unreliable network, non-zero latency, heterogeneous clients, least privilege).
+Two are not:
+
+| Law | Status in the pack |
+| --- | --- |
+| **8 — "Your users are on 3G Android phones in sunlight. Design for that, not your M-series MacBook on fibre."** | **Honoured** in `10` (390px, 44px targets) and `23` §23.11 — this is the best line in the batch for your context |
+| **7 — "The business rules belong in exactly one place — the domain. Everywhere else is a caller, not a decider."** | **Broken.** See `23` §23.18 |
+
+Law 7 is the finding. The pack specified three clients (React Native, web, admin) and never stated
+where the money rules live. It is now stated, with three non-negotiable rules.
+
+### The one thing worth lifting verbatim
+
+The batch's most useful contribution to *this* project is a single sentence of calibration:
+
+> *"Your users are on 3G Android phones in sunlight. Design for that, not your M-series MacBook on
+> fibre."*
+
+Every design decision in `10` and `23` §23.10 can be tested against that one line. It is the clearest
+statement of the constraint that governs the entire product, and it came from a file about system
+layers rather than a file about design.
+
+### And the honest bottom line on the library as a whole
+
+Across **65 files and ~4.6 MB**, the value distribution is now clear:
+
+| Contribution | Where it came from | Share of value |
+| --- | --- | ---: |
+| Evidence discipline, stop rules, 8 structures | batch 1 (`bitekasa`, `software_security`) | **high** |
+| Named design patterns, pre-build gate | batch 1 (`keywords.pdf`, `Before_Anyone_Builds`) | **high** |
+| Ten laws, domain-single-source | batch 3 (`THE_SEVEN_LAYERS`) | **high** |
+| Prompt frameworks, cheat-code indexes | batches 1–3 | **low** — one page each |
+| Design codex volumes, Davinci, music, image prompts | batches 1–3 | **none for this product** |
+
+**Roughly 5% of the library carries 90% of the value, and every high-value item is a *standard or a
+rule*, not a template.** That is the pattern across all three batches and it is worth stating plainly:
+you do not need a 66th file. You need the ten laws, the seven evidence labels, the six documents and
+the eight structures — all of which you now have.

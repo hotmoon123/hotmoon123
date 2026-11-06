@@ -610,7 +610,79 @@ self-consistency.
 
 ---
 
-## 23.17 The whole brainstorm in ten lines
+## 23.18 Correction 5 — the one law I quoted and then broke in the same document
+
+`THE_SEVEN_LAYERS.md` ends with **ten laws** and one of them indicts this pack:
+
+> **Law 7 — "The business rules belong in exactly one place — the domain. Everywhere else is a caller,
+> not a decider."**
+
+`23` §23.11 said the same thing in different words: *"offline-first is a correctness requirement."*
+`23` §23.9 said the money rules are a four-way decision. And then the pack distributed those rules
+across **three UI clients** — React Native, a web app, a marketing site — with no single place that owns
+them. That is the exact failure the law names, and I wrote it down and then ignored it.
+
+### The architectural consequence, stated once
+
+```
+                 ┌─────────────────────────────────────────┐
+                 │  DOMAIN  (Django)                       │
+                 │  money · state · permissions · pricing  │
+                 │  the ONLY decider                       │
+                 └───────────────┬─────────────────────────┘
+                                 │ typed contract (OpenAPI)
+        ┌────────────────────────┼────────────────────────┐
+        ▼                        ▼                        ▼
+  React Native            Web client                Admin console
+  (buyer)                 (provider onboarding)     (you, at 30 jobs)
+  offline-capable,        no local rules,           no local rules,
+  but never a decider     never a decider           never a decider
+```
+
+**Three rules, non-negotiable** `[D]`:
+
+1. **No client computes a price, a fee, a payout, a tax amount, or a state transition.** It displays
+   what the server said, or it says "unknown".
+2. **Every money action carries a client-generated idempotency key** and is safe to retry by
+   construction — because on a 3G connection in Accra, retry is not an edge case.
+3. **Offline queue holds intent, never decisions.** A queued action says "the user wants X". The server
+   decides whether X is still legal when the queue drains — a state re-check on arrival, not a replay.
+
+`[I]` Point 3 is the one that is usually missed. Replaying an offline queue *optimistically* (applying
+the stored decision on reconnect) is how a provider marks a job complete twice, gets paid once, and
+opens a dispute the platform loses. Offline-first means **the user's intent survives the network**, not
+that the client's decision survives it.
+
+### And the second correction this batch forces
+
+`THE_COMPLETE_STACK.md` §9 contains the SDLC role table — and it lists **23 roles**, including one
+printed **twice** (Engineering Manager / Tech Lead). That duplication is a small thing. The real
+question it forces is the one `23.18` dodged:
+
+> **Why does `23` §23.6 recommend launching on roughly 12 roles when `01` catalogues 300?**
+
+Because a catalogue, a launch surface, and a hiring market are three different graphs:
+
+| Graph | What it is | Size | Changes |
+| --- | --- | ---: | --- |
+| **Coverage catalogue** | every role the system can *describe* | 300 | rarely |
+| **Launch surface** | roles that appear in the app *today* | **12** | per cell, per city |
+| **Liquidity graph** | roles where you have ≥3 available providers | **starts at 1** | hourly |
+
+**The 12 launch roles, named** `[D]` — chosen because they are the ones the sustain wedge
+(`23` §23.6) actually transacts, and because you can recruit them in Accra this month:
+
+`D099 Backend Developer` · `D098 Mobile App Developer` · `D102 Frontend Web Developer` ·
+`D104 Database Administrator (Production)` · `D091 DevOps Engineer` · `D110 Networking & Connectivity Engineer` ·
+`D096 Security Engineer` · `D107 QA Automation Engineer` · `D223 On-call & Incident Manager` ·
+`D052 Technical Writer` · `D105 Mobile UX/UI Designer` · `D114 Configuration & Environment Manager`
+
+Every other role stays **searchable but unstaffed** — visible, honest about availability, and a
+waiting list rather than a promise. That is the difference between a catalogue and a lie.
+
+---
+
+## 23.19 The whole brainstorm in eleven lines
 
 1. You described an **unblocking network**, not a hiring marketplace — and Codementor, not Upwork, is
    the comparable. `[I]`
@@ -624,5 +696,5 @@ self-consistency.
 8. The **110 artefacts in `01` are the verification instrument** — proof, not paperwork. `[I]`
 9. **Nine screens**, not 42; **zero** for the first month. `[D]`
 10. Net take is **~3.5%, not 10%** — re-base the economics before building anything. `[I]`
-11. **The "300 roles" claim misses 18 of the 57 roles you named by hand** — structural validation is
+10b. **The "300 roles" claim misses 18 of the 57 roles you named by hand** — structural validation is
     not coverage validation, and I presented one as the other. `[F]` §23.18
