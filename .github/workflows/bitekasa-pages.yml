@@ -23,9 +23,9 @@ jobs:
         working-directory: bitekasa-site
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -34,6 +34,10 @@ jobs:
         run: npm ci
       - name: Type-check
         run: npm run typecheck
+      - name: Automated tests and coverage gate
+        run: npm run test:coverage
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
       - name: Build production site
         run: npm run build -- --base=/hotmoon123/
         env:

@@ -20,7 +20,7 @@ npm install
 npm run dev
 ```
 
-Vite binds to `0.0.0.0` for preview compatibility. Run `npm run typecheck` for TypeScript validation, `npm run build` for a production build, then `npm run check:bundle` and `npm run check:seo` for the compressed-asset budget and metadata/sitemap checks. Use `npm run preview` to inspect the build.
+Vite binds to `0.0.0.0` for preview compatibility. Run `npm run typecheck` for TypeScript validation, `npm run test:coverage` for component tests and coverage, and `npm run build` for a production build. Then run `npm run check:bundle` and `npm run check:seo` for the compressed-asset budget and metadata/sitemap checks. Use `npm run preview` to inspect the build.
 
 ## Brand palette
 
@@ -44,7 +44,7 @@ Verify both telephone numbers, whether either is WhatsApp-enabled, current price
 
 `assets/premium-combo-poster.png` and `assets/bitekasa-logo.jpg` remain unchanged owner-approved source images. The supplied master logo, including its “BITES” subline, is used in the site and corrected flyer. The site links to Instagram `@bitekasa` based on the owner-provided profile screenshot; confirm that the spelling and destination are correct. `assets/bitekasa-offer-flyer.png` is a corrected copy of the owner-approved 2:3 poster composition (1024 × 1536), with the rejected upgrade copy removed and Golden set to 50 pieces. **Superseded 5 Nov 2026:** the owner confirmed Golden is 55 pieces, so this raster and every derivative of it show a stale count — use `assets/qr/bitekasa-premium-flyer-qr.png` for print. Feed and Story exports fit the complete artwork without cropping: `assets/bitekasa-instagram-feed-4x5.png` (1080 × 1350) and `assets/bitekasa-instagram-story-9x16.png` (1080 × 1920). These raster files are for digital use, not print-preflighted artwork.
 
-See `../docs/BITEKASA_STARTER_BRIEF.md` for business facts and assumptions, `../docs/BITEKASA_ORDER_WORKFLOW.md` for the proposed workflow, `../docs/BITEKASA_INSTAGRAM_POST_PACK.md` for posting guidance, and `../docs/BITEKASA_HOSTING_AND_GROWTH_RUNBOOK.md` for Pages, Search Console, Bing, GA4, business-profile, directory, backup, security, and QR rollout instructions.
+See `../docs/BITEKASA_STARTER_BRIEF.md` for business facts and assumptions, `../docs/BITEKASA_ORDER_WORKFLOW.md` for the proposed workflow, `../docs/BITEKASA_INSTAGRAM_POST_PACK.md` for posting guidance, and `../docs/BITEKASA_HOSTING_AND_GROWTH_RUNBOOK.md` for Pages, Search Console, Bing, GA4, business-profile, directory, backup, security, and QR rollout instructions. QA cases/coverage and SLO/incident procedures are documented in `../docs/BITEKASA_QA_TEST_PLAN.md` and `../docs/BITEKASA_RELIABILITY_RUNBOOK.md`.
 
 ## SEO pages, privacy, and QR artwork
 

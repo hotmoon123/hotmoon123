@@ -2,7 +2,7 @@ name: BiteKasa public-site smoke check
 
 on:
   schedule:
-    - cron: '17 8 * * *'
+    - cron: '23 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -15,15 +15,33 @@ jobs:
       - name: Check homepage and dedicated service pages
         shell: bash
         run: |
-          set -euo pipefail
-          for url in \
-            'https://hotmoon123.github.io/hotmoon123/' \
-            'https://hotmoon123.github.io/hotmoon123/services/fried/' \
-            'https://hotmoon123.github.io/hotmoon123/services/unfried/' \
-            'https://hotmoon123.github.io/hotmoon123/services/frozen/' \
-            'https://hotmoon123.github.io/hotmoon123/privacy.html' \
-            'https://hotmoon123.github.io/hotmoon123/robots.txt' \
-            'https://hotmoon123.github.io/hotmoon123/sitemap.xml'; do
-            echo "Checking ${url}"
-            curl --fail --silent --show-error --location --retry 3 --retry-delay 5 --output /dev/null "${url}"
+          set -uo pipefail
+          urls=(
+            'https://hotmoon123.github.io/hotmoon123/'
+            'https://hotmoon123.github.io/hotmoon123/services/fried/'
+            'https://hotmoon123.github.io/hotmoon123/services/unfried/'
+            'https://hotmoon123.github.io/hotmoon123/services/frozen/'
+            'https://hotmoon123.github.io/hotmoon123/privacy.html'
+            'https://hotmoon123.github.io/hotmoon123/robots.txt'
+            'https://hotmoon123.github.io/hotmoon123/sitemap.xml'
+          )
+          failures=0
+          {
+            echo '## BiteKasa public-site availability probe'
+            echo "- UTC time: $(date -u '+%Y-%m-%d %H:%M:%S')"
+            echo '- Check interval: hourly GitHub Actions scheduled probe'
+            echo '| Endpoint | Result |'
+            echo '|---|---|'
+          } >> "$GITHUB_STEP_SUMMARY"
+          for url in "${urls[@]}"; do
+            if curl --fail --silent --show-error --location --retry 3 --retry-delay 5 --output /dev/null "$url"; then
+              echo "PASS ${url}"
+              echo "| \`${url}\` | PASS |" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "FAIL ${url}"
+              echo "| \`${url}\` | FAIL |" >> "$GITHUB_STEP_SUMMARY"
+              failures=$((failures + 1))
+            fi
           done
+          echo "- Failed endpoints: ${failures}/${#urls[@]}" >> "$GITHUB_STEP_SUMMARY"
+          test "$failures" -eq 0

@@ -29,9 +29,9 @@ jobs:
         working-directory: bitekasa-site
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -40,8 +40,16 @@ jobs:
         run: npm ci
       - name: Type-check
         run: npm run typecheck
-      - name: Audit production dependencies
-        run: npm audit --omit=dev --audit-level=high
+      - name: Run automated tests and collect coverage
+        run: npm run test:coverage
+      - name: Archive coverage report
+        uses: actions/upload-artifact@v7
+        with:
+          name: bitekasa-test-coverage-${{ github.run_id }}
+          path: bitekasa-site/coverage
+          retention-days: 30
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
       - name: Build for GitHub Pages
         run: npm run build -- --base=/hotmoon123/
       - name: Enforce compressed bundle budgets
