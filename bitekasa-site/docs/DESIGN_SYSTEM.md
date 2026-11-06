@@ -99,12 +99,26 @@ Rules:
 - 4px base scale: `4 8 12 16 24 32 48 64 96` (`--space-1` … `--space-9`).
 - Section padding: 56px mobile → 80px tablet → 96px desktop.
 - Gutters: 16px → 28px → 48px. Content max width 76rem.
-- Radius: `2px` (`--radius-xs`), `4px` (`--radius-sm`, default for buttons and
-  inputs), `8px` (`--radius-md`, cards and panels), `999px` (pills only for the
-  splash's skip button). **Nothing larger than 8px on a rectangle.**
-- Elevation: `--shadow-card` (a 1px warm line, not a blur) for resting panels;
-  `--shadow-float` for the consent panel and settings button only. Content cards
-  do not float.
+- Radius — soft, and one value per element type (owner direction, v2.1):
+
+  | Token | Value | Applies to |
+  |---|---|---|
+  | `--radius-xs` | 6px | chips, tags, tiny controls |
+  | `--radius-sm` | 12px | utility links only (skip link) |
+  | `--radius-md` | 18px | cards, images, panels, FAQ rows, step cards |
+  | `--radius-lg` | 24px | order panel, consent panel |
+  | `--radius-pill` | 999px | **every interactive control** — buttons, steppers, menu toggle, badges |
+
+  Rule: **never mix radii on the same element type.** Three tiers and no others:
+  *content* sits at 18px, *containers* at 24px, *anything you can tap* is a pill.
+  Flat by exception only (the WhatsApp message preview is a ruled quote, 0px).
+- Elevation: `--shadow-card` (1px, 5% warm ink) for resting cards so a rounded
+  surface reads as a surface; `--shadow-float` for the consent panel only.
+  Nothing hovers above the page.
+- **Declutter rule:** separation comes from *surface and space* before lines.
+  Cards carry a 1px hairline instead of a heavy rule; FAQ and service links are
+  rounded rows with gaps rather than a stack of dividers; section headers use one
+  small accent tick, not a full-width bar.
 
 ---
 
@@ -190,9 +204,11 @@ Raised paper, 1px line, `--shadow-float`, 44px buttons. On mobile it sits above
 the sticky bar (offset by 68px) so the two never overlap.
 
 ### 6.11 Splash (`LogoIntro.tsx`)
-Unchanged behaviour: once per session, black, logo finishes alone, `?intro=1`
-replays, `?intro=0` suppresses, six dismiss paths, focus restored, honours
-reduced motion. Styling only is in this system.
+Once per session, black, the logo finishes alone, `?intro=1` replays, `?intro=0`
+suppresses, focus restored, reduced motion honoured. **No button:** it ends on
+its own after the reveal (2.4s, then a 260ms fade) or early with Escape. Taps and
+scrolls deliberately do nothing, so the animation is never swallowed and a tap
+meant for the page underneath is never eaten by the overlay.
 
 ---
 
@@ -255,11 +271,13 @@ handsome it is.
 | 3 | Gold demoted to hairlines | Gold CTA fills (v1) | Cream-on-gold fails contrast at scale and reads cheap |
 | 4 | Primary conversion buttons red | Gold buttons | Red is the brand's strongest signal and passes 6.4:1 with cream |
 | 5 | Body 17px | 12–13px (v1) | Readability on a phone held at arm's length |
-| 6 | Radii ≤ 8px | 12px+ everywhere (v1) | Editorial language; large radii read as generic SaaS |
+| 6 | **Radius scale 6 / 12 / 18 / 24 / pill** (v2.1, owner direction) | 2–8px tight corners (v2.0) | Owner asked for softer, friendlier corners; the Janus Tiu design-system prompt requires one consistent radius per element type — so the scale is now documented rather than improvised |
 | 7 | No shadows on content | Cards with soft shadows | Hierarchy from rules and space, not blur |
 | 8 | One shared entrance animation | Per-section effects | Consistency, and cheaper to audit for reduced motion |
 | 9 | Order maths extracted to `src/lib/order.ts` | Logic inside the component | Testable without a DOM; one place to change the message format |
 | 10 | Prices only in `src/data/catalogue.ts` | Prices in copy | A price change is one edit and cannot drift between sections |
+| 11 | Cards carry the content; rules were reduced to a small accent tick | Full-width 2px rules (v2.0) | Less visual noise at phone width — the owner's "not cluttered" test |
+| 12 | Navigation trimmed to four items (Packs · Build an order · Questions · Contact) | Five items incl. "How it works" | The section still exists; the header stops competing with the hero |
 
 ---
 

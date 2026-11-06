@@ -10,7 +10,6 @@ const OPENING_MESSAGE = 'Hello BiteKasa! I would like to ask about your packs an
 export const NAV_ITEMS = [
   { label: 'Packs', href: `${SITE_BASE}#packs` },
   { label: 'Build an order', href: `${SITE_BASE}#order` },
-  { label: 'How it works', href: `${SITE_BASE}#how-it-works` },
   { label: 'Questions', href: `${SITE_BASE}#questions` },
   { label: 'Contact', href: `${SITE_BASE}#contact` },
 ];

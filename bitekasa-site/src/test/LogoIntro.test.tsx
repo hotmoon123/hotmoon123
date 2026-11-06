@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import LogoIntro from '../LogoIntro';
 
 const STORAGE_KEY = 'bitekasa-intro-seen';
@@ -11,6 +11,7 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
   window.sessionStorage.clear();
 });
 
@@ -20,14 +21,20 @@ describe('LogoIntro', () => {
     expect(screen.getByRole('dialog', { name: 'BiteKasa is opening' })).toBeInTheDocument();
   });
 
-  it('offers a way out that is reachable by keyboard', () => {
+  it('carries no button of its own — it plays and leaves', () => {
     render(<LogoIntro />);
-    expect(screen.getByRole('button', { name: 'Enter site' })).toBeInTheDocument();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
-  it('remembers that the splash was dismissed for this session', () => {
+  it('leaves on its own after the reveal and remembers that for the session', () => {
+    vi.useFakeTimers();
     render(<LogoIntro />);
-    fireEvent.click(screen.getByRole('button', { name: 'Enter site' }));
+
+    act(() => {
+      vi.advanceTimersByTime(4000);
+    });
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(window.sessionStorage.getItem(STORAGE_KEY)).toBe('1');
   });
 
@@ -48,5 +55,29 @@ describe('LogoIntro', () => {
     window.history.replaceState({}, '', '/?intro=0');
     render(<LogoIntro />);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+});
+
+describe('LogoIntro dismissal paths', () => {
+  beforeEach(() => {
+    window.sessionStorage.clear();
+    window.history.replaceState({}, '', '/');
+  });
+
+  it('keeps playing when the visitor taps or scrolls the splash', () => {
+    render(<LogoIntro />);
+    const splash = screen.getByRole('dialog', { name: 'BiteKasa is opening' });
+
+    fireEvent.touchStart(splash);
+    fireEvent.wheel(splash);
+    fireEvent.pointerDown(splash);
+
+    expect(screen.getByRole('dialog', { name: 'BiteKasa is opening' })).toBeInTheDocument();
+  });
+
+  it('still closes on Escape for keyboard users', async () => {
+    render(<LogoIntro />);
+    fireEvent.keyDown(window, { key: 'Escape' });
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });
 });
