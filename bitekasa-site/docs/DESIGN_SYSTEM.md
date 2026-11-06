@@ -222,6 +222,25 @@ meant for the page underneath is never eaten by the overlay.
 - Owner-supplied photography can replace an illustrative image only together with
   the caption being removed in the same change.
 
+### Icon set (favicon / app icons)
+
+Cut from the owner's full logo lockup: the **emblem only** (crown, samosa, spring
+roll), because the wordmark, BITES line, tagline and phone numbers are illegible
+below 64px. Backgrounds are brand cream `#F7EEDB`, so the icon reads on light and
+dark tab bars. Files live in `public/`:
+
+| File | Purpose |
+|---|---|
+| `favicon.ico` | 16 / 32 / 48 multi-size, legacy tabs and bookmarks |
+| `favicon-32.png` | modern browsers |
+| `apple-touch-icon.png` | 180px, **opaque square** — iOS applies its own mask |
+| `icon-192.png`, `icon-512.png` | installable app icon, rounded corners |
+| `maskable-512.png` | Android maskable, emblem inside the 62% safe zone |
+| `site.webmanifest` | name, theme `#F7EEDB`, icon set |
+
+Source: the 1254×1254 JPEG lockup the owner supplied on 6 November 2026. The
+original file is not modified by this process.
+
 ---
 
 ## 8. Voice

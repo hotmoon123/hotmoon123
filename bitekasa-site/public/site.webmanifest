@@ -1,0 +1,31 @@
+{
+  "name": "BiteKasa — Samosas & Spring Rolls",
+  "short_name": "BiteKasa",
+  "description": "Three packs of hot, crispy samosas and spring rolls. Build an order on the site and send it to BiteKasa on WhatsApp.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F7EEDB",
+  "theme_color": "#F7EEDB",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
