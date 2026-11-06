@@ -1,5 +1,17 @@
 # ReactDrops × BiteKasa — logo animation documentation
 
+> **Status: installed and live on the site.** Source pulled from the registry item `liquid-glass-logo` (four files, ~97 KB of TS/CSS, zero npm dependencies) into `bitekasa-site/src/components/`, mounted through `src/LogoReveal.tsx` as a black brand-reveal band between the product options and the closing call to action.
+>
+> | Check | Result |
+> |---|---|
+> | Typecheck | pass |
+> | Tests | 10 pass (2 new for the reveal) |
+> | Main JS | **118.5 KiB gzip** / 150 KiB budget |
+> | Glass chunk | 53.7 kB raw, **18.9 KiB gzip**, lazy — never in main |
+> | Logo asset | 35.8 kB (512 px, quantised) |
+> | Reduced motion | renders the finished logo still |
+> | WebGL missing | falls back to `<img>` of the mark |
+
 **Source:** [reactdrops.dev](https://reactdrops.dev) · repo [crisjavr/reactdrops](https://github.com/crisjavr/reactdrops) · checked 6 Nov 2026
 
 ---
@@ -204,3 +216,30 @@ const LiquidGlassLogo = lazy(() => import('./components/liquid-glass-logo'));
 | Replace the header logo with animation | ❌ don't |
 
 **Professional recommendation:** do **Path A** now — it gives you an animated logo for Instagram today, with no bundle cost, no fallback bugs and no performance risk. Treat Path B as a later experiment to be measured against the 150 KiB budget, not as part of the launch.
+
+
+---
+
+## 9. What was installed, exactly
+
+| File | Size | Role |
+|---|---|---|
+| `src/components/liquid-glass-logo.tsx` | 13.2 KB | React component, props, ref handle, fallback |
+| `src/components/liquid-glass-logo-renderer.ts` | 36.8 KB | Canvas/WebGL engine, image loading, measured fitting, reduced motion |
+| `src/components/liquid-glass-logo-shaders.ts` | 41.7 KB | GLSL: bevel refraction, dispersion, caustics, streaks |
+| `src/components/liquid-glass-logo.css` | 5.6 KB | Positioning, canvas visibility gating, fallback layout |
+
+All four keep the ReactDrops Component License 1.0 header intact, as the licence requires.
+
+### How it is wired
+
+`src/LogoReveal.tsx`:
+
+- **`React.lazy` + `Suspense`** — the ~92 KB engine is its own chunk (`liquid-glass-logo-*.js`, 18.9 KiB gzip). The main bundle stays at 118.5 KiB gzip against the 150 KiB CI gate.
+- **`IntersectionObserver` at 0.35 threshold** — the canvas only mounts when the band is actually on screen, so the 1.8 s reveal plays where a visitor can see it instead of finishing above the fold.
+- **Static `<img>` before mount, during load and when WebGL is unavailable** — the brand is never a blank box.
+- **`ending="logo"`** — the sequence stops on the original logo at its normal size. No second text reveal, no wordmark.
+- **`background="#000000"`, `logoColor="original"`, `logoRelief={0}`, `finalLogoScale={1}`** — black band, unaltered artwork colours, no recoloured silhouette.
+- **`aria-label="BiteKasa — samosas and spring rolls"`**, heading visually hidden — the canvas is decorative but the section is announced.
+
+The logo passed to the component is `assets/bitekasa-logo-mark.png`: the crown + samosa + roll, knocked out to transparency from the owner's original JPEG and cut to 512 px / 35.8 kB. The full lockup (with the BITES subline and both phone numbers) was deliberately **not** used — inside a 256 px plate the numbers become illegible. Swapping to the full lockup is one line in `LogoReveal.tsx` if that is ever wanted.
