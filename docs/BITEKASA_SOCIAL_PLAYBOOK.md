@@ -371,6 +371,54 @@ One URL, many surfaces. Every one below is free; the first three matter far more
 
 **Captions do not need the URL.** Instagram captions are not clickable, and a pasted URL looks like spam. Use “link in bio” in the caption and put the real link in the bio and in Story stickers.
 
+### 12a. Tap-by-tap: adding the link on the phone
+
+**Route A — from the profile (works on every current version)**
+
+1. Open Instagram → tap your **profile picture** (bottom right).
+2. Tap **Edit profile** (the button under the bio area, next to *Share profile*).
+3. Scroll **past** Name, Username, Bio, and the links row. Keep scrolling — on some builds the link section sits below the bio, not above it.
+4. Find **Links** (older builds call it **Website**). Tap **Add link** / **+ Add external link**.
+5. In **URL**, type exactly:
+   `https://hotmoon123.github.io/hotmoon123/`
+   — the `https://` must be there. Typing `hotmoon123.github.io/hotmoon123` without it is the reason earlier attempts never saved.
+6. In **Title**, type:
+   `Packs, prices & how to order`
+   — leave this blank and some builds silently refuse to save.
+7. Toggle **Show as primary link** to **ON**.
+8. Tap **Done** (top right of the link sheet), then **Done**/**Save** again on the Edit profile screen. **Two saves** — this is the second reason it kept disappearing.
+9. You should land back on your profile. Under the bio you will now see **Packs, prices & how to order** as a tappable line.
+
+**Route B — if `Edit profile` has no Links row**
+
+1. Profile → **Professional dashboard** → **Edit profile**.
+2. Same section, same fields.
+
+**Route C — if neither shows a link field**
+
+- Update the Instagram app from the Play Store, then reopen it.
+- Confirm the account is still on **Professional → Business** (Settings → **Profile type and tools**). The external-link field only appears for professional accounts.
+- As a last resort, put the URL at the end of the bio text. It will not be clickable, but it is better than nothing until the field appears.
+
+**Verify it worked — do this every time**
+
+| Check | Expected |
+|---|---|
+| Profile page, under bio | The title line, tappable |
+| Tap it | Site opens in Instagram's browser |
+| Site loads with **55 pieces** on Golden | Yes — required before anyone else taps it |
+| Insights → Profile activity → **Link taps** | Starts counting within about a day |
+
+The setup checklist's *“Complete your profile ✓”* tick means nothing here — it ticks without a link. Only the profile page tells the truth.
+
+**Story link sticker — the other half**
+
+1. Profile → **+** → **Story**.
+2. Pick the flyer or a clip.
+3. Tap the **sticker** icon (top) → **Link** → paste the same URL → **Done**.
+4. Place the sticker where a thumb reaches, not over the food.
+5. Post, then check Insights → Stories → **Link taps** for that Story.
+
 **Keep one canonical URL.** No shorteners, no `http://` variants, no trailing-slash differences. Everything — QR, bio, WhatsApp, listings — points at the same string.
 
 ---
