@@ -369,3 +369,33 @@
   url: "https://www.truelancer.com/software-development-freelancers-in-accra"
   verified: true
   claim: "Ghana-focused and pan-African freelance platforms exist (e.g. CediJob, Gebeya, TERAWORK, Findworka, Solangigs) alongside global platforms listing Accra-based developers; public listings show Accra developers priced from about $2–$10/hr upward, anchoring local talent to global low-price competition."
+- id: S58
+  title: "Value Added Tax Act, 2025 (Act 1151) — Ghana"
+  author: "Ghana Revenue Authority / Parliament of Ghana"
+  url: "https://www.modernghana.com/news/1460334/new-vat-act-takes-effect-january-1-2026-as-gra.html"
+  verified: true
+  claim: "Ghana's Value Added Tax Act, 2025 (Act 1151) took effect 1 January 2026, replacing the previous regime with a unified 20% charge (VAT 15% + NHIL 2.5% + GETFund 2.5% on the same taxable value); it abolishes the COVID-19 Health Recovery Levy, raises the VAT registration threshold for goods from GHS 200,000 to GHS 750,000, and makes NHIL and GETFund creditable as input tax."
+- id: S59
+  title: "Codementor — on-demand developer help marketplace"
+  author: "Codementor / MentorCruise review / sefism platform profile"
+  url: "https://mentorcruise.com/blog/codementor-review-is-it-the-coding-mentor-youve-been-dreaming-of/"
+  verified: false
+  claim: "Codementor is an on-demand one-to-one developer help marketplace; mentors set their own rates (reported $8–$15 per 15 minutes for newer mentors, $15–$30 for experienced), seats carry a 15-minute minimum then per-minute billing plus a service fee, most mentors respond within 10–30 minutes, and the site claims 12,000+ available developers. The platform fee is reported at 10–20% but that figure dates from a 2015 report and current terms were not verified."
+- id: S60
+  title: "Growwr — AI-vetted African freelance platform"
+  author: "Techpoint Africa"
+  url: "https://techpoint.africa/insight/growwr-startup-feature/"
+  verified: false
+  claim: "Growwr, launched May 2024 and based in Lagos, uses three proprietary AI systems (crawler, behavioural interview, matching) to vet African talent; the founders claim $1.5M paid out to talent, 3,000 businesses served, 19,000 applicants reduced to 1,100 vetted candidates (~5.8%), a team of eight, and operations across 13 countries including Ghana as its first customer."
+- id: S61
+  title: "TERAWORK — Nigerian freelance marketplace with native apps"
+  author: "Techtrends Africa / Tech In Africa"
+  url: "https://techtrends.africa/terawork-nigerian-recruitment-startup-launches-app-to-help-employers-hire/"
+  verified: false
+  claim: "TERAWORK (founded 2018, Lagos) offers a freelance marketplace with payment escrow, task management, and post-work reviews, and ships native iOS and Android apps; reported at 15,000 freelancers and 6,000+ transactions, operating in Nigeria, Kenya, Ghana, the UK and North America."
+- id: S62
+  title: "Hamzry — Nigerian freelancer marketplace launch (2025)"
+  author: "Vanguard Nigeria"
+  url: "https://www.vanguardngr.com/2025/05/platform-launches-to-connect-nigerian-freelancers-to-global-clients/"
+  verified: false
+  claim: "Hamzry launched in 2025 as a Nigerian-focused freelance marketplace with naira-native payments, reporting 1,800 freelancers signed up at launch, positioned against the difficulty Nigerian freelancers face getting noticed and paid on global platforms."

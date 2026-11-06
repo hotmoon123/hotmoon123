@@ -35,6 +35,7 @@
 | **18** | **[18-questionnaire-and-next-steps.md](18-questionnaire-and-next-steps.md)** | **12 questions that change the design + your next 14 days** | **want to start now** |
 | **19** | **[19-competitor-teardown.md](19-competitor-teardown.md)** | **Upwork, Fiverr, Toptal, Braintrust, Andela, GH regional — strengths, weaknesses, what to copy** | **asked for competitor reference** |
 | **20** | **[20-review-of-pasted-blueprints.md](20-review-of-pasted-blueprints.md)** | **Honest critique of DevMesh & TechRelay: what is brilliant, what is wrong** | **pasted those two documents** |
+| **23** | **[23-brainstorm-the-system-reconsidered.md](23-brainstorm-the-system-reconsidered.md)** | **The brainstorm: the app is an unblocking network, not a hiring marketplace — plus VAT 20%, the missing competitors, and the net-vs-gross maths** | **are deciding what the app actually is** |
 | **22** | **[22-source-library-review.md](22-source-library-review.md)** | **What the 15 uploaded files actually are: 73% method, 0% market — what to adopt, what is wrong, what they cannot tell you** | **pasted the 15-file library** |
 | 99 | [99-sources-and-assumptions.md](99-sources-and-assumptions.md) | 57 sources + 10 labelled assumptions | want to check any claim |
 | — | [artifacts/00-artifact-index.md](artifacts/00-artifact-index.md) | 110 deliverables with owners and definitions of done | asked "what is the output of each role" |

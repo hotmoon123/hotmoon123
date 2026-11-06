@@ -4,7 +4,7 @@
 > **a claim that is not in this file is not cited as fact.** If it cannot be sourced,
 > it is written as `H-###` in the assumption register below and tested, not asserted.
 
-**Sources:** 57 &nbsp;|&nbsp; **verified:** 54 &nbsp;|&nbsp; **flagged unverified:** 3
+**Sources:** 62 &nbsp;|&nbsp; **verified:** 55 &nbsp;|&nbsp; **flagged unverified:** 7
 
 ## A. Verified sources
 
@@ -64,6 +64,7 @@
 | S55 | Andela business model and engagement terms (2026) — *Andela / third-party reviews* | n.d. | Andela (founded Lagos 2014) places vetted engineers — acceptance reported near 0.5% — into client teams on long contracts (commonly 12-month minimums) at roughly $6,000–$14,000 per developer per month; talent are contractors, not employees; no short-term freelance tier; revenue is majority enterprise in North America and Western Europe. | <https://www.andela.com/> |
 | S56 | Stripe merchant availability in Ghana — *Stripe / Paystack* | n.d. | Stripe does not support Ghana as a direct merchant country; Ghana is reached through Stripe's extended network via Paystack (a Stripe company). A Ghana-registered company cannot open a standard Stripe account, and Stripe Connect Custom is therefore not directly available to a Ghanaian entity. | <https://stripe.com/global> |
 | S57 | African and Ghanaian freelance platforms (landscape) — *Tech In Africa / Truelancer / Twine listings* | n.d. | Ghana-focused and pan-African freelance platforms exist (e.g. CediJob, Gebeya, TERAWORK, Findworka, Solangigs) alongside global platforms listing Accra-based developers; public listings show Accra developers priced from about $2–$10/hr upward, anchoring local talent to global low-price competition. | <https://www.truelancer.com/software-development-freelancers-in-accra> |
+| S58 | Value Added Tax Act, 2025 (Act 1151) — Ghana — *Ghana Revenue Authority / Parliament of Ghana* | n.d. | Ghana's Value Added Tax Act, 2025 (Act 1151) took effect 1 January 2026, replacing the previous regime with a unified 20% charge (VAT 15% + NHIL 2.5% + GETFund 2.5% on the same taxable value); it abolishes the COVID-19 Health Recovery Levy, raises the VAT registration threshold for goods from GHS 200,000 to GHS 750,000, and makes NHIL and GETFund creditable as input tax. | <https://www.modernghana.com/news/1460334/new-vat-act-takes-effect-january-1-2026-as-gra.html> |
 
 ## B. Flagged as unverified (cited for principles only — confirm before relying on them)
 
@@ -72,6 +73,10 @@
 | S4 | Constitution of the Republic of Ghana, 1992 — Article 18 (privacy of home and property) | Foundation for privacy protection; read through Act 843 in practice. Text not re-read for this pack. |
 | S35 | NIST SP 800-63B-4 — Digital Identity Guidelines (authentication) | Authenticator and session requirements. Revision status should be confirmed before certification; cited for principles only. |
 | S37 | Mobile Money interoperability in Ghana (GhIPSS / BoG) | Interoperability across MTN MoMo, Telecel Cash and AT Money is live for transfers. Provider specifics must be re-checked before integrating. |
+| S59 | Codementor — on-demand developer help marketplace | Codementor is an on-demand one-to-one developer help marketplace; mentors set their own rates (reported $8–$15 per 15 minutes for newer mentors, $15–$30 for experienced), seats carry a 15-minute minimum then per-minute billing plus a service fee, most mentors respond within 10–30 minutes, and the site claims 12,000+ available developers. The platform fee is reported at 10–20% but that figure dates from a 2015 report and current terms were not verified. |
+| S60 | Growwr — AI-vetted African freelance platform | Growwr, launched May 2024 and based in Lagos, uses three proprietary AI systems (crawler, behavioural interview, matching) to vet African talent; the founders claim $1.5M paid out to talent, 3,000 businesses served, 19,000 applicants reduced to 1,100 vetted candidates (~5.8%), a team of eight, and operations across 13 countries including Ghana as its first customer. |
+| S61 | TERAWORK — Nigerian freelance marketplace with native apps | TERAWORK (founded 2018, Lagos) offers a freelance marketplace with payment escrow, task management, and post-work reviews, and ships native iOS and Android apps; reported at 15,000 freelancers and 6,000+ transactions, operating in Nigeria, Kenya, Ghana, the UK and North America. |
+| S62 | Hamzry — Nigerian freelancer marketplace launch (2025) | Hamzry launched in 2025 as a Nigerian-focused freelance marketplace with naira-native payments, reporting 1,800 freelancers signed up at launch, positioned against the difficulty Nigerian freelancers face getting noticed and paid on global platforms. |
 
 ## C. Assumption register (things we do **not** know yet)
 
