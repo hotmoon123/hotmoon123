@@ -1,0 +1,116 @@
+
+/* --- Display serif: Newsreader (SIL Open Font License 1.1) --
+   Vendored latin subset, self-hosted so no third-party request
+   is made when a visitor loads the page. */
+@font-face {
+  font-family: "Newsreader Variable";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../assets/fonts/newsreader-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Newsreader Variable";
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../assets/fonts/newsreader-latin-wght-italic.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ============================================================
+   BiteKasa design tokens — v2 "warm editorial"
+   Single source of truth for colour, type, space, radius,
+   elevation and motion. Documented in docs/DESIGN_SYSTEM.md.
+   Nothing in the app should hardcode a hex value or a px size
+   that exists here.
+   ============================================================ */
+
+:root {
+  /* --- Colour: paper, ink, two accents ---------------------- */
+  --paper: #f7eedb;          /* brand cream — the page */
+  --paper-raised: #fcf7ea;   /* cards, form surfaces */
+  --paper-deep: #efe3cc;     /* alternating band */
+  --ink: #241b18;            /* primary text */
+  --ink-soft: #5c4a40;       /* secondary text, 7.1:1 on paper */
+  --ink-muted: #7a675c;      /* captions, 4.9:1 on paper */
+  --red: #a71920;            /* brand red — one event per screen */
+  --red-deep: #7e1116;       /* text-safe red, 7.4:1 on paper */
+  --gold: #d5a12e;           /* hairline / rule only, never a fill */
+  --gold-deep: #8a6516;      /* gold where it must carry text */
+  --line: rgb(36 27 24 / 14%);
+  --line-strong: rgb(36 27 24 / 30%);
+  --on-dark: #f7eedb;        /* text on ink and on red */
+  --on-dark-soft: rgb(247 238 219 / 78%);
+
+  /* --- Type ------------------------------------------------- */
+  --font-display: "Newsreader Variable", Georgia, "Times New Roman", serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --text-xs: 0.75rem;      /* 12 — labels, captions */
+  --text-sm: 0.875rem;     /* 14 — meta, notes */
+  --text-base: 1.0625rem;  /* 17 — body */
+  --text-md: 1.1875rem;    /* 19 — lead paragraph */
+  --text-lg: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+  --text-xl: clamp(1.875rem, 1.3rem + 2.2vw, 2.625rem);   /* section titles */
+  --text-2xl: clamp(2.375rem, 1.4rem + 4vw, 3.75rem);     /* hero */
+  --text-3xl: clamp(2.75rem, 1.5rem + 6vw, 5rem);         /* closing plate */
+
+  --leading-tight: 1.02;
+  --leading-snug: 1.15;
+  --leading-body: 1.65;
+  --tracking-display: -0.02em;
+  --tracking-label: 0.16em;
+
+  /* --- Space: 4px base, 8px rhythm -------------------------- */
+  --space-1: 0.25rem;  /*  4 */
+  --space-2: 0.5rem;   /*  8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+  --space-8: 4rem;     /* 64 */
+  --space-9: 6rem;     /* 96 */
+
+  --gutter-sm: 1rem;
+  --gutter-md: 1.75rem;
+  --gutter-lg: 3rem;
+  --measure: 34rem;     /* comfortable reading width */
+  --content: 76rem;
+
+  /* --- Radius: editorial, tight ---------------------------- */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+
+  /* --- Elevation: warm, minimal ---------------------------- */
+  --shadow-card: 0 1px 0 rgb(36 27 24 / 6%);
+  --shadow-lift: 0 18px 44px -32px rgb(36 27 24 / 55%);
+  --shadow-float: 0 12px 34px -18px rgb(36 27 24 / 45%);
+
+  /* --- Motion: short, eased, never looping ----------------- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur: 180ms;
+  --dur-slow: 240ms;
+
+  /* --- Focus ----------------------------------------------- */
+  --focus-ring: 3px solid var(--red-deep);
+  --focus-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 1ms;
+    --dur: 1ms;
+    --dur-slow: 1ms;
+  }
+}
