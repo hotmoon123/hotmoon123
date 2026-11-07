@@ -998,6 +998,8 @@ main[id] {
 }
 .logo-intro-stage .liquid-glass-logo { width: 100%; height: 100%; }
 
+.logo-intro-blank { width: 100%; height: 100%; }
+
 .logo-intro-still {
   display: block;
   width: auto;
