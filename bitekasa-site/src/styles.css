@@ -976,7 +976,7 @@ main[id] {
   opacity: 1;
   transition: opacity 240ms ease-out;
 }
-/* Warm brand light behind the glass: red at the base, gold at the crown.
+/* Warm brand light over the cream ground: red at the base, gold at the crown.
    Purely decorative, and it never intercepts the tap that enters the site. */
 .logo-intro::before {
   content: "";
