@@ -1,0 +1,4 @@
+# Concept proposal — intentionally not indexed.
+# Flip to allow + add a Sitemap line when MYST WATER COMPANY adopts this site.
+User-agent: *
+Disallow: /

@@ -1,0 +1,41 @@
+{
+  "name": "mystwater-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Concept website for MYST WATER COMPANY (The Feel Good Water, Ghana) — a private proposal prepared by Caleb Bentum. Not an official business website.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "check:content": "node scripts/check-content.mjs",
+    "check:bundle": "node scripts/check-bundle-size.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.5",
+    "@fontsource/archivo-black": "^5.2.5",
+    "lucide-react": "^1.69.0",
+    "motion": "^14.8.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-icons": "^5.7.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@types/jest-axe": "^3.5.9",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/coverage-v8": "^5.1.0",
+    "jest-axe": "^11.0.0",
+    "jsdom": "^31.0.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
