@@ -1,0 +1,17 @@
+{
+  "name": "Myst Water — The Feel Good Water",
+  "short_name": "Myst Water",
+  "description": "Natural mineral water from the Dodowa aquifer, proudly made in Ghana. The Feel Good Water.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#012885",
+  "theme_color": "#012885",
+  "icons": [
+    {
+      "src": "assets/myst-logo.jpg",
+      "sizes": "150x150",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

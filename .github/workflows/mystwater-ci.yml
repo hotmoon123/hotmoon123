@@ -1,0 +1,58 @@
+name: MYST WATER concept CI
+
+on:
+  pull_request:
+    paths:
+      - 'mystwater-site/**'
+      - '.github/workflows/mystwater-ci.yml'
+      - '.github/workflows/mystwater-pages.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'mystwater-site/**'
+      - '.github/workflows/mystwater-ci.yml'
+      - '.github/workflows/mystwater-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mystwater-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mystwater-site
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mystwater-site/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Type-check
+        run: npm run typecheck
+      - name: Run automated tests and collect coverage
+        run: npm run test:coverage
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+      - name: Build production site (Pages subpath base)
+        run: npm run build -- --base=/hotmoon123/mystwater/
+      - name: Concept-integrity and bundle checks
+        run: |
+          npm run check:content
+          npm run check:bundle
+      - name: Archive coverage report
+        uses: actions/upload-artifact@v7
+        with:
+          name: mystwater-test-coverage-${{ github.run_id }}
+          path: mystwater-site/coverage
+          retention-days: 30

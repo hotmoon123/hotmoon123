@@ -55,6 +55,22 @@ jobs:
           test -s dist/robots.txt
           test -s dist/sitemap.xml
           test -s dist/privacy.html
+      - name: Build MYST WATER concept site into Pages subpath
+        working-directory: mystwater-site
+        run: |
+          npm ci
+          npm run typecheck
+          npm run build -- --base=/hotmoon123/mystwater/
+          npm run check:content
+          npm run check:bundle
+          mkdir -p ../bitekasa-site/dist/mystwater
+          cp -r dist/. ../bitekasa-site/dist/mystwater/
+      - name: Verify MYST WATER concept site files
+        run: |
+          test -s bitekasa-site/dist/mystwater/index.html
+          test -s bitekasa-site/dist/mystwater/privacy.html
+          test -s bitekasa-site/dist/mystwater/robots.txt
+          test -f bitekasa-site/dist/mystwater/assets/myst-logo.jpg
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
