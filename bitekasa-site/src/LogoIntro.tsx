@@ -8,6 +8,8 @@ import logoFull from '../assets/bitekasa-logo-full.png';
  * Rules this follows:
  * - Once per browser session, so a return visit is never delayed twice.
  * - The reveal plays in full and then the splash leaves on its own.
+ * - Nothing but the cream ground is painted until the glass is ready: no still
+ *   logo, no placeholder, so the logo can never appear before the animation.
  * - No button: tapping or clicking anywhere on the splash opens the site at
  *   once, and Enter or Escape do the same for keyboard users. A visitor who
  *   already knows what they want is never made to wait for the animation.
@@ -17,9 +19,11 @@ import logoFull from '../assets/bitekasa-logo-full.png';
  * - No WebGL, no slow network, or a failed module load all fall back to the same still.
  * - The page renders underneath the whole time, so nothing is blocked from loading.
  */
-const LiquidGlassLogo = lazy(() =>
-  import('./components/liquid-glass-logo').then((module) => ({ default: module.LiquidGlassLogo })),
-);
+// Start the chunk download as soon as this module is parsed, so the glass is
+// almost always ready before the splash is painted. A visitor must never see a
+// still logo standing in for the animation.
+const glassModule = import('./components/liquid-glass-logo');
+const LiquidGlassLogo = lazy(() => glassModule.then((module) => ({ default: module.LiquidGlassLogo })));
 
 const STORAGE_KEY = 'bitekasa-intro-seen';
 const HOLD_MS = 2400;
@@ -84,9 +88,12 @@ export default function LogoIntro() {
 
   if (!visible) return null;
 
+  // Reduced motion: no glass animation, so the finished logo is the honest
+  // static state. Everyone else gets blank cream until the glass is ready.
   const still = (
     <img className="logo-intro-still" src={logoFull} alt="" width={240} height={279} aria-hidden="true" />
   );
+  const blank = <div className="logo-intro-blank" aria-hidden="true" />;
 
   return (
     <div
@@ -101,7 +108,7 @@ export default function LogoIntro() {
         {reduced ? (
           still
         ) : (
-          <Suspense fallback={still}>
+          <Suspense fallback={blank}>
             <LiquidGlassLogo
               logo={logoFull}
               ending="logo"
@@ -111,7 +118,9 @@ export default function LogoIntro() {
                  glass tile so the splash belongs to the same palette as the
                  page it fades into. */
               background="#F7EEDB"
-              tileColor="#F1E5C9"
+              tileColor="#F7EEDB"
+              /* No square plate: the glass stays, but round. */
+              tile={false}
               logoColor="original"
               logoRelief={0}
               finalLogoScale={1}

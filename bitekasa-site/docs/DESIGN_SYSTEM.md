@@ -215,6 +215,15 @@ to an opaque colour, so the washes sit over the canvas rather than behind it;
 at 14–16% alpha they read as tint, not as a filter.) The glass tile is warm cream (`#F1E5C9`)
 rather than the component's default grey.
 
+**No square.** `tile={false}` — the glass plate is not drawn, so the reveal is
+round glass bending the cream ground and then the logo alone. Nothing square
+appears at any point, including the final frame.
+
+**Nothing before the glass.** The animation chunk is requested as soon as the
+splash module is parsed, and until it is ready the splash paints *blank cream* —
+never a still logo. The still image survives only for `prefers-reduced-motion`,
+where there is no animation to stand in for.
+
 **No button, and the whole screen is the way in.** A tap, click, Enter or Space
 opens the site immediately; Escape does the same. Left alone, the reveal plays in
 full and the splash leaves on its own (2.4s, then a 260ms fade). Scrolling is
