@@ -8,9 +8,10 @@ import logoFull from '../assets/bitekasa-logo-full.png';
  * Rules this follows:
  * - Once per browser session, so a return visit is never delayed twice.
  * - The reveal plays in full and then the splash leaves on its own.
- * - It ends on its own after the reveal, or early with Escape. There is no
- *   button on it: a stray tap or scroll must not swallow the animation, and the
- *   page underneath is what the visitor came for.
+ * - No button: tapping or clicking anywhere on the splash opens the site at
+ *   once, and Enter or Escape do the same for keyboard users. A visitor who
+ *   already knows what they want is never made to wait for the animation.
+ * - Scrolling does nothing: the page underneath stays where it was.
  * - `prefers-reduced-motion: reduce` gets the still artwork for a shorter beat instead
  *   of the droplet animation.
  * - No WebGL, no slow network, or a failed module load all fall back to the same still.
@@ -65,7 +66,10 @@ export default function LogoIntro() {
 
     const timer = window.setTimeout(dismiss, reduced ? REDUCED_HOLD_MS : HOLD_MS);
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') dismiss();
+      if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        dismiss();
+      }
     };
     window.addEventListener('keydown', onKey);
 
@@ -89,7 +93,9 @@ export default function LogoIntro() {
       className={`logo-intro${leaving ? ' is-leaving' : ''}`}
       role="dialog"
       aria-modal="true"
-      aria-label="BiteKasa is opening"
+      aria-label="BiteKasa is opening — tap, click or press Enter to enter the site"
+      onPointerDown={dismiss}
+      onClick={dismiss}
     >
       <div className="logo-intro-stage">
         {reduced ? (
@@ -101,7 +107,11 @@ export default function LogoIntro() {
               ending="logo"
               theme="light"
               depth={2.9}
-              background="#000000"
+              /* Brand ground, not the demo's black: cream paper with a warm
+                 glass tile so the splash belongs to the same palette as the
+                 page it fades into. */
+              background="#F7EEDB"
+              tileColor="#F1E5C9"
               logoColor="original"
               logoRelief={0}
               finalLogoScale={1}

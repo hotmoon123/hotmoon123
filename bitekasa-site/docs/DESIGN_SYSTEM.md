@@ -204,11 +204,19 @@ Raised paper, 1px line, `--shadow-float`, 44px buttons. On mobile it sits above
 the sticky bar (offset by 68px) so the two never overlap.
 
 ### 6.11 Splash (`LogoIntro.tsx`)
-Once per session, black, the logo finishes alone, `?intro=1` replays, `?intro=0`
-suppresses, focus restored, reduced motion honoured. **No button:** it ends on
-its own after the reveal (2.4s, then a 260ms fade) or early with Escape. Taps and
-scrolls deliberately do nothing, so the animation is never swallowed and a tap
-meant for the page underneath is never eaten by the overlay.
+Once per session, `?intro=1` replays, `?intro=0` suppresses, focus restored,
+reduced motion honoured. The logo finishes alone (`ending="logo"`,
+`finalLogoScale` 1, no second text reveal).
+
+**Ground:** brand cream `--paper`, not black, with two low-alpha radial washes
+behind the glass — red at the base, gold at the crown — so the splash and the
+page are visibly the same surface. The glass tile is warm cream (`#F1E5C9`)
+rather than the component's default grey.
+
+**No button, and the whole screen is the way in.** A tap, click, Enter or Space
+opens the site immediately; Escape does the same. Left alone, the reveal plays in
+full and the splash leaves on its own (2.4s, then a 260ms fade). Scrolling is
+ignored, so the page underneath never moves.
 
 ---
 
@@ -258,15 +266,17 @@ over the full lockup, swapping in the emblem crop is a one-file change.
 | `maskable-512.png` | Android maskable, emblem inside the 62% safe zone |
 | `site.webmanifest` | name, theme `#F7EEDB`, icon set |
 
-**v2.2 (7 Nov 2026): replaced at the owner's request.** The owner supplied a
-16×16 ICO showing the full lockup and asked for it to become the favicon. That
-frame is now the source for every size, so all surfaces show the same artwork.
+**v3 (7 Nov 2026): the full lockup, at full resolution.** The owner asked twice
+for the complete logo — crown, samosa, roll, *BiteKasa*, BITES, tagline and both
+phone numbers — to be the icon, and supplied the 1254×1254 lockup to cut it from.
+Every size is rendered straight from that original, so nothing is upscaled and
+the wordmark is legible from 48px up. The earlier 16×16 ICO (a thumbnail of the
+same design) is no longer the source; its softness is why.
 
-*Resolution limit, recorded honestly:* a 16×16 source cannot carry a wordmark.
-The tab icon is pixel-exact, but `icon-192`, `icon-512` and the maskable icon are
-honest upscales of it and read soft at home-screen size. The previous emblem set
-(cut from the 1254×1254 lockup) remains reproducible from that JPEG if a crisp
-large icon is wanted later.
+*Known trade-off, the owner's decision:* at 16px a full lockup cannot be read —
+it resolves to warm orange and red shapes that still identify the brand
+instantly. The emblem-only variant remains reproducible from the same JPEG if a
+more legible tab icon is ever wanted.
 
 
 ---

@@ -970,9 +970,22 @@ main[id] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000000;
+  /* Brand cream, so the splash and the page are the same surface. */
+  background: var(--paper);
+  cursor: pointer;
   opacity: 1;
   transition: opacity 240ms ease-out;
+}
+/* Warm brand light behind the glass: red at the base, gold at the crown.
+   Purely decorative, and it never intercepts the tap that enters the site. */
+.logo-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 48% at 50% 78%, rgba(167, 25, 32, 0.14), transparent 72%),
+    radial-gradient(46% 40% at 50% 16%, rgba(213, 161, 46, 0.16), transparent 74%);
 }
 .logo-intro.is-leaving { opacity: 0; pointer-events: none; }
 
