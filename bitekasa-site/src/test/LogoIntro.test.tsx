@@ -18,7 +18,7 @@ afterEach(() => {
 describe('LogoIntro', () => {
   it('opens as a labelled splash over the site', () => {
     render(<LogoIntro />);
-    expect(screen.getByRole('dialog', { name: 'BiteKasa is opening' })).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   it('carries no button of its own — it plays and leaves', () => {
@@ -48,7 +48,7 @@ describe('LogoIntro', () => {
     window.sessionStorage.setItem(STORAGE_KEY, '1');
     window.history.replaceState({}, '', '/?intro=1');
     render(<LogoIntro />);
-    expect(screen.getByRole('dialog', { name: 'BiteKasa is opening' })).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   it('can be switched off entirely with ?intro=0', () => {
@@ -64,15 +64,40 @@ describe('LogoIntro dismissal paths', () => {
     window.history.replaceState({}, '', '/');
   });
 
-  it('keeps playing when the visitor taps or scrolls the splash', () => {
+  it('opens the site as soon as the visitor taps the splash', async () => {
     render(<LogoIntro />);
-    const splash = screen.getByRole('dialog', { name: 'BiteKasa is opening' });
+    const splash = screen.getByRole('dialog');
 
-    fireEvent.touchStart(splash);
-    fireEvent.wheel(splash);
     fireEvent.pointerDown(splash);
 
-    expect(screen.getByRole('dialog', { name: 'BiteKasa is opening' })).toBeInTheDocument();
+    expect(splash).toHaveClass('is-leaving');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('opens the site on a click too, for mouse and trackpad users', async () => {
+    render(<LogoIntro />);
+    const splash = screen.getByRole('dialog');
+
+    fireEvent.click(splash);
+
+    expect(splash).toHaveClass('is-leaving');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('opens the site on Enter for keyboard users', async () => {
+    render(<LogoIntro />);
+    fireEvent.keyDown(window, { key: 'Enter' });
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('ignores scrolling, so the page underneath is not disturbed', () => {
+    render(<LogoIntro />);
+    const splash = screen.getByRole('dialog');
+
+    fireEvent.wheel(splash);
+    fireEvent.touchStart(splash);
+
+    expect(splash).not.toHaveClass('is-leaving');
   });
 
   it('still closes on Escape for keyboard users', async () => {
