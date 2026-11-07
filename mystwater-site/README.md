@@ -51,6 +51,14 @@ Where the two published phone numbers disagree, **both are shown, labelled by so
 - Form does **not** silently submit: it opens WhatsApp/email with the message pre‑filled (or a Netlify Form if deployed on Netlify with `data-netlify`). No analytics, cookies or trackers.
 - Imagery is the supplied brand artwork, unmodified, used for proposal evaluation only.
 
+## Intro / splash — “Liquid Glass Logo” (what it is, and how to swap it)
+
+On every page load the app opens with a full‑screen MYST‑indigo intro: the supplied logo (`public/assets/myst-logo.jpg`, byte‑identical to the file shared on 2026‑11‑07) plays a liquid‑glass entrance — a glossy sphere morphs into the mark, with a wavelength‑ordered bevel ring, chromatic edge streaks and a measured, responsive fit — and then finishes on the original logo alone. **No button is required**: the animation auto‑completes (~2.7s, or ~0.35s under `prefers-reduced-motion`), and tapping/clicking anywhere (or pressing `Escape`/`Enter`/`Space`) reveals the site immediately. The rest of the site renders underneath the overlay, so nothing else waits on it. The splash background is drawn from the sampled MYST palette (indigo `#012885`, deep navy, campaign blue `#0257CC`, cyan `#25AAE2`, leaf `#8DC540`) — never red.
+
+**Provenance — read this honestly.** The brief asked to install the ReactDrops “Liquid Glass Logo” component (ID `liquid-glass-logo`) via `npx shadcn@latest add https://reactdrops.dev/r/liquid-glass-logo.json`. That registry file could not be fetched from this sandbox (network is restricted to npm/GitHub; the fetch fails at the TLS handshake), so what ships is an **original implementation** in `src/components/liquid-glass-logo.tsx` + `src/components/SplashScreen.tsx`, written to the requested feature set (sphere‑to‑tile entrance, wavelength bevel, chromatic fringes, measured fitting, reduced‑motion support, image fallback with a CSS‑only wordmark, single `ending="logo"`, `depth={2.9}`). It is **not** the ReactDrops component and carries no ReactDrops licence terms.
+
+**Swap in the real ReactDrops component:** from a network‑open machine, fetch the JSON, copy its `files[]` contents over `src/components/liquid-glass-logo.tsx` (and any dependencies it declares), keep the `SplashScreen.tsx` call site (`<LiquidGlassLogo logo={asset('assets/myst-logo.jpg')} ending="logo" theme="dark" depth={2.9} style={{ height: 480 }} onFinish={requestDone} />`) and re‑run `npm run typecheck && npm run test`.
+
 ## Adoption checklist (what changes the day MYST WATER says yes)
 
 1. Replace placeholder contact labels with the company's decision (retire one phone number; publish hours, MOQ, price list, delivery zones — edit `src/content.ts` only).

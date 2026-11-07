@@ -345,3 +345,142 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ============================================================
+   Splash / intro — MYST liquid-glass logo entrance
+   ============================================================ */
+.splash {
+  position: fixed; inset: 0; z-index: 120; display: grid; place-items: center;
+  overflow: hidden; cursor: pointer; color-scheme: dark;
+  /* MYST palette gradients — indigo depth, campaign-blue glow, cyan light, leaf mist */
+  background:
+    radial-gradient(1100px 720px at 50% -18%, rgb(37 170 226 / 64%), transparent 62%),
+    radial-gradient(900px 620px at 50% 118%, rgb(141 197 64 / 36%), transparent 58%),
+    radial-gradient(1300px 900px at -18% 55%, rgb(2 87 204 / 55%), transparent 60%),
+    radial-gradient(1300px 900px at 118% 45%, rgb(12 45 110 / 62%), transparent 60%),
+    linear-gradient(164deg, #012885 0%, #20386f 46%, #0a1830 100%);
+  animation: splash-in 480ms var(--ease) both;
+  transition: opacity 260ms var(--ease), visibility 260ms var(--ease);
+}
+.splash.is-closing { opacity: 0; visibility: hidden; pointer-events: none; }
+.splash:focus-visible { outline: 3px solid var(--cyan); outline-offset: -6px; }
+.splash-glow { position: absolute; pointer-events: none; border-radius: 50%; filter: blur(64px); }
+.splash-glow--top {
+  width: 54vmin; height: 54vmin; top: -15vmin; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, rgb(37 170 226 / 48%), transparent 70%);
+  animation: splash-breathe 4.4s ease-in-out infinite;
+}
+.splash-glow--bottom {
+  width: 62vmin; height: 62vmin; bottom: -20vmin; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, rgb(2 87 204 / 42%), transparent 70%);
+}
+.splash-inner { position: relative; display: grid; place-items: center; padding: var(--space-4); }
+.splash-hint {
+  margin-top: var(--space-5); font-size: var(--text-2xs, 0.68rem); font-weight: 600;
+  letter-spacing: 0.24em; text-transform: uppercase; text-align: center;
+  color: rgb(233 247 248 / 72%); opacity: 0;
+  animation: splash-hint-in 620ms var(--ease) 2.05s forwards;
+}
+@keyframes splash-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes splash-breathe { 0%, 100% { opacity: 0.7 } 50% { opacity: 1 } }
+@keyframes splash-hint-in { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+
+/* Liquid glass logo — stages: sphere → morphing tile → settled original logo */
+.lg-logo { display: grid; place-items: center; }
+.lg-stage { position: relative; display: grid; place-items: center; }
+.lg-tile {
+  position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden;
+  background: #ffffff; /* matches the supplied logo jpg, so the morph stays seamless */
+  animation: lg-morph 2.1s cubic-bezier(0.22, 1.28, 0.36, 1) both;
+}
+.lg-img {
+  width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none;
+  animation: lg-img-in 2.1s ease both;
+}
+.lg-specular {
+  position: absolute; top: -38%; bottom: -38%; left: -62%; width: 44%;
+  transform: rotate(18deg) translateX(0);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 88%), transparent);
+  filter: blur(2px); mix-blend-mode: screen; pointer-events: none;
+  animation: lg-sweep 2.25s cubic-bezier(0.4, 0, 0.2, 1) 0.18s both;
+}
+.lg-bevel {
+  position: absolute; inset: 0; pointer-events: none; border-radius: 50%;
+  padding: 3.5px;
+  background: conic-gradient(from 215deg,
+    #25AAE2 0deg, #E9F7F8 60deg, #0257CC 120deg, #8DC540 158deg,
+    #25AAE2 200deg, #012885 268deg, #25AAE2 330deg, #25AAE2 360deg);
+  /* keep only the outer band: hollow ring mask */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+  opacity: var(--lg-bevel, 0.62);
+  animation: lg-bevel-radius 2.25s cubic-bezier(0.22, 1.2, 0.36, 1) both, lg-bevel-spin 2.25s ease-out both;
+}
+.lg-chroma { position: absolute; inset: 0; border-radius: 50%; pointer-events: none; opacity: 0; }
+.lg-chroma--cyan { border: 3px solid rgb(37 170 226 / 90%); transform: translate(-3px, 1px); animation: lg-chroma 2.3s ease both; }
+.lg-chroma--blue { border: 3px solid rgb(2 87 204 / 90%); transform: translate(2.5px, -2px); animation: lg-chroma 2.3s 60ms ease both; }
+.lg-chroma--leaf { border: 3px solid rgb(141 197 64 / 88%); transform: translate(1.5px, 3px); animation: lg-chroma 2.3s 120ms ease both; }
+
+@keyframes lg-morph {
+  0%   { border-radius: 50%; transform: scale(0.42) translateY(2.4rem); opacity: 0; box-shadow: 0 0 0 rgb(0 0 0 / 0%); }
+  10%  { opacity: 1; box-shadow: 0 34px 90px rgb(1 12 34 / 60%), inset 0 2px 2px rgb(255 255 255 / 95%), inset 0 -20px 34px rgb(18 60 140 / 30%); }
+  44%  { border-radius: 50%; transform: scale(1.02) translateY(0); }
+  70%  { border-radius: 30px; transform: scale(0.97); }
+  84%  { transform: scale(1.045); }
+  100% { border-radius: 0; transform: scale(1) translateY(0); opacity: 1; box-shadow: 0 0 0 rgb(0 0 0 / 0%); }
+}
+@keyframes lg-img-in {
+  0%   { opacity: 0; transform: scale(1.22); }
+  26%  { opacity: 0.2; }
+  55%  { opacity: 1; }
+  84%  { transform: scale(0.985); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes lg-sweep {
+  0%   { left: -62%; opacity: 0; }
+  18%  { opacity: 1; }
+  68%  { left: 132%; opacity: 0; }
+  100% { left: 132%; opacity: 0; }
+}
+@keyframes lg-bevel-radius {
+  0%   { border-radius: 50%; }
+  70%  { border-radius: 30px; }
+  100% { border-radius: 0; opacity: 0; }
+}
+@keyframes lg-bevel-spin {
+  0%   { transform: rotate(0deg); filter: hue-rotate(-36deg) saturate(1.5); opacity: 0; }
+  16%  { opacity: var(--lg-bevel, 0.62); }
+  55%  { transform: rotate(150deg); filter: hue-rotate(0deg) saturate(1); }
+  100% { transform: rotate(205deg); opacity: 0; }
+}
+@keyframes lg-chroma {
+  0%, 22% { opacity: 0; }
+  42%     { opacity: 0.95; }
+  78%     { opacity: 0.35; }
+  100%    { opacity: 0; border-radius: 0; }
+}
+
+/* CSS-only fallback if the supplied logo cannot load */
+.lg-wordmark {
+  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 2px;
+  background: #ffffff; color: #012885;
+}
+.lg-wordmark span { font-family: var(--font-display); font-size: calc(var(--lg-size, 480px) * 0.30); line-height: 1; letter-spacing: 0.02em; }
+.lg-wordmark small { font-family: var(--font-sans); font-weight: 700; font-size: calc(var(--lg-size, 480px) * 0.065); letter-spacing: 0.42em; color: #0257CC; }
+
+/* Reduced motion: settle instantly on the original logo */
+.lg-logo--reduced .lg-tile,
+.lg-logo--reduced .lg-img { animation: none; }
+.lg-logo--reduced .lg-tile { border-radius: 0; transform: none; box-shadow: none; background: transparent; }
+.lg-logo--reduced .lg-img { opacity: 1; transform: none; }
+.lg-logo--reduced .lg-bevel,
+.lg-logo--reduced .lg-chroma,
+.lg-logo--reduced .lg-specular { display: none; }
+.lg-logo--reduced + .splash-hint,
+.splash:has(.lg-logo--reduced) .splash-hint { animation-delay: 150ms; }
+
+@media (max-width: 480px) {
+  .splash-hint { letter-spacing: 0.18em; font-size: 0.62rem; }
+}
