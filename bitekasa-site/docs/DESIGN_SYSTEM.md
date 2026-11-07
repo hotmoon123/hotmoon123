@@ -258,8 +258,16 @@ over the full lockup, swapping in the emblem crop is a one-file change.
 | `maskable-512.png` | Android maskable, emblem inside the 62% safe zone |
 | `site.webmanifest` | name, theme `#F7EEDB`, icon set |
 
-Source: the 1254×1254 JPEG lockup the owner supplied on 6 November 2026. The
-original file is not modified by this process.
+**v2.2 (7 Nov 2026): replaced at the owner's request.** The owner supplied a
+16×16 ICO showing the full lockup and asked for it to become the favicon. That
+frame is now the source for every size, so all surfaces show the same artwork.
+
+*Resolution limit, recorded honestly:* a 16×16 source cannot carry a wordmark.
+The tab icon is pixel-exact, but `icon-192`, `icon-512` and the maskable icon are
+honest upscales of it and read soft at home-screen size. The previous emblem set
+(cut from the 1254×1254 lockup) remains reproducible from that JPEG if a crisp
+large icon is wanted later.
+
 
 ---
 
