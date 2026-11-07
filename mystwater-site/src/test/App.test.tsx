@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { describe, expect, it } from 'vitest';
 import App from '../App';
@@ -44,6 +44,19 @@ describe('Myst Water concept site', () => {
     expect(within(form).getByLabelText(/business name/i)).toBeRequired();
     expect(within(form).getByLabelText(/area/i)).toBeRequired();
     expect(within(form).getByLabelText(/whatsapp \/ phone/i)).toBeRequired();
+  });
+
+  it('reveals the website after the intro overlay is tapped', async () => {
+    render(<App />);
+    // Intro overlay is up on open; taps anywhere dismiss it.
+    fireEvent.pointerDown(screen.getByRole('button', { name: /continue to the myst water website/i }));
+    await waitFor(
+      () => {
+        expect(screen.queryByRole('button', { name: /continue to the myst water website/i })).not.toBeInTheDocument();
+      },
+      { timeout: 2500 },
+    );
+    expect(screen.getByRole('main')).toBeInTheDocument();
   });
 
   it('has no detectable accessibility violations', async () => {
