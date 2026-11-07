@@ -209,8 +209,10 @@ reduced motion honoured. The logo finishes alone (`ending="logo"`,
 `finalLogoScale` 1, no second text reveal).
 
 **Ground:** brand cream `--paper`, not black, with two low-alpha radial washes
-behind the glass — red at the base, gold at the crown — so the splash and the
-page are visibly the same surface. The glass tile is warm cream (`#F1E5C9`)
+over it — red at the base, gold at the crown, both away from the logo itself —
+so the splash and the page are visibly the same surface. (The WebGL plate clears
+to an opaque colour, so the washes sit over the canvas rather than behind it;
+at 14–16% alpha they read as tint, not as a filter.) The glass tile is warm cream (`#F1E5C9`)
 rather than the component's default grey.
 
 **No button, and the whole screen is the way in.** A tap, click, Enter or Space
