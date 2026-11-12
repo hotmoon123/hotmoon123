@@ -18,8 +18,8 @@ export default function Packs() {
         </Reveal>
 
         <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
-          {PACKS.map((pack) => (
-            <Reveal key={pack.id} className={`product-pack ${pack.className}`}>
+          {PACKS.map((pack, index) => (
+            <Reveal key={pack.id} delay={index * 0.06} className={`product-pack ${pack.className}`}>
               <h3 className="pack-name">{pack.name}</h3>
               <p className="pack-price">{cedi(pack.price)}</p>
               <p className="pack-description">{packContents(pack)}</p>

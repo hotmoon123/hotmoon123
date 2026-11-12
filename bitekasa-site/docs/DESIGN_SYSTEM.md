@@ -229,6 +229,38 @@ opens the site immediately; Escape does the same. Left alone, the reveal plays i
 full and the splash leaves on its own (2.4s, then a 260ms fade). Scrolling is
 ignored, so the page underneath never moves.
 
+### 6.12 Motion language
+
+Motion here has one job: confirm that something happened. It never decorates,
+never loops, and never delays a task.
+
+| Token | Value | Used for |
+|---|---|---|
+| `--dur-fast` | 140ms | hover, focus, press |
+| `--dur` | 180ms | selection, totals, card lift |
+| `--dur-slow` | 240ms | section entrances, sticky bar, splash handoff |
+| `--ease` | `cubic-bezier(0.22,0.61,0.36,1)` | entrances — decelerate into place |
+| `--ease-in` | `cubic-bezier(0.55,0,0.9,0.35)` | exits — accelerate away |
+| `--stagger` | 60ms | one beat between siblings |
+| `--lift` | 2px | the only distance a card may move |
+
+**What moves, and why**
+
+| Element | Motion | Reason |
+|---|---|---|
+| Sections | 10px rise + fade, once, 240ms | Orientation: content arrived, it did not jump |
+| Pack cards | 2px lift + deeper shadow on hover, 180ms | Feedback: the card is targetable |
+| Pack cards | 60ms stagger on entrance | Rhythm: three cards read in order |
+| Buttons | 1px sink on press, 140ms | Feedback: the press registered |
+| Sticky bar | Rises 12px once, 240ms | Orientation: the shortcut exists |
+| Builder total | 4px tick on value change, 180ms | Feedback: the number is new, not stale |
+| Splash → page | Logo lifts 8px and fades, 240ms | Continuity: one surface becomes another |
+
+**Rules:** transforms and opacity only (compositor work, no layout); pointer-only
+hover so nothing sticks on touch; nothing animates a price in a way that hides
+its value; `prefers-reduced-motion` collapses every duration to 1ms and every
+distance to zero — motion is removed, not merely shortened.
+
 ---
 
 ## 7. Images
