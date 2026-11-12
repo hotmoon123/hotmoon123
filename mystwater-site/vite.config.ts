@@ -1,9 +1,8 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react()],
   server: {
     host: '0.0.0.0',
     allowedHosts: ['.e2b.app'],
@@ -19,7 +18,7 @@ export default defineConfig({
     clearMocks: true,
     coverage: {
       provider: 'v8',
-      include: ['src/App.tsx'],
+      include: ['src/App.tsx', 'src/lib/**', 'src/content.ts'],
       reporter: ['text', 'json-summary', 'html'],
       thresholds: { statements: 70, branches: 50, functions: 70, lines: 75 },
     },

@@ -1,4 +1,3 @@
-@import "tailwindcss";
 @import "./styles/tokens.css";
 
 /* ============================================================
@@ -484,3 +483,15 @@ img { display: block; max-width: 100%; }
 @media (max-width: 480px) {
   .splash-hint { letter-spacing: 0.18em; font-size: 0.62rem; }
 }
+
+/* ============================================================
+   Next iteration (unreleased): error boundary + vCard save
+   ============================================================ */
+.btn--sm { min-height: 44px; padding-inline: 1.1rem; font-size: var(--text-xs); }
+
+.contact-save { margin-bottom: var(--space-4); text-decoration: none; }
+
+.error-boundary { display: grid; gap: var(--space-4); justify-items: start; padding-block: var(--space-9); }
+.error-boundary-title { font-family: var(--font-display); font-size: var(--text-lg); color: var(--navy-deep); }
+.error-boundary-copy { color: var(--ink-soft); max-width: 34rem; }
+.error-boundary-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }

@@ -130,6 +130,14 @@ export const FAQS = [
     a: 'Call or WhatsApp either number on this page, or send us a message on Instagram @mystwater. Tell us your address and how many packs you need — we confirm price, delivery and payment before dispatch.',
   },
   {
+    q: 'I’m a regular — how do I reorder?',
+    a: 'Message us on WhatsApp or call — “more packs on Monday” is exactly how our customers do it. Tip: tap “Save MYST to your contacts” in Contact, and reordering is one tap, every time.',
+  },
+  {
+    q: 'What happens to my details when I order?',
+    a: 'This website keeps nothing — no account, no cookies, no trackers. You order like any ordinary WhatsApp message or phone call, and the few details you share in that conversation (address, pack count) are used to deliver your order.',
+  },
+  {
     q: 'How do I become a stockist or distributor?',
     a: 'Use the stockist form on this page — it reaches our sales line with your business name, area and how many packs you expect to move. Minimum order quantity, trade pricing and delivery terms: on enquiry.',
   },

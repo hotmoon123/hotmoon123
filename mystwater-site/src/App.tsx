@@ -3,6 +3,7 @@ import Contact from './components/Contact';
 import Delivery from './components/Delivery';
 import Faq from './components/Faq';
 import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Products from './components/Products';
@@ -25,17 +26,19 @@ export default function App() {
         Skip to content
       </a>
       <Header />
-      <main id="main">
-        <Hero />
-        <TrustStrip />
-        <Products />
-        <Wholesale />
-        <Delivery />
-        <Source />
-        <Reviews />
-        <Faq />
-        <Contact />
-      </main>
+      <ErrorBoundary>
+        <main id="main">
+          <Hero />
+          <TrustStrip />
+          <Products />
+          <Wholesale />
+          <Delivery />
+          <Source />
+          <Reviews />
+          <Faq />
+          <Contact />
+        </main>
+      </ErrorBoundary>
       <Footer />
       <StickyCta />
     </>
