@@ -98,10 +98,13 @@
   --shadow-float: 0 16px 40px -26px rgb(36 27 24 / 40%);
 
   /* --- Motion: short, eased, never looping ----------------- */
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --dur-fast: 140ms;
-  --dur: 180ms;
-  --dur-slow: 240ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);   /* entrances: decelerate in */
+  --ease-in: cubic-bezier(0.55, 0, 0.9, 0.35); /* exits: accelerate away */
+  --dur-fast: 140ms;   /* state changes: hover, focus, press */
+  --dur: 180ms;        /* element change: selection, totals */
+  --dur-slow: 240ms;   /* entrance: sections, sticky bar, handoff */
+  --stagger: 60ms;     /* gap between siblings in one entrance */
+  --lift: 2px;         /* the only distance a card is allowed to move */
 
   /* --- Focus ----------------------------------------------- */
   --focus-ring: 3px solid var(--red-deep);
@@ -113,5 +116,7 @@
     --dur-fast: 1ms;
     --dur: 1ms;
     --dur-slow: 1ms;
+    --stagger: 0ms;
+    --lift: 0px;
   }
 }

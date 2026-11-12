@@ -94,7 +94,10 @@ export default function OrderBuilder() {
             ) : (
               <>
                 <p className="builder-total">
-                  {cedi(summary.total)}
+                  {/* Re-keyed on the value: the tick fires on a real change, never on a re-render. */}
+                  <span key={summary.total} className="builder-total-value">
+                    {cedi(summary.total)}
+                  </span>
                   <span className="builder-total-meta">
                     {summary.packCount} {summary.packCount === 1 ? 'pack' : 'packs'} · {summary.pieceCount} pieces
                   </span>

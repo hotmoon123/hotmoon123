@@ -974,7 +974,7 @@ main[id] {
   background: var(--paper);
   cursor: pointer;
   opacity: 1;
-  transition: opacity 240ms ease-out;
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
 }
 /* Warm brand light over the cream ground: red at the base, gold at the crown.
    Purely decorative, and it never intercepts the tap that enters the site. */
@@ -987,7 +987,7 @@ main[id] {
     radial-gradient(60% 48% at 50% 78%, rgba(167, 25, 32, 0.14), transparent 72%),
     radial-gradient(46% 40% at 50% 16%, rgba(213, 161, 46, 0.16), transparent 74%);
 }
-.logo-intro.is-leaving { opacity: 0; pointer-events: none; }
+.logo-intro.is-leaving { opacity: 0; transform: translateY(-8px) scale(0.998); pointer-events: none; }
 
 .logo-intro-stage {
   width: min(720px, 92vw);
@@ -1010,6 +1010,76 @@ main[id] {
 
 @media (prefers-reduced-motion: reduce) {
   .logo-intro { transition: none; }
+}
+
+/* ============================================================
+   14c. Motion language
+   One rule set: motion confirms, it never decorates. Distances are
+   2-12px, durations come from the token scale, and nothing loops.
+   ============================================================ */
+
+/* Cards: a 2px lift and a deeper shadow. Transform and shadow only, so
+   the grid never reflows and the price never moves. Pointer devices only,
+   because a hover state that sticks on touch reads as a bug. */
+@media (hover: hover) and (pointer: fine) {
+  .product-pack {
+    transition:
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+  .product-pack:hover {
+    transform: translateY(calc(-1 * var(--lift)));
+    box-shadow: var(--shadow-lift);
+    border-color: var(--line-strong);
+  }
+}
+
+/* Press: the control sinks one pixel. Released on pointer-up, so it reads
+   as tactile rather than as a page transition. */
+.whatsapp-button,
+.call-button,
+.builder-cta,
+.builder-reset,
+.stepper-button,
+.header-cta,
+.mobile-menu-cta,
+.pack-link {
+  transition:
+    transform var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+.whatsapp-button:active,
+.call-button:active,
+.builder-cta:active:not(:disabled),
+.builder-reset:active:not(:disabled),
+.stepper-button:active:not(:disabled),
+.header-cta:active,
+.mobile-menu-cta:active {
+  transform: translateY(1px);
+}
+
+/* Mobile action bar: rises once when the page settles. Never repeats. */
+@keyframes sticky-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+.sticky-cta {
+  animation: sticky-rise var(--dur-slow) var(--ease) 120ms both;
+}
+
+/* Order builder: the number ticks into place when the total changes. The
+   element is re-keyed on change, so the animation only fires on a real
+   value change - never on a re-render, never in a loop. */
+@keyframes total-tick {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+.builder-total-value {
+  display: inline-block;
+  animation: total-tick var(--dur) var(--ease) both;
 }
 
 /* ============================================================
