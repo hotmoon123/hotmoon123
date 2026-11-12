@@ -66,6 +66,9 @@ jobs:
           mkdir -p ../bitekasa-site/dist/mystwater
           cp -r dist/. ../bitekasa-site/dist/mystwater/
       - name: Verify MYST WATER concept site files
+        # Job-level defaults put us in bitekasa-site/, so these paths are
+        # relative to the repository root and need that reset explicitly.
+        working-directory: .
         run: |
           test -s bitekasa-site/dist/mystwater/index.html
           test -s bitekasa-site/dist/mystwater/privacy.html
