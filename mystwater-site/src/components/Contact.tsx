@@ -1,6 +1,7 @@
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, Download, Mail, MapPin, Phone } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
 import { telLink } from '../lib/whatsapp';
+import { mystVCardDataUri } from '../lib/vcard';
 import { SITE } from '../content';
 
 export default function Contact() {
@@ -45,6 +46,10 @@ export default function Contact() {
                 {SITE.hoursNote}
               </span>
             </div>
+
+            <a className="btn btn--ghost btn--sm contact-save" href={mystVCardDataUri()} download="myst-water.vcf">
+              <Download size={16} aria-hidden="true" /> Save MYST to your contacts
+            </a>
 
             <div className="socials" aria-label="Myst Water on social media">
               <a className="social" href={SITE.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Myst Water on Instagram">
