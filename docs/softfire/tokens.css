@@ -1,0 +1,256 @@
+/* ============================================================
+   FACES
+   Self-hosted. Inter carries everything that speaks; JetBrains Mono
+   carries every number and every filing label. Weights 400/600/700
+   only — 500 exists in the file but the system does not use it.
+   ============================================================ */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/inter-latin-var.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
+                 U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('assets/jetbrains-mono-latin-var.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
+                 U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ============================================================
+   SOFTFIRE — tokens v4
+   Read this before drawing anything.
+
+   Sources obeyed:
+     · UI Design System Master Prompt (Janus Tiu) — this file is
+       that document, filled in. Colour / typography / spacing /
+       radius / shadow / components / rules.
+     · "Name it, don't describe it" (keywords.pdf) — every value
+       below is named, not adjectives.
+     · Locked: radius 5 everywhere. Flame palette. Inter.
+
+   Three rules that override taste:
+     1. One accent per surface. Gold. Cherry is a surface, never ink.
+     2. One gradient (the logo) and one glow (the hero). Nowhere else.
+     3. Numbers are mono and tabular. Words are Inter. Never mixed.
+   ============================================================ */
+
+:root {
+
+  /* ---- TIER 1 — PRIMITIVE ----------------------------------
+     The flame. Five colours, no sixth. ------------------------ */
+
+  --c-charcoal:     #16100D;   /* the field */
+  --c-charcoal-2:   #1C1512;
+  --c-charcoal-3:   #261A16;
+  --c-cream:        #F2E9E4;   /* ink on charcoal — 15.75:1 */
+  --c-gold:         #F4A300;   /* THE accent — 9.05:1 on charcoal */
+  --c-orange:       #E85D04;   /* focus + link — 5.38:1 */
+  --c-cherry:       #8C1C13;   /* SURFACE ONLY — 2.06:1 as text ✗ */
+  --c-cherry-deep:  #5C100C;
+  --c-ember:        #B33A16;   /* gradient stop only */
+  --c-muted:        #A8968D;   /* 6.65:1 — second line, always grey */
+  --c-muted-deep:   #8F7F76;   /* 3.21 on cream — large only */
+  --c-success:      #4CAF7D;
+  --c-offline:      #6E5F57;
+
+  /* ---- SPACE — 4px base unit, 8px layout rhythm -------------
+     Layout gaps = multiples of 8. Inside a component, 4 and 12
+     are the only half-steps allowed. Nothing else exists. ------ */
+
+  --s-0:  0;
+  --s-1:  4px;    /* half-step: inside a row */
+  --s-2:  8px;    /* base */
+  --s-3:  12px;   /* half-step: label to content */
+  --s-4:  16px;   /* the one gutter */
+  --s-6:  24px;   /* block gap */
+  --s-8:  32px;   /* card padding, large */
+  --s-10: 40px;
+  --s-12: 48px;   /* section inner */
+  --s-16: 64px;
+  --s-24: 96px;   /* section */
+  --s-32: 128px;  /* hero */
+
+  /* ---- TYPE — Inter for words, JetBrains Mono for numbers ---
+     Scale 1.333. Base 16. Four steps per screen, never five. -- */
+
+  --fs-display: clamp(2.75rem, 6.2vw, 4.1875rem);  /* 44 → 67 */
+  --fs-h1:      clamp(2.125rem, 3.9vw, 3.125rem);  /* 34 → 50 */
+  --fs-h2:      clamp(1.75rem, 2.9vw, 2.375rem);   /* 28 → 38 */
+  --fs-h3:      clamp(1.3125rem, 1.8vw, 1.75rem);  /* 21 → 28 */
+  --fs-h4:      1.125rem;                          /* 18 */
+  --fs-body:    1rem;                              /* 16 — floor */
+  --fs-small:   0.875rem;                          /* 14 */
+  --fs-label:   0.75rem;                           /* 12 */
+  --fs-data:    0.9375rem;                         /* 15 */
+
+  /* Three weights. 500 does not exist in this system. */
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --lh-display: 1.00;
+  --lh-h1: 1.05;
+  --lh-h2: 1.12;
+  --lh-h3: 1.20;
+  --lh-h4: 1.35;
+  --lh-body: 1.60;
+  --lh-small: 1.50;
+  --lh-label: 1.40;
+
+  --tr-display: -0.03em;
+  --tr-h1: -0.02em;
+  --tr-h2: -0.015em;
+  --tr-h3: -0.01em;
+  --tr-label: 0.08em;
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --measure-prose: 64ch;
+  --measure-lede: 46ch;
+
+  /* tabular figures — every number in this site lines up */
+  --num: "tnum" 1, "lnum" 1;
+
+  /* ---- MOTION — six durations, four curves, nothing else ---- */
+
+  --dur-instant:  80ms;
+  --dur-micro:    120ms;
+  --dur-component:180ms;
+  --dur-panel:    240ms;
+  --dur-page:     280ms;
+  --dur-emphatic: 400ms;
+
+  --ease-enter: cubic-bezier(.16, 1, .3, 1);
+  --ease-exit:  cubic-bezier(.4, 0, 1, 1);
+  --ease-move:  cubic-bezier(.4, 0, .2, 1);
+  --ease-loop:  linear;
+
+  --stagger: 40ms;      /* per item; group must finish under 1 s */
+
+  /* ---- SHAPE — one radius. No pills. ----------------------- */
+
+  --r-1: 5px;
+  --bw-1: 1px;
+  --bw-2: 2px;
+
+  /* ---- SIZE — the numbers that stop invention --------------- */
+
+  --btn-h:    44px;   /* the touch floor */
+  --chip-h:   28px;
+  --row-h:    52px;   /* list rows, 44–56 band */
+  --nav-h:    64px;
+  --rail-w:   0px;    /* becomes 112px at ≥1024 */
+
+
+  /* ---- TIER 2 — SEMANTIC ---------------------------------- */
+
+  --surface-page:  var(--c-charcoal);
+  --surface-raised:var(--c-charcoal-2);
+  --surface-fill:  var(--c-cherry);           /* cream text 7.66:1 */
+  --surface-sunken:rgb(0 0 0 / .22);
+
+  --text-primary: var(--c-cream);             /* 15.75:1 */
+  --accent:       var(--c-gold);              /* 9.05:1  — THE accent */
+  --text-link:    var(--c-orange);            /* 5.38:1 */
+  --text-muted:   var(--c-muted);             /* 6.65:1  — second line */
+
+  --text-on-light:        var(--c-charcoal);
+  --text-on-light-accent: var(--c-cherry);    /* 7.66:1 on cream */
+  --text-on-light-muted:  var(--c-muted-deep);/* 3.21 — large only */
+
+  /* 12% is decoration (dividers). 38% is the control floor.
+     WCAG 1.4.11 needs 3:1 for a boundary that carries meaning:
+     28% measured 2.28 and failed; 38% measures 3.16 and passes. */
+  --border-hairline: rgb(242 233 228 / .12);
+  --border-control:  rgb(242 233 228 / .38);
+  --border-strong:   rgb(242 233 228 / .38);
+  --border-glass:    rgb(242 233 228 / .16);
+  --border-accent:   rgb(244 163 0 / .55);   /* 3.50:1 on charcoal */
+
+  --focus-ring: var(--c-orange);
+  --focus-w: 2px;
+
+  --state-success-bg: var(--c-success);  --state-success-text: var(--c-charcoal);
+  --state-warning-bg: var(--c-gold);     --state-warning-text: var(--c-charcoal);
+  --state-danger-bg:  var(--c-cherry);   --state-danger-text:  var(--c-cream);
+  --state-neutral-bg: var(--c-charcoal-3);--state-neutral-text: var(--c-muted);
+
+  /* ---- TIER 3 — COMPONENT ---------------------------------- */
+
+  /* glass: layered alpha surfaces. No shadow. Never over motion. */
+  --glass-bg:     rgb(28 21 18 / .66);
+  --glass-bg-2:   rgb(38 26 22 / .58);
+  --glass-border: var(--border-glass);
+  --glass-line:   inset 0 1px 0 rgb(242 233 228 / .06);
+  --glass-shadow: none;
+
+  --btn-bg:       var(--c-cherry);
+  --btn-text:     var(--c-cream);         /* 7.66:1 */
+  --btn-bg-hover: var(--c-ember);
+  --btn-pad-x:    var(--s-6);
+
+  --btn-quiet-color: var(--text-primary);
+  --btn-quiet-rule:  var(--border-strong);
+
+  --card-bg:     var(--glass-bg);
+  --card-border: var(--glass-border);
+  --card-pad:    var(--s-8);
+
+  --table-row-h: 52px;
+  --table-rule:  var(--border-hairline);
+
+  --chip-bg:   rgb(242 233 228 / .07);
+  --chip-text: var(--text-muted);
+
+  /* the one glow — hero only. Never repeated, never tinted. */
+  --glow: radial-gradient(58% 42% at 50% 0%, rgb(244 163 0 / .16) 0%, rgb(232 93 4 / .06) 38%, transparent 72%);
+  --glow-h: 380px;
+
+  /* the one grain — 3.5% noise, kills the banding the glow makes */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+
+  /* crawler field — texture, never pattern.
+     .055 was set while the field was accidentally invisible (a flex
+     bug, since fixed). At real density it made body copy compete, so
+     it is now .03 with a wider beat: reads as grain, not as letters. */
+  --crawler-opacity: .03;
+  --crawler-cols: 12;
+  --crawler-size: 54px;
+  --crawler-gap: var(--s-16);
+  --crawler-duration: 46s;
+
+  /* ---- TIER 4 — LAYOUT ------------------------------------- */
+
+  --container-max: 1160px;
+  --container-pad: var(--s-4);
+  --section-py: clamp(var(--s-16), 7vw, var(--s-24));
+
+  --bp-sm: 480px; --bp-md: 768px; --bp-lg: 1024px; --bp-xl: 1280px;
+}
+
+@media (min-width: 768px) {
+  :root { --container-pad: var(--s-8); }
+}
+
+@media (min-width: 1024px) {
+  :root { --rail-w: 112px; }
+}
+
+/* ---- RULES (Janus Tiu, section "Rules") --------------------
+   1. Never introduce a colour outside the tier-1 list.
+   2. Always use the spacing scale. No arbitrary values.
+   3. One radius (5px) per element type. No pills.
+   4. When in doubt, add whitespace, not another box.
+   ------------------------------------------------------------ */

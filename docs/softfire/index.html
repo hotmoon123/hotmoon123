@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en-GH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SoftFire — one person builds your web app, and hands you the keys</title>
+<meta name="description" content="SoftFire builds websites, portals and brand systems for churches, schools, shops and small businesses in Ghana. One developer. The plan before the pixels. A fixed written quote in 48 hours.">
+<meta name="theme-color" content="#16100D">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<!-- Two faces, self-hosted, variable, latin subset. 47 KB + 40 KB,
+     cached forever. No third-party request, no render-blocking CSS from
+     another origin, and the page looks the same offline. -->
+<link rel="preload" href="assets/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/jetbrains-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<!-- respect a motion preference before paint: a reduce user never
+     sees the crawlers start, and a return visitor who pressed Pause
+     gets a still page on the first frame, not the second. -->
+<script>
+  (function(){
+    try {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var off = sessionStorage.getItem('sf-motion') === 'off';
+      if (reduce || off) document.documentElement.setAttribute('data-motion', 'off');
+    } catch (e) {}
+  })();
+</script>
+<style id="crowd-control">/* set by the script above before first paint */
+  html[data-motion="off"] .crawler-track { animation: none !important; }
+</style>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="styles.css">
+<meta property="og:url" content="https://hotmoon123.github.io/softfire/">
+<meta property="og:title" content="SoftFire — the plan before the pixels">
+<meta property="og:description" content="One developer. Websites, portals and brand systems for small organisations in Ghana. Fixed written quote in 48 hours. You own everything.">
+<meta property="og:type" content="website">
+<!-- og:image must be absolute to resolve on social platforms. Replace
+     the host when the site gets one; this is the GitHub Pages address. -->
+<meta property="og:image" content="https://hotmoon123.github.io/softfire/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SoftFire: the plan before the pixels. One developer builds your website, portal or brand system and hands you the keys.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ===== CRAWLER FIELD — 12 desktop / 8 mobile, decorative only ===== -->
+<div class="crawlers" aria-hidden="true" data-crawlers>
+  <div class="crawler" data-dir="up"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="down"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="up"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="down"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="up"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="down"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="up"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="down"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="up"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="down"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="up"><div class="crawler-track" data-track></div></div>
+  <div class="crawler" data-dir="down"><div class="crawler-track" data-track></div></div>
+</div>
+
+<!-- ===== THE RAIL — desktop only. Five doors, one per section.
+     Replaces a top-left nav that had to be hunted for. ===== -->
+<nav class="rail" aria-label="Sections">
+  <ol class="rail-list">
+    <li><a href="#who"><span class="rail-n">01</span><span class="rail-l">For you</span></a></li>
+    <li><a href="#offers"><span class="rail-n">02</span><span class="rail-l">Services</span></a></li>
+    <li><a href="#work"><span class="rail-n">03</span><span class="rail-l">Work</span></a></li>
+    <li><a href="#process"><span class="rail-n">04</span><span class="rail-l">Process</span></a></li>
+    <li><a href="#documents"><span class="rail-n">05</span><span class="rail-l">Paper</span></a></li>
+    <li><a href="#brief"><span class="rail-n">06</span><span class="rail-l">Start</span></a></li>
+  </ol>
+  <a class="rail-cta" href="https://wa.me/233570572221">WhatsApp</a>
+</nav>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="SoftFire, home">
+      <img class="brand-mark" src="assets/logo-b.svg" alt="" width="34" height="34">
+      <span class="brand-word">SoftFire</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <ul>
+        <li><a href="#who">For you</a></li>
+        <li><a href="#offers">Services</a></li>
+        <li><a href="#work">Work</a></li>
+      </ul>
+    </nav>
+    <a class="btn header-cta" href="https://wa.me/233570572221">
+      WhatsApp
+      <svg class="btn-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ 1. HERO ============
+       One glow. One primary action. Five choices above the fold. -->
+  <section class="hero" id="top">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-panel">
+        <p class="label">FIG.01 — One developer, start to finish</p>
+        <h1 class="display">The <span class="fire">plan</span><br>before the pixels.</h1>
+        <p class="lede">
+          Websites, portals and brand systems for churches, schools, shops and small
+          businesses. Built, deployed and handed over by one person — with the keys in
+          your name.
+        </p>
+        <div class="actions">
+          <a class="btn" href="https://wa.me/233570572221">
+            Message on WhatsApp
+            <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-quiet" href="#brief">Build a brief in 4 taps</a>
+        </div>
+
+        <!-- the three facts that decide the sale, as data not adjectives.
+             On desktop this is the right-hand spec column, not a strip
+             under the buttons: the hero was 44rem wide in a 1160px field
+             and left 344px of nothing. -->
+        <dl class="hero-facts">
+          <div><dt class="label">A written quote</dt><dd><span class="num">48h</span> from your first message</dd></div>
+          <div><dt class="label">The price</dt><dd>Fixed <span class="num">before</span> any work starts</dd></div>
+          <div><dt class="label">Handover</dt><dd><span class="num">100%</span> in your name, in writing</dd></div>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 2. PROOF ============ -->
+  <section class="section-tight" id="work">
+    <div class="wrap">
+      <div class="fig"><p class="label">FIG.02 — Live, today</p></div>
+      <h2 class="h2-lead">Built, deployed, and taking orders.</h2>
+      <p class="prose muted mb-8">
+        One project you can open right now, on your own phone, before you decide anything.
+      </p>
+      <a class="proof" href="https://hotmoon123.github.io/hotmoon123/" target="_blank" rel="noopener">
+        <span class="badge"><span class="badge-dot" aria-hidden="true"></span>Live</span>
+        <span class="proof-body">
+          <strong>BiteKasa — a live ordering site for a family food business.</strong>
+          <p>Real customers place orders today. No checkout, no account, no card: pick a
+             pack, the total builds, one tap opens WhatsApp with the order already
+             written. Designed, built and deployed by SoftFire.</p>
+        </span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ 3. FOUR FACTS ============ -->
+  <section>
+    <div class="wrap">
+      <div class="fig"><p class="label">FIG.03 — Why one person</p></div>
+      <h2 class="h2-lead">Four things a big studio cannot tell you.</h2>
+      <p class="prose muted mb-8">
+        Not because they are dishonest. Because in a studio of nine, nobody in the room
+        knows all four answers at once.
+      </p>
+      <div class="grid grid-4">
+
+        <div class="fact">
+          <p class="n" aria-hidden="true">01</p>
+          <h3>One person, one thread</h3>
+          <p class="small muted">The person who writes the plan writes the code. No
+             handoff, no account manager, nobody to translate between.</p>
+        </div>
+
+        <div class="fact">
+          <p class="n" aria-hidden="true">02</p>
+          <h3>A fixed price in 48 hours</h3>
+          <p class="small muted">A written scope and one number, two days after we talk.
+             It does not move because the build was harder than expected.</p>
+        </div>
+
+        <div class="fact">
+          <p class="n" aria-hidden="true">03</p>
+          <h3>You own everything</h3>
+          <p class="small muted">Domain, hosting, source and every account in your name on
+             day one. Not a licence, not a monthly rental. Yours.</p>
+        </div>
+
+        <div class="fact">
+          <p class="n" aria-hidden="true">04</p>
+          <h3>A live build, today</h3>
+          <p class="small muted">BiteKasa is deployed and taking real orders. Open it on
+             your phone before you decide anything.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. WHO ============ -->
+  <section id="who">
+    <div class="wrap">
+      <div class="fig"><p class="label">FIG.04 — Who this is for</p></div>
+      <h2 class="h2-lead">Four kinds of organisation.<br>One recurring problem.</h2>
+      <p class="prose muted mb-12">
+        None of them is buying software. All of them are buying the confidence that someone
+        will finish, explain it in plain words, and still answer the phone in month six.
+      </p>
+
+      <div class="grid grid-4">
+        <a class="buyer" href="#brief">
+          <p class="label">01</p>
+          <h3>Churches</h3>
+          <p class="small">Members, giving and follow-up — currently in a WhatsApp
+             broadcast and one person's phone. Nothing searchable. Nothing that survives
+             the person who kept it.</p>
+        </a>
+        <a class="buyer" href="#brief">
+          <p class="label">02</p>
+          <h3>Schools</h3>
+          <p class="small">Fees, admissions and results — in Excel or a paper register,
+             reconciled by hand every term, with parents asking for a portal.</p>
+        </a>
+        <a class="buyer" href="#brief">
+          <p class="label">03</p>
+          <h3>Shops</h3>
+          <p class="small">Orders, prices and stock — in DMs, answering "how much?" fifty
+             times a day, with no record of who bought what.</p>
+        </a>
+        <a class="buyer" href="#brief">
+          <p class="label">04</p>
+          <h3>Small businesses</h3>
+          <p class="small">No site, or one nobody can update, so the business cannot be
+             found by anyone who has not already been told about it.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. OFFERS ============ -->
+  <section id="offers">
+    <div class="wrap">
+      <div class="fig"><p class="label">FIG.05 — The offers</p></div>
+      <h2 class="h2-lead">Eight ways in. One way of working.</h2>
+      <p class="prose muted mb-8">
+        Every engagement ends with a written recommendation to the next step — including
+        when the recommendation is to stop.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <caption class="label">Prices in Ghana cedis · fixed in writing before work starts</caption>
+          <thead>
+            <tr>
+              <th scope="col">Offer</th>
+              <th scope="col">What you get</th>
+              <th scope="col" class="num">GH₵</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Build Plan <span class="unit">2–3 days</span></th>
+              <td data-label="What you get">A planning service: scope, features, exclusions and one fixed price, in writing. Credited against the build.</td>
+              <td class="num" data-label="Price">800</td>
+            </tr>
+            <tr>
+              <th scope="row">Diagnostic <span class="unit">1 week</span></th>
+              <td data-label="What you get">A diagnosis service: the problem named, ranked and costed, in writing.</td>
+              <td class="num" data-label="Price">1,800</td>
+            </tr>
+            <tr>
+              <th scope="row">Brand system <span class="unit">3 weeks</span></th>
+              <td data-label="What you get">A structure service: mark, palette, type, and a one-page sheet your printer can work from.</td>
+              <td class="num" data-label="Price">4,500</td>
+            </tr>
+            <tr>
+              <th scope="row">Website <span class="unit">3–4 weeks</span></th>
+              <td data-label="What you get">A software service: five pages, written for the buyer, built to load fast on a cheap phone.</td>
+              <td class="num" data-label="Price">4,500</td>
+            </tr>
+            <tr class="is-lead">
+              <th scope="row">Portal <span class="chip">Lead</span> <span class="unit">6–8 weeks</span></th>
+              <td data-label="What you get">A system service: one working app — fees, members or orders — with a staff login.</td>
+              <td class="num" data-label="Price">15,000</td>
+            </tr>
+            <tr>
+              <th scope="row">Full System <span class="unit">10–12 weeks</span></th>
+              <td data-label="What you get">A process service: portal, site, trained people and a documented process.</td>
+              <td class="num" data-label="Price">22,000</td>
+            </tr>
+            <tr>
+              <th scope="row">App wrap <span class="unit">2 weeks</span></th>
+              <td data-label="What you get">A software service: your site as an installable Android app, in your own store listing.</td>
+              <td class="num" data-label="Price">9,000</td>
+            </tr>
+            <tr>
+              <th scope="row">Care Plan <span class="unit">monthly</span></th>
+              <td data-label="What you get">An ongoing service: hosting watched, bugs fixed, one small change a month. Cancellable.</td>
+              <td class="num" data-label="Price">300–700<span class="unit">/mo</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid-2 mt-8">
+        <div class="card">
+          <p class="label mb-3">How payment works</p>
+          <p class="small">50% to start, 40% when you approve the demo, 10% on handover.
+             The deposit confirms the scope. If the scope changes, we agree the change in
+             writing before the work continues.</p>
+        </div>
+        <div class="card">
+          <p class="label mb-3">What is not included</p>
+          <p class="small">Copywriting beyond what is on the page, photography, hosting
+             fees, SMS credits, revisions beyond two rounds, and staff training beyond the
+             handover session. On page one of every quote, not page nine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. CAROUSEL ============ -->
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="fig"><p class="label">FIG.06 — What a project looks like</p></div>
+      <h2 class="h2-lead">Three stages. Nothing hidden between them.</h2>
+
+      <div class="carousel" data-carousel>
+        <div class="stage">
+
+          <article class="slide" data-pos="centre">
+            <p class="label mb-3">01 — Plan</p>
+            <h3>Nothing is built until it is written.</h3>
+            <p class="small">A one-page plan: the problem in your words, what is included,
+               what is excluded, the dates, and one price. You keep it whether or not you
+               go ahead.</p>
+          </article>
+
+          <article class="slide" data-pos="right">
+            <p class="label mb-3">02 — Build</p>
+            <h3>You click a working thing, not a picture.</h3>
+            <p class="small">Design happens in the browser, on your content, with your
+               staff's real names in it. You approve a demo you can use — not a mockup you
+               have to imagine.</p>
+          </article>
+
+          <article class="slide" data-pos="left">
+            <p class="label mb-3">03 — Handover</p>
+            <h3>The keys go in your name.</h3>
+            <p class="small">Domain, hosting, source code and every account transfer to you
+               on final payment, with a session until your own people can update it without
+               calling me.</p>
+          </article>
+
+        </div>
+
+        <div class="carousel-controls">
+          <button class="iconbtn" type="button" data-dir="prev" aria-label="Previous card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="iconbtn" type="button" data-dir="next" aria-label="Next card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <span class="carousel-count num" data-count aria-live="polite">01 / 03</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. PROCESS ============ -->
+  <section id="process">
+    <div class="wrap">
+      <div class="fig"><p class="label">FIG.07 — A clear path forward</p></div>
+      <h2 class="h2-lead">Five stages. Each one ends with something you can check.</h2>
+      <p class="prose muted mb-8">
+        A stage is not finished because time passed. It is finished when you have used the
+        thing and said yes.
+      </p>
+
+      <ol class="process">
+        <li>
+          <p class="n" aria-hidden="true">01</p>
+          <div>
+            <h3>Plan</h3>
+            <p class="small muted">Written plan and fixed price. GH₵800, credited against
+               the build if you go ahead.</p>
+          </div>
+          <p class="gate">You sign off: <strong>the one-page plan</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">02</p>
+          <div>
+            <h3>Scope</h3>
+            <p class="small muted">Exclusions on page one. 50% deposit. Dates on a
+               calendar, not "in a few weeks".</p>
+          </div>
+          <p class="gate">You sign off: <strong>the scope and the dates</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">03</p>
+          <div>
+            <h3>Build</h3>
+            <p class="small muted">A working demo in the browser, with your real content
+               in it, updated as it grows.</p>
+          </div>
+          <p class="gate">You sign off: <strong>a demo you can click</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">04</p>
+          <div>
+            <h3>Handover</h3>
+            <p class="small muted">Keys, accounts and a training session. Thirty-day
+               warranty on anything that breaks.</p>
+          </div>
+          <p class="gate">You sign off: <strong>every login works in your name</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">05</p>
+          <div>
+            <h3>Care</h3>
+            <p class="small muted">Optional. Monthly. Fixed. Cancellable. It is a service,
+               not a lock-in.</p>
+          </div>
+          <p class="gate">You decide: <strong>keep it, or take it in-house</strong></p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+
+  <!-- ============ 7b. THE SIX DOCUMENTS ============
+       From "Before Anyone Builds Your Site": what a client should be able
+       to read before a single page is built. SoftFire writes all six. -->
+  <section id="documents">
+    <div class="wrap">
+      <div class="fig"><p class="label">FIG.08 — The paper</p></div>
+      <h2 class="h2-lead">Six documents you read<br>before I build anything.</h2>
+      <p class="prose muted mb-8">
+        "The plan before the pixels" is not a mood. It is six short documents, in this
+        order, each one written in plain language and each one yours to keep whether or
+        not you go ahead. You sign the last three before money moves.
+      </p>
+
+      <ol class="docs">
+        <li>
+          <p class="n" aria-hidden="true">01</p>
+          <h3>The requirements</h3>
+          <p class="small muted">What it does, feature by feature, and a list of what is
+             <em>not</em> in this version. If a feature is not on the page it is not in the
+             build.</p>
+          <p class="doc-out">You read: <strong>a features table, and what is excluded</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">02</p>
+          <h3>The technical sheet</h3>
+          <p class="small muted">The tools, decided once and written down, each with a
+             one-line reason in plain English. So nobody is guessing halfway through.</p>
+          <p class="doc-out">You read: <strong>what it is built on, and why</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">03</p>
+          <h3>The app flow</h3>
+          <p class="small muted">Every page a person can reach, what each button does, which
+             page comes next, and where they land when something goes wrong.</p>
+          <p class="doc-out">You read: <strong>no dead ends</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">04</p>
+          <h3>The design brief</h3>
+          <p class="small muted">Your real colours and fonts, and the rules for buttons,
+             forms, headings and tone — written so the tenth screen looks as on-brand as
+             the first.</p>
+          <p class="doc-out">You read: <strong>your colours, not ones that look close</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">05</p>
+          <h3>The data sheet</h3>
+          <p class="small muted">What is stored, how records link, and exactly who can see,
+             change and delete each one — with anything personal or sensitive flagged.</p>
+          <p class="doc-out">You read: <strong>who can see what</strong></p>
+        </li>
+        <li>
+          <p class="n" aria-hidden="true">06</p>
+          <h3>The build order</h3>
+          <p class="small muted">The stages, what you get at each one, how you test it
+             yourself, and what you sign off before the next stage starts. Riskiest first.</p>
+          <p class="doc-out">You read: <strong>a sign-off you can do alone</strong></p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ 8. ABOUT ============ -->
+  <section id="about">
+    <div class="wrap">
+      <div class="fig"><p class="label">FIG.09 — The person</p></div>
+      <div class="grid grid-2 gap-8 align-start">
+        <div>
+          <h2 class="mb-4">Caleb Bentum.</h2>
+          <p class="prose">
+            One developer, working with churches, schools, shops and small businesses
+            anywhere. I write the plan, write the code, deploy it, and answer the phone
+            afterwards.
+          </p>
+          <p class="prose muted">
+            I work in React, Python and MySQL — a stack a small organisation can actually
+            keep running — and I will tell you when the simpler answer is the right one,
+            even when the simpler answer earns me less.
+          </p>
+        </div>
+        <div class="card">
+          <p class="label mb-3">What I will not do</p>
+          <ul class="refusals">
+            <li>Take on banking-grade fintech or certified health data</li>
+            <li>Promise a date one person cannot deliver</li>
+            <li>Publish a result nobody confirmed</li>
+            <li>Recommend hosting the client cannot afford</li>
+            <li>Start work without a written scope and a deposit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9. THE BRIEF ============ -->
+  <section id="brief" class="section-fill">
+    <div class="wrap">
+      <p class="label">FIG.10 — Start here</p>
+      <h2 class="mb-4 mt-4 max-22">Four taps. Then one message.</h2>
+      <p class="prose mb-8">
+        No account, no email, nothing sent anywhere. Answer four questions and the message
+        writes itself — it is assembled in this browser tab and never leaves it. You decide
+        whether to send it, and you send it from your own WhatsApp with your own name on it.
+      </p>
+
+      <div class="brief" data-brief>
+
+        <div class="brief-progress">
+          <div class="brief-bar"><span data-bar style="width:25%"></span></div>
+          <span class="brief-stepnum num" data-stepnum>1 / 4</span>
+        </div>
+
+        <!-- step 1 -->
+        <div class="brief-step" data-step="0" data-active="true">
+          <h3>What kind of organisation is this?</h3>
+          <p>Pick one. It changes what I ask next.</p>
+          <div class="choices choices-4">
+            <button class="choice" type="button" data-q="kind" data-a="A church" aria-pressed="false">
+              <strong>Church</strong><span>Members, giving, follow-up</span>
+            </button>
+            <button class="choice" type="button" data-q="kind" data-a="A school" aria-pressed="false">
+              <strong>School</strong><span>Fees, admissions, results</span>
+            </button>
+            <button class="choice" type="button" data-q="kind" data-a="A shop" aria-pressed="false">
+              <strong>Shop</strong><span>Catalogue, orders, stock</span>
+            </button>
+            <button class="choice" type="button" data-q="kind" data-a="A small business" aria-pressed="false">
+              <strong>Small business</strong><span>Service, bookings, visibility</span>
+            </button>
+          </div>
+          <div class="brief-nav">
+            <button class="btn" type="button" data-next>Next</button>
+          </div>
+        </div>
+
+        <!-- step 2 -->
+        <div class="brief-step" data-step="1">
+          <h3>What is the one thing that hurts most?</h3>
+          <p>One answer is enough. We find the rest together.</p>
+          <div class="choices">
+            <button class="choice" type="button" data-q="problem" data-a="We do not have a website" aria-pressed="false">
+              <strong>No website</strong><span>People cannot find us or check our details</span>
+            </button>
+            <button class="choice" type="button" data-q="problem" data-a="Our records are on paper or in Excel" aria-pressed="false">
+              <strong>Records in Excel or on paper</strong><span>Reconciled by hand, every month</span>
+            </button>
+            <button class="choice" type="button" data-q="problem" data-a="Orders and questions come through DMs" aria-pressed="false">
+              <strong>Everything comes through DMs</strong><span>The same question, fifty times a day</span>
+            </button>
+            <button class="choice" type="button" data-q="problem" data-a="We already have a site but it does not work" aria-pressed="false">
+              <strong>We have a site that does not work</strong><span>Slow, out of date, or nobody can edit it</span>
+            </button>
+          </div>
+          <div class="brief-nav">
+            <button class="btn btn-quiet" type="button" data-back>Back</button>
+            <button class="btn" type="button" data-next>Next</button>
+          </div>
+        </div>
+
+        <!-- step 3 -->
+        <div class="brief-step" data-step="2">
+          <h3>Is there a date it has to be live by?</h3>
+          <p>An honest answer here saves us both a difficult conversation later.</p>
+          <div class="choices">
+            <button class="choice" type="button" data-q="deadline" data-a="Before an admissions or term date" aria-pressed="false">
+              <strong>Yes — a term or admissions date</strong><span>It cannot slip</span>
+            </button>
+            <button class="choice" type="button" data-q="deadline" data-a="Before a specific event" aria-pressed="false">
+              <strong>Yes — an event</strong><span>A launch, a service, a campaign</span>
+            </button>
+            <button class="choice" type="button" data-q="deadline" data-a="No fixed date" aria-pressed="false">
+              <strong>No fixed date</strong><span>Sooner is better, but nothing breaks</span>
+            </button>
+          </div>
+          <div class="brief-nav">
+            <button class="btn btn-quiet" type="button" data-back>Back</button>
+            <button class="btn" type="button" data-next>Next</button>
+          </div>
+        </div>
+
+        <!-- step 4 -->
+        <div class="brief-step" data-step="3">
+          <h3>The last one. Who am I talking to?</h3>
+          <p>So the message does not open with "Dear sir".</p>
+          <label class="field">
+            <span>Name and organisation</span>
+            <input type="text" data-q="who" placeholder="e.g. Grace — Osu Community School" autocomplete="organization">
+          </label>
+          <label class="field">
+            <span>Anything else worth knowing <em>(optional)</em></span>
+            <textarea data-q="extra" rows="3" placeholder="We have about 300 students and the bursar does everything in Excel."></textarea>
+          </label>
+          <div class="brief-nav">
+            <button class="btn btn-quiet" type="button" data-back>Back</button>
+            <button class="btn" type="button" data-finish>Build my message</button>
+          </div>
+        </div>
+
+        <!-- result -->
+        <div class="brief-step" data-step="4">
+          <h3>Your brief is ready.</h3>
+          <p>Nothing has been sent. This is the message — read it, then send it if you want to.</p>
+          <pre class="brief-summary" data-summary></pre>
+          <div class="brief-nav">
+            <a class="btn" data-send href="https://wa.me/233570572221" target="_blank" rel="noopener">
+              Send this on WhatsApp
+              <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <button class="btn btn-quiet" type="button" data-restart>Start again</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <img src="assets/logo-c.svg" alt="SoftFire" width="96" height="64" class="footer-mark">
+        <p class="muted small">Built on paper first.<br>One developer, start to finish.</p>
+      </div>
+      <div>
+        <h2 class="footer-h">Studio</h2>
+        <ul>
+          <li><a href="#who">For you</a></li>
+          <li><a href="#offers">Services</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#documents">The six documents</a></li>
+          <li><a href="#brief">Start</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-h">Contact</h2>
+        <ul>
+          <li><a href="https://wa.me/233570572221">WhatsApp 0570 572 221</a></li>
+          <li><a href="tel:+233570572221">Call 0570 572 221</a></li>
+          <li><a href="tel:+233597937024">Call 0597 937 024</a></li>
+          <li><a href="mailto:kojocbentum@gmail.com">kojocbentum@gmail.com</a></li>
+          <li><a href="https://github.com/hotmoon123" rel="noopener">github.com/hotmoon123</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-controls">
+      <button class="motion-toggle" type="button" data-motion-toggle aria-pressed="false">
+        <span class="motion-dot" aria-hidden="true"></span>
+        <span data-motion-label>Pause background motion</span>
+      </button>
+      <p class="small muted motion-note">
+        The SF marks behind this page move. You can stop them.
+      </p>
+    </div>
+    <div class="footer-legal">
+      <span>Caleb Bentum · SoftFire — a trading name, not a registered company</span>
+      <span>Prices in GH₵ · no VAT charged</span>
+      <span class="ml-auto">© <span data-year>2026</span></span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

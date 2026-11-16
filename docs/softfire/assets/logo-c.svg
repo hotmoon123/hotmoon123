@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="SoftFire">
+  <title>SoftFire — Tier C: one colour, for print and every use under 24px</title>
+  <rect width="80" height="80" rx="5" fill="#16100D"/>
+  <text x="40" y="51.5" font-family="Inter, system-ui, sans-serif" font-weight="700"
+        font-size="34" letter-spacing="-1" text-anchor="middle" fill="#F2E9E4">SF</text>
+</svg>

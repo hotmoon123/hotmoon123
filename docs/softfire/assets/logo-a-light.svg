@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="SoftFire">
+  <title>SoftFire — Tier A on cream. Paper and print only, never the dark field.</title>
+  <defs>
+    <linearGradient id="fireLight" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5C100C"/>
+      <stop offset="0.55" stop-color="#8C1C13"/>
+      <stop offset="1" stop-color="#B33A16"/>
+    </linearGradient>
+  </defs>
+  <rect width="80" height="80" rx="5" fill="#F2E9E4"/>
+  <text x="40" y="51.5" font-family="Inter, system-ui, sans-serif" font-weight="700"
+        font-size="34" letter-spacing="-1" text-anchor="middle" fill="url(#fireLight)">SF</text>
+</svg>
