@@ -42,8 +42,9 @@ nothing in them changes.
 | | Budget | Shipped |
 |---|---|---|
 | JS, gzip | 180 KB | **4.4 KB** |
-| CSS, gzip (both files) | — | **17.0 KB** |
-| HTML, gzip | — | **16.6 KB** |
+| CSS, gzip (both files) | — | **17.2 KB** |
+| HTML, gzip | — | **16.9 KB** |
+| First load, transferred (mobile, 390px) | 1 MB | **173.0 KB** |
 | Fonts | — | **87 KB**, self-hosted, 2 files |
 | Third-party requests | 0 | **0** |
 | Above-the-fold images | 0 | 0 |
@@ -183,14 +184,20 @@ Latest passing run: `github.com/hotmoon123/hotmoon123/actions/runs/44238191493`.
 
 ```bash
 python3 docs/softfire/verify-claims.py
+LD_LIBRARY_PATH=/tmp/chr/libs/lib python3 docs/softfire/measure-audit.py
 ```
+
+Two scripts, two different questions. `verify-claims.py` asks *is every stated
+fact true somewhere in the repo* — 67 checks. `measure-audit.py` asks *does the
+page meet the written standards at every width* — it opens the page in
+Chromium at ten widths and measures what actually renders.
 
 Re-reads the document section, then greps every asserted fact out of the source
 file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **57 checks**. Besides the fact-to-source checks it asserts the
+It now runs **67 checks**. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -265,6 +272,60 @@ gradient-filled with `background-clip:text` and therefore has a transparent
 | 45% | `#E85D04` | **5.38** | pass |
 | 100% | `#F4A300` | **9.05** | pass |
 
+## The standards, and where each number comes from
+
+Every figure below is quoted from a file in the reference set, not invented.
+Three of them exposed defects that a visual pass had missed.
+
+| Standard | Source | Measured | Result |
+|---|---|---|---|
+| Measure 45–75 characters | `THE_COMPLETE_STACK.md` §1.1; `MASTER-PROMPT-senior-graphic-designer.md` §6 | 27–72 cpl at ten widths | pass |
+| Body text ≥ 16 px | master prompt §6 | 16 px prose, 18 px lede | pass |
+| Line-height 1.3–1.6 | `THE_COMPLETE_STACK.md` §1.1 | 1.50–1.60 | pass |
+| Works at 320 px **and 1920 px** | uiux master prompt §10 | 320 → 1920, 0 overflow | pass |
+| First load < 1 MB | `THE_COMPLETE_STACK.md` §1.3 | 173.0 KB | pass |
+| Controls ≥ 44 px | site floor | 0 under, ten widths | pass |
+| CSP + Referrer-Policy | software/security prompt §6.1–6.2 | meta CSP, hash-pinned | partial, see gaps |
+
+### The measure was wrong twice, and the second time was worse
+
+The site first ran 103–117 characters per line. I capped it at `76ch` and
+believed it fixed. It measured **86** — because `ch` is the width of `"0"`
+(8.00 px), not the average character (5.75 px at 14 px, 6.45 px at 16 px).
+
+So I measured again, with a probe span, and believed *that*. It still reported
+85, and I wrote "max 85" into this file as if 85 satisfied a 75-character
+standard. It did not. **That was a false claim in my own documentation.**
+
+Both mistakes had the same root: estimating characters instead of counting
+them. `measure-audit.py` now counts characters per *rendered line box* using
+Range rectangles — the number a reader actually experiences. The caps were then
+derived from measurement instead of guessed: 75 characters of 16 px prose is
+484 px, which is 30.2em, so the cap is `30em`. Table cells needed their own cap
+because they do not inherit the prose width; they were the widest text on the
+page at 84 characters.
+
+Lesson recorded because it cost the most time in this project: **an estimate
+that agrees with your expectation is the most dangerous kind of measurement.**
+
+### Security, and the limits of a static host
+
+GitHub Pages cannot send response headers. The page therefore carries what meta
+tags can carry, and nothing more is claimed:
+
+- **Content-Security-Policy** (meta): `default-src 'self'`, `script-src 'self'`
+  plus the one permitted inline script pinned by SHA-256 hash, `object-src
+  'none'`, `base-uri 'self'`, `form-action 'none'`, `connect-src 'self'`.
+- **Referrer-Policy**: `strict-origin-when-cross-origin`.
+- Loaded in Chromium: **zero CSP violations, zero JS errors**, and the
+  hash-pinned script still applies a saved motion preference before first paint
+  (verified with `reduced-motion` emulation — `data-motion="off"` still lands).
+
+What is **not** protected, and must not be described as protected: HSTS,
+`X-Frame-Options` / `frame-ancestors` (meta CSP does not cover it, so the page
+is clickjackable), and `Permissions-Policy`. Those need a host that can set
+headers — Cloudflare Pages, Netlify or Vercel can, GitHub Pages cannot.
+
 ## Known gaps — read before shipping
 
 1. **The price table is published and the pricing is not settled.** The figures
@@ -302,7 +363,14 @@ gradient-filled with `background-clip:text` and therefore has a transparent
 10. **Inter and JetBrains Mono are the variable latin subsets only.** No Greek,
     Cyrillic or Vietnamese. Correct for this audience, wrong if the site is
     ever translated.
-11. **`softfire.dev` does not exist.** Every canonical, OG and sitemap URL on
+11. **Clickjacking is not prevented.** Meta CSP cannot set `frame-ancestors`,
+    and GitHub Pages sends no `X-Frame-Options`. A static host that sets headers
+    fixes this in one line; this one cannot. Do not claim the site is
+    frame-protected.
+12. **The validation gap is still the largest gap.** See item 3. Standards
+    compliance is not market evidence, and passing 67 checks is not the same as
+    one stranger asking to buy.
+13. **`softfire.dev` does not exist.** Every canonical, OG and sitemap URL on
     the page points at `github.com/hotmoon123/softfire/`, which is where it can
     actually be deployed today. Change all of them together, or the metadata
     lies.

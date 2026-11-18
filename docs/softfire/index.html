@@ -12,6 +12,18 @@
      another origin, and the page looks the same offline. -->
 <link rel="preload" href="assets/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/jetbrains-mono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Security, as far as a static host allows.
+     GitHub Pages cannot send response headers, so these are the meta-tag
+     equivalents. Measured, not assumed: the page makes 9 requests, all
+     same-origin; it loads no third-party script, style, image or font; the
+     one inline script is what applies a saved motion preference before
+     first paint, and it is the only thing CSP has to allow by hash.
+     What this CANNOT do, and the README says so: set HSTS, X-Frame-Options
+     as a header, or a real Content-Security-Policy header. Meta CSP does not
+     cover frame-ancestors either -- clickjacking protection needs the header,
+     so it needs a host that can set one. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HBfBaMtsGbV1nqFWabqaX1D7PCB0vnPniLaGzQ2vl3c='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- respect a motion preference before paint: a reduce user never
      sees the crawlers start, and a return visitor who pressed Pause
      gets a still page on the first frame, not the second. -->

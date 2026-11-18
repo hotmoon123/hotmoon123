@@ -117,16 +117,19 @@
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
-  --measure-prose: 56ch;
-  /* MEASURED, and the first attempt was wrong. Six blocks ran 103-117
-     characters per line at 1440px. I capped them at 76ch and they still
-     measured 86, because 1ch is the width of "0" (8.00px here) while real
-     prose averages 6.45px per character — ch over-counts by about a
-     quarter. em tracks the text instead, so the cap is set in em and then
-     re-measured with a probe. 50em at 14px = 700px = about 108 characters
-     of this prose; 43em = 602px = about 93. */
-  --measure-small: 36em;
-  --measure-mono: 34em;
+  /* MEASURE. The standard, from THE_COMPLETE_STACK.md 1.1 and
+     MASTER-PROMPT-senior-graphic-designer.md 6: "measure 45-75 characters".
+
+     Three earlier attempts failed because I was measuring characters with a
+     probe span instead of counting rendered lines. Counted now with Range
+     rectangles over real text, this prose sets at 5.749 px per character at
+     14 px and 6.45 px at 16 px. So:
+       75 chars of 14px small  = 431 px = 30.8em  -> cap at 30em
+       75 chars of 16px body   = 484 px = 30.2em  -> cap at 30em
+     Both caps are 30em, and they are re-measured after any change. */
+  --measure-prose: 30em;
+  --measure-small: 30em;
+  --measure-mono: 27em;
   --measure-lede: 46ch;
 
   /* tabular figures — every number in this site lines up */

@@ -750,6 +750,13 @@ table {
   font-size: var(--fs-small);
 }
 
+/* Table cells carry prose too, and they were the widest text on the page:
+   84 characters per line at 1440px against a 45-75 standard. The cap is on
+   the cell's own text block, not the cell, so the columns and rules stay
+   where they are and only the line length changes. */
+tbody td { max-width: 34em; }
+tbody td > * { max-width: var(--measure-small); }
+
 /* Column proportions. The offer name needs room for a two-word service and
    its duration; the price is always four or five figures; the description
    takes the rest. Without these the name column broke "Brand system"

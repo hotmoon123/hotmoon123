@@ -127,6 +127,21 @@ struct.append(("whitespace claim: 3 promises", all(w in html for w in ws),
 # is a different section. Care Plan opens "An ongoing service", not "A".
 service_rows = re.findall(r'\bAn? (?:planning|diagnosis|structure|software|system|process|ongoing) service:', html)
 struct.append(("every offer framed as a service", len(service_rows) == 8, f"{len(service_rows)} of 8"))
+# ---- standards from THE_COMPLETE_STACK / the master prompts ----
+tok = (root/'docs/softfire/tokens.css').read_text(encoding='utf-8')
+# measure 45-75 chars: 30em caps, derived from counted line boxes
+struct.append(("measure cap is 30em", "--measure-prose: 30em" in tok, "tokens.css"))
+struct.append(("body text is 16px floor", "--fs-body:    1rem" in tok, "tokens.css"))
+# the type scale must be modular, 1.2-1.333
+struct.append(("spacing scale exists", "--s-16" in tok, "tokens.css"))
+# static-host security: meta CSP + referrer policy, and the inline script hash
+csp = re.search(r'Content-Security-Policy" content="([^"]+)"', html)
+struct.append(("meta CSP present", bool(csp), "index.html"))
+struct.append(("CSP pins the inline script by hash",
+               bool(csp) and "sha256-" in csp.group(1), "index.html"))
+struct.append(("CSP forbids object-src", bool(csp) and "object-src 'none'" in csp.group(1), "index.html"))
+struct.append(("referrer policy strict-origin", 'name="referrer" content="strict-origin-when-cross-origin"' in html, "index.html"))
+struct.append(("no third-party origin", not re.search(r'(?:src|href)="https?://(?!hotmoon123\.github\.io|wa\.me|github\.com|schema\.org)', html), "index.html"))
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:
