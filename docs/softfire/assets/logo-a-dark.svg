@@ -1,13 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="SoftFire">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66.95 49.47" role="img" aria-label="SoftFire">
   <title>SoftFire — Tier A: the gradient, on charcoal, 64px cap and above</title>
   <defs>
-    <linearGradient id="fireDark" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="fireDark" gradientUnits="userSpaceOnUse" x1="12.37" y1="0" x2="54.59" y2="0">
       <stop offset="0" stop-color="#B33A16"/>
       <stop offset="0.55" stop-color="#E85D04"/>
       <stop offset="1" stop-color="#F4A300"/>
     </linearGradient>
   </defs>
-  <rect width="80" height="80" rx="5" fill="#16100D"/>
-  <text x="40" y="51.5" font-family="Inter, system-ui, sans-serif" font-weight="700"
-        font-size="34" letter-spacing="-1" text-anchor="middle" fill="url(#fireDark)">SF</text>
+  <path transform="translate(12.37 37.10)" fill="url(#fireDark)" d="M11.31 0.36Q8.34 0.36 6.14 -0.55Q3.94 -1.47 2.71 -3.26Q1.48 -5.04 1.41 -7.68H6.34Q6.43 -6.42 7.08 -5.59Q7.73 -4.75 8.81 -4.33Q9.89 -3.91 11.26 -3.91Q12.61 -3.91 13.62 -4.31Q14.63 -4.71 15.19 -5.42Q15.75 -6.13 15.75 -7.07Q15.75 -7.92 15.25 -8.49Q14.75 -9.07 13.8 -9.48Q12.84 -9.89 11.49 -10.21L8.77 -10.88Q5.63 -11.65 3.85 -13.28Q2.07 -14.92 2.07 -17.62Q2.07 -19.85 3.28 -21.53Q4.49 -23.21 6.59 -24.14Q8.69 -25.07 11.37 -25.07Q14.12 -25.07 16.16 -24.13Q18.2 -23.19 19.34 -21.52Q20.49 -19.86 20.52 -17.69H15.63Q15.48 -19.17 14.35 -19.99Q13.22 -20.81 11.33 -20.81Q10.04 -20.81 9.13 -20.44Q8.21 -20.07 7.74 -19.42Q7.26 -18.77 7.26 -17.94Q7.26 -17.03 7.82 -16.43Q8.37 -15.83 9.28 -15.45Q10.19 -15.07 11.22 -14.83L13.46 -14.28Q15.02 -13.92 16.36 -13.32Q17.71 -12.73 18.72 -11.85Q19.73 -10.98 20.29 -9.79Q20.86 -8.6 20.86 -7.05Q20.86 -4.8 19.72 -3.13Q18.59 -1.46 16.45 -0.55Q14.32 0.36 11.31 0.36Z"/>
+  <path transform="translate(12.37 37.10)" fill="url(#fireDark)" d="M23.48 0V-24.74H39.75V-20.53H28.55V-13.62H38.66V-9.49H28.55V0Z"/>
 </svg>
