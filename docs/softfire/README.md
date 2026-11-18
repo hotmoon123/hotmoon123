@@ -267,31 +267,42 @@ gradient-filled with `background-clip:text` and therefore has a transparent
 
 ## Known gaps — read before shipping
 
-1. **The price table is published and the pricing is not settled.**
-   The figures are provisional and the user is still researching the
-   market. This is the largest unsourced claim on the page.
-2. **Delivery durations are new.** "2–3 days", "3–4 weeks" and the rest
-   were added to frame each offer as a service. They are estimates, not
-   measured delivery history. Confirm or remove them.
-3. **The Rent & Lease system's live status is unproven.** Its models and
-   routes are in this repo and its data sheet is real, but there is no
-   deploy workflow, no smoke check and no hosting URL for it — unlike
-   BiteKasa, which has all three. The page does not claim it is live, and
-   must not start claiming that without the same evidence BiteKasa has.
-4. **The sequence diagram describes the intended payment path, not a
-   verified gateway integration.** No Paystack, Flutterwave, Stripe or
-   Hubtel code exists in the repo; `gateway_customer_id` and the reference
-   fields are present but nothing is wired to a provider. The diagram is
-   accurate about what gets *stored*, and it is a design, not a receipt.
-3. **Anchors, not routes.** `#offers`, `#work`, `#process` are sections,
-   not URLs.
-4. **No mobile menu.** Nav hides under 860 px; the WhatsApp button
-   carries the CTA alone. The rail covers ≥1024 px. 768–1023 px has no
-   section nav.
-5. **LCP is unmeasured.** **Nothing has been measured on a real phone on
-   a Ghanaian network.** Do that before calling any of this done.
-6. **The carousel holds three cards.** It loops correctly at three.
-   Test at two and at five before reuse.
-7. **Inter and JetBrains Mono are the variable latin subsets only.** No
-   Greek, Cyrillic or Vietnamese. Correct for this audience, wrong if
-   the site is ever translated.
+1. **The price table is published and the pricing is not settled.** The figures
+   are provisional and the user is still researching the market. This is the
+   largest unsourced claim on the page.
+2. **Delivery durations are new.** "2–3 days", "3–4 weeks" and the rest were
+   added to frame each offer as a service. They are estimates, not measured
+   delivery history. Confirm or remove them.
+3. **Nothing has been validated with a real buyer yet.** The idea-to-product
+   sheet puts *Research & Validation* before *Strategy* and *Design*, and that
+   stage has not happened. There is no interview, no message thread, no
+   enquiry from a stranger — so every claim on the page about what a church,
+   school or retailer needs is an inference from the work, not evidence from
+   the market. The page does not pretend otherwise, and it should not until
+   there is a real conversation to point at.
+4. **The Rent & Lease system's live status is unproven.** Its models and routes
+   are in this repo and its data sheet is real, but there is no deploy
+   workflow, no smoke check and no hosting URL for it — unlike BiteKasa, which
+   has all three. The page does not claim it is live, and must not start
+   claiming that without the same evidence BiteKasa has.
+5. **The sequence diagram describes the intended payment path, not a verified
+   gateway integration.** No Paystack, Flutterwave, Stripe or Hubtel code
+   exists in the repo; `gateway_customer_id` and the reference fields are
+   present but nothing is wired to a provider. The diagram is accurate about
+   what gets *stored*, and it is a design, not a receipt.
+6. **Anchors, not routes.** `#offers`, `#work`, `#process` are sections, not
+   URLs. Nothing here is indexable per section, and a shared link always lands
+   at the top of the page.
+7. **No mobile menu.** Nav hides under 860 px; the WhatsApp button carries the
+   CTA alone. The rail covers ≥1024 px. 768–1023 px has no section nav.
+8. **LCP is unmeasured.** **Nothing has been measured on a real phone on a
+   Ghanaian network.** Do that before calling any of this done.
+9. **The carousel holds three cards.** It loops correctly at three. Test at two
+   and at five before reuse.
+10. **Inter and JetBrains Mono are the variable latin subsets only.** No Greek,
+    Cyrillic or Vietnamese. Correct for this audience, wrong if the site is
+    ever translated.
+11. **`softfire.dev` does not exist.** Every canonical, OG and sitemap URL on
+    the page points at `github.com/hotmoon123/softfire/`, which is where it can
+    actually be deployed today. Change all of them together, or the metadata
+    lies.
