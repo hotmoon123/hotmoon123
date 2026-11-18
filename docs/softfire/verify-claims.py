@@ -116,6 +116,17 @@ struct.append(("accordion in app.js", "data-doc" in js, "app.js"))
 # lifecycle in app.js, so that is what gets asserted.
 struct.append(("print opens all six", "beforeprint" in js and "afterprint" in js, "app.js"))
 struct.append(("accordion respects print", "printing" in js, "app.js"))
+# the /whitespace claim is a CLAIM, not decoration: it says three specific
+# things are on page one of every quote. If any of the three leaves the page,
+# the claim stops being true.
+ws = ["price is fixed", "excluded is written down", "new written number"]
+struct.append(("whitespace claim: 3 promises", all(w in html for w in ws),
+               ", ".join(w for w in ws if w not in html) or "all present"))
+# every offer row must be framed as a service (standing instruction).
+# Searched across the whole page, not the documents slice — the offers table
+# is a different section. Care Plan opens "An ongoing service", not "A".
+service_rows = re.findall(r'\bAn? (?:planning|diagnosis|structure|software|system|process|ongoing) service:', html)
+struct.append(("every offer framed as a service", len(service_rows) == 8, f"{len(service_rows)} of 8"))
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:

@@ -1713,6 +1713,16 @@ tr.is-lead th { color: var(--accent); }
   font-size: var(--fs-small);
   color: var(--text-primary);
 }
+/* a wide card that holds a short list: full width, list in two columns
+   once there is room, so three one-line promises do not become a stack. */
+.card-wide { margin-top: var(--s-8); }
+.card-wide > .small { max-width: var(--measure-small); }
+/* proximity: the list was crowding the sentence above it, which made the
+   paragraph and the promises read as one block. Separate, then group. */
+.checks-cols { margin-top: var(--s-6); }
+@media (min-width: 768px) {
+  .checks-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); }
+}
 .checks li::before {
   counter-increment: c;
   content: "✓";
