@@ -709,23 +709,37 @@ section { padding-block: var(--section-py); }
 }
 .fact h3 { margin-bottom: var(--s-2); font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: 0; }
 
+/* ANTI-GENERIC RULE, applied:
+   "Never produce symmetric four-icon feature grids with no editorial point
+   of view" (MASTER-PROMPT-senior-graphic-designer.md 5). This was exactly
+   that: four equal glass cards, equal weight, nothing saying which one
+   matters. Four boxes with equal weight is a template; a numbered row with
+   a rule and a live link is a menu.
+
+   Same four audiences, same words, no invented facts. What changed is the
+   carrier: rules instead of boxes (2px top rule, which is the same weight as
+   the section rules), the number set as the marker rather than a label, and
+   the column rule only on the first item so it reads as a list of four
+   choices rather than a grid of four tiles. */
+
 .buyer {
   display: block;
-  padding: var(--s-6);
-  background: var(--glass-bg);
-  border: var(--bw-1) solid var(--glass-border);
-  border-radius: var(--r-1);
-  box-shadow: var(--glass-line);
+  padding: var(--s-5) 0 0;
+  background: none;
+  border: 0;
+  border-top: var(--bw-2) solid var(--border-control);
+  border-radius: 0;
+  box-shadow: none;
   text-decoration: none;
-  transition: border-color var(--dur-component) var(--ease-move),
-              transform var(--dur-component) var(--ease-move);
+  transition: border-color var(--dur-component) var(--ease-move);
 }
 .buyer:hover, .buyer:focus-visible {
-  border-color: var(--border-accent);
-  transform: translateY(-2px);
+  border-top-color: var(--accent);
 }
-.buyer .label { margin-bottom: var(--s-3); }
-.buyer h3 { margin-bottom: var(--s-2); }
+.buyer:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.buyer .label { margin-bottom: var(--s-2); color: var(--c-muted-deep); }
+.buyer:hover .label, .buyer:focus-visible .label { color: var(--accent); }
+.buyer h3 { margin-bottom: var(--s-3); }
 .buyer p { color: var(--text-muted); margin: 0; }
 
 @media (prefers-reduced-motion: reduce) {

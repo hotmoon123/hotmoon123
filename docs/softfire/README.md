@@ -308,6 +308,42 @@ page at 84 characters.
 Lesson recorded because it cost the most time in this project: **an estimate
 that agrees with your expectation is the most dangerous kind of measurement.**
 
+### The anti-generic rule, applied to a grid that was on the banned list
+
+`MASTER-PROMPT-senior-graphic-designer.md` §5 lists what never to produce,
+and one line is: *"Symmetric four-icon feature grids with no editorial point of
+view."* The "who this is for" section was exactly that — four equal glass cards
+in a four-column grid, equal weight, no indication which audience matters.
+
+The fix was not to delete the content. Same four audiences, same words, no
+invented facts. What changed is the **carrier**: glass boxes became a numbered
+list with 2px rules, so the type and the number carry the structure instead of
+a card outline doing it. On mobile the four collapse into one numbered column,
+which is how a menu should behave.
+
+Verified at 390 and 1440: no overflow, no control under 44px, measure inside
+45–75 characters.
+
+### What survives with JavaScript switched off
+
+Law 1 of the ten laws is *"the network is not reliable."* The most common
+partial-failure state on a 3G Android is not a broken network — it is a page
+that loads and then does nothing because a script did not.
+
+Tested in Chromium with `java_script_enabled=False`:
+
+| | with JS off |
+|---|---|
+| `<h1>` renders | yes — "The plan before the pixels." |
+| All six document summaries | **6 of 6 visible** |
+| Documents open on click | **yes — native `<details>`, no script needed** |
+| The brief | step 1 renders, progress bar present |
+| Page height at 390px | 12,888px (vs 12,461px with JS) |
+
+The one thing that stops working is the accordion (staying open one at a time)
+and the composed WhatsApp message, which are written in JavaScript by
+definition. Every document still opens. Nothing is unreachable.
+
 ### Security, and the limits of a static host
 
 GitHub Pages cannot send response headers. The page therefore carries what meta
