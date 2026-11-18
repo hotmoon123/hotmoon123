@@ -1373,3 +1373,322 @@ tr.is-lead th { color: var(--accent); }
 .motion-toggle[aria-pressed="true"] .motion-dot { background: transparent; box-shadow: inset 0 0 0 1px var(--text-muted); }
 
 .motion-note { margin: 0; }
+
+/* ============================================================
+   21. THE SIX DOCUMENTS, FILLED IN
+   These are documents, not cards. So the visual language is paper:
+   a rule at the top of each, a document number in the margin, a
+   quiet body, and the table as the centre of the argument. No
+   shadow, no glass — glass says "surface", and this is a page.
+   ============================================================ */
+
+.doc {
+  border-top: var(--bw-2) solid var(--border-control);
+  padding-top: var(--s-6);
+  margin-top: var(--s-12);
+}
+.doc:first-of-type { margin-top: var(--s-10); }
+
+.doc-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: var(--s-4);
+  row-gap: var(--s-1);
+  margin-bottom: var(--s-6);
+}
+.doc-n {
+  grid-row: span 2;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .08em;
+  color: var(--accent);
+}
+.doc-head h3 {
+  margin: 0;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--tr-h3);
+}
+.doc-for {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--c-muted-deep);
+}
+
+.doc-body { display: flow-root; }
+.doc-body > * + * { margin-top: var(--s-6); }
+.doc-body h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); margin: 0 0 var(--s-2); }
+
+/* the goal / who block */
+.doc-goal {
+  margin: 0;
+  padding: var(--s-4) var(--s-6);
+  background: rgb(242 233 228 / .04);
+  border-left: var(--bw-2) solid var(--accent);
+  border-radius: 0 var(--r-1) var(--r-1) 0;
+}
+.doc-goal dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-muted-deep);
+  margin-bottom: var(--s-1);
+}
+.doc-goal dd {
+  margin: 0 0 var(--s-4);
+  color: var(--text-primary);
+  max-width: 60ch;
+}
+.doc-goal dd:last-child { margin-bottom: 0; }
+
+/* document tables: quieter than the price table, same bones */
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+  margin-top: var(--s-4);
+  /* The browser had been guessing at column widths and gave "Done when"
+     a 90px sliver while the empty space beside it went unused. Fixed
+     layout with declared proportions stops that argument. */
+  table-layout: fixed;
+}
+.doc-table td, .doc-table th { word-break: normal; overflow-wrap: break-word; }
+.doc-table caption {
+  text-align: left;
+  padding: 0 0 var(--s-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--c-muted-deep);
+}
+.doc-table th, .doc-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--s-3) var(--s-4) var(--s-3) 0;
+  border-bottom: var(--bw-1) solid var(--border-hairline);
+}
+.doc-table thead th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--c-muted-deep);
+  border-bottom-color: var(--border-control);
+}
+.doc-table tbody th {
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  width: 24%;
+}
+/* Three-column proportion: label 24%, middle 26%, the long "why /
+   done when" column takes the remaining 50%. The middle column needs
+   more than a sliver because "Motion for React" and "React 19 +
+   TypeScript" live there. */
+.doc-table thead th:nth-child(1) { width: 24%; }
+.doc-table thead th:nth-child(2) { width: 26%; }
+.doc-table thead th:nth-child(3) { width: auto; }
+/* the flow table is two columns: the failure case, then what happens */
+.doc-table-flow tbody th { width: 30%; }
+.doc-table td { color: var(--text-muted); }
+.doc-table tbody tr:last-child th,
+.doc-table tbody tr:last-child td { border-bottom: 0; }
+/* the flow table has no header row, so its first cell is narrow */
+.doc-table-flow tbody th { width: 34%; }
+.doc-table-flow td { color: var(--text-muted); }
+
+.doc-excl {
+  padding: var(--s-4) var(--s-6);
+  border: var(--bw-1) solid var(--border-hairline);
+  border-radius: var(--r-1);
+  background: rgb(0 0 0 / .14);
+}
+.doc-excl-lead {
+  border-color: var(--border-control);
+  background: rgb(242 233 228 / .04);
+}
+.doc-excl p { margin: 0; color: var(--text-muted); max-width: 66ch; }
+.doc-excl .small { color: var(--text-muted); }
+
+.doc-list { margin: var(--s-2) 0 0; padding-left: var(--s-4); }
+.doc-list li { margin-bottom: var(--s-2); color: var(--text-muted); }
+.doc-list li:last-child { margin-bottom: 0; }
+
+.doc-note {
+  margin: var(--s-6) 0 0;
+  padding-left: var(--s-4);
+  border-left: var(--bw-2) solid var(--border-control);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--c-muted-deep);
+  max-width: 62ch;
+}
+
+.doc-label {
+  margin: var(--s-6) 0 var(--s-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-muted-deep);
+}
+
+/* the app flow as one readable line, not a diagram nobody can read */
+.flow {
+  margin: 0;
+  padding: var(--s-4) var(--s-4);
+  background: rgb(0 0 0 / .18);
+  border: var(--bw-1) solid var(--border-hairline);
+  border-radius: var(--r-1);
+  font-size: var(--fs-small);
+  line-height: 2;
+  color: var(--text-muted);
+  max-width: none;
+}
+.flow strong { color: var(--text-primary); }
+.flow-sep { color: var(--accent); padding-inline: var(--s-1); }
+
+/* colour swatches — the only place a colour chip is allowed, because
+   the colour IS the content */
+.swatches {
+  list-style: none;
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-3);
+}
+.swatches li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: var(--s-3);
+  row-gap: 2px;
+  padding: var(--s-2) 0;
+  border-bottom: var(--bw-1) solid var(--border-hairline);
+}
+.sw {
+  grid-row: span 3;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-1);
+  background: var(--sw);
+  box-shadow: inset 0 0 0 1px rgb(242 233 228 / .30);
+}
+.sw-n { font-size: var(--fs-small); color: var(--text-primary); }
+.sw-h { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.sw-u { font-size: 11px; color: var(--c-muted-deep); }
+
+/* the six-box check, reproduced from page 08 */
+.checklist {
+  margin-top: var(--s-12);
+  padding: var(--s-6);
+  border: var(--bw-2) solid var(--border-control);
+  border-radius: var(--r-1);
+}
+.checklist-h {
+  margin: 0 0 var(--s-2);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+}
+.checks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-2);
+  counter-reset: c;
+}
+.checks li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-3);
+  align-items: start;
+  font-size: var(--fs-small);
+  color: var(--text-primary);
+}
+.checks li::before {
+  counter-increment: c;
+  content: "✓";
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.checklist-foot {
+  margin: var(--s-6) 0 0;
+  padding-top: var(--s-4);
+  border-top: var(--bw-1) solid var(--border-hairline);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+
+@media (min-width: 768px) {
+  .doc-head { grid-template-columns: 3rem minmax(0, 1fr); }
+  .doc-n { font-size: var(--fs-small); }
+  .swatches { grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+  .swatches li { border-bottom: 0; border-top: var(--bw-1) solid var(--border-hairline); padding-top: var(--s-3); }
+  .checks { grid-template-columns: 1fr 1fr; gap: var(--s-3) var(--s-6); }
+}
+
+/* The document tables carry three columns and there are six of them.
+   Stacked at 390px they became a column of orphaned words, which is
+   worse than no table: the reader loses which value belongs to which
+   heading. Under 720px each row becomes one labelled block instead —
+   heading first, then each cell with its column name in front of it. */
+@media (max-width: 719px) {
+  .doc-table, .doc-table thead, .doc-table tbody,
+  .doc-table tr, .doc-table th, .doc-table td { display: block; width: 100%; }
+  .doc-table thead { display: none; }
+  /* the blanket rule above turns thead cells into blocks too, which
+     printed three empty bands of header text. Hide the row properly. */
+  .doc-table thead tr,
+  .doc-table thead th { display: none; }
+  .doc-table tbody tr {
+    padding: var(--s-4) 0;
+    border-bottom: var(--bw-1) solid var(--border-control);
+  }
+  .doc-table tbody tr:last-child { border-bottom: 0; }
+  .doc-table tbody th {
+    width: auto;
+    padding: 0 0 var(--s-3);
+    border-bottom: 0;
+    font-size: var(--fs-body);
+    line-height: 1.35;
+    letter-spacing: 0;
+  }
+  .doc-table tbody td {
+    padding: 0 0 var(--s-3);
+    border-bottom: 0;
+  }
+  .doc-table tbody td:last-child { padding-bottom: 0; }
+  /* the column name, taken from the header row by data-label */
+  .doc-table tbody td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--c-muted-deep);
+  }
+  /* the flow table has no column names to borrow */
+  .doc-table-flow tbody td[data-label]::before { content: none; }
+  .doc-table-flow tbody th {
+    color: var(--accent);
+    font-size: var(--fs-small);
+  }
+}
+
+/* the first cell of a document row is the thing being described, so it
+   keeps the row for itself and no column name is printed above it */
+@media (max-width: 719px) {
+  .doc-table tbody th.row-h { font-size: var(--fs-body); }
+}

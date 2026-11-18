@@ -69,7 +69,7 @@
     <li><a href="#offers"><span class="rail-n">02</span><span class="rail-l">Services</span></a></li>
     <li><a href="#work"><span class="rail-n">03</span><span class="rail-l">Work</span></a></li>
     <li><a href="#process"><span class="rail-n">04</span><span class="rail-l">Process</span></a></li>
-    <li><a href="#documents"><span class="rail-n">05</span><span class="rail-l">Paper</span></a></li>
+    <li><a href="#documents"><span class="rail-n">05</span><span class="rail-l">Documents</span></a></li>
     <li><a href="#brief"><span class="rail-n">06</span><span class="rail-l">Start</span></a></li>
   </ol>
   <a class="rail-cta" href="https://wa.me/233570572221">WhatsApp</a>
@@ -259,42 +259,42 @@
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Build Plan <span class="unit">2–3 days</span></th>
+              <th scope="row" class="row-h">Build Plan <span class="unit">2–3 days</span></th>
               <td data-label="What you get">A planning service: scope, features, exclusions and one fixed price, in writing. Credited against the build.</td>
               <td class="num" data-label="Price">800</td>
             </tr>
             <tr>
-              <th scope="row">Diagnostic <span class="unit">1 week</span></th>
+              <th scope="row" class="row-h">Diagnostic <span class="unit">1 week</span></th>
               <td data-label="What you get">A diagnosis service: the problem named, ranked and costed, in writing.</td>
               <td class="num" data-label="Price">1,800</td>
             </tr>
             <tr>
-              <th scope="row">Brand system <span class="unit">3 weeks</span></th>
+              <th scope="row" class="row-h">Brand system <span class="unit">3 weeks</span></th>
               <td data-label="What you get">A structure service: mark, palette, type, and a one-page sheet your printer can work from.</td>
               <td class="num" data-label="Price">4,500</td>
             </tr>
             <tr>
-              <th scope="row">Website <span class="unit">3–4 weeks</span></th>
+              <th scope="row" class="row-h">Website <span class="unit">3–4 weeks</span></th>
               <td data-label="What you get">A software service: five pages, written for the buyer, built to load fast on a cheap phone.</td>
               <td class="num" data-label="Price">4,500</td>
             </tr>
             <tr class="is-lead">
-              <th scope="row">Portal <span class="chip">Lead</span> <span class="unit">6–8 weeks</span></th>
+              <th scope="row" class="row-h">Portal <span class="chip">Lead</span> <span class="unit">6–8 weeks</span></th>
               <td data-label="What you get">A system service: one working app — fees, members or orders — with a staff login.</td>
               <td class="num" data-label="Price">15,000</td>
             </tr>
             <tr>
-              <th scope="row">Full System <span class="unit">10–12 weeks</span></th>
+              <th scope="row" class="row-h">Full System <span class="unit">10–12 weeks</span></th>
               <td data-label="What you get">A process service: portal, site, trained people and a documented process.</td>
               <td class="num" data-label="Price">22,000</td>
             </tr>
             <tr>
-              <th scope="row">App wrap <span class="unit">2 weeks</span></th>
+              <th scope="row" class="row-h">App wrap <span class="unit">2 weeks</span></th>
               <td data-label="What you get">A software service: your site as an installable Android app, in your own store listing.</td>
               <td class="num" data-label="Price">9,000</td>
             </tr>
             <tr>
-              <th scope="row">Care Plan <span class="unit">monthly</span></th>
+              <th scope="row" class="row-h">Care Plan <span class="unit">monthly</span></th>
               <td data-label="What you get">An ongoing service: hosting watched, bugs fixed, one small change a month. Cancellable.</td>
               <td class="num" data-label="Price">300–700<span class="unit">/mo</span></td>
             </tr>
@@ -429,64 +429,369 @@
 
 
   <!-- ============ 7b. THE SIX DOCUMENTS ============
-       From "Before Anyone Builds Your Site": what a client should be able
-       to read before a single page is built. SoftFire writes all six. -->
+       From "Before Anyone Builds Your Site" (Aprendio, 2026).
+       The guide's own instruction is "each one filled in, so you can see
+       what good looks like". So this section does not describe six
+       documents — it prints them, filled in for BiteKasa.
+
+       EVERY FACT BELOW IS TRACEABLE. Sources, all in this repository:
+         bitekasa-site/src/App.tsx ......... packs, prices, phone numbers
+         bitekasa-site/README.md ........... stack, palette, honesty caveats
+         bitekasa-site/scripts/*.mjs ....... the two automated checks
+         .github/workflows/bitekasa-*.yml .. CI, deploy, daily smoke check
+         docs/BITEKASA_STARTER_BRIEF.md .... what is known vs unknown
+       Where something is not known, the document says so. That is the
+       point of the exercise, not a gap in it. -->
   <section id="documents">
     <div class="wrap">
-      <div class="fig"><p class="label">FIG.08 — The paper</p></div>
+      <div class="fig"><p class="label">FIG.08 — The paper, filled in</p></div>
       <h2 class="h2-lead">Six documents you read<br>before I build anything.</h2>
-      <p class="prose muted mb-8">
+      <p class="prose muted mb-6">
         "The plan before the pixels" is not a mood. It is six short documents, in this
         order, each one written in plain language and each one yours to keep whether or
-        not you go ahead. You sign the last three before money moves.
+        not you go ahead.
+      </p>
+      <p class="prose mb-10">
+        Anybody can promise six documents. So here are all six, filled in for the one
+        project SoftFire has actually shipped — <strong>BiteKasa</strong>, a live food
+        business. Read them before you talk to me. They are the same six you would get,
+        with your name and your prices in place of theirs.
       </p>
 
-      <ol class="docs">
-        <li>
-          <p class="n" aria-hidden="true">01</p>
+      <!-- ============ DOC 01 ============ -->
+      <article class="doc">
+        <header class="doc-head">
+          <p class="doc-n">01</p>
           <h3>The requirements</h3>
-          <p class="small muted">What it does, feature by feature, and a list of what is
-             <em>not</em> in this version. If a feature is not on the page it is not in the
-             build.</p>
-          <p class="doc-out">You read: <strong>a features table, and what is excluded</strong></p>
-        </li>
-        <li>
-          <p class="n" aria-hidden="true">02</p>
+          <p class="doc-for">BiteKasa · public website · version 1</p>
+        </header>
+
+        <div class="doc-body">
+          <dl class="doc-goal">
+            <dt>Goal</dt>
+            <dd>Someone who has never heard of BiteKasa can see the three packs, the
+                price, what is in each one, and reach a human on WhatsApp in one tap —
+                without an account and without paying online.</dd>
+            <dt>Who uses it</dt>
+            <dd>Customers deciding whether to order. The owner, who answers the messages.</dd>
+          </dl>
+
+          <table class="doc-table">
+            <caption>Features, and how you would know each one works</caption>
+            <thead>
+              <tr><th scope="col">Feature</th><th scope="col">Who uses it</th><th scope="col">Done when</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" class="row-h">Show the three packs</th>
+                <td data-label="Who uses it">Customer</td>
+                <td data-label="Done when">Silver, Golden and Premium each show a price, a piece count and any drink</td>
+              </tr>
+              <tr>
+                <th scope="row" class="row-h">Separate fried / unfried / frozen pages</th>
+                <td data-label="Who uses it">Customer</td>
+                <td data-label="Done when">Each state has its own page, its own title and its own description</td>
+              </tr>
+              <tr>
+                <th scope="row" class="row-h">Order on WhatsApp</th>
+                <td data-label="Who uses it">Customer</td>
+                <td data-label="Done when">The message is pre-written and opens in WhatsApp addressed to the shop</td>
+              </tr>
+              <tr>
+                <th scope="row" class="row-h">Call from the phone</th>
+                <td data-label="Who uses it">Customer</td>
+                <td data-label="Done when">Tapping the number dials it, no copy and paste</td>
+              </tr>
+              <tr>
+                <th scope="row" class="row-h">Say what is illustrative</th>
+                <td data-label="Who uses it">Owner</td>
+                <td data-label="Done when">Every generated food image carries a visible "illustrative" label</td>
+              </tr>
+              <tr>
+                <th scope="row" class="row-h">Ask before tracking</th>
+                <td data-label="Who uses it">Owner</td>
+                <td data-label="Done when">No analytics script loads until a visitor accepts, and none loads if unset</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="doc-excl">
+            <h4>Not in this version</h4>
+            <p class="small">
+              No cart, no online payment, no delivery tracking, no customer accounts, no
+              stock system, no database. Every order is a conversation, on purpose: the
+              business takes orders by message today and building checkout before there
+              is anyone to run it would be a costume, not a shop.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ DOC 02 ============ -->
+      <article class="doc">
+        <header class="doc-head">
+          <p class="doc-n">02</p>
           <h3>The technical sheet</h3>
-          <p class="small muted">The tools, decided once and written down, each with a
-             one-line reason in plain English. So nobody is guessing halfway through.</p>
-          <p class="doc-out">You read: <strong>what it is built on, and why</strong></p>
-        </li>
-        <li>
-          <p class="n" aria-hidden="true">03</p>
+          <p class="doc-for">BiteKasa · what it runs on, decided once</p>
+        </header>
+
+        <div class="doc-body">
+          <table class="doc-table">
+            <caption>Each choice, and the reason in plain English</caption>
+            <thead>
+              <tr><th scope="col">Area</th><th scope="col">Choice</th><th scope="col">Why, in plain English</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row" class="row-h">Framework</th><td data-label="Choice">React 19 + TypeScript</td>
+                <td data-label="Why, in plain English">Typed, so a wrong price or a missing pack is caught before it reaches a customer</td></tr>
+              <tr><th scope="row" class="row-h">Styling</th><td data-label="Choice">Tailwind CSS 4</td>
+                <td data-label="Why, in plain English">One set of brand values used everywhere instead of colours picked by hand</td></tr>
+              <tr><th scope="row" class="row-h">Motion</th><td data-label="Choice">Motion for React</td>
+                <td data-label="Why, in plain English">Short entrances that switch themselves off when a phone asks for less motion</td></tr>
+              <tr><th scope="row" class="row-h">Build</th><td data-label="Choice">Vite 8</td>
+                <td data-label="Why, in plain English">Turns the source into plain files a free host can serve</td></tr>
+              <tr><th scope="row" class="row-h">Hosting</th><td data-label="Choice">GitHub Pages, GH₵0</td>
+                <td data-label="Why, in plain English">No server to rent while the business has no revenue for one</td></tr>
+              <tr><th scope="row" class="row-h">Deploy</th><td data-label="Choice">GitHub Actions on every push</td>
+                <td data-label="Why, in plain English">Type-check, build, budget check and SEO check run before publishing — a broken build cannot go live</td></tr>
+              <tr><th scope="row" class="row-h">Ordering</th><td data-label="Choice">WhatsApp deep link</td>
+                <td data-label="Why, in plain English">The owner already answers WhatsApp; nothing new to learn or pay for</td></tr>
+              <tr><th scope="row" class="row-h">Analytics</th><td data-label="Choice">GA4, off by default</td>
+                <td data-label="Why, in plain English">Nothing loads unless a key is set <em>and</em> the visitor says yes</td></tr>
+              <tr><th scope="row" class="row-h">Backups</th><td data-label="Choice">Scheduled GitHub workflow</td>
+                <td data-label="Why, in plain English">The source of the site survives a deleted file or a bad edit</td></tr>
+            </tbody>
+          </table>
+
+          <div class="doc-excl">
+            <h4>Two measurements it must pass, every deploy</h4>
+            <p class="small">
+              JavaScript must stay under <strong>150 KiB compressed</strong> and CSS under
+              <strong>20 KiB</strong>. Both are enforced by a script that fails the build if
+              either is exceeded, so "make it fast" is a test result rather than a promise.
+              A second script checks that all five pages carry a unique title and
+              description, a correct canonical address, and appear in the sitemap.
+            </p>
+            <h4 class="mt-6">Decisions still needed</h4>
+            <ul class="small doc-list">
+              <li>Whether the two advertised numbers are both WhatsApp-enabled.</li>
+              <li>Whether the Silver, Golden and Premium prices apply to fried, unfried or frozen.</li>
+              <li>Whether GA4 is wanted at all — until it is, nothing is measured.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ DOC 03 ============ -->
+      <article class="doc">
+        <header class="doc-head">
+          <p class="doc-n">03</p>
           <h3>The app flow</h3>
-          <p class="small muted">Every page a person can reach, what each button does, which
-             page comes next, and where they land when something goes wrong.</p>
-          <p class="doc-out">You read: <strong>no dead ends</strong></p>
-        </li>
-        <li>
-          <p class="n" aria-hidden="true">04</p>
+          <p class="doc-for">BiteKasa · where a customer goes, and what happens when it breaks</p>
+        </header>
+
+        <div class="doc-body">
+          <p class="doc-label">Main path</p>
+          <p class="flow">Home <span class="flow-sep">›</span> See the three packs
+            <span class="flow-sep">›</span> Choose fried, unfried or frozen
+            <span class="flow-sep">›</span> <strong>Order on WhatsApp</strong>
+            <span class="flow-sep">›</span> Message arrives pre-written
+            <span class="flow-sep">›</span> Owner replies and confirms</p>
+
+          <p class="doc-label">From any page</p>
+          <ul class="doc-list">
+            <li><strong>Call</strong> — taps straight into the phone dialler.</li>
+            <li><strong>Instagram</strong> — opens the shop's profile in a new tab.</li>
+            <li><strong>Privacy</strong> — one page, plain language, linked in the footer.</li>
+          </ul>
+
+          <p class="doc-label">When something goes wrong</p>
+          <table class="doc-table doc-table-flow">
+            <tbody>
+              <tr><th scope="row" class="row-h">No WhatsApp installed</th>
+                <td>WhatsApp offers to open in a browser or the app store. The phone number is printed beside the button so the order can still be placed by calling.</td></tr>
+              <tr><th scope="row" class="row-h">Visitor declines analytics</th>
+                <td>Nothing is recorded, the site works identically, and the banner does not return.</td></tr>
+              <tr><th scope="row" class="row-h">Analytics key not set</th>
+                <td>The banner never appears at all. There is no half-configured state.</td></tr>
+              <tr><th scope="row" class="row-h">Images fail to load</th>
+                <td>Each image has written alt text, so the page still explains what was there.</td></tr>
+              <tr><th scope="row" class="row-h">Pack is out of stock</th>
+                <td>The site says to confirm availability before ordering, so the website never promises stock it cannot see.</td></tr>
+            </tbody>
+          </table>
+          <p class="doc-note">
+            Read it for dead ends. Every branch above ends somewhere a person can still
+            finish what they came to do — order food.
+          </p>
+        </div>
+      </article>
+
+      <!-- ============ DOC 04 ============ -->
+      <article class="doc">
+        <header class="doc-head">
+          <p class="doc-n">04</p>
           <h3>The design brief</h3>
-          <p class="small muted">Your real colours and fonts, and the rules for buttons,
-             forms, headings and tone — written so the tenth screen looks as on-brand as
-             the first.</p>
-          <p class="doc-out">You read: <strong>your colours, not ones that look close</strong></p>
-        </li>
-        <li>
-          <p class="n" aria-hidden="true">05</p>
+          <p class="doc-for">BiteKasa · colours, type, and the rules that keep screen ten on-brand</p>
+        </header>
+
+        <div class="doc-body">
+          <p class="doc-label">Colours</p>
+          <ul class="swatches">
+            <li><span class="sw" style="--sw:#A71920"></span>
+              <span class="sw-n">Royal Red</span><span class="sw-h">#A71920</span>
+              <span class="sw-u">Actions, pack tags</span></li>
+            <li><span class="sw" style="--sw:#F7EEDB"></span>
+              <span class="sw-n">Warm Cream</span><span class="sw-h">#F7EEDB</span>
+              <span class="sw-u">Page ground</span></li>
+            <li><span class="sw" style="--sw:#D5A12E"></span>
+              <span class="sw-n">Royal Gold</span><span class="sw-h">#D5A12E</span>
+              <span class="sw-u">Golden pack, highlights</span></li>
+          </ul>
+
+          <p class="doc-label">Type and rules</p>
+          <table class="doc-table">
+            <tbody>
+              <tr><th scope="row" class="row-h">Fonts</th>
+                <td>The brand's own two faces. No third face is introduced for a new page.</td></tr>
+              <tr><th scope="row" class="row-h">Buttons</th>
+                <td>Red fill, cream text, rounded corners. One filled button per screen: Order on WhatsApp. Call is the quiet second.</td></tr>
+              <tr><th scope="row" class="row-h">Images</th>
+                <td>Fixed ratios so the three pack photos line up. Any image that is not a real photograph is labelled illustrative, on the image.</td></tr>
+              <tr><th scope="row" class="row-h">Tone</th>
+                <td>Warm and plain. "Ask about fried, unfried and frozen options", not "Explore our product range".</td></tr>
+              <tr><th scope="row" class="row-h">Honesty rule</th>
+                <td>No invented shelf life, no ingredient or allergen claims, no delivery promise until delivery is real. Where the flyer is ambiguous, the site says "confirm".</td></tr>
+              <tr><th scope="row" class="row-h">Phone first</th>
+                <td>Most customers arrive from Instagram on a phone. Designed at 390px and checked at 320 and 430 before desktop.</td></tr>
+            </tbody>
+          </table>
+          <p class="doc-note">
+            Read it for your real colour codes, not ones that look close. If a brief could
+            describe any company's site, it is not specific enough.
+          </p>
+        </div>
+      </article>
+
+      <!-- ============ DOC 05 ============ -->
+      <article class="doc">
+        <header class="doc-head">
+          <p class="doc-n">05</p>
           <h3>The data sheet</h3>
-          <p class="small muted">What is stored, how records link, and exactly who can see,
-             change and delete each one — with anything personal or sensitive flagged.</p>
-          <p class="doc-out">You read: <strong>who can see what</strong></p>
-        </li>
-        <li>
-          <p class="n" aria-hidden="true">06</p>
+          <p class="doc-for">BiteKasa · what is stored, and who can see it</p>
+        </header>
+
+        <div class="doc-body">
+          <div class="doc-excl doc-excl-lead">
+            <h4>The short answer</h4>
+            <p class="small">
+              <strong>This site stores nothing about a customer.</strong> There is no
+              database, no login, no order record and no payment. The only place an order
+              exists is the customer's own WhatsApp thread and the owner's phone. That is
+              not a missing feature — it is the smallest possible amount of personal data,
+              which is the safest amount to hold.
+            </p>
+          </div>
+
+          <table class="doc-table">
+            <caption>Everything that could hold data, and what is actually in it</caption>
+            <thead>
+              <tr><th scope="col">Record</th><th scope="col">What is stored</th><th scope="col">Who can see it</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row" class="row-h">Customer</th><td data-label="What is stored">Nothing. No name, email or account is collected by the site.</td><td data-label="Who can see it">Nobody</td></tr>
+              <tr><th scope="row" class="row-h">Order</th><td data-label="What is stored">Nothing in the site. The message exists only in WhatsApp.</td><td data-label="Who can see it">Customer and owner</td></tr>
+              <tr><th scope="row" class="row-h">Payment</th><td data-label="What is stored">Nothing. No card details are ever collected here.</td><td data-label="Who can see it">Nobody</td></tr>
+              <tr><th scope="row" class="row-h">Analytics</th><td data-label="What is stored">Page views only, and only after the visitor accepts.</td><td data-label="Who can see it">The owner, in aggregate</td></tr>
+              <tr><th scope="row" class="row-h">Hosting logs</th><td data-label="What is stored">GitHub Pages records standard web requests.</td><td data-label="Who can see it">GitHub</td></tr>
+            </tbody>
+          </table>
+
+          <div class="doc-excl">
+            <h4>Rules</h4>
+            <ul class="small doc-list">
+              <li>No analytics script is injected until a visitor accepts. Declining is a real decline, not a delay.</li>
+              <li>No card data is ever collected, so none can be leaked.</li>
+              <li>Product photographs of real customers are never published without permission.</li>
+              <li>If ordering is ever taken into the site, this document is rewritten <em>before</em> the first record is created, not after.</li>
+            </ul>
+          </div>
+          <p class="doc-note">
+            This is the one to never skip. A page that looks wrong can be fixed in an
+            afternoon. A customer's data visible to the wrong people is a conversation you
+            have with them.
+          </p>
+        </div>
+      </article>
+
+      <!-- ============ DOC 06 ============ -->
+      <article class="doc">
+        <header class="doc-head">
+          <p class="doc-n">06</p>
           <h3>The build order</h3>
-          <p class="small muted">The stages, what you get at each one, how you test it
-             yourself, and what you sign off before the next stage starts. Riskiest first.</p>
-          <p class="doc-out">You read: <strong>a sign-off you can do alone</strong></p>
-        </li>
-      </ol>
+          <p class="doc-for">BiteKasa · five stages, each ending in something you can check alone</p>
+        </header>
+
+        <div class="doc-body">
+          <table class="doc-table">
+            <caption>What you get, and how you sign it off</caption>
+            <thead>
+              <tr><th scope="col">Stage</th><th scope="col">What you get</th><th scope="col">You sign off when</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row" class="row-h">1 · One page</th>
+                <td data-label="What you get">Hero, the three packs, one WhatsApp button</td>
+                <td data-label="You sign off when">You open it on your own phone and the prices are right</td></tr>
+              <tr><th scope="row" class="row-h">2 · The three states</th>
+                <td data-label="What you get">Separate fried, unfried and frozen pages</td>
+                <td data-label="You sign off when">Each page names its state and does not imply the others</td></tr>
+              <tr><th scope="row" class="row-h">3 · Trust and discovery</th>
+                <td data-label="What you get">Privacy page, robots, sitemap, per-page titles</td>
+                <td data-label="You sign off when">Searching your own business name finds the right page</td></tr>
+              <tr><th scope="row" class="row-h">4 · Guard rails</th>
+                <td data-label="What you get">Budget check, SEO check, backup workflow</td>
+                <td data-label="You sign off when">A deliberately broken price stops the deploy instead of shipping</td></tr>
+              <tr><th scope="row" class="row-h">5 · Launch</th>
+                <td data-label="What you get">Live address, QR artwork, daily uptime check</td>
+                <td data-label="You sign off when">A physical QR scan on a printed flyer opens the live site</td></tr>
+            </tbody>
+          </table>
+          <div class="doc-excl">
+            <h4>Riskiest part first</h4>
+            <p class="small">
+              Stage 1 put the prices and the WhatsApp handoff in front of the owner before
+              any decoration existed, because a wrong price or a dead link is the only
+              failure that actually costs a sale. Everything after stage 1 is additive and
+              can be removed without breaking ordering.
+            </p>
+          </div>
+          <p class="doc-note">
+            Read it for a sign-off you can do yourself at every stage. If you cannot test
+            it, you will only find out at the end.
+          </p>
+        </div>
+      </article>
+
+      <!-- the self-check from page 08 of the guide -->
+      <div class="checklist">
+        <h3 class="checklist-h">The check before building starts</h3>
+        <p class="small muted mb-6">
+          From the guide, unchanged. Ask any builder for each one. Tick it only if you have
+          seen it and read it.
+        </p>
+        <ul class="checks">
+          <li>A feature list I have read and agreed to</li>
+          <li>The tools it runs on, written down and fixed</li>
+          <li>A map of every page and what each click does</li>
+          <li>A design brief with our real colours and fonts</li>
+          <li>A plan for where client data lives and who sees it</li>
+          <li>A build order with points where I sign off</li>
+        </ul>
+        <p class="checklist-foot">
+          All six are above, filled in, for a project that is live right now. That is the
+          whole claim.
+        </p>
+      </div>
     </div>
   </section>
 

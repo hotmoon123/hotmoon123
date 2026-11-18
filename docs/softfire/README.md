@@ -5,9 +5,9 @@ no third-party request of any kind.
 
 ```
 docs/softfire/
-├── index.html          10 sections, one page
+├── index.html          10 sections, one page, incl. six filled-in documents
 ├── tokens.css          four tiers — primitive → semantic → component → layout
-├── styles.css          21 numbered blocks, incl. a print sheet
+├── styles.css          22 numbered blocks, incl. a print sheet
 ├── app.js              6 islands: crawlers · rail · carousel · brief ·
 │                          motion toggle · year
 └── assets/
@@ -42,8 +42,8 @@ nothing in them changes.
 | | Budget | Shipped |
 |---|---|---|
 | JS, gzip | 180 KB | **3.8 KB** |
-| CSS, gzip (both files) | — | **13.3 KB** |
-| HTML, gzip | — | **8.5 KB** |
+| CSS, gzip (both files) | — | **15.5 KB** |
+| HTML, gzip | — | **13.2 KB** |
 | Fonts | — | **87 KB**, self-hosted, 2 files |
 | Third-party requests | 0 | **0** |
 | Above-the-fold images | 0 | 0 |
@@ -116,6 +116,48 @@ Four steps, one question per screen, choices as pressable cards.
 - Brief: focus moves to each step heading on change.
 - `lang="en-GH"`; headings descend h1 → h2 → h3 with no skipped level.
 
+## The six documents — and where every fact comes from
+
+`#documents` does not describe six planning documents. It prints them, filled
+in for **BiteKasa**, the one project SoftFire has shipped. This follows the
+guide's own instruction (*"each one filled in, so you can see what good looks
+like"*) and page 08's six-box check, which is reproduced verbatim at the end.
+
+Nothing in that section is invented. Every factual claim traces to a file in
+this repository:
+
+| Claim in the document | Source file |
+|---|---|
+| Silver 30 pcs / Golden 50 + 500 ml / Premium 70 + 1 L | `bitekasa-site/src/App.tsx`, `PACKS` |
+| Phone numbers 0595 638 696 and 0552 727 051 | `bitekasa-site/src/App.tsx`, `PHONE_NUMBERS` |
+| React 19, TypeScript, Tailwind 4, Motion, Vite 8 | `bitekasa-site/package.json` |
+| GitHub Pages hosting, Actions deploy | `.github/workflows/bitekasa-pages.yml` |
+| 150 KiB JS / 20 KiB CSS budgets | `bitekasa-site/scripts/check-bundle-size.mjs` |
+| Per-page title, description, canonical, sitemap | `bitekasa-site/scripts/check-seo.mjs` |
+| Five pages + robots + sitemap tested after deploy | `bitekasa-pages.yml`, "Verify required pages" |
+| Everything live, checked daily | `.github/workflows/bitekasa-smoke-check.yml` |
+| Palette #A71920 / #F7EEDB / #D5A12E | `bitekasa-site/README.md` |
+| No stored customer data, no cart, no payment | `bitekasa-site/README.md` |
+| "Illustrative" image disclosure | `bitekasa-site/src/App.tsx`, `figcaption.image-disclosure` |
+| GA4 off until key set *and* visitor accepts | `bitekasa-site/src/AnalyticsConsent.tsx` |
+
+**Live status — verified by proxy.** `github.io` is blocked from this sandbox,
+so the live page cannot be fetched here. The GitHub API is reachable and shows
+the `BiteKasa public-site smoke check` workflow **passing**, which curls all
+seven production URLs with `--fail` and would fail loudly on any of them.
+Latest passing run: `github.com/hotmoon123/hotmoon123/actions/runs/44238191493`.
+
+### Prove it yourself
+
+```bash
+python3 docs/softfire/verify-claims.py
+```
+
+Re-reads the document section, then greps every asserted fact out of the source
+file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
+it after any edit to that section — if a claim stops being true, the script
+fails instead of the page quietly lying.
+
 ## Known gaps — read before shipping
 
 1. **The price table is published and the pricing is not settled.**
@@ -124,6 +166,12 @@ Four steps, one question per screen, choices as pressable cards.
 2. **Delivery durations are new.** "2–3 days", "3–4 weeks" and the rest
    were added to frame each offer as a service. They are estimates, not
    measured delivery history. Confirm or remove them.
+3. **The six documents cover one project, and it is the only one.**
+   BiteKasa is real and live, but it is a website, not a portal — so the
+   data sheet honestly says "stores nothing", which is a weaker
+   demonstration than a project with a database. A second filled-in set
+   for a portal-shaped build would be stronger evidence and does not exist
+   yet. Do not imply otherwise.
 3. **Anchors, not routes.** `#offers`, `#work`, `#process` are sections,
    not URLs.
 4. **No mobile menu.** Nav hides under 860 px; the WhatsApp button
