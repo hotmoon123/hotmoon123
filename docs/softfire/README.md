@@ -197,7 +197,7 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **69 checks**. Besides the fact-to-source checks it asserts the
+It now runs **72 checks**. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -365,6 +365,61 @@ What is **not** protected, and must not be described as protected: HSTS,
 is clickjackable), and `Permissions-Policy`. Those need a host that can set
 headers — Cloudflare Pages, Netlify or Vercel can, GitHub Pages cannot.
 
+## The brand, in five parts
+
+`brand/BRAND.md` — purpose, market position, identity, legal, and customer
+experience, with every line marked FACT, INFERENCE or UNKNOWN. Read it before any
+of the four decisions at its end.
+
+Three findings from writing it are already applied to the site.
+
+### The logo was not the logo — fixed
+
+Every mark was `<text font-family="Inter">SF</text>` inside an SVG loaded through
+an `<img>`. An SVG in an `<img>` is a separate document and **cannot fetch the
+page's web fonts**, so the browser fell back to a system sans. Measured in
+Chromium, three different S shapes appeared side by side.
+
+`tools/build-marks.py` instantiates the shipped `inter-latin-var.woff2` at
+`wght 700`, applies −0.03em tracking, and emits the glyphs as paths. Still an
+ordinary S and an ordinary F — now those two letters in every browser, with no
+font request and no fallback. All five assets are 1.2–1.6 KB.
+
+### The price was undefended — fixed
+
+Measured against five real Accra studios:
+
+| Studio | Entry website price |
+|---|---|
+| BuiltFound | GH₵1,000 |
+| YookuWeb | GH₵1,500 |
+| Websys | GH₵2,500 |
+| KayTech | GH₵3,500 |
+| **SoftFire** | **GH₵4,500** |
+
+SoftFire is the most expensive entry price in the set and the page said nothing
+about why. The table was losing on the only axis it did not address. There is now
+one card under it that names the rival range, admits it is not the cheapest, and
+lists four things a "from" quote cannot promise — all of them already true of the
+studio, so no new claim was invented.
+
+It ends with: *"If they are not worth the difference to you, the cheaper quote is
+the right purchase and I will say so."*
+
+### The domains are taken — and this project's notes were wrong
+
+The notes said `softfire.dev` "does not exist". It does. Live DNS:
+
+| Domain | Status |
+|---|---|
+| `softfire.dev` | **registered** — resolves to Cloudflare |
+| `softfire.com` | **registered** — resolves to a hosting IP |
+| `softfire.com.gh` | NXDOMAIN — **appears available** |
+| `softfire.gh` | NXDOMAIN — appears available |
+
+A customer typing `softfire.com` reaches a stranger. `softfire.com.gh` looks
+free, and it is the one that matches a registered business name.
+
 ## Known gaps — read before shipping
 
 1. **The price table is published and the pricing is not settled.** The figures
@@ -409,7 +464,11 @@ headers — Cloudflare Pages, Netlify or Vercel can, GitHub Pages cannot.
 12. **The validation gap is still the largest gap.** See item 3. Standards
     compliance is not market evidence, and passing 67 checks is not the same as
     one stranger asking to buy.
-13. **`softfire.dev` does not exist.** Every canonical, OG and sitemap URL on
+13. **`softfire.dev` is registered to someone else.** `softfire.com` too. The
+    canonical and OG URLs on this page point at `hotmoon123.github.io/softfire/`,
+    which is where it can actually deploy today. `softfire.com.gh` appears
+    available and is the recommended home. **Corrected:** earlier notes in this
+    repo said the domain did not exist; live DNS says it does. Every canonical, OG and sitemap URL on
     the page points at `github.com/hotmoon123/softfire/`, which is where it can
     actually be deployed today. Change all of them together, or the metadata
     lies.

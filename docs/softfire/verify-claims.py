@@ -119,9 +119,15 @@ struct.append(("accordion respects print", "printing" in js, "app.js"))
 # the /whitespace claim is a CLAIM, not decoration: it says three specific
 # things are on page one of every quote. If any of the three leaves the page,
 # the claim stops being true.
-ws = ["price is fixed", "excluded is written down", "new written number"]
-struct.append(("whitespace claim: 3 promises", all(w in html for w in ws),
-               ", ".join(w for w in ws if w not in html) or "all present"))
+# The three promises moved into the price-defence card when the two competing
+# cards were merged. The claim is the same; only its address changed. This
+# check follows the text, so it failed when the old strings disappeared --
+# which is the point: a claim that quietly leaves the page should fail a test.
+ws = ["price fixed in writing", "exclusions",
+      "in your name", "named person in month six"]
+struct.append(("price defence carries the 4 promises",
+               all(w.lower() in html.lower() for w in ws),
+               ", ".join(w for w in ws if w.lower() not in html.lower()) or "all present"))
 # every offer row must be framed as a service (standing instruction).
 # Searched across the whole page, not the documents slice — the offers table
 # is a different section. Care Plan opens "An ongoing service", not "A".
@@ -155,6 +161,14 @@ struct.append(("brand precedes section nav",
 # every anchor must land clear of the 64px sticky header
 struct.append(("anchor offset for sticky header",
                "scroll-padding-top" in css and "scroll-margin-top" in css, "styles.css"))
+# the price defence is a set of claims about the studio. If the sentence that
+# names the competing price range disappears, the page stops being honest
+# about where it sits in the market.
+struct.append(("price defence names the rival range",
+               "GH\u20b51,000\u20133,500" in html, "index.html"))
+struct.append(("price defence admits it is not cheapest",
+               "not the cheapest" in html.lower() or "costs more than the cheapest" in html.lower(),
+               "index.html"))
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:

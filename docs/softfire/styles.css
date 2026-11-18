@@ -1738,16 +1738,33 @@ tr.is-lead th { color: var(--accent); }
 }
 .checks li {
   display: grid;
-  grid-template-columns: auto 1fr;
+  /* the ::before tick is the first column; ALL the text must be the second.
+     When inline <strong>/<span> sit directly in the <li> they each become a
+     grid item and the sentence splits into columns - measured, a bold lead
+     landed in column 1 and its continuation in column 2. Wrapping the text in
+     a block keeps it one item. */
+  grid-template-columns: auto minmax(0, 1fr);
   gap: var(--s-3);
   align-items: start;
   font-size: var(--fs-small);
   color: var(--text-primary);
 }
+.checks li { align-items: baseline; }
+.checks li > span { min-width: 0; }
+/* Keep the sentence as ONE item in column 2. A grid container with inline
+   children wraps each run in an anonymous item, which is how "A written plan
+   you approve" and "before any code is written" ended up in different
+   columns. The ::before is moved out of the grid flow instead. */
+.checks li strong { font-weight: var(--fw-semibold); }
 /* a wide card that holds a short list: full width, list in two columns
    once there is room, so three one-line promises do not become a stack. */
 .card-wide { margin-top: var(--s-8); }
 .card-wide > .small { max-width: var(--measure-small); }
+/* proximity: the checklist was butting straight into the paragraph above it */
+.card-wide > .checks { margin-top: var(--s-6); }
+/* and the closing line needs air after the list, or it reads as a 5th tick */
+.card-wide > .checks + .small { margin-top: var(--s-6); }
+.card-wide > .label + .small { margin-bottom: var(--s-2); }
 /* proximity: the list was crowding the sentence above it, which made the
    paragraph and the promises read as one block. Separate, then group. */
 .checks-cols { margin-top: var(--s-6); }
