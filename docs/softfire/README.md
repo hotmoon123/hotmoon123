@@ -197,7 +197,7 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **67 checks**. Besides the fact-to-source checks it asserts the
+It now runs **69 checks**. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -280,6 +280,9 @@ Three of them exposed defects that a visual pass had missed.
 | Standard | Source | Measured | Result |
 |---|---|---|---|
 | Measure 45–75 characters | `THE_COMPLETE_STACK.md` §1.1; `MASTER-PROMPT-senior-graphic-designer.md` §6 | 27–72 cpl at ten widths | pass |
+| No symmetric four-icon grid | master prompt §5 (banned list) | four glass cards → numbered rules | pass |
+| Reading order: brand before section nav | UIUX master prompt §10 (keyboard checks) | tab 1 skip, 2 brand, 3 CTA, 4–9 rail | pass |
+| Every control ≥ 44px, visible 2px focus | UIUX master prompt §10 | 10/10 stops, 0 under 44 | pass |
 | Body text ≥ 16 px | master prompt §6 | 16 px prose, 18 px lede | pass |
 | Line-height 1.3–1.6 | `THE_COMPLETE_STACK.md` §1.1 | 1.50–1.60 | pass |
 | Works at 320 px **and 1920 px** | uiux master prompt §10 | 320 → 1920, 0 overflow | pass |

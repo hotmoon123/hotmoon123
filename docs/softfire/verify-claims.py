@@ -142,6 +142,16 @@ struct.append(("CSP pins the inline script by hash",
 struct.append(("CSP forbids object-src", bool(csp) and "object-src 'none'" in csp.group(1), "index.html"))
 struct.append(("referrer policy strict-origin", 'name="referrer" content="strict-origin-when-cross-origin"' in html, "index.html"))
 struct.append(("no third-party origin", not re.search(r'(?:src|href)="https?://(?!hotmoon123\.github\.io|wa\.me|github\.com|schema\.org)', html), "index.html"))
+# the anti-generic rule: the four-audience section must NOT be built from
+# cards. MASTER-PROMPT-senior-graphic-designer.md 5 bans "symmetric four-icon
+# feature grids". This asserts the carrier is a rule + number, not a box.
+seg = html[html.index('id="who"'):html.index('id="offers"')]
+buyer_css = css[css.index('.buyer {'):css.index('.buyer:focus-visible')]
+struct.append(("buyers are rules, not cards",
+               "border-radius: 0" in buyer_css and "box-shadow: none" in buyer_css,
+               "styles.css"))
+struct.append(("brand precedes section nav",
+               html.index('class="brand"') < html.index('class="rail"'), "index.html"))
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:
