@@ -152,6 +152,9 @@ struct.append(("buyers are rules, not cards",
                "styles.css"))
 struct.append(("brand precedes section nav",
                html.index('class="brand"') < html.index('class="rail"'), "index.html"))
+# every anchor must land clear of the 64px sticky header
+struct.append(("anchor offset for sticky header",
+               "scroll-padding-top" in css and "scroll-margin-top" in css, "styles.css"))
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:
