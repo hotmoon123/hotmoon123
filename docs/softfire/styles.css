@@ -160,6 +160,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* content sits above the field — every section is on z-index 1 */
 main, .site-header, .site-footer, .rail { position: relative; z-index: 1; }
 
+/* ANCHOR LANDING. The header is sticky and 64px tall. Without this, every
+   in-page link (#offers, #documents, #brief) lands with its own heading
+   hidden underneath the header -- measured: scrollIntoView on #brief put the
+   question "What kind of organisation is this?" directly under the wordmark,
+   half-clipped. scroll-padding on the scroll container is the correct fix and
+   costs nothing: it applies to every anchor on the page at once. */
+html { scroll-padding-top: calc(64px + var(--s-4)); }
+/* and for anything scrolled to programmatically */
+main section[id] { scroll-margin-top: calc(64px + var(--s-4)); }
+
 main { isolation: isolate; }
 
 /* ============================================================
