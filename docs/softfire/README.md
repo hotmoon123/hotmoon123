@@ -42,8 +42,8 @@ nothing in them changes.
 | | Budget | Shipped |
 |---|---|---|
 | JS, gzip | 180 KB | **3.8 KB** |
-| CSS, gzip (both files) | — | **15.5 KB** |
-| HTML, gzip | — | **13.2 KB** |
+| CSS, gzip (both files) | — | **16.4 KB** |
+| HTML, gzip | — | **16.9 KB** |
 | Fonts | — | **87 KB**, self-hosted, 2 files |
 | Third-party requests | 0 | **0** |
 | Above-the-fold images | 0 | 0 |
@@ -126,6 +126,27 @@ like"*) and page 08's six-box check, which is reproduced verbatim at the end.
 Nothing in that section is invented. Every factual claim traces to a file in
 this repository:
 
+The data sheet (05) now covers **two** systems, because the two are genuinely
+different cases: BiteKasa stores nothing, and the Rent & Lease system holds
+real financial records. That second table is the one that matters, and every
+row in it comes from the Django models in this repo.
+
+### Diagrams
+
+Document 03 and 05 each carry a real diagram, drawn in the notation the
+corpus supplied (six-shape flowchart: oval start/end, rectangle action,
+diamond decision, parallelogram input, small circle connector, arrow):
+
+- **App flow** — `flow-svg`, the BiteKasa customer journey including the
+  "no" branch back to the packs and the "call instead" escape hatch.
+- **Sequence** — `seq-svg`, six numbered messages across four lifelines,
+  showing that the payment gateway holds the card and this system holds
+  only a reference. Solid arrow = request, dashed = reply.
+
+Both are inline SVG with `<title>` and `<desc>`, so a screen reader reads the
+whole flow as prose. Every node is distinguished by **shape as well as
+colour** — the diagram survives a monochrome screen or forced-colors mode.
+
 | Claim in the document | Source file |
 |---|---|
 | Silver 30 pcs / Golden 50 + 500 ml / Premium 70 + 1 L | `bitekasa-site/src/App.tsx`, `PACKS` |
@@ -140,6 +161,17 @@ this repository:
 | No stored customer data, no cart, no payment | `bitekasa-site/README.md` |
 | "Illustrative" image disclosure | `bitekasa-site/src/App.tsx`, `figcaption.image-disclosure` |
 | GA4 off until key set *and* visitor accepts | `bitekasa-site/src/AnalyticsConsent.tsx` |
+
+And for the Rent & Lease half of the data sheet:
+
+| Claim in the document | Source file |
+|---|---|
+| Ten record types, by class name | `apps/*/models.py` |
+| Only last four digits and expiry stored | `apps/financials/models.py`, `PaymentMethod` |
+| Idempotency key on every transaction | `apps/financials/models.py`, `Transaction` |
+| Leases soft-delete via `deleted_at` | `apps/leases/models.py` |
+| Landlord holds tax ID and business reg. number | `apps/users/models.py` |
+| **No full card number and no CVV field** | verified absent from `apps/financials/models.py` |
 
 **Live status — verified by proxy.** `github.io` is blocked from this sandbox,
 so the live page cannot be fetched here. The GitHub API is reachable and shows
@@ -158,6 +190,11 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
+It now runs **44 checks**, including one negative test: it greps for
+`card_number`, `cvv`, `cvc`, `security_code` and `card_full` in the financials
+model and fails if any of them exists. The claim "the full card is never
+stored" is therefore proven by the absence of the field, not by assertion.
+
 ## Known gaps — read before shipping
 
 1. **The price table is published and the pricing is not settled.**
@@ -166,12 +203,16 @@ fails instead of the page quietly lying.
 2. **Delivery durations are new.** "2–3 days", "3–4 weeks" and the rest
    were added to frame each offer as a service. They are estimates, not
    measured delivery history. Confirm or remove them.
-3. **The six documents cover one project, and it is the only one.**
-   BiteKasa is real and live, but it is a website, not a portal — so the
-   data sheet honestly says "stores nothing", which is a weaker
-   demonstration than a project with a database. A second filled-in set
-   for a portal-shaped build would be stronger evidence and does not exist
-   yet. Do not imply otherwise.
+3. **The Rent & Lease system's live status is unproven.** Its models and
+   routes are in this repo and its data sheet is real, but there is no
+   deploy workflow, no smoke check and no hosting URL for it — unlike
+   BiteKasa, which has all three. The page does not claim it is live, and
+   must not start claiming that without the same evidence BiteKasa has.
+4. **The sequence diagram describes the intended payment path, not a
+   verified gateway integration.** No Paystack, Flutterwave, Stripe or
+   Hubtel code exists in the repo; `gateway_customer_id` and the reference
+   fields are present but nothing is wired to a provider. The diagram is
+   accurate about what gets *stored*, and it is a design, not a receipt.
 3. **Anchors, not routes.** `#offers`, `#work`, `#process` are sections,
    not URLs.
 4. **No mobile menu.** Nav hides under 860 px; the WhatsApp button

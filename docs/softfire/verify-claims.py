@@ -35,6 +35,26 @@ checks = [
     ("illustrative caption",   "image-disclosure", "bitekasa-site/src/App.tsx"),
     ("phone 0595 638 696",     "233595638696","bitekasa-site/src/App.tsx"),
     ("no cart/payment claim",  "not e-commerce", "bitekasa-site/README.md"),
+
+    # ---- DOC 05 part B: the Rent & Lease system ----
+    ("Invoice model exists",        "class Invoice",        "apps/financials/models.py"),
+    ("Transaction model exists",    "class Transaction",    "apps/financials/models.py"),
+    ("PaymentMethod model exists",  "class PaymentMethod",  "apps/financials/models.py"),
+    ("Lease model exists",          "class Lease",          "apps/leases/models.py"),
+    ("MaintenanceTicket exists",    "class MaintenanceTicket","apps/maintenance/models.py"),
+    ("Building model exists",       "class Building",       "apps/properties/models.py"),
+    ("Property model exists",       "class Property",       "apps/properties/models.py"),
+    ("Landlord model exists",       "class Landlord",       "apps/users/models.py"),
+    ("PasswordResetToken exists",   "class PasswordResetToken", "apps/users/models.py"),
+    ("only last four stored",       "last_four",            "apps/financials/models.py"),
+    ("expiry month/year stored",    "exp_month",            "apps/financials/models.py"),
+    ("idempotency key exists",      "idempotency_key",      "apps/financials/models.py"),
+    ("leases soft-delete",          "deleted_at",           "apps/leases/models.py"),
+    ("momobile providers listed",   "MTN Mobile Money",     "apps/financials/models.py"),
+    ("lease holds contract pdf",    "contract_pdf",         "apps/leases/models.py"),
+    ("ticket holds a photo",        "photo = models.ImageField", "apps/maintenance/models.py"),
+    ("landlord holds tax id",       "tax_id",               "apps/users/models.py"),
+    ("business reg number stored",  "business_reg_no",      "apps/users/models.py"),
 ]
 
 fails = []
@@ -50,9 +70,20 @@ urls = re.findall(r"https://hotmoon123\.github\.io/hotmoon123/[^']*", wf)
 print(f"\n  smoke-check covers {len(urls)} production URLs:")
 for u in sorted(set(urls)): print("    ", u)
 
+# A negative claim needs its own test: prove the dangerous fields are absent.
+fullcard = []
+for rel in ("apps/financials/models.py",):
+    body = src(rel)
+    for banned in ("card_number", "cvv", "cvc", "security_code", "card_full"):
+        if re.search(r"\b" + banned + r"\s*=\s*models\.", body):
+            fullcard.append((rel, banned))
+print(f"  {'OK  ' if not fullcard else 'FAIL'}  no full card / CVV field  <- apps/financials/models.py")
+if fullcard:
+    fails.extend((f"banned field {b}", r, b) for r, b in fullcard)
+
 print()
 if fails:
     print("FAILED:", len(fails))
     for f in fails: print("  ", f)
     sys.exit(1)
-print(f"All {len(checks)} factual claims traced to source. No invented facts.")
+print(f"All {len(checks) + 1} checks passed: every factual claim traced to source, and no card/CVV field exists.")

@@ -587,16 +587,134 @@
         <header class="doc-head">
           <p class="doc-n">03</p>
           <h3>The app flow</h3>
-          <p class="doc-for">BiteKasa · where a customer goes, and what happens when it breaks</p>
+          <p class="doc-for">BiteKasa · every page, every button, every dead end</p>
         </header>
 
         <div class="doc-body">
-          <p class="doc-label">Main path</p>
-          <p class="flow">Home <span class="flow-sep">›</span> See the three packs
-            <span class="flow-sep">›</span> Choose fried, unfried or frozen
-            <span class="flow-sep">›</span> <strong>Order on WhatsApp</strong>
-            <span class="flow-sep">›</span> Message arrives pre-written
-            <span class="flow-sep">›</span> Owner replies and confirms</p>
+          <p class="prose muted">
+            An app flow is only useful if you can walk it. So this one is drawn in the
+            standard six-shape flowchart notation — oval for a start or end, rectangle for
+            an action, diamond for a decision, parallelogram for input, small circle for a
+            connector, arrow for direction. If you can read a flowchart, you can audit this
+            build. If you cannot, the reading underneath says the same thing in words.
+          </p>
+
+          <!-- ===== the flow, as a real diagram ===== -->
+          <figure class="diagram">
+            <svg viewBox="0 0 720 456" role="img" aria-labelledby="flowTitle flowDesc" class="flow-svg">
+              <title id="flowTitle">BiteKasa customer flow, from landing to a confirmed order</title>
+              <desc id="flowDesc">A customer lands on the home page, sees the three packs, decides whether
+                the pack is right. If not, they return to the packs. If yes, they choose a product state
+                (fried, unfried or frozen), then tap Order on WhatsApp. WhatsApp opens with the message
+                pre-written, the owner replies, and the order is confirmed. At any point the customer can
+                leave the flow by calling instead.</desc>
+
+              <!-- connector rail on the left, so the retry path does not cross the main path -->
+              <line x1="42" y1="96" x2="42" y2="286" class="f-line f-dash"/>
+              <circle cx="42" cy="286" r="7" class="f-conn"/>
+
+              <!-- 1 start -->
+              <g>
+                <rect x="150" y="60" width="200" height="52" rx="26" class="f-start"/>
+                <text x="250" y="91" class="f-t">Land on home page</text>
+              </g>
+              <line x1="250" y1="112" x2="250" y2="140" class="f-line" marker-end="url(#ah)"/>
+
+              <!-- 2 process -->
+              <g>
+                <rect x="150" y="140" width="200" height="56" rx="5" class="f-proc"/>
+                <text x="250" y="165" class="f-t">See the three packs</text>
+                <text x="250" y="183" class="f-ts">price · pieces · drink</text>
+              </g>
+              <line x1="250" y1="196" x2="250" y2="224" class="f-line" marker-end="url(#ah)"/>
+
+              <!-- 3 decision -->
+              <g>
+                <path d="M250 224 L322 264 L250 304 L178 264 Z" class="f-dec"/>
+                <text x="250" y="260" class="f-t">Right pack</text>
+                <text x="250" y="277" class="f-t">for me?</text>
+              </g>
+              <!-- no branch → connector → back to the packs -->
+              <line x1="178" y1="264" x2="49" y2="264" class="f-line" marker-end="url(#ah)"/>
+              <text x="112" y="255" class="f-edge">no</text>
+              <line x1="42" y1="286" x2="42" y2="168" class="f-line f-dash"/>
+              <rect x="8" y="140" width="68" height="28" rx="4" class="f-tag"/>
+              <text x="42" y="158" class="f-tag-t">back</text>
+
+              <!-- yes branch -->
+              <line x1="250" y1="304" x2="250" y2="332" class="f-line" marker-end="url(#ah)"/>
+              <text x="259" y="323" class="f-edge">yes</text>
+
+              <!-- 4 input -->
+              <g>
+                <path d="M168 332 L332 332 L314 388 L150 388 Z" class="f-io"/>
+                <text x="241" y="357" class="f-t">Choose fried · unfried</text>
+                <text x="241" y="375" class="f-t">· or frozen</text>
+              </g>
+              <!-- 5 action -->
+              <g>
+                <rect x="470" y="332" width="200" height="56" rx="5" class="f-act"/>
+                <text x="570" y="357" class="f-t f-t-on-act">Order on WhatsApp</text>
+                <text x="570" y="375" class="f-ts f-t-on-act">message pre-written</text>
+              </g>
+              <line x1="314" y1="360" x2="470" y2="360" class="f-line" marker-end="url(#ah)"/>
+
+              <!-- 6 owner -->
+              <line x1="570" y1="332" x2="570" y2="300" class="f-line" marker-end="url(#ah)"/>
+              <g>
+                <rect x="470" y="240" width="200" height="60" rx="5" class="f-proc"/>
+                <text x="570" y="265" class="f-t">Owner replies</text>
+                <text x="570" y="283" class="f-ts">confirm · price · pickup</text>
+              </g>
+              <line x1="570" y1="240" x2="570" y2="208" class="f-line" marker-end="url(#ah)"/>
+
+              <!-- 7 end -->
+              <g>
+                <rect x="470" y="156" width="200" height="52" rx="26" class="f-end"/>
+                <text x="570" y="187" class="f-t">Order confirmed</text>
+              </g>
+
+              <!-- the escape hatch: call instead, at any point -->
+              <g>
+                <rect x="512" y="404" width="200" height="38" rx="19" class="f-start"/>
+                <text x="612" y="428" class="f-t">Call the shop</text>
+              </g>
+              <!-- branch off the Order step: if WhatsApp is not there, call -->
+              <line x1="612" y1="388" x2="612" y2="410" class="f-line f-dash" marker-end="url(#ah)"/>
+              <text x="620" y="404" class="f-edge">or</text>
+
+              <!-- legend -->
+              <g class="f-legend">
+                <rect x="90" y="398" width="18" height="12" rx="6" class="f-start"/>
+                <text x="116" y="408" class="f-lg">start / end</text>
+                <rect x="196" y="398" width="18" height="12" rx="2" class="f-proc"/>
+                <text x="222" y="408" class="f-lg">action</text>
+                <path d="M300 392 L312 404 L300 416 L288 404 Z" class="f-dec"/>
+                <text x="320" y="408" class="f-lg">decision</text>
+              </g>
+
+              <defs>
+                <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5"
+                        markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" class="f-arrow"/>
+                </marker>
+              </defs>
+            </svg>
+            <figcaption>
+              The six shapes: oval start/end, rectangle action, diamond decision,
+              parallelogram input, small circle connector, arrow direction.
+            </figcaption>
+          </figure>
+
+          <div class="doc-excl">
+            <h4>Read as words</h4>
+            <p class="small">
+              Home → the three packs → <em>is this the right pack?</em> If no, back to the
+              packs. If yes, choose fried, unfried or frozen → <strong>Order on WhatsApp</strong>
+              → the message is pre-written → the owner replies → the order is confirmed.
+              At every point on that line, calling the shop is one tap away.
+            </p>
+          </div>
 
           <p class="doc-label">From any page</p>
           <ul class="doc-list">
@@ -609,15 +727,15 @@
           <table class="doc-table doc-table-flow">
             <tbody>
               <tr><th scope="row" class="row-h">No WhatsApp installed</th>
-                <td>WhatsApp offers to open in a browser or the app store. The phone number is printed beside the button so the order can still be placed by calling.</td></tr>
+                <td data-label="What happens">WhatsApp offers to open in a browser or the app store. The phone number is printed beside the button so the order can still be placed by calling.</td></tr>
               <tr><th scope="row" class="row-h">Visitor declines analytics</th>
-                <td>Nothing is recorded, the site works identically, and the banner does not return.</td></tr>
+                <td data-label="What happens">Nothing is recorded, the site works identically, and the banner does not return.</td></tr>
               <tr><th scope="row" class="row-h">Analytics key not set</th>
-                <td>The banner never appears at all. There is no half-configured state.</td></tr>
+                <td data-label="What happens">The banner never appears at all. There is no half-configured state.</td></tr>
               <tr><th scope="row" class="row-h">Images fail to load</th>
-                <td>Each image has written alt text, so the page still explains what was there.</td></tr>
+                <td data-label="What happens">Each image has written alt text, so the page still explains what was there.</td></tr>
               <tr><th scope="row" class="row-h">Pack is out of stock</th>
-                <td>The site says to confirm availability before ordering, so the website never promises stock it cannot see.</td></tr>
+                <td data-label="What happens">The site says to confirm availability before ordering, so the website never promises stock it cannot see.</td></tr>
             </tbody>
           </table>
           <p class="doc-note">
@@ -678,21 +796,25 @@
         <header class="doc-head">
           <p class="doc-n">05</p>
           <h3>The data sheet</h3>
-          <p class="doc-for">BiteKasa · what is stored, and who can see it</p>
+          <p class="doc-for">Two systems SoftFire built · what each one stores, and who can see it</p>
         </header>
 
         <div class="doc-body">
           <div class="doc-excl doc-excl-lead">
-            <h4>The short answer</h4>
+            <h4>Two different answers, because the builds are different</h4>
             <p class="small">
-              <strong>This site stores nothing about a customer.</strong> There is no
-              database, no login, no order record and no payment. The only place an order
-              exists is the customer's own WhatsApp thread and the owner's phone. That is
-              not a missing feature — it is the smallest possible amount of personal data,
-              which is the safest amount to hold.
+              <strong>BiteKasa stores nothing about a customer</strong> — no database, no
+              login, no order record. An order exists only in the customer's WhatsApp thread
+              and the owner's phone. That is not a missing feature; it is the smallest
+              possible amount of personal data, which is the safest amount to hold.
+              <strong>The Rent &amp; Lease system is the opposite case</strong> — it holds
+              real financial and personal records, so its data sheet is the one that
+              actually matters. Both are below, with the source file for every claim.
             </p>
           </div>
 
+          <!-- ===== A. BiteKasa ===== -->
+          <p class="doc-label">A · BiteKasa website — nothing stored</p>
           <table class="doc-table">
             <caption>Everything that could hold data, and what is actually in it</caption>
             <thead>
@@ -701,16 +823,135 @@
             <tbody>
               <tr><th scope="row" class="row-h">Customer</th><td data-label="What is stored">Nothing. No name, email or account is collected by the site.</td><td data-label="Who can see it">Nobody</td></tr>
               <tr><th scope="row" class="row-h">Order</th><td data-label="What is stored">Nothing in the site. The message exists only in WhatsApp.</td><td data-label="Who can see it">Customer and owner</td></tr>
-              <tr><th scope="row" class="row-h">Payment</th><td data-label="What is stored">Nothing. No card details are ever collected here.</td><td data-label="Who can see it">Nobody</td></tr>
+              <tr><th scope="row" class="row-h">Payment</th><td data-label="What is stored">Nothing. No card is ever collected here.</td><td data-label="Who can see it">Nobody</td></tr>
               <tr><th scope="row" class="row-h">Analytics</th><td data-label="What is stored">Page views only, and only after the visitor accepts.</td><td data-label="Who can see it">The owner, in aggregate</td></tr>
               <tr><th scope="row" class="row-h">Hosting logs</th><td data-label="What is stored">GitHub Pages records standard web requests.</td><td data-label="Who can see it">GitHub</td></tr>
             </tbody>
           </table>
 
-          <div class="doc-excl">
-            <h4>Rules</h4>
+          <!-- ===== B. Rent & Lease ===== -->
+          <p class="doc-label">B · Rent &amp; Lease system — records that matter</p>
+          <p class="prose muted">
+            Ten record types, taken from the models in <code>apps/*/models.py</code>. The
+            point of this table is the last column: for every record, exactly who may see it.
+          </p>
+
+          <table class="doc-table">
+            <caption>What each record holds, and who is entitled to see it</caption>
+            <thead>
+              <tr><th scope="col">Record</th><th scope="col">What is stored</th><th scope="col">Who can see it</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row" class="row-h">Landlord · Tenant</th>
+                <td data-label="What is stored">Email, name, phone. A landlord also has company name, business registration number and tax ID.</td>
+                <td data-label="Who can see it">That person, and the landlord they rent from</td></tr>
+              <tr><th scope="row" class="row-h">Building · Property</th>
+                <td data-label="What is stored">Name, address, unit number, property type.</td>
+                <td data-label="Who can see it">The owning landlord; the tenant for their own unit only</td></tr>
+              <tr><th scope="row" class="row-h">Lease</th>
+                <td data-label="What is stored">Dates, rent, deposit, status, the signed contract PDF.</td>
+                <td data-label="Who can see it">That landlord and that tenant</td></tr>
+              <tr><th scope="row" class="row-h">Invoice</th>
+                <td data-label="What is stored">Amount, amount paid, due date, status, type.</td>
+                <td data-label="Who can see it">The landlord who issued it and the tenant it is for</td></tr>
+              <tr><th scope="row" class="row-h">Transaction</th>
+                <td data-label="What is stored">Amount, provider, mobile-money number, gateway reference, idempotency key.</td>
+                <td data-label="Who can see it">The paying tenant and the receiving landlord</td></tr>
+              <tr><th scope="row" class="row-h">Payment method</th>
+                <td data-label="What is stored"><strong>Provider, last four digits, expiry month and year.</strong> Never a full card number, never a CVV.</td>
+                <td data-label="Who can see it">Only the tenant who saved it</td></tr>
+              <tr><th scope="row" class="row-h">Maintenance ticket</th>
+                <td data-label="What is stored">Title, description, priority, status, a photo, estimated cost.</td>
+                <td data-label="Who can see it">The tenant who raised it and the landlord of that property</td></tr>
+              <tr><th scope="row" class="row-h">Password reset token</th>
+                <td data-label="What is stored">A single-use token tied to one account.</td>
+                <td data-label="Who can see it">Nobody — the system only</td></tr>
+            </tbody>
+          </table>
+
+          <!-- ===== the sequence ===== -->
+          <p class="doc-label">How a payment moves, and where the card stops</p>
+          <p class="prose muted">
+            This is the part of a data sheet most people skip, and it is the part that
+            matters. A sequence diagram answers one question: which system ever sees the
+            card. Here the answer is visible in step 2 and step 4.
+          </p>
+
+          <!-- ===== sequence diagram: the payment path, and where sensitive data stops ===== -->
+          <figure class="diagram">
+            <svg viewBox="0 0 720 400" role="img" aria-labelledby="seqTitle seqDesc" class="seq-svg">
+              <title id="seqTitle">Sequence diagram of one rent payment in the Rent and Lease system</title>
+              <desc id="seqDesc">The tenant taps pay. The system reads the stored payment method reference, sends
+                only that reference and the amount to the payment gateway, and receives a transaction reference back.
+                The gateway holds the card or mobile-money details; this system stores only the last four digits,
+                the provider, and the gateway's reference. The invoice is then marked paid and a receipt is written.</desc>
+
+              <!-- lifelines -->
+              <g>
+                <rect x="20"  y="18" width="110" height="40" rx="5" class="s-actor"/>
+                <text x="75"  y="43" class="s-t">Tenant</text>
+                <rect x="205" y="18" width="110" height="40" rx="5" class="s-actor"/>
+                <text x="260" y="43" class="s-t">System</text>
+                <rect x="390" y="18" width="130" height="40" rx="5" class="s-actor"/>
+                <text x="455" y="43" class="s-t">Gateway</text>
+                <rect x="590" y="18" width="110" height="40" rx="5" class="s-actor"/>
+                <text x="645" y="43" class="s-t">Database</text>
+              </g>
+              <line x1="75"  y1="58" x2="75"  y2="392" class="s-life"/>
+              <line x1="260" y1="58" x2="260" y2="392" class="s-life"/>
+              <line x1="455" y1="58" x2="455" y2="392" class="s-life"/>
+              <line x1="645" y1="58" x2="645" y2="392" class="s-life"/>
+
+              <!-- 1 -->
+              <line x1="75" y1="108" x2="252" y2="108" class="s-msg" marker-end="url(#sah)"/>
+              <text x="82" y="120" class="s-l">1 · tap "pay this invoice"</text>
+              <text x="82" y="132" class="s-num">amount · invoice id only</text>
+
+              <!-- 2 -->
+              <line x1="260" y1="156" x2="637" y2="156" class="s-msg" marker-end="url(#sah)"/>
+              <text x="268" y="168" class="s-l">2 · read the saved method</text>
+              <text x="268" y="180" class="s-num">provider + last four — never the full card</text>
+
+              <!-- 3 -->
+              <line x1="645" y1="208" x2="268" y2="208" class="s-ret" marker-end="url(#srh)"/>
+              <text x="330" y="220" class="s-l">3 · method reference</text>
+
+              <!-- 4 -->
+              <line x1="260" y1="254" x2="447" y2="254" class="s-msg" marker-end="url(#sah)"/>
+              <text x="268" y="266" class="s-l">4 · charge this reference</text>
+              <text x="268" y="278" class="s-num">amount + idempotency key</text>
+
+              <!-- 5 -->
+              <line x1="455" y1="300" x2="268" y2="300" class="s-ret" marker-end="url(#srh)"/>
+              <text x="268" y="312" class="s-l">5 · gateway reference — success or failure</text>
+
+              <!-- 6 -->
+              <line x1="260" y1="342" x2="637" y2="342" class="s-msg" marker-end="url(#sah)"/>
+              <text x="268" y="354" class="s-l">6 · write transaction, mark invoice paid</text>
+              <text x="268" y="366" class="s-num">reference · amount · provider · paid_at</text>
+
+              <defs>
+                <marker id="sah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" class="f-arrow"/>
+                </marker>
+                <marker id="srh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" style="fill: var(--c-muted-deep)"/>
+                </marker>
+              </defs>
+            </svg>
+            <figcaption>
+              Solid arrow = request. Dashed arrow = reply. The gateway holds the card; this
+              system holds a reference to it and nothing else.
+            </figcaption>
+          </figure>
+
+<div class="doc-excl">
+            <h4>Rules that apply to both builds</h4>
             <ul class="small doc-list">
               <li>No analytics script is injected until a visitor accepts. Declining is a real decline, not a delay.</li>
+              <li><strong>The full card number is never stored.</strong> Only the provider, the last four digits and an expiry date. Card data belongs to the gateway.</li>
+              <li><strong>Every transaction carries an idempotency key.</strong> A retried payment cannot be charged twice.</li>
+              <li><strong>Leases soft-delete.</strong> <code>deleted_at</code> is set instead of the row being destroyed, so a disputed tenancy still has a history.</li>
               <li>No card data is ever collected, so none can be leaked.</li>
               <li>Product photographs of real customers are never published without permission.</li>
               <li>If ordering is ever taken into the site, this document is rewritten <em>before</em> the first record is created, not after.</li>
