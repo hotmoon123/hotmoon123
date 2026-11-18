@@ -41,9 +41,9 @@ nothing in them changes.
 
 | | Budget | Shipped |
 |---|---|---|
-| JS, gzip | 180 KB | **3.8 KB** |
-| CSS, gzip (both files) | — | **16.4 KB** |
-| HTML, gzip | — | **16.9 KB** |
+| JS, gzip | 180 KB | **4.4 KB** |
+| CSS, gzip (both files) | — | **17.0 KB** |
+| HTML, gzip | — | **16.6 KB** |
 | Fonts | — | **87 KB**, self-hosted, 2 files |
 | Third-party requests | 0 | **0** |
 | Above-the-fold images | 0 | 0 |
@@ -190,10 +190,80 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **44 checks**, including one negative test: it greps for
-`card_number`, `cvv`, `cvc`, `security_code` and `card_full` in the financials
-model and fails if any of them exists. The claim "the full card is never
-stored" is therefore proven by the absence of the field, not by assertion.
+It now runs **57 checks**. Besides the fact-to-source checks it asserts the
+structure the page now depends on: six `<details>` exist, each has a summary and
+a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
+real id, the accordion and print behaviour are present in `app.js`, and radius is
+still 5.
+
+One check is negative: it greps for `card_number`, `cvv`, `cvc`, `security_code`
+and `card_full` in the financials model and fails if any of them exists. The claim
+"the full card is never stored" is proven by the absence of the field, not by
+assertion.
+
+## Hierarchy, applied and measured
+
+The design corpus this project was built against states the position plainly
+(`graphic-design-principles.md`): *"Hierarchy is the single most important
+principle in graphic design: it tells the viewer where to start, what matters
+most, and how to proceed."* Measured against that, the page failed.
+
+| Measured at 390 px | Before | After |
+|---|---|---|
+| Total page height | 25,654 px | **12,461 px** (−51%) |
+| `#documents` section | 14,742 px — **57%** of the page | **1,561 px — 12.5%** |
+| Words in `#documents` | 2,149 | 1,109 |
+| Scroll before the first document | 8,425 px (≈10 screens) | **8,341 px, list of six visible together** |
+| Scroll to reach the last document | 13,412 px of documents | **553 px of list** |
+| Largest section on the page | documents (57%) | offers (18%) |
+
+The change was structural, not cosmetic. Each document became
+`<details class="doc" data-doc>` with a summary carrying its number, title, the
+one-line "whose document is this" and a chevron. Native `<details>` means it
+opens with no JavaScript, is keyboard operable with no script, and exposes the
+right role to assistive technology. `app.js` adds only the accordion rule — one
+open at a time — so the section cannot grow back into the wall it was.
+
+Nothing was deleted. All six documents are still in the page, still fully
+readable, and still printed: a closed `<details>` prints nothing, and CSS
+**cannot** open one. That was measured, not assumed — the first attempt set
+`display:block` on the child and the PDF came out with **0 characters** of
+document text. The working mechanism is `beforeprint`/`afterprint` in `app.js`,
+and it is verified against the generated PDF: **21 pages, 19,245 characters, all
+six titles present.**
+
+### Alignment, proximity and measure — the same audit method
+
+Three more of the corpus principles were checked by measurement rather than by
+eye. Each found a real defect.
+
+| Principle | What was measured | Found | Fixed |
+|---|---|---|---|
+| Alignment (`terminology`: "lining up elements along a common edge") | Left edge of every text block at 1440 px | Price-table caption at x=309 while its own column headers sat at x=285 | `caption.caption-flush` — caption and table now share the spine |
+| Proximity (Gestalt: related items group) | Gap from eyebrow to heading, every section | 24/48/48/48/48/48/48/48/48/**0** px | `#brief` had a bare `<p>` where every other section uses `.fig`; now 48 px in all nine |
+| Measure (`terminology`: "line length in characters") | Characters per line, probed with a hidden span | Nine blocks at 103–117 characters | Caps in `em`; **max now 85** at 1440 px, 54 at 390 px, none over |
+
+Measure was wrong twice before it was right, which is worth recording:
+`76ch` still measured 86 characters because `ch` is the width of `"0"`
+(8.00 px here) while this prose averages **6.45 px** per character. `em` tracks
+the text, so the cap is set in `em` and re-measured after every change.
+
+### Contrast — every rendered pair, not the palette in the abstract
+
+Instead of trusting the token table, the page was walked element by element,
+resolving each text colour against the first opaque background behind it, at the
+font size and weight actually computed, against the WCAG 2.2 AA threshold that
+applies to that size.
+
+**Result: zero failures.** The single reported hit was the word *plan*, which is
+gradient-filled with `background-clip:text` and therefore has a transparent
+`color`; measured against its real gradient stops at 67 px bold (3:1 required):
+
+| Stop | Colour | Against `#16100D` | |
+|---|---|---|---|
+| 0% | `#B33A16` | **3.17** | pass |
+| 45% | `#E85D04` | **5.38** | pass |
+| 100% | `#F4A300` | **9.05** | pass |
 
 ## Known gaps — read before shipping
 

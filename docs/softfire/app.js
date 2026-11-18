@@ -349,7 +349,57 @@
   })();
 
   /* ============================================================
-     6. YEAR
+     6. THE SIX DOCUMENTS — one open at a time
+     A native <details> already opens and closes with no JavaScript.
+     This only enforces the accordion behaviour: opening one closes
+     the others, so the section never becomes the 14,742px wall it
+     was. If JS fails, all six still open independently — degraded,
+     never broken.
+     ============================================================ */
+
+  (function documents() {
+    var docs = Array.prototype.slice.call(document.querySelectorAll('[data-doc]'));
+    if (!docs.length) return;
+
+    /* the print handler below opens all six at once. The accordion must not
+       interpret that as a click and re-close five of them, so it holds off
+       while `printing` is true. Measured: without this, only 1 of 6 printed. */
+    var printing = false;
+
+    if (docs.length > 1) {
+      docs.forEach(function (d) {
+        d.addEventListener('toggle', function () {
+          if (printing || !d.open) return;
+          docs.forEach(function (other) {
+            if (other !== d && other.open) other.open = false;
+          });
+        });
+      });
+    }
+
+    /* Printing: a CLOSED <details> prints nothing, and CSS cannot open it —
+       measured, the PDF had 0 characters of document text. So open all six
+       for the printer and restore what the reader had afterwards. */
+    var wasOpen = null;
+    window.addEventListener('beforeprint', function () {
+      wasOpen = docs.map(function (d) { return d.open; });
+      printing = true;
+      docs.forEach(function (d) { d.open = true; });
+      /* let the queued toggle events drain, then release the lock, so the
+         reader's own clicks behave normally again after printing */
+      setTimeout(function () { printing = false; }, 0);
+    });
+    window.addEventListener('afterprint', function () {
+      if (!wasOpen) return;
+      printing = true;
+      docs.forEach(function (d, i) { d.open = wasOpen[i]; });
+      setTimeout(function () { printing = false; }, 0);
+      wasOpen = null;
+    });
+  })();
+
+  /* ============================================================
+     7. YEAR
      ============================================================ */
 
   var yearEl = document.querySelector('[data-year]');

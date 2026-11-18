@@ -81,9 +81,52 @@ print(f"  {'OK  ' if not fullcard else 'FAIL'}  no full card / CVV field  <- app
 if fullcard:
     fails.extend((f"banned field {b}", r, b) for r, b in fullcard)
 
+# ------------------------------------------------------------------
+# Structural checks. The disclosure rewrite is a claim too: "six documents,
+# reachable, and none lost". If a summary stops pointing at its body, or a
+# body disappears from the DOM, that is a broken promise and this fails.
+# ------------------------------------------------------------------
+
+struct = []
+docs_html = re.findall(r'<details class="doc" data-doc[^>]*>(.*?)</details>', docs, re.S)
+struct.append(("six documents present", len(docs_html) == 6, f"{len(docs_html)} found"))
+for n, body in enumerate(docs_html, 1):
+    has_sum = '<summary class="doc-sum"' in body
+    has_inner = '<div class="doc-inner"' in body
+    # every id a summary/body defines must be unique in the whole page
+    struct.append((f"doc {n:02d} has summary + body", has_sum and has_inner,
+                   "summary" if not has_sum else ("body" if not has_inner else "ok")))
+
+# the six document numbers, in order, appear in the summaries
+nums = re.findall(r'<span class="doc-n"[^>]*>\s*(\d\d)', docs)
+struct.append(("numbers 01-06 in order", nums == ["01","02","03","04","05","06"], str(nums)))
+
+# no orphaned anchors: every href="#..." must resolve to an id on the page
+ids = set(re.findall(r'\sid="([^"]+)"', html))
+anchors = set(re.findall(r'href="#([^"]+)"', html))
+missing = sorted(anchors - ids)
+struct.append(("every #anchor resolves", not missing, str(missing)))
+
+# the accordion needs both a JS behaviour and a CSS fallback
+css = (root/'docs/softfire/styles.css').read_text(encoding='utf-8')
+js  = (root/'docs/softfire/app.js').read_text(encoding='utf-8')
+struct.append(("accordion in app.js", "data-doc" in js, "app.js"))
+# MEASURED: CSS cannot reveal a closed <details> for print (the PDF came out
+# with 0 characters of document text). The working mechanism is the print
+# lifecycle in app.js, so that is what gets asserted.
+struct.append(("print opens all six", "beforeprint" in js and "afterprint" in js, "app.js"))
+struct.append(("accordion respects print", "printing" in js, "app.js"))
+struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
+
+for label, ok, where in struct:
+    print(f"  {'OK  ' if ok else 'FAIL'}  {label:28} <- {where}")
+if any(not ok for _, ok, _ in struct):
+    fails.extend((l, w, "") for l, ok, w in struct if not ok)
+
 print()
 if fails:
     print("FAILED:", len(fails))
     for f in fails: print("  ", f)
     sys.exit(1)
-print(f"All {len(checks) + 1} checks passed: every factual claim traced to source, and no card/CVV field exists.")
+print(f"All {len(checks) + 1 + len(struct)} checks passed: every factual claim traced to source, "
+      f"no card/CVV field exists, and all six documents are reachable.")

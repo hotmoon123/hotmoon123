@@ -208,6 +208,12 @@ p { margin: 0; }
   font-weight: 500;
 }
 
+/* Proximity, measured. Every section eyebrow is a .fig — mono label plus a
+   hairline running to the right edge — and the gap label→heading measured
+   48px in eight sections and 0px in #brief, which had a bare <p> instead.
+   The fix was the markup, not a new rule: #brief now uses the same .fig.
+   Verified at 390 and 1440. */
+
 /* every figure in the site: tabular, aligned, never proportional */
 .num, table .num, .n, .brief-stepnum, .carousel-count, .hero-facts dd, .unit {
   font-family: var(--font-mono);
@@ -683,6 +689,7 @@ section { padding-block: var(--section-py); }
   font-size: var(--fs-small);
   line-height: var(--lh-small);
   color: var(--text-muted);
+  max-width: var(--measure-small);   /* was 103 characters per line */
 }
 
 @media (max-width: 559px) {
@@ -755,6 +762,12 @@ caption {
   padding: var(--s-6) var(--s-6) 0;
   color: var(--c-muted-deep);
 }
+
+/* alignment, measured: this caption sat at x=309 while every heading in the
+   page and the column headers under it sat at x=284 — a 25px step sideways
+   that reads as a mistake, because it is one. The table is flush, so the
+   caption is flush. */
+caption.caption-flush { padding-inline: 0; }
 
 thead th {
   text-align: left;
@@ -832,6 +845,7 @@ tr.is-lead th { color: var(--accent); }
     max-width: 100%;
   }
   caption { padding: var(--s-4) var(--s-4) 0; }
+  caption.caption-flush { padding-inline: 0; }
   tbody tr {
     padding: var(--s-4);
     border-bottom: var(--bw-1) solid var(--border-hairline);
@@ -978,6 +992,9 @@ tr.is-lead th { color: var(--accent); }
   color: var(--c-muted-deep);
 }
 .process .gate strong { color: var(--text-primary); font-weight: 500; }
+/* measure: the process bodies ran 109 characters per line at 1440px. */
+.process li p.small { max-width: var(--measure-small); }
+.process .gate { max-width: var(--measure-mono); }
 
 @media (min-width: 900px) {
   .process li {
@@ -1218,7 +1235,15 @@ tr.is-lead th { color: var(--accent); }
   margin-bottom: var(--s-4);
 }
 .site-footer ul { list-style: none; margin: 0; padding: 0; }
-.site-footer li { margin-bottom: var(--s-1); }
+.site-footer li { margin-bottom: 0; }
+/* a short word is a small target: "Work" measured 34x44 and "Start" 32x44.
+   Give every footer link a 44px floor and let the hit area run the column
+   width, so the label never has to be padded into looking different. */
+.site-footer li a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
 .site-footer a {
   display: inline-flex;
   align-items: center;
@@ -1264,6 +1289,16 @@ tr.is-lead th { color: var(--accent); }
    ============================================================ */
 
 @media print {
+  /* MEASURED, not assumed: `display:block` on the child of a CLOSED <details>
+     does NOT make it print. Chromium keeps the content dropped and the PDF
+     came out with 0 characters of the six documents. The real fix is in
+     app.js — `beforeprint` opens all six, `afterprint` puts them back.
+     What remains here is only cosmetic for the already-open document. */
+  .doc-inner .doc-head { display: grid !important; }
+  .doc-sum { list-style: none; }
+  .doc-chev { display: none; }
+  .doc { break-inside: avoid; }
+
   .crawlers, .rail, .site-header, .carousel-controls, .brief { display: none; }
   body { background: #fff; color: #000; }
   .wrap { max-width: none; padding: 0; }
@@ -1382,12 +1417,76 @@ tr.is-lead th { color: var(--accent); }
    shadow, no glass — glass says "surface", and this is a page.
    ============================================================ */
 
+/* Hierarchy, measured. #documents was 57% of the page — 14,742px of 25,654,
+   and a visitor scrolled ten screens before reaching the first document.
+   The corpus is unambiguous that hierarchy is the first principle, so the
+   six documents are now disclosure rows: the list is visible, the contents
+   open on demand. Same evidence, one tenth the scroll. */
 .doc {
-  border-top: var(--bw-2) solid var(--border-control);
-  padding-top: var(--s-6);
-  margin-top: var(--s-12);
+  border-top: var(--bw-1) solid var(--border-control);
+  margin-top: 0;
 }
-.doc:first-of-type { margin-top: var(--s-10); }
+.doc:last-of-type { border-bottom: var(--bw-1) solid var(--border-control); }
+
+.doc-sum {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "n  title  chev"
+    "n  for    chev";
+  /* the chevron aligns to the TITLE, not to the middle of the whole row.
+     Alignment is a principle, not a leftover. */
+  align-items: start;
+  column-gap: var(--s-4);
+  row-gap: var(--s-2);
+  padding: var(--s-4) var(--s-2) var(--s-4) 0;
+  min-height: 64px;
+  cursor: pointer;
+  list-style: none;
+}
+.doc-sum::-webkit-details-marker { display: none; }
+.doc-sum:hover .doc-sum-t,
+.doc-sum:focus-visible .doc-sum-t { color: var(--accent); }
+.doc-sum:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.doc-sum .doc-n { grid-area: n; grid-row: auto; margin: 0; align-self: start; padding-top: 3px; }
+.doc-sum-t {
+  grid-area: title;
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  line-height: 1.3;
+  color: var(--text-primary);
+  transition: color var(--dur-component) var(--ease-move);
+}
+.doc-sum-f {
+  grid-area: for;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .03em;
+  color: var(--c-muted-deep);
+}
+.doc-chev {
+  grid-area: chev;
+  width: 10px;
+  height: 10px;
+  border-right: 1.5px solid var(--c-muted);
+  border-bottom: 1.5px solid var(--c-muted);
+  transform: rotate(45deg) translate(-2px, 3px);
+  transition: transform var(--dur-component) var(--ease-move);
+}
+.doc[open] .doc-chev { transform: rotate(225deg) translate(3px, -2px); }
+
+/* the open document gets a surface so it is visibly a different state.
+   Common region (Gestalt): the content belongs to the row it came from. */
+.doc[open] {
+  background: var(--surface-raised);
+  border-top-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--border-hairline);
+}
+.doc[open] .doc-sum { padding-inline: var(--s-4); }
+.doc[open] .doc-inner { padding: var(--s-2) var(--s-4) var(--s-8); }
+/* the article inside keeps its own document header out of the way */
+.doc-inner .doc-head { display: none; }
 
 .doc-head {
   display: grid;
@@ -1621,6 +1720,11 @@ tr.is-lead th { color: var(--accent); }
   font-family: var(--font-mono);
   font-size: 12px;
 }
+.checklist > p.small,
+.checklist-foot,
+.doc-list p,
+.doc-list li,
+.doc-excl p { max-width: var(--measure-small); }
 .checklist-foot {
   margin: var(--s-6) 0 0;
   padding-top: var(--s-4);
