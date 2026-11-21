@@ -734,7 +734,7 @@ section { padding-block: var(--section-py); }
 
 .buyer {
   display: block;
-  padding: var(--s-5) 0 0;
+  padding: var(--s-6) 0 0;
   background: none;
   border: 0;
   border-top: var(--bw-2) solid var(--border-control);
@@ -1758,6 +1758,25 @@ tr.is-lead th { color: var(--accent); }
 .checks li strong { font-weight: var(--fw-semibold); }
 /* a wide card that holds a short list: full width, list in two columns
    once there is room, so three one-line promises do not become a stack. */
+/* the after-launch table: three columns, no decorative borders. It inherits
+   the site table's measure caps so a cell never runs past 34em. */
+.layers { width: 100%; border-collapse: collapse; margin-top: var(--s-4); }
+.layers th, .layers td {
+  text-align: left; padding: var(--s-3) var(--s-2);
+  border-bottom: var(--bw-1) solid var(--border-hairline); vertical-align: top;
+}
+.layers thead th {
+  font-family: var(--font-mono); font-size: var(--fs-label);
+  letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+  font-weight: 500; border-bottom-color: var(--table-rule);
+}
+.layers tbody th {
+  font-family: var(--font-mono); font-size: var(--fs-small);
+  font-weight: 500; color: var(--text-primary); white-space: nowrap;
+  max-width: 12em;
+}
+.layers td { font-size: var(--fs-small); max-width: 34em; }
+.layers .num { text-align: right; white-space: nowrap; font-family: var(--font-mono); }
 .card-wide { margin-top: var(--s-8); }
 .card-wide > .small { max-width: var(--measure-small); }
 /* proximity: the checklist was butting straight into the paragraph above it */

@@ -175,6 +175,24 @@ struct.append(("care plan is under half the build price per month",
                _care and int(_care.group(1)) < 1500 * 0.5,
                f"care from {_care.group(1) if _care else '?'}/mo vs 1500 build"))
 
+# --- the after-launch promise ----------------------------------------------
+# The four layers are the most promise-dense text on the page. Every one of
+# them is a claim a client will hold SoftFire to, so each is pinned.
+for _p, _why in [
+    ("Days 1–30", "the warranty window must stay named"),
+    ("Months 1–3", "three free months was a deliberate decision"),
+    ("Month 4 on", "the date money starts must be visible"),
+    ("do not pay me for it", "a static site needs no maintenance - the honest answer"),
+    ("nothing renews without asking", "nothing recurring may start silently"),
+    ("tell you which one it is", "bug-vs-change must be said before work, not after"),
+]:
+    struct.append((_p.lower(), _p.lower() in html.lower(), _why))
+
+# The Care Plan must not exceed the market range it was repriced into
+# (Ghana care plans: 250-600/mo per Faciotek, 299-499 per Manuel).
+struct.append(("care plan sits inside the Ghana range",
+               "200–400" in html, "above 600 reads as renting the site"))
+
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:

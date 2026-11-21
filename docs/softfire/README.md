@@ -197,7 +197,7 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **74 checks**, including the price ladder pinned by row. Besides the fact-to-source checks it asserts the
+It now runs **81 checks**, including the price ladder pinned by row and every clause of the after-launch promise. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -454,6 +454,47 @@ actually asks: *what is not included.* It is the scope sheet from `PRICING.md` �
 `measure-audit.py` could not run. The page was validated structurally (balanced
 tags, 74 claim checks, 17.6 KB gzip) but **not visually**. Re-run
 `measure-audit.py` before shipping.
+
+## Maintenance is not management
+
+`MAINTENANCE.md` is the research behind the after-launch promise: what the four
+words actually mean, what a static site needs, and how to structure three free
+months so they build a paying relationship instead of a churn statistic.
+
+**The finding that drives everything:** a static site has **no database, no
+plugins, no CMS to patch**, and every host renews SSL automatically. Sourced
+twice, the genuine technical work is about **two hours a year** — a quarterly
+sweep of links, forms and stale content. So:
+
+> **Maintenance asks "is it still working?" Management asks "is it still true?"**
+
+Selling a maintenance retainer on a static build would be charging a monthly fee
+for work that does not exist. The plan sells **management** — changes made,
+someone accountable, and a monthly note saying what was checked.
+
+**The three-months problem.** A study of 16,512 free-trial customers found **48%
+churned**, against 34% of those on a regular contract — a free trial selects for
+people who were never going to pay, and 4–6% is a good no-card trial conversion.
+So the three months are structured as **onboarding, not a trial**: capped at one
+hour a month, with a monthly note that becomes the receipt for month four.
+
+| When | What | Cost |
+|---|---|---|
+| Days 1–30 | anything that does not work as the signed scope said | free |
+| Months 1–3 | 1 hour of changes/month + the monthly note | included |
+| Month 4 on | 2 changes/month + the monthly note | GH₵200/month |
+| If nothing ever changes | nothing to maintain | nothing |
+
+**Costed, not guessed:** one hour a month is 3 hours — **GH₵150 at GH₵50/hour,
+10% of the build.** Uncapped, the same promise is a 40–67% loss. The cap is what
+makes the generosity affordable.
+
+**The rule that matters most:** nothing renews without asking. A silent rollover
+is how a studio that trades on fixed, written prices loses the plot.
+
+The page now carries a four-row table stating all of this with dates, and the
+Care Plan was repriced from **GH₵399–899/mo to GH₵200–400/mo** — above the Ghana
+market (GH₵250–600) it was renting the site rather than looking after it.
 
 ## Known gaps — read before shipping
 
