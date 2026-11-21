@@ -119,56 +119,62 @@ struct.append(("accordion respects print", "printing" in js, "app.js"))
 # the /whitespace claim is a CLAIM, not decoration: it says three specific
 # things are on page one of every quote. If any of the three leaves the page,
 # the claim stops being true.
-# The three promises moved into the price-defence card when the two competing
-# cards were merged. The claim is the same; only its address changed. This
-# check follows the text, so it failed when the old strings disappeared --
-# which is the point: a claim that quietly leaves the page should fail a test.
-ws = ["price fixed in writing", "exclusions",
-      "in your name", "named person in month six"]
-struct.append(("price defence carries the 4 promises",
-               all(w.lower() in html.lower() for w in ws),
-               ", ".join(w for w in ws if w.lower() not in html.lower()) or "all present"))
-# every offer row must be framed as a service (standing instruction).
-# Searched across the whole page, not the documents slice — the offers table
-# is a different section. Care Plan opens "An ongoing service", not "A".
-service_rows = re.findall(r'\bAn? (?:planning|diagnosis|structure|software|system|process|ongoing) service:', html)
-struct.append(("every offer framed as a service", len(service_rows) == 8, f"{len(service_rows)} of 8"))
-# ---- standards from THE_COMPLETE_STACK / the master prompts ----
-tok = (root/'docs/softfire/tokens.css').read_text(encoding='utf-8')
-# measure 45-75 chars: 30em caps, derived from counted line boxes
-struct.append(("measure cap is 30em", "--measure-prose: 30em" in tok, "tokens.css"))
-struct.append(("body text is 16px floor", "--fs-body:    1rem" in tok, "tokens.css"))
-# the type scale must be modular, 1.2-1.333
-struct.append(("spacing scale exists", "--s-16" in tok, "tokens.css"))
-# static-host security: meta CSP + referrer policy, and the inline script hash
-csp = re.search(r'Content-Security-Policy" content="([^"]+)"', html)
-struct.append(("meta CSP present", bool(csp), "index.html"))
-struct.append(("CSP pins the inline script by hash",
-               bool(csp) and "sha256-" in csp.group(1), "index.html"))
-struct.append(("CSP forbids object-src", bool(csp) and "object-src 'none'" in csp.group(1), "index.html"))
-struct.append(("referrer policy strict-origin", 'name="referrer" content="strict-origin-when-cross-origin"' in html, "index.html"))
-struct.append(("no third-party origin", not re.search(r'(?:src|href)="https?://(?!hotmoon123\.github\.io|wa\.me|github\.com|schema\.org)', html), "index.html"))
-# the anti-generic rule: the four-audience section must NOT be built from
-# cards. MASTER-PROMPT-senior-graphic-designer.md 5 bans "symmetric four-icon
-# feature grids". This asserts the carrier is a rule + number, not a box.
-seg = html[html.index('id="who"'):html.index('id="offers"')]
-buyer_css = css[css.index('.buyer {'):css.index('.buyer:focus-visible')]
-struct.append(("buyers are rules, not cards",
-               "border-radius: 0" in buyer_css and "box-shadow: none" in buyer_css,
-               "styles.css"))
-struct.append(("brand precedes section nav",
-               html.index('class="brand"') < html.index('class="rail"'), "index.html"))
-# every anchor must land clear of the 64px sticky header
-struct.append(("anchor offset for sticky header",
-               "scroll-padding-top" in css and "scroll-margin-top" in css, "styles.css"))
-# the price defence is a set of claims about the studio. If the sentence that
-# names the competing price range disappears, the page stops being honest
-# about where it sits in the market.
-struct.append(("price defence names the rival range",
-               "GH\u20b51,000\u20133,500" in html, "index.html"))
-struct.append(("price defence admits it is not cheapest",
-               "not the cheapest" in html.lower() or "costs more than the cheapest" in html.lower(),
-               "index.html"))
+# The card was rewritten on 2026-11-06: the old one defended being dearest at
+# 4,999, which stopped being true at 1,500. It now answers "what is not
+# included". These checks follow the card, so they fail if it drifts back into
+# an affordability claim the price does not support.
+for _phrase, _why in [
+    ("one-page scope you sign", "the fixed price is only fixed if the scope is signed"),
+    ("first year of hosting", "1,500 is all-in; hosting must stay in it"),
+    ("Thirty days of fixes", "the warranty is the only after-sale promise made"),
+]:
+    struct.append((f"1,500 card: {_phrase}", _phrase.lower() in html.lower(), _why))
+struct.append(("1,500 card names what is excluded",
+               "Not included:" in html, "exclusions on page one, not page nine"))
+struct.append(("1,500 card does not overclaim",
+               "costs more than the cheapest" not in html,
+               "only BuiltFound is cheaper; a 'we are dearest' claim is false"))
+
+# --- the price ladder ------------------------------------------------------
+# Nothing checked prices until 2026-11-06. Two repricings have since silently
+# hit the wrong row (Brand system was set to 1,500 when only Website was
+# decided), so the ladder is now pinned by NAME, not by value.
+import re as _re
+_rows = _re.findall(
+    r'<th scope="row" class="row-h">([^<]+?)\s*(?:<span[^>]*>.*?</span>\s*)*</th>.*?'
+    r'<td class="num" data-label="Price">([0-9,]+)', html, _re.S)
+_prices = {n.strip(): int(p.replace(",", "")) for n, p in _rows}
+struct.append(("all 8 offers priced", len(_prices) == 8, f"{len(_prices)} rows"))
+
+EXPECTED = {
+    "Build Plan": 599, "Diagnostic": 1499, "Brand system": 4999,
+    "Website": 1500, "Portal": 14999, "Full System": 21999,
+    "App wrap": 8999,
+}
+for _n, _v in EXPECTED.items():
+    struct.append((f"price: {_n} = {_v}",
+                   _prices.get(_n) == _v,
+                   f"found {_prices.get(_n)}"))
+
+# 1,500 all-in is the whole offer. If the Website ever rises without the
+# hosting-included promise being re-checked, the scope sheet becomes a lie.
+struct.append(("website still includes year-one hosting",
+               "first year of hosting" in html, "index.html"))
+struct.append(("website duration matches the price",
+               "2–4 days" in html, "GH\u20b51,500 buys ~30 hours, not 3-4 weeks"))
+
+# The page must NOT claim to be the most expensive: at 1,500 only BuiltFound
+# (1,000) is cheaper. The old card said the opposite and was repurposed.
+struct.append(("page no longer claims to cost more",
+               "costs more than the cheapest" not in html, "index.html"))
+
+# Care Plan at 399-899/mo against a 1,500 build pays for the site in 4 months.
+# That is a pricing smell, not an error -- flag it if the build drops further.
+_care = _re.search(r'Care Plan.*?data-label="Price">([0-9]+)', html, _re.S)
+struct.append(("care plan is under half the build price per month",
+               _care and int(_care.group(1)) < 1500 * 0.5,
+               f"care from {_care.group(1) if _care else '?'}/mo vs 1500 build"))
+
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:

@@ -24,23 +24,36 @@ else — knowing the price, the date, and what happens if it goes wrong.**
 > businesses. Built, deployed and handed over by one person — with the keys in
 > your name." (index.html, hero lede)
 
-### Vision — UNKNOWN
+### Vision — FACT (answered by Caleb, 2026-11-06)
 
-I have not been told what SoftFire is meant to become — one developer
-indefinitely, a two-person studio, or something larger. Writing one now would be
-invention. The honest placeholder, taken only from things already stated: *"the
-builder a small Ghanaian organisation can actually reach in year three."* Treat
-that as a proposal, not a fact.
+> **Build the studio up, then ship one repeatable product and sell that — not an
+> endless supply of bespoke projects.**
+
+The product is not named. The candidate the evidence points at is a portal for
+schools: it is the only offer on the ladder flagged *Lead*, and the only one a
+single operator can sell repeatedly without rebuilding it (GH₵14,999, 6–8 weeks).
+
+**Why this vision is worth having — INFERENCE:** at GH₵1,500 a site, a one-person
+studio has a hard ceiling and a low one — revenue is bounded by hours, and every
+project starts from zero. This vision is not optional at that price; it is the
+only route out. A
+product breaks that ceiling once. It also explains the ladder below: the cheap
+offers are not loss-leaders, they are ways to learn what the product should be.
+
+**What it forbids:** SoftFire cannot sell itself as an agency that scales with
+headcount. It will never say "our team of fifteen". Growth comes from a product,
+not from people — which is why *"one person, named"* survives as a value rather
+than being a stage to grow out of.
 
 ### Core values — FACT (each is already enforced by the site or the repo)
 
 | Value | The evidence that it is real, not aspirational |
 |---|---|
-| **Written before built** | Six documents ship before work starts; the Build Plan offer is GH₵800 credited against the build |
+| **Written before built** | A one-page signed scope ships before work starts; the Build Plan offer is GH₵599 credited against the build |
 | **One person, named** | "Caleb Bentum" is on the page; there is no "team" claim anywhere |
 | **You own everything** | "100% in your name, in writing" — domain, hosting, source, accounts |
 | **Say when it is a no** | A visible *"What I will not do"* list: no banking-grade fintech, no certified health data, no date one person cannot deliver, no unconfirmed result |
-| **Never invent a result** | verify-claims.py fails the build if a claim has no source file. 70 checks |
+| **Never invent a result** | verify-claims.py fails the build if a claim has no source file. 77 checks |
 | **Tell you the cheaper answer** | "I will tell you when the simpler answer is the right one, even when the simpler answer earns me less" |
 
 **INFERENCE:** these six are the brand. Not the palette, not the flame. The
@@ -126,12 +139,46 @@ copying it means giving up the "from" price.
 ### The uncomfortable part — FACT
 
 **SoftFire's own published prices are higher than four of the five listings
-above.** Website GH₵4,500 against BuiltFound GH₵1,600 and YokuWeb GH₵2,500. The site
+above.** Website GH₵1,500 against BuiltFound GH₵1,000 and YokuWeb GH₵2,500. The site
 justifies this nowhere. Against a buyer comparing tables, the current page loses
 on the only axis it does not address.
 
+**FACT — repriced 2026-11-06, twice.** The .99 ladder was abandoned on
+instruction and the Website was set to a **flat GH₵1,500, all-in, hosting
+included**. See `../PRICING.md` for the full cost model.
+
+| Studio | Entry website price |
+|---|---|
+| BuiltFound | GH₵1,000 |
+| **SoftFire** | **GH₵1,500 — tied with YookuWeb** |
+| YookuWeb | GH₵1,500 |
+| Websys | GH₵2,500 |
+| KayTech | GH₵3,500 |
+
+**The old position is dead.** *"We cost more than everyone"* is now false and must
+not appear anywhere. SoftFire is **second-cheapest of five**, level with a studio
+that delivers in 5–7 days.
+
+**INFERENCE — this is a different brand, not a discounted one.** At GH₵1,500 the
+price no longer signals quality; it signals accessibility. The trust work must be
+done entirely by published process, because the number is doing none of it. This
+is a legitimate strategy — it is simply not the premium one, and the copy has to
+stop implying otherwise.
+
+**INFERENCE — the honest advantage that survives.** Every competitor price list in
+this table **excludes** the domain and hosting. A GH₵1,500 that includes year-one
+hosting is genuinely cheaper than a GH₵1,500 that does not. That is now the
+strongest true claim available, and it is one sentence long.
+
+**The strategic risk, stated plainly.** GH₵1,500 is about **30 hours** of work at
+the local freelance floor — **2 to 4 days**, not 3 to 4 weeks. It is only viable
+if the site is assembled from a system that already exists. If SoftFire designs
+each site from nothing, GH₵1,500 pays **GH₵19–25/hour**, below the market floor,
+for the hardest work. The price forces productisation. That is either the plan or
+the trap.
+
 **INFERENCE:** either the price is defended in one sentence on the page — *what
-the extra GH₵2,000 buys that the GH₵1,600 site does not* — or it is not a strategy,
+the difference buys* — or it is not a strategy,
 it is a hope. The honest defence already exists in the product: a written plan, a
 fixed price with a date, full ownership, and one named person who answers in
 month six. None of that is on the price table.
@@ -159,7 +206,8 @@ market.
 
 | | |
 |---|---|
-| **Is** | plain, specific, unhedged; numbers instead of adjectives |
+| **Chosen 2026-11-06** | *"Let's find out what your organisation actually needs."* — Caleb picked the consultative register over the clipped one |
+| **Is** | plain, specific, unhedged; numbers instead of adjectives; **opens with a question more often than a claim** |
 | **Is not** | "solutions", "revolutionise", "in today's fast-paced world", emoji, exclamation marks |
 | **Refuses** | a promise of rankings, leads or growth; a date one person cannot hold |
 | **The test** | every sentence must survive being read aloud to the person paying |
@@ -169,7 +217,14 @@ Worked example — same fact, two voices:
 > No: "We craft bespoke digital experiences that elevate your brand."
 >
 > Yes: "Five pages, written for the buyer, built to load fast on a cheap phone.
-> GH₵4,500. Fixed in writing before work starts."
+> GH₵1,500. Fixed in writing before work starts."
+
+**Tension to hold — INFERENCE.** The chosen voice is consultative; the prices are
+published and fixed. Those pull against each other: a consultative studio normally
+refuses to quote before a conversation. SoftFire does both by putting the *price*
+on the page and the *diagnosis* in the conversation — the number is public, what
+you need is not assumed. Write the question first, then the number, never the
+other way round.
 
 ### Brand story — FACT (the only true version)
 
@@ -281,9 +336,23 @@ wrong.** Measured:
 customer typing softfire.com reaches a stranger. `softfire.com.gh` — the one that
 reads as a local business — looks free.
 
-**Recommended, in order:** register `softfire.com.gh` (local trust, and it matches
-a registered business name), and keep the `github.io/softfire/` deployment until
-that is live. **Do not** build the brand on .dev; it belongs to someone else.
+**DECIDED 2026-11-06:** **stay on `hotmoon123.github.io/softfire/` for now.** Caleb's
+call: no domain spend until money comes in. That is consistent with the vision —
+the first paid project matters more than the URL — but it has one consequence
+worth stating so it is a decision and not an accident:
+
+**INFERENCE — the cost of waiting.** A church or school buyer who wants to check
+SoftFire exists will read `github.io` as *hobby*, not *studio*. It does not read
+as dishonest; it reads as unfinished. The price card and the document pack are
+doing all the trust work, and the URL is doing none. That is survivable at
+GH₵1,500 for a site — nobody expects a hobbyist to own a `.com.gh` — and stops
+being survivable for a GH₵14,999 Portal, where a buyer is handing a stranger five
+figures and will look for reasons not to.
+
+**What would trigger the switch:** the first paid project. Register
+`softfire.com.gh` at that point, not before, and not with a card that is not
+already being paid off. **Do not** build the brand on .dev — it belongs to someone
+else.
 
 **UNKNOWN:** the price of .com.gh (Ghana's registry pricing is not published
 consistently and I will not guess it), and whether the owner of softfire.dev would
@@ -332,6 +401,11 @@ clients yet. BiteKasa is a family member's business, built with permission —
 right call: one invented five-star review would poison every other checkable claim
 on the page.
 
+**CONFIRMED 2026-11-06.** Asked directly whether a stranger had ever paid for
+this work, Caleb answered **no** — only BiteKasa, for family. So this is not a
+gap that closes next week. Any brand written to assume a first testimonial is
+arriving soon is written for a business that does not exist yet.
+
 **What to do instead, in order:**
 
 1. **Ask BiteKasa's owner for one sentence** she would say unprompted — her words,
@@ -342,6 +416,13 @@ on the page.
 3. **Keep the 48-hour promise in public and count it.** "Every quote sent within 48
    hours since [date]: 11 of 11" is a trust asset nobody else in the table above
    can print.
+
+**The floor, stated plainly — INFERENCE.** With zero paying clients, the only
+proof available is *process* proof: published documents, a verifier anyone can
+run, a price that does not move, and a named person. SoftFire should sell the
+process loudly and the track record not at all. The first paid project is worth
+more to this brand than any redesign — and it should be documented to the same
+standard as BiteKasa.
 
 ---
 
@@ -365,7 +446,8 @@ on the page.
 | **@softfire handle availability** | Unverified; printing it would be a guess |
 | **The price of .com.gh** | Registry pricing is not published consistently |
 | **Whether the name is clear in Class 42** | Needs the US$135 search, not an opinion |
-| **A customer quote** | There are no customers yet. This is the one thing that cannot be manufactured |
+| **A customer quote** | There are no customers yet — now confirmed, not assumed. This is the one thing that cannot be manufactured |
+| **Whether GH₵1,500 leaves a living** | ~30 hours at the local freelance floor. Viable only if the build is productised. See `../PRICING.md` |
 | **Sunlight and legibility test** | Needs a real phone, outdoors, on a Ghanaian network |
 
 ## The four decisions only Caleb can make
@@ -373,8 +455,10 @@ on the page.
 1. **Domain:** softfire.com.gh looks free; .dev and .com are taken. Register it, or
    accept that a customer typing .com meets a stranger.
 2. **Name search:** US$135 answers "can this name be mine" before US$615 is spent.
-3. **Price defence:** the site is 2–3x the entry price of four competitors and says
-   nothing about why. One sentence, or the table loses.
+3. **~~Price defence~~ — CLOSED, then reopened, then closed.** The premise has
+   inverted: at GH₵1,500 there is no premium to defend. The card now answers *what
+   is not included*. **The open decision is whether GH₵1,500 is viable at all** —
+   it is, if the build is productised. See `../PRICING.md` §2.
 4. **Registration:** a registered business name is what lets a church or school
    buy at all — and it comes before the trademark in value.
 

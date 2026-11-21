@@ -197,7 +197,7 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **72 checks**. Besides the fact-to-source checks it asserts the
+It now runs **74 checks**, including the price ladder pinned by row. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -419,6 +419,41 @@ The notes said `softfire.dev` "does not exist". It does. Live DNS:
 
 A customer typing `softfire.com` reaches a stranger. `softfire.com.gh` looks
 free, and it is the one that matches a registered business name.
+
+## The GH₵1,500 decision, and what it costs
+
+`PRICING.md` is the research: every cost between the first conversation and a live
+site, marked FACT / INFERENCE / UNVERIFIED. It exists because GH₵1,500 all-in was
+chosen without a cost model, and the numbers turned out to be less comfortable
+than the price suggests.
+
+**Three findings that change how the site is built:**
+
+1. **`.com.gh` costs GH₵750–1,690 a year**, not the GH₵200 the registry's own
+   guidelines still quote. At GH₵1,500 all-in, a `.com.gh` domain is 50% of the
+   price before any work happens — and at the dearer registrars, more than all of
+   it. **SoftFire must quote `.com` (GH₵146–260) or static hosting, or the job
+   loses money.** `.com.gh` is a brand cost, not a hosting cost.
+2. **GH₵1,500 is about 30 hours** — the local freelance floor of GH₵50/hour — so
+   **2–4 days, not 3–4 weeks**. The page previously said 3–4 weeks. Only one of
+   those can be true.
+3. **E-Levy was repealed in April 2025.** Any cost model still adding 1.5% to
+   mobile-money receipts is out of date. The live cost is the merchant fee,
+   0.75–1.5%.
+
+**The honest advantage that survives at this price:** every competitor's published
+price list *excludes* the domain and hosting. One that includes them is genuinely
+cheaper than one that does not. That sentence is now the strongest true claim on
+the page.
+
+**The card was repurposed, not deleted.** It used to defend being the dearest quote
+in Accra. At GH₵1,500 the premise is false, so it now answers what a GH₵1,500 buyer
+actually asks: *what is not included.* It is the scope sheet from `PRICING.md` §3.
+
+**Unmeasured this session:** Chromium could not be installed in the sandbox, so
+`measure-audit.py` could not run. The page was validated structurally (balanced
+tags, 74 claim checks, 17.6 KB gzip) but **not visually**. Re-run
+`measure-audit.py` before shipping.
 
 ## Known gaps — read before shipping
 
