@@ -193,6 +193,34 @@ for _p, _why in [
 struct.append(("care plan sits inside the Ghana range",
                "200–400" in html, "above 600 reads as renting the site"))
 
+# --- security and hosting --------------------------------------------------
+# The site's own README says HSTS, frame-ancestors and Permissions-Policy are
+# not covered. That was true while meta CSP was the only mechanism. _headers
+# fixes it for any host that reads the file - and it stays a documented gap on
+# GitHub Pages, which ignores the file. Both facts are pinned so neither is
+# forgotten.
+import os as _os
+_h = open(_os.path.join(_os.path.dirname(__file__), "_headers"), encoding="utf-8").read()
+for _hdr in ["Strict-Transport-Security", "frame-ancestors",
+             "X-Content-Type-Options", "Referrer-Policy", "Permissions-Policy"]:
+    struct.append((f"_headers sends {_hdr}", _hdr in _h, "_headers"))
+
+# frame-ancestors must NOT be restated in the meta tag: the CSP spec ignores
+# it there, so putting it in meta creates the illusion of protection.
+# Scope to the meta tag itself. A comment mentioning frame-ancestors is not a
+# meta directive -- and the first version of this check failed on exactly
+# that, which is what a claim test is for.
+_metacsp = _re.search(r'<meta[^>]+Content-Security-Policy[^>]+>', html, _re.I)
+struct.append(("meta CSP does not pretend to deliver frame-ancestors",
+               _metacsp is not None and "frame-ancestors" not in _metacsp.group(0),
+               "meta CSP present" if _metacsp else "NO META CSP FOUND"))
+
+# Hosting at GH0 is a claim. If a hosting price ever appears, this fails.
+struct.append(("hosting is stated as GH0",
+               "GH\u20b50" in html or "GH\u20b5 0" in html, "index.html"))
+struct.append(("accounts are stated as the client's",
+               "in your name" in html, "the whole ownership promise"))
+
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:

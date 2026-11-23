@@ -18,10 +18,13 @@
      same-origin; it loads no third-party script, style, image or font; the
      one inline script is what applies a saved motion preference before
      first paint, and it is the only thing CSP has to allow by hash.
-     What this CANNOT do, and the README says so: set HSTS, X-Frame-Options
-     as a header, or a real Content-Security-Policy header. Meta CSP does not
-     cover frame-ancestors either -- clickjacking protection needs the header,
-     so it needs a host that can set one. -->
+     What this CANNOT do: set HSTS or X-Frame-Options, or deliver
+     frame-ancestors (the CSP spec excludes it from meta). A meta tag is
+     ignored for all three.
+     The fix is _headers in this directory, which Cloudflare Pages and Netlify
+     send as real headers. GitHub Pages ignores that file, so on GitHub Pages
+     clickjacking is still not prevented -- the gap is the host, not the page.
+     Meta CSP stays as defence in depth for however the file is served. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HBfBaMtsGbV1nqFWabqaX1D7PCB0vnPniLaGzQ2vl3c='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- respect a motion preference before paint: a reduce user never

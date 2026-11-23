@@ -197,7 +197,7 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **81 checks**, including the price ladder pinned by row and every clause of the after-launch promise. Besides the fact-to-source checks it asserts the
+It now runs **89 checks**, including the price ladder pinned by row, every clause of the after-launch promise, and each header in `_headers`. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -496,6 +496,52 @@ The page now carries a four-row table stating all of this with dates, and the
 Care Plan was repriced from **GH₵399–899/mo to GH₵200–400/mo** — above the Ghana
 market (GH₵250–600) it was renting the site rather than looking after it.
 
+## Security is setup, not a subscription
+
+`SECURITY-HOSTING.md` answers where security and hosting belong.
+
+**Security: 9 of 20 standard controls apply to a static site, and 7 of those are
+done once at launch.** There is no CMS to patch, no plugin, no database, no login,
+no server to harden, no WAF worth having on a page with no input. A "security
+monitoring" line on a static build is an alarm on an empty room.
+
+What actually matters is the **client's accounts** — registrar, email, GitHub —
+because most breaches start with one stolen login, not with the site. That is 2FA
+and a registrar lock, once, for free.
+
+**The finding that changes the build: GitHub Pages cannot send custom headers.**
+Not "is inconvenient" — cannot. A `<meta>` tag cannot substitute either, because
+the CSP spec **excludes `frame-ancestors` from meta delivery**, and Chromium says
+so in the console. So clickjacking prevention is impossible on GitHub Pages and
+possible on Cloudflare Pages, at the same GH₵0 price.
+
+`_headers` now exists in this directory with HSTS, `frame-ancestors`,
+`X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`. It takes
+effect the moment the deploy target is Cloudflare Pages or Netlify. **Until then
+that gap is real and documented**, and the site says which host causes it.
+
+**Hosting: separate, named, and GH₵0.** Research says bundling hosting into a care
+plan is the most profitable model and markup is "the most exposed". Both conflict
+with a brand whose promise is that nothing is hidden. Static hosting costs nothing,
+so there is no margin to take on nothing:
+
+| Item | Who pays | Cost |
+|---|---|---|
+| Hosting (static) | nobody | **GH₵0** |
+| Domain `.com` | client, directly | GH₵146–260/yr |
+| Domain `.com.gh` | client, directly | GH₵750–1,690/yr |
+| cPanel, only if insisted | client, directly | GH₵105–1,100/yr |
+
+**This gives up about GH₵1,200/yr per client in hosting margin** in exchange for a
+claim no competitor in the table can make: no migration, no lock-in, the exit cost
+is a zip file. The retainer is the business; it does not need to smuggle hosting
+into its price.
+
+**And the trap:** the moment the site stops being static — a portal, a login, a
+database — everything above inverts. Security becomes a real service, backups
+become data, and the retainer must follow the attack surface, not the client's
+budget. A GH₵200 plan on a portal holding student records would be a liability.
+
 ## Known gaps — read before shipping
 
 1. **The price table is published and the pricing is not settled.** The figures
@@ -540,7 +586,11 @@ market (GH₵250–600) it was renting the site rather than looking after it.
 12. **The validation gap is still the largest gap.** See item 3. Standards
     compliance is not market evidence, and passing 67 checks is not the same as
     one stranger asking to buy.
-13. **`softfire.dev` is registered to someone else.** `softfire.com` too. The
+13. **Clickjacking is still not prevented, and now the reason is named.** The site
+    cannot send `frame-ancestors` or HSTS while it deploys to GitHub Pages.
+    `_headers` is written and will take effect on Cloudflare Pages or Netlify.
+    **The gap is the host, not the page.**
+14. **`softfire.dev` is registered to someone else.** `softfire.com` too. The
     canonical and OG URLs on this page point at `hotmoon123.github.io/softfire/`,
     which is where it can actually deploy today. `softfire.com.gh` appears
     available and is the recommended home. **Corrected:** earlier notes in this

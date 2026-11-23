@@ -1,0 +1,31 @@
+# Real HTTP response headers.
+#
+# GitHub Pages ignores this file entirely - it cannot send custom headers.
+# Cloudflare Pages and Netlify read it from the publish directory and send
+# these as actual headers. That distinction is the whole point of this file:
+#
+#   frame-ancestors   CANNOT be delivered by a <meta> tag (CSP spec excludes
+#                     it), so until the site moves host, clickjacking is not
+#                     prevented. This file is the fix.
+#   HSTS              likewise impossible via meta.
+#
+# The meta CSP in index.html stays as defence in depth for however the file is
+# served. Header CSP and meta CSP are intersected, so this file deliberately
+# restates ONLY frame-ancestors rather than the full policy - duplicating the
+# policy in two places is how the two drift apart and start blocking something
+# that works.
+#
+# HSTS is one day on purpose. includeSubDomains and preload are separate,
+# much harder-to-reverse decisions, and this brand does not take those on
+# someone else's domain without asking.
+
+/*
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=86400
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
