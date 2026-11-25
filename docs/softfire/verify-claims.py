@@ -245,6 +245,32 @@ struct.append(("ownership carve-out is stated, not hidden",
                "Mine does not take it away" in _flat and "permanent licence" in _flat,
                "gift with a hidden condition is not a gift"))
 
+# --- packaging --------------------------------------------------------------
+# The page used to present eight unranked offers. Measured: a middle tier lifts
+# conversion 17-25% and removing it costs 48-60% of revenue. So there must be
+# exactly three tiers, and exactly one must be marked as the recommendation.
+_flat2 = " ".join(html.split())
+# Count the CARDS, not every class that starts with "tier". The first version
+# of this check subtracted one string from another and happened to pass while
+# measuring nothing meaningful - 16 matches for tier-for/list/price/foot.
+_tier_cards = re.findall(r'class="tier(?: tier-hero)?"', html)
+struct.append(("exactly 3 tiers", len(_tier_cards) == 3,
+               f"{len(_tier_cards)} cards: three is the researched default"))
+struct.append(("exactly 1 recommended", html.count('tier-hero') == 1,
+               f"{html.count('tier-hero')} marked"))
+struct.append(("tiers are named for outcomes, not numbers",
+               all(n in html for n in ("Launch", "Operate", "System")),
+               "Launch/Operate/System"))
+struct.append(("tier prices match the ladder",
+               "1,500" in html and "2,250" in html and "9,999" in html,
+               "1500 / 2250 / 9999"))
+struct.append(("the table is demoted to reference",
+               "for reference" in _flat2.lower(),
+               "eight rows is a lookup, not a decision"))
+struct.append(("bundling does not swallow the domain",
+               "Domain set up in your name" in html,
+               "the ownership promise survives packaging"))
+
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:

@@ -1777,6 +1777,74 @@ tr.is-lead th { color: var(--accent); }
 }
 .layers td { font-size: var(--fs-small); max-width: 34em; }
 .layers .num { text-align: right; white-space: nowrap; font-family: var(--font-mono); }
+/* --- the three tiers ------------------------------------------------------
+   The middle tier is the hero: raised border, its own accent, and the only
+   one with a chip. That is anchoring, and it is honest anchoring - the
+   outer tiers are real products at real prices a real person can buy, not
+   decoys designed to be rejected. See PACKAGING.md. */
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}
+.tier {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-6);
+  background: var(--surface-raised);
+  border: var(--bw-1) solid var(--border-hairline);
+  border-radius: var(--r-1);
+}
+.tier-hero {
+  border-color: var(--border-accent);
+  box-shadow: inset 0 3px 0 0 var(--c-orange);
+}
+.tier .label { display: flex; align-items: center; gap: var(--s-2); margin: 0 0 var(--s-2); }
+.tier-for { font-size: var(--fs-small); color: var(--text-muted); margin: 0 0 var(--s-4); }
+.tier-price {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin: 0 0 var(--s-4);
+}
+.tier-price .unit {
+  display: block;
+  font-size: var(--fs-label);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: var(--s-1);
+}
+.tier-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+.tier-list li {
+  position: relative;
+  padding-left: var(--s-4);
+  font-size: var(--fs-small);
+  color: var(--text-primary);
+}
+.tier-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .55em;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--c-gold);
+}
+.tier-hero .tier-list li::before { background: var(--c-orange); }
+.tier-foot {
+  margin: auto 0 0;
+  padding-top: var(--s-4);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+@media (max-width: 900px) {
+  .tiers { grid-template-columns: 1fr; }
+  /* the hero keeps its accent when stacked, so the recommendation survives
+     the reflow - a stacked list with no marker reads as three equals */
+  .tier-hero { box-shadow: inset 0 3px 0 0 var(--c-orange); }
+}
 .card-wide { margin-top: var(--s-8); }
 .card-wide > .small { max-width: var(--measure-small); }
 /* proximity: the checklist was butting straight into the paragraph above it */

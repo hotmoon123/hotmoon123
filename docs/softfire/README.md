@@ -197,11 +197,11 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **94 checks**, including the price ladder pinned by row, every clause of the after-launch promise, each header in `_headers`, and both statutes the page leans on.
+It now runs **100 checks**, including the price ladder pinned by row, every clause of the after-launch promise, each header in `_headers`, and both statutes the page leans on.
 
 **Business documents:** `brand/BRAND.md` · `brand/BRAND-PROMPT.md` · `PRICING.md` ·
 `MAINTENANCE.md` · `SECURITY-HOSTING.md` · `OPERATIONS.md` ·
-`LAW-GOVERNANCE.md` · `GROWTH.md` · `CARD.md`. Besides the fact-to-source checks it asserts the
+`LAW-GOVERNANCE.md` · `GROWTH.md` · `PACKAGING.md` · `CARD.md`. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -646,6 +646,44 @@ building is available on Friday it fills Friday, and the week never closes. And
 
 **Sustain is one number:** three months of personal costs. It is not a luxury, it
 is the price of the only strategic freedom that matters — **the ability to say no.**
+
+## Packaging and presentation
+
+`PACKAGING.md` covers how the offers are bundled, how they are shown, and how a
+studio with **no portfolio** shows something worth looking at.
+
+**The finding contradicted the page.** The packaging research is unanimous: three
+tiers, named after outcomes, with the **middle one designed to be chosen**. Two
+tiers beat one by ~15% revenue per user; a middle tier lifts conversion **17–25%**;
+**removing** the middle tier costs **48–60% of revenue**. The page had **eight
+unranked rows** — a menu that made the buyer do the choosing.
+
+| | **Launch** | **Operate** ← recommended | **System** |
+|---|---|---|---|
+| For | nothing online | already trading | running on paper |
+| Price | GH₵1,500 | **GH₵2,250** | GH₵9,999 |
+| Extra | — | **3 months of changes included** | up to six screens |
+
+The table stays, demoted to *"for reference."* The card makes the decision.
+
+**Why Operate is the hero, honestly:** the three free months were already a decided
+cost. Bundling them converts **a free gift into paid onboarding** — the client pays
+GH₵750 for twelve hours that were going to be given away, and both sides are better
+off. It also fixes the structural risk in `MAINTENANCE.md` §3.4: the free months now
+have an invoice behind them, so month four is not an empty bill.
+
+**No decoy.** A deliberately bad option is the one packaging tactic this brand
+cannot use, because it depends on the buyer not understanding what they are seeing.
+System is a real product at a real price a real client can buy.
+
+**Showing the work with no clients** — three honest routes: the site itself as the
+case study (every claim checkable by the reader), one **labelled** spec piece on a
+*real* local organisation, and the first three clients at GH₵1,000 in exchange for a
+case study. That discount is the portfolio budget: **GH₵1,500 spent** to make the
+full price defensible.
+
+**The most persuasive line in any case study** is not what you built — it is **what
+you refused.**
 
 ## Known gaps — read before shipping
 
