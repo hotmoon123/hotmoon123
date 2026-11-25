@@ -197,7 +197,10 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **89 checks**, including the price ladder pinned by row, every clause of the after-launch promise, and each header in `_headers`. Besides the fact-to-source checks it asserts the
+It now runs **89 checks**, including the price ladder pinned by row, every clause of the after-launch promise, and each header in `_headers`.
+
+**Business documents:** `brand/BRAND.md` · `brand/BRAND-PROMPT.md` · `PRICING.md` ·
+`MAINTENANCE.md` · `SECURITY-HOSTING.md` · `OPERATIONS.md`. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -541,6 +544,39 @@ into its price.
 database — everything above inverts. Security becomes a real service, backups
 become data, and the retainer must follow the attack surface, not the client's
 budget. A GH₵200 plan on a portal holding student records would be a liability.
+
+## The operating manual
+
+`OPERATIONS.md` is the business, not the website: structure, procedures, goals,
+records, tax, risk, and the decisions already made so they are not re-made.
+
+**The seven questions, answered once:** every part of the business — offer, money,
+records, tax, security, clients, growth — is held against *what, why, who, when,
+where, how, which*. The pattern that falls out is the same in every row:
+**write it down, keep the number fixed, own the account, answer the phone.**
+
+**Two findings that matter more than the rest:**
+
+1. **Withholding tax on services is 7.5%.** When a business, school or church pays,
+   they deduct it and give you a certificate. A GH₵1,500 invoice may arrive as
+   **GH₵1,387.50**. That is not a loss — the certificates are a tax credit — but it
+   is a cash-flow gap, and **losing the certificates means paying the tax twice.**
+2. **The law changed on 1 September 2026.** Act 1178 raised the tax-free threshold
+   to GH₵7,056 and the presumptive turnover threshold to **GH₵750,000** at **3%**.
+   But **individuals with a professional qualification are excluded** from the
+   presumptive routes. That is one question — *do you hold a formal IT or
+   computing qualification?* — and it decides whether the books are a sales book
+   or a proper set of accounts. It is not answered here.
+
+**The 90-day goal is one paid project, documented to the BiteKasa standard.** Not
+ten cheap ones — the first build of a business type costs 30 hours and the third
+costs 22, because by then the page plan, the content worksheet and the launch
+checklist exist. Those three assets are the highest-return hour in the business.
+
+**Three risks score 12+ and get a rule, not a hope:** no paying client (20), a job
+running past 30 hours (16), and illness with one person and no backup (12). The
+control for the third is unglamorous and real: every live site has a handover
+sheet so someone competent could step in for a week.
 
 ## Known gaps — read before shipping
 
