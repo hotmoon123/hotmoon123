@@ -148,7 +148,7 @@ Strategy is stable. Tactics change by stage. These are the moves, not the princi
 
 | Stage | Tactic | Why this one |
 |---|---|---|
-| Build | **offer the first three clients a stated discount** — GH₵1,000 instead of GH₵1,500, in writing, with an end date | honest, dated, and buys the case study |
+| Build | **never discount. Add scope instead** — same GH₵1,500, more delivered | the price is the position; a launch price makes it a negotiation |
 | Build | **time every hour of job one** | it is the number the whole model rests on |
 | Stabilise | **write the assets on job one, not after job three** | the memory of what went wrong is only fresh once |
 | Grow | **ask at month 3, not month 1** | by then the client has used the plan and knows what it is |
@@ -156,10 +156,29 @@ Strategy is stable. Tactics change by stage. These are the moves, not the princi
 | Scale | **raise the price before hiring** | see §3 |
 | Sustain | **hold three months of costs** | the only thing that lets you say no |
 
-**INFERENCE — the tactic that matters most right now is the stated discount.** It
-is the only move available that turns the brand from a claim into evidence, and it
-is honest because it is written down with an end date. A silent discount would
-destroy the position; a published one is a launch offer.
+**DECIDED — no discount, at any stage, for any reason.** Not a launch price, not a
+first-client price, not a friend-of-the-church price. If the work must be worth
+more, **add scope at the same price** rather than cut the price for the same scope.
+
+**INFERENCE — the distinction that saves the position.** A client who pays GH₵1,000
+for a GH₵1,500 site has learned the price is negotiable, and will say so to the next
+buyer. A client who pays GH₵1,500 and receives a GH₵2,000 job has learned the price
+is *real*, and will also say so. **Both cost GH₵500. Only one of them leaves the
+price intact.**
+
+So the entry offer is not cheaper. It is **larger**:
+
+| | The opening offer |
+|---|---|
+| **Price** | GH₵1,500 — the published number, unchanged |
+| **Sections** | five (the standard) |
+| **Added, first three clients only, in writing and dated** | a **written case study** of the job, published with their permission, and their name if they allow it |
+| **What it costs SoftFire** | about two hours and the permission conversation |
+
+**The client is not buying a cheaper website. They are buying the thing nobody else
+offers: a published record of their project, built to a standard they can show to
+their own board.** That is worth more than GH₵500 to the right buyer, and it costs
+SoftFire nothing but writing — which it has to do anyway.
 
 ---
 

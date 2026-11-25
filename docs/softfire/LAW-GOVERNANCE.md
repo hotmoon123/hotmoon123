@@ -243,12 +243,23 @@ A one-person business has three, and they are all about the same person.
 |---|---|---|
 | **Sell the bigger offer** | quote the portal when the site would do | quote the smallest offer that solves the stated problem, and say so |
 | **Stretch the warranty** | a "free" fix to keep the peace | name it as a bug or a change, every time, even when it is free |
-| **Take the discounted job** | a lower price to win the first client | a published price that moves once has moved forever |
+| **Take the discounted job** | a lower price to win the first client | **never discount.** A published price that moves once has moved forever. Add scope, not a discount |
 
-**DECIDED:** the first client may be given a **discount stated as a discount, in
-writing, with an end date** — never a quiet lower price. *"First three clients:
-GH₵1,000 instead of GH₵1,500, because I need the case study."* That is honest. A
-silent discount is the beginning of the end of the position.
+**DECIDED — no discount, ever, in any form.** Not a stated one, not a dated one,
+not one for a church. There is no version of a lower price that leaves the position
+intact, because the position *is* the price.
+
+**What to do instead, when a job is worth winning:** add scope at the same price.
+The first three clients get a **written case study published with their permission**
+included in the GH₵1,500 — not a GH₵500 reduction. It costs two hours instead of
+five hundred cedis, and it produces a better case study because the client consents
+to it from the start.
+
+**INFERENCE — why the "stated discount" I proposed earlier was wrong.** It is
+honest about the *motive* and still corrupts the *signal*. A buyer reads a published
+price as a fact. The moment one buyer is told it is negotiable, the fact becomes an
+opening offer, and every conversation after that is a negotiation — with a client
+who has been told, by the discount, that negotiation works.
 
 ### 3.6 Records as governance
 

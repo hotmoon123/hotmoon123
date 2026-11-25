@@ -271,6 +271,19 @@ struct.append(("bundling does not swallow the domain",
                "Domain set up in your name" in html,
                "the ownership promise survives packaging"))
 
+# --- no discount -------------------------------------------------------------
+# DECIDED 2026-11-06: the price never moves. That is the whole position, so it is
+# the one promise that must survive every future edit to the page.
+_f = " ".join(html.split())
+struct.append(("page promises no discount", "no discount for a church" in _f.lower(),
+               "a launch price is a number that moved"))
+struct.append(("page offers scope instead of a cut",
+               "add to what you get" in _f.lower() and "cut what you pay" in _f.lower(),
+               "bigger, not cheaper"))
+struct.append(("no launch price anywhere",
+               "1,000 instead" not in _f and "launch price," not in _f.replace("No launch price,", ""),
+               "checked across the page"))
+
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:

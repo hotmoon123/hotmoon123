@@ -197,7 +197,7 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **100 checks**, including the price ladder pinned by row, every clause of the after-launch promise, each header in `_headers`, and both statutes the page leans on.
+It now runs **103 checks**, including the price ladder pinned by row, every clause of the after-launch promise, each header in `_headers`, and both statutes the page leans on.
 
 **Business documents:** `brand/BRAND.md` · `brand/BRAND-PROMPT.md` · `PRICING.md` ·
 `MAINTENANCE.md` · `SECURITY-HOSTING.md` · `OPERATIONS.md` ·
@@ -678,9 +678,23 @@ System is a real product at a real price a real client can buy.
 
 **Showing the work with no clients** — three honest routes: the site itself as the
 case study (every claim checkable by the reader), one **labelled** spec piece on a
-*real* local organisation, and the first three clients at GH₵1,000 in exchange for a
-case study. That discount is the portfolio budget: **GH₵1,500 spent** to make the
-full price defensible.
+*real* local organisation, and the first three clients.
+
+**CORRECTION 2026-11-06 — no discount, ever.** This section previously recommended
+the first three clients pay **GH₵1,000 instead of GH₵1,500** for a case study. That
+is withdrawn, at Caleb's instruction, and the reasoning against it is stronger than
+the reasoning for it: **this brand's whole claim is a number that does not move, and
+a launch price is a number that moved.**
+
+The replacement costs two hours instead of GH₵500: **the first three clients get a
+written case study, published with their permission, included in the price.** The
+offer gets bigger, not cheaper. And it produces a *better* case study, because the
+client consents to it from the start and helps shape what is said.
+
+The arithmetic that settles it: a GH₵1,000 buyer has learned the price is
+negotiable and tells the next buyer. A GH₵1,500 buyer who receives a GH₵2,000 job
+has learned the price is real — and also tells the next buyer. **Both cost GH₵500.
+Only one leaves the position intact.**
 
 **The most persuasive line in any case study** is not what you built — it is **what
 you refused.**

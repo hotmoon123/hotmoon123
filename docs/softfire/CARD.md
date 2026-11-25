@@ -88,14 +88,18 @@ When two conflict, the higher number wins.
 
 | # | Rule |
 |---|---|
-| **1** | Never write a number I cannot hold |
+| **1** | Never write a number I cannot hold — **and never discount one I already published** |
 | **2** | The client owns the keys — domain, hosting, code, content |
 | **3** | Say what is not included before saying what is |
 | **4** | Only claim what was measured |
 | **5** | One named person answers, and it is me |
 
 **Rule 1 is above rule 5 for a reason:** it is better to answer slowly than to
-answer with a number that moves.
+answer with a number that moves. And rule 1 has a second half that gets tested
+constantly — **when a job is worth winning, add scope. Never cut price.** A launch
+price, a first-client price and a church price are all the same mistake: they teach
+the buyer the number is an opening offer, and every conversation after that is a
+negotiation.
 
 ---
 

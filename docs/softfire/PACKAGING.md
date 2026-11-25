@@ -215,14 +215,30 @@ is the only asset in this document that is both.
 > real clients... Offer three or four introductory projects, deliver like it's a
 > $5,000 job, and ask for a testimonial in return."*
 
-**DECIDED (already, in `GROWTH.md`):** the first three clients pay **GH₵1,000
-instead of GH₵1,500**, stated in writing, with an end date, in exchange for a
-testimonial and permission to publish the case study.
+**DECIDED — and this overrides the research's advice, deliberately: no discount.**
+Not for the first three, not for anyone. The standard advice is an intro rate, and
+it is wrong here for one reason: **this brand's entire claim is a number that does
+not move.** A launch price is a number that moved.
 
-**INFERENCE — the discount is the portfolio budget.** GH₵500 × 3 = **GH₵1,500
-spent** to acquire three case studies that make the full price defensible. That is
-the cheapest marketing this business will ever do, and it is honest because it is
-written down.
+**What replaces it — the offer gets bigger, not cheaper:**
+
+| | |
+|---|---|
+| **Price** | GH₵1,500 — unchanged, published |
+| **Scope** | the standard five sections, plus **a written case study**, published with permission, dated, and credited to them if they allow it |
+| **Cost to SoftFire** | about two hours of writing it would do anyway |
+| **What the client gets** | a published record of their project they can show their board, their family, their customers |
+
+**INFERENCE — this is the better trade, and the arithmetic is on its side.** A
+discount spends GH₵500 to buy a case study. **Adding the case study to the
+deliverable spends two hours and zero cedis**, and it produces a *better* case
+study — because the client has consented to it from the start and helped shape what
+is said.
+
+**And it protects the position.** A client who paid GH₵1,000 has learned the price
+is negotiable and will tell the next buyer. A client who paid GH₵1,500 and got a
+published case study has learned the price is real, and will also tell the next
+buyer.
 
 ### 3.4 The case study, written for the first client
 
@@ -289,7 +305,7 @@ is a decision with a reference attached.
 | Whether GH₵2,250 sells in this market | the middle tier is the whole model, and no one has tested it |
 | Whether three tiers convert better than eight rows **here** | the benchmarks are SaaS and Western freelancers; Ghanaian buyers may read a long table as thoroughness rather than confusion |
 | Whether a spec piece is read as generosity or as filler | cultural, untested |
-| Whether the first three clients will accept a published discount | no one has been asked yet |
+| Whether a published case study is worth GH₵500 to a buyer | it is the replacement for a discount and nobody has been offered it yet |
 | Whether the case study format works in a market that buys on WhatsApp | a PDF may never be opened; the case study may need to be a message |
 
 ---

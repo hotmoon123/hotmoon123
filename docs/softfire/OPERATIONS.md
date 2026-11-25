@@ -495,7 +495,7 @@ A one-person business loses more time to re-deciding than to deciding.
 
 | Situation | Already decided | Where |
 |---|---|---|
-| A client asks for a discount | the price does not move; remove scope instead | `PRICING.md` |
+| A client asks for a discount | **no.** Add scope at the same price, or decline. The number never moves | `GROWTH.md` |
 | A client wants hosting billed to me | no — they own the account | `SECURITY-HOSTING.md` |
 | A client asks for "just one more page" | a change, quoted | this manual §6 gate 8 |
 | A client misses the content deadline | the launch date moves, in writing | §6 gate 5 |
