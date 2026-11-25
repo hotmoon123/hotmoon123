@@ -197,10 +197,11 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **89 checks**, including the price ladder pinned by row, every clause of the after-launch promise, and each header in `_headers`.
+It now runs **94 checks**, including the price ladder pinned by row, every clause of the after-launch promise, each header in `_headers`, and both statutes the page leans on.
 
 **Business documents:** `brand/BRAND.md` · `brand/BRAND-PROMPT.md` · `PRICING.md` ·
-`MAINTENANCE.md` · `SECURITY-HOSTING.md` · `OPERATIONS.md`. Besides the fact-to-source checks it asserts the
+`MAINTENANCE.md` · `SECURITY-HOSTING.md` · `OPERATIONS.md` ·
+`LAW-GOVERNANCE.md` · `CARD.md`. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -577,6 +578,37 @@ checklist exist. Those three assets are the highest-return hour in the business.
 running past 30 hours (16), and illness with one person and no backup (12). The
 control for the third is unglamorous and real: every live site has a handover
 sheet so someone competent could step in for a week.
+
+## Law and governance
+
+`LAW-GOVERNANCE.md` covers the statutes that actually touch this business, the
+contract clauses, and how a one-person business governs itself. Two findings:
+
+**1. SoftFire is almost certainly an unregistered data controller, and 2026 is an
+enforcement year.** Act 843 requires registration *before* processing personal
+data, renews every two years, and makes processing without it a criminal offence
+(fine or up to two years). The Commission has declared 2026 for enforcement —
+*"no exemptions"* — with spot checks from 5 October 2026.
+
+A phone number on WhatsApp is personal data. So is every contact form on every site
+built. **The list of what to do is short and cheap:** register, add a privacy line,
+add a processor clause (s.30(2) requires a written agreement), keep an incident log.
+None of it is done.
+
+**2. In Ghana the client owns the copyright by default — and almost no studio says
+so.** Copyright Act 690 s.7 vests commissioned work in the *commissioner* unless
+the contract says otherwise. Ghana is the opposite of the US/UK default. That makes
+the ownership promise the strongest legally-checkable claim on the page — and it is
+now stated with its carve-out: SoftFire keeps the reusable system, the client gets a
+permanent licence to everything on their site.
+
+**Governance, for one person,** is not a board. It is six clauses that fit on a
+card, a ten-question screen before accepting any job, and a quarterly question that
+is deliberately uncomfortable: *which rule did I break, and was it the rule's
+fault?*
+
+`CARD.md` is the one-page version — strength, logic, process, fundamentals, the
+numbers, and what to do when everything is on fire.
 
 ## Known gaps — read before shipping
 

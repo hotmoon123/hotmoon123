@@ -221,6 +221,30 @@ struct.append(("hosting is stated as GH0",
 struct.append(("accounts are stated as the client's",
                "in your name" in html, "the whole ownership promise"))
 
+# --- law ---------------------------------------------------------------------
+# Two statutes do real work on this page. If either vanishes, the page is either
+# making a claim with no legal basis or has quietly dropped a duty.
+struct.append(("privacy notice names the Act",
+               "Act 843" in html, "Data Protection Act, 2012"))
+struct.append(("privacy notice says what is collected",
+               "your name, your phone number" in html, "informed collection"))
+struct.append(("processor duty is disclosed",
+               "I am the" in html and "processor" in html,
+               "Act 843 s.30(2) requires a written processor agreement"))
+struct.append(("ownership cites the Copyright Act",
+               "Act 690" in html or "Copyright Act, 2005" in html,
+               "s.7 vests commissioned work in the client - the strongest true claim here"))
+
+# The assignment gift must be paired with the carve-out, or the page promises
+# something the business cannot honour and cannot build the next site.
+# Normalise whitespace before matching. HTML source wraps sentences across
+# lines, so a phrase check against raw text fails on a line break rather than
+# on a missing promise -- which is exactly how this one failed first time.
+_flat = " ".join(html.split())
+struct.append(("ownership carve-out is stated, not hidden",
+               "Mine does not take it away" in _flat and "permanent licence" in _flat,
+               "gift with a hidden condition is not a gift"))
+
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:
