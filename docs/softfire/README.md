@@ -197,11 +197,11 @@ file that backs it, and exits non-zero if any fact has no source. 25 checks. Run
 it after any edit to that section — if a claim stops being true, the script
 fails instead of the page quietly lying.
 
-It now runs **103 checks**, including the price ladder pinned by row, every clause of the after-launch promise, each header in `_headers`, and both statutes the page leans on.
+It now runs **107 checks**, including the price ladder pinned by row, every clause of the after-launch promise, each header in `_headers`, and both statutes the page leans on.
 
 **Business documents:** `brand/BRAND.md` · `brand/BRAND-PROMPT.md` · `PRICING.md` ·
 `MAINTENANCE.md` · `SECURITY-HOSTING.md` · `OPERATIONS.md` ·
-`LAW-GOVERNANCE.md` · `GROWTH.md` · `PACKAGING.md` · `CARD.md`. Besides the fact-to-source checks it asserts the
+`LAW-GOVERNANCE.md` · `GROWTH.md` · `PACKAGING.md` · `CARD.md` · **`MANUAL.md`**. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -698,6 +698,26 @@ Only one leaves the position intact.**
 
 **The most persuasive line in any case study** is not what you built — it is **what
 you refused.**
+
+## Start here: `MANUAL.md`
+
+**One document containing the whole business.** Foundations, governance, law,
+regulations, **sixteen policies**, ten laws with detectors, accounting and tax,
+brand, operations, scheduling, packaging, maintenance, growth, risk, and the plan.
+5,856 words, 19 sections.
+
+The appendices hold the argument; the manual holds the answers. If you read one
+file, read `MANUAL.md`. If you read one page of it, read §5 — the policy register.
+
+**The new thing in this version is the policy layer.** A policy is a standing
+decision with a reason, an owner and a consequence — not a procedure (steps) and not
+a rule (one line). Sixteen of them, and two are worth naming:
+
+- **P15 — subcontractors: none today.** Deliberately a policy about nothing. Its
+  value is that the day a job overruns and a friend offers to help, the decision was
+  already made in a calm week.
+- **P16 — change control.** No policy bends in a live client's favour without being
+  written down with a date. **A rule that bends silently is not a rule.**
 
 ## Known gaps — read before shipping
 

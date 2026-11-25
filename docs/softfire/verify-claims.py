@@ -284,6 +284,22 @@ struct.append(("no launch price anywhere",
                "1,000 instead" not in _f and "launch price," not in _f.replace("No launch price,", ""),
                "checked across the page"))
 
+# --- the manual --------------------------------------------------------------
+# MANUAL.md is the single document that must stay true. If a policy number here
+# drifts from the page, the manual is either lying or out of date, and both are
+# worse than not having one.
+import pathlib as _pl
+_m = (_pl.Path('/home/user/hotmoon123/docs/softfire/MANUAL.md')).read_text(encoding='utf-8')
+struct.append(("manual has all 16 policies",
+               all(f"| **P{i}** |" in _m for i in range(1, 17)),
+               f"{sum(1 for i in range(1,17) if f'| **P{i}** |' in _m)}/16"))
+struct.append(("manual states the no-discount rule",
+               "no discount, ever" in _m.lower(), "MANUAL.md"))
+struct.append(("manual quotes the same price as the page",
+               "GH\u20b51,500" in _m and "1,500" in html, "1500"))
+struct.append(("manual quotes the same check count",
+               "103 checks" in _m, "verify-claims count"))
+
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
 for label, ok, where in struct:
