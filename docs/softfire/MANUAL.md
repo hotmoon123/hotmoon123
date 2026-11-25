@@ -456,7 +456,78 @@ they are looking at. System is a real product at a real price.
 is more impressive than the eight-row table it replaced, because it decides something
 for the reader.
 
-### 11.2 Showing the work with no clients
+### 11.2 Presentation, taste, and the first five seconds
+
+**Taste is not decoration. It is a set of refusals, and each one has a cost.**
+
+#### The hero — audited 2026-11-06, four defects found and fixed
+
+The first screen is the only one most visitors read. Before this audit it:
+
+| Defect | Why it mattered | Fixed |
+|---|---|---|
+| **Never named the price** | the whole position is a number that does not move, and the number was below the fold | headline now says **GH₵1,500, fixed before work starts** |
+| **Two primary buttons** | "Message on WhatsApp" and "Build a brief" both competed; one screen, one action | the brief is now a ghost secondary |
+| **Did not say what happens next** | "Message on WhatsApp" assumes the reader knows what to say | *"say what the business does — that is enough to begin"* |
+| **Did not remove the last hesitation** | fear of being sold to is the real blocker | *"No deposit to see it, and no call you have to book"* |
+
+**INFERENCE — the fourth is the one that makes buying easy.** A person will not
+message a stranger who might spend an hour selling at them. Saying *there is no call
+to book* removes the fear, and it costs nothing because it is true.
+
+#### The taste rules — fifteen refusals
+
+| # | Rule | What it rejects |
+|---|---|---|
+| 1 | **One primary action per screen** | two buttons that both want to be pressed |
+| 2 | **Say the number** | "contact us for pricing" |
+| 3 | **Name the thing** | "digital solutions", "bespoke experiences" |
+| 4 | **Show less at a higher standard** | ten thin samples instead of three deep ones |
+| 5 | **Two weights, one accent** | a third colour used for decoration |
+| 6 | **Cards only for objects** | a card around every paragraph |
+| 7 | **No stock photography** | a smiling stranger in a headset |
+| 8 | **No icons where a word works** | a shield glyph next to "secure" |
+| 9 | **Reduced motion is the final state** | animation that carries meaning |
+| 10 | **Earned whitespace, not padding** | equal gaps everywhere |
+| 11 | **Numbers in mono, words in the sans** | a data figure set in prose type |
+| 12 | **Label every claim** | an unsourced statistic |
+| 13 | **Silence over filler** | an "Our values" section |
+| 14 | **Nothing should look like it took effort** | visible craft as a selling point |
+| 15 | **Constrain the measure** | a line that runs to 120 characters |
+
+**The unifying rule — INFERENCE:** *nothing should look like it took effort.* A page
+that looks laboured makes the reader do the labour of judging it. The measure, the
+spacing scale, the two weights and the single accent all exist so that the reader
+never notices the page — only the offer.
+
+#### What taste costs
+
+| Refusal | The cost |
+|---|---|
+| No stock photo | no image at all, and the page is text-heavy |
+| One accent | less visual variety than competitors |
+| Say the number | you cannot hide behind "from" |
+| Show less | fewer things to point at |
+| No animation | it feels still next to a competitor's site |
+
+**INFERENCE — every one of those is a real loss, and taken together they are why the
+page reads as calm.** Taste that costs nothing is just preference.
+
+#### "Saying exactly what the video and business is for"
+
+There is no video. **INFERENCE:** if one is ever made, the same four rules apply, and
+they are the same four as the hero:
+
+1. **Say what it is in the first three seconds** — what is sold, to whom, at what price.
+2. **One ask** — a single action, said once, and said last.
+3. **Show the product, not the studio** — the deliverable, not the desk.
+4. **Name what it is not** — the exclusion is what makes the offer believable.
+
+**A video that begins with a logo is a video that begins with nothing.**
+
+---
+
+### 11.3 Showing the work with no clients
 
 1. **The site is the case study** — every claim checkable by the reader.
 2. **One spec piece on a real local organisation**, labelled in the first ten

@@ -719,6 +719,13 @@ section { padding-block: var(--section-py); }
 }
 .fact h3 { margin-bottom: var(--s-2); font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: 0; }
 
+/* The in/out pair reuses .tier-list for its ticks, but a gold dot beside a check
+   would read as decoration. In is a tick, out is a strike. */
+.fact .n.no { color: var(--text-muted); }
+.fact .tier-list li::before { content: "\2713"; background: none; width: auto; height: auto;
+  top: 0; font-size: var(--fs-small); color: var(--c-gold); line-height: var(--lh-small, 1.5); }
+.fact .tier-list li.no::before { content: "\2715"; color: var(--text-muted); }
+
 /* ANTI-GENERIC RULE, applied:
    "Never produce symmetric four-icon feature grids with no editorial point
    of view" (MASTER-PROMPT-senior-graphic-designer.md 5). This was exactly

@@ -290,6 +290,19 @@ struct.append(("no launch price anywhere",
 # worse than not having one.
 import pathlib as _pl
 _m = (_pl.Path('/home/user/hotmoon123/docs/softfire/MANUAL.md')).read_text(encoding='utf-8')
+# --- the offer must be legible: what is in, what is out ----------------------
+struct.append(("page states what is not included",
+               "Not included, at any price" in html and "card payment taken online" in html,
+               "an exclusion is what makes a price credible"))
+struct.append(("page states what costs nothing extra",
+               "GH\u20b50 extra" in html and "SSL" in html, "no surprise line items"))
+struct.append(("the plan is free, not GH\u20b5599",
+               "GH\u20b5599" not in html and "Free, and yours to keep" in html,
+               "the hero promised no deposit to see a quote"))
+
+struct.append(("manual has the taste rules",
+               all(f"| {i} | **" in _m for i in (1, 15)) and "fifteen refusals" in _m,
+               "MANUAL 11.2"))
 struct.append(("manual has all 16 policies",
                all(f"| **P{i}** |" in _m for i in range(1, 17)),
                f"{sum(1 for i in range(1,17) if f'| **P{i}** |' in _m)}/16"))
@@ -299,6 +312,30 @@ struct.append(("manual quotes the same price as the page",
                "GH\u20b51,500" in _m and "1,500" in html, "1500"))
 struct.append(("manual quotes the same check count",
                "103 checks" in _m, "verify-claims count"))
+
+# --- the first five seconds --------------------------------------------------
+# The hero is the only screen most visitors read. Four things must be true of it,
+# and all four were false before this check existed: the price was not named, two
+# buttons competed, and nothing said what happens after the tap.
+_hero = html[html.index('FIG.01'):html.index('FIG.02')]
+_hero_f = " ".join(_hero.split())
+struct.append(("hero names the price", "GH\u20b51,500" in _hero_f, "the number is the position"))
+struct.append(("hero promises a delivery time", "2\u20134 days" in _hero_f, "live in 2-4 days"))
+# Count only buttons that LOOK primary. .btn-quiet is a ghost button - transparent
+# background, muted rule - so it does not compete. Counting every class starting
+# with "btn" flagged the secondary as a rival and would forbid a legitimate
+# second link.
+_hero_btns = re.findall(r'class="(btn[^"]*)"', _hero)
+# exclude the arrow icon inside the button, and the ghost secondary
+_primary = [b for b in _hero_btns
+            if "quiet" not in b and "header" not in b and "arrow" not in b]
+struct.append(("exactly one primary action in the hero",
+               len(_primary) == 1,
+               f"primary={_primary} all={_hero_btns}"))
+struct.append(("hero says what happens after the tap",
+               "within 48 hours" in _hero_f and "no deposit" in _hero_f.lower(),
+               "tell people exactly what to do"))
+struct.append(("buying is made easy", "no call you have to book" in _hero_f, "remove the last hesitation"))
 
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
