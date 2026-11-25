@@ -3,11 +3,27 @@
 Static one-page site. No build step, no framework, no dependencies,
 no third-party request of any kind.
 
+### Decisions taken 2026-11-06, from the taste questions
+
+| Question | Answer | Where it lives now |
+|---|---|---|
+| Photographs? | **None.** Images stay out deliberately — typography, rules and the flame carry the page | page unchanged; reason in MANUAL 11.2 |
+| Voice? | **More formal.** Blunt statements kept, six sharp sentences rewarmed | `index.html`; the six rewrites are listed in MANUAL 11.2 |
+| Palette? | **A flame, burning.** Already encoded: `tokens.css` line 51, *"five colours, no sixth"* | MANUAL 11.2, new subsection |
+| Video? | **15 s / 60 s / 5 min**, all three written; AI for text cards only | `VIDEO.md`, MANUAL 11.4 |
+
+**On the palette, one correction worth recording.** A rule I had written into MANUAL
+said *one accent*. The brand has five flame colours and a gradient, and the token file
+said so before either of us looked. The rule was wrong, so the rule was changed — to
+**"one accent, and a fire may heat up: a fifth colour used for decoration"**. A rule
+that outlaws the brand is not a standard, it is a mistake with a number next to it.
+
 ```
 docs/softfire/
 ├── index.html          10 sections, one page, incl. six filled-in documents
 ├── tokens.css          four tiers — primitive → semantic → component → layout
 ├── styles.css          22 numbered blocks, incl. a print sheet
+├── VIDEO.md            three cuts, shot tables, tagged [FILM]/[SCREEN]/[AI]
 ├── app.js              6 islands: crawlers · rail · carousel · brief ·
 │                          motion toggle · year
 └── assets/

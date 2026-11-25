@@ -483,7 +483,7 @@ to book* removes the fear, and it costs nothing because it is true.
 | 2 | **Say the number** | "contact us for pricing" |
 | 3 | **Name the thing** | "digital solutions", "bespoke experiences" |
 | 4 | **Show less at a higher standard** | ten thin samples instead of three deep ones |
-| 5 | **Two weights, one accent** | a third colour used for decoration |
+| 5 | **One accent, and a fire may heat up** | a fifth colour used for decoration |
 | 6 | **Cards only for objects** | a card around every paragraph |
 | 7 | **No stock photography** | a smiling stranger in a headset |
 | 8 | **No icons where a word works** | a shield glyph next to "secure" |
@@ -499,6 +499,48 @@ to book* removes the fear, and it costs nothing because it is true.
 that looks laboured makes the reader do the labour of judging it. The measure, the
 spacing scale, the two weights and the single accent all exist so that the reader
 never notices the page — only the offer.
+
+#### The palette is a fire — decided, not decorated
+
+**Your words, 2026-11-06:** *"we used the colors of a flame burning flame."* The token
+file said the same thing before you did — `tokens.css` line 51 reads *"The flame. Five
+colours, no sixth."* So this is not a colour scheme that happens to be warm. It is one
+photograph of one thing.
+
+| Token | Hex | What it is in the photograph | Where it is allowed |
+|---|---|---|---|
+| `--c-charcoal` | `#16100D` | **the dark.** Not black — black is the absence of fire, and this is warm dark | every field |
+| `--c-cherry-deep` → `--c-cherry` → `--c-ember` | `#5C100C` → `#8C1C13` → `#B33A16` | **the base of the flame**, where it is coolest and reddest | surfaces, the start of the gradient. **Never type** — cherry is 2.06:1 |
+| `--c-orange` | `#E85D04` | **the body of the fire**, where it does work | links, focus rings, rules, arrows. 5.38:1 |
+| `--c-gold` | `#F4A300` | **the hottest point**, where a flame goes before it goes white | the number, and only the number. 9.05:1 |
+| `--c-cream` | `#F2E9E4` | **the light the fire throws on what it touches** | body copy. 15.75:1 |
+
+**The rule that makes it a system rather than a palette — INFERENCE:** the gradient
+runs `ember → orange → gold`, which is a fire getting hotter. That direction is the
+argument of the whole page: **things get brighter as they get closer to the ask.** The
+price is gold because it is the hottest point on the page. If gold ever appears on
+something that is not the offer, the system is broken — not because a rule says so, but
+because the photograph no longer means anything.
+
+**Why the flame works for this business, and this is the part that is not decoration:**
+
+- **A flame is small and hot, not large and bright.** That is the entire argument for
+  one person over a studio of nine. A studio is a floodlight. This is a fire you can
+  stand next to.
+- **Fire is warm at a distance and dangerous close.** Which is honest, because the
+  price does not move and the exclusions are on page one.
+- **A fire has edges you can see.** Gold at the top, dark red at the bottom — the same
+  way the offer has an inside and an outside.
+- **It survives a cheap phone.** Five flat colours and one gradient compress to almost
+  nothing. A photograph-led brand does not.
+
+**What the flame does *not* license.** No animated flames, no sparks, no glowing
+buttons, no "heat" effects on hover. The fire is in the colours, and motion would turn
+a controlled thing into a novelty. **Rule 9 still holds: reduced motion is the final
+state.**
+
+**The stroke rule:** `"the flame. five colours, no sixth"` — the token file's own words,
+and the reason a sixth colour is a bug rather than a preference.
 
 #### What taste costs
 
@@ -536,6 +578,51 @@ they are the same four as the hero:
 
 **The most persuasive line in any case study is not what you built. It is what you
 refused.**
+
+---
+
+## 11.4 The video — written, not shot
+
+**INFERENCE — three cuts are three products, not one video cut shorter.** The 15-second
+Status clip, the 60-second link-preview and the 5-minute committee video have different
+audiences, different watch-through, and different costs of failure:
+
+| | 15 s | 60 s | 5 min |
+|---|---|---|---|
+| **Who** | someone scrolling Status | someone with the link | someone who was sent it |
+| **Watch-through, honest** | 60–80% | 25–40% | ~2% of cold visitors |
+| **Job** | make them ask "how much?" | make them message | make them agree in a meeting |
+| **Cost of getting it wrong** | nothing | little | a committee watched it together |
+
+**The 5-minute cut is not marketing. It replaces being in the room**, which is why it
+should be the *least* persuasive of the three and the only one that reads the
+exclusions aloud at normal speed.
+
+**The sound-off rule drives the whole design.** Most mobile video plays muted, so the
+burned-in text must carry the message *alone*; voiceover is a bonus. And **the price is
+beat two, not beat five** — a viewer who sees no number in six seconds concludes there
+is not one, which is the exact thing this brand exists not to do.
+
+**The label rule, extended from the case-study rule.** BiteKasa is a family business,
+built unpaid. That appears **on screen, in the first ten seconds, every time the
+footage appears** — not in a description under the video, where a Status viewer will
+never see it.
+
+**AI: where it works and where it destroys the position.** Text and motion cards —
+yes, generators are good at flat type on a colour field, but **type every number
+yourself**; generators invent digits. Product footage — no; a drawing of a website
+fails the first "can I see it?". A person speaking — **no, never**; a generated face
+selling a one-person business removes the one advantage that is real, which is that a
+reachable person does the work. **PROPOSED:** film the human shots on a phone in one
+afternoon, screen-record the product, generate only the text cards.
+
+**The flame in motion:** the gradient runs ember → orange → gold, a fire getting hotter,
+so **things brighten as they approach the ask**. Never run it backwards, never put gold
+on anything that is not the offer, and no animated flames — motion would turn a
+controlled palette into a novelty, and rule 9 still holds.
+
+**The script lives at `docs/softfire/VIDEO.md`.** Three shot tables, every shot tagged
+`[FILM]` / `[SCREEN]` / `[AI]`, and a production card carrying the exact tokens.
 
 ---
 

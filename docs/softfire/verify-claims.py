@@ -182,7 +182,7 @@ for _p, _why in [
     ("Days 1–30", "the warranty window must stay named"),
     ("Months 1–3", "three free months was a deliberate decision"),
     ("Month 4 on", "the date money starts must be visible"),
-    ("do not pay me for it", "a static site needs no maintenance - the honest answer"),
+    ("none will be asked for", "a static site needs no maintenance - the honest answer"),
     ("nothing renews without asking", "nothing recurring may start silently"),
     ("tell you which one it is", "bug-vs-change must be said before work, not after"),
 ]:
@@ -275,14 +275,22 @@ struct.append(("bundling does not swallow the domain",
 # DECIDED 2026-11-06: the price never moves. That is the whole position, so it is
 # the one promise that must survive every future edit to the page.
 _f = " ".join(html.split())
-struct.append(("page promises no discount", "no discount for a church" in _f.lower(),
+# The claim, not the wording. It was "no discount for a church" / "cut what you pay";
+# the formal-register pass rewrote both sentences to say the same thing at greater
+# length. Pin the meaning so a later rewrite cannot quietly drop it.
+struct.append(("page promises no discount",
+               "no reduced" in _f.lower() and "not negotiated" in _f.lower(),
                "a launch price is a number that moved"))
 struct.append(("page offers scope instead of a cut",
-               "add to what you get" in _f.lower() and "cut what you pay" in _f.lower(),
+               "add to what you receive" in _f.lower() and "reduce what you pay" in _f.lower(),
                "bigger, not cheaper"))
+# Every mention of a launch price must be the sentence that DENIES one. The old
+# guard was case-sensitive and let a lowercase "no launch price" through as a hit.
+_lp = [m.start() for m in re.finditer(r"launch price", _f.lower())]
+_denied = all(_f.lower()[max(0, k-3):k].strip().endswith("no") for k in _lp)
 struct.append(("no launch price anywhere",
-               "1,000 instead" not in _f and "launch price," not in _f.replace("No launch price,", ""),
-               "checked across the page"))
+               "1,000 instead" not in _f and _denied,
+               f"{len(_lp)} mentions, all negated: {_denied}"))
 
 # --- the manual --------------------------------------------------------------
 # MANUAL.md is the single document that must stay true. If a policy number here
@@ -299,6 +307,27 @@ struct.append(("page states what costs nothing extra",
 struct.append(("the plan is free, not GH\u20b5599",
                "GH\u20b5599" not in html and "Free, and yours to keep" in html,
                "the hero promised no deposit to see a quote"))
+
+# --- the video ---------------------------------------------------------------
+# There is no video yet. What is checked is that the script exists, keeps the
+# four beats in order, and never lets BiteKasa appear without its label.
+_vid = (root/"docs/softfire/VIDEO.md").read_text(encoding="utf-8")
+struct.append(("the manual carries the video decision",
+               "11.4 The video" in (root/"docs/softfire/MANUAL.md").read_text(encoding="utf-8"),
+               "MANUAL 11.4"))
+struct.append(("a video script exists in three lengths",
+               all(k in _vid for k in ("15-second", "60-second", "5-minute")),
+               "15s / 60s / 5min"))
+struct.append(("every cut carries the same four beats",
+               "GH\u20b51,500" in _vid and "WhatsApp" in _vid and "2\u20134 days" in _vid,
+               "what it is, what it costs, what you get, what to do"))
+struct.append(("the unpaid family work is labelled on screen",
+               "built unpaid" in _vid and "family business" in _vid,
+               "labelled in the first ten seconds, every time"))
+struct.append(("the video never opens on a logo",
+               "no logo open" in _vid.lower(), "a video that begins with a logo begins with nothing"))
+struct.append(("the video uses the flame, not a sixth colour",
+               "#F4A300" in _vid and "#16100D" in _vid, "production card matches tokens.css"))
 
 struct.append(("manual has the taste rules",
                all(f"| {i} | **" in _m for i in (1, 15)) and "fifteen refusals" in _m,
@@ -336,6 +365,32 @@ struct.append(("hero says what happens after the tap",
                "within 48 hours" in _hero_f and "no deposit" in _hero_f.lower(),
                "tell people exactly what to do"))
 struct.append(("buying is made easy", "no call you have to book" in _hero_f, "remove the last hesitation"))
+
+# --- the flame ---------------------------------------------------------------
+# The palette is one photograph of one thing: charcoal, cherry, orange, gold,
+# cream. A sixth colour is a bug. Checked by parsing tokens.css rather than by
+# trusting a comment, because the comment said "five" while the file grew.
+_tok = (root/"docs/softfire/tokens.css").read_text(encoding="utf-8")
+_css = (root/"docs/softfire/styles.css").read_text(encoding="utf-8")
+_hik = (root/"docs/softfire/index.html").read_text(encoding="utf-8").split("</head>")[1]
+_prims = re.findall(r"--c-([a-z0-9-]+):\s*#([0-9a-fA-F]{6})", _tok)
+_prim_names = [n for n, _ in _prims]
+_flame = ["charcoal", "charcoal-2", "charcoal-3", "cream", "gold", "orange",
+          "cherry", "cherry-deep", "ember", "muted", "muted-deep",
+          "success", "offline"]
+struct.append(("flame tokens are intact",
+               all(f in _prim_names for f in ("charcoal", "cream", "gold", "orange", "cherry", "ember")),
+               f"{len(_prim_names)} primitives"))
+struct.append(("no sixth colour crept in",
+               not [n for n in _prim_names if n not in _flame],
+               str([n for n in _prim_names if n not in _flame])))
+struct.append(("cherry is never used as type",
+               "color: var(--c-cherry)" not in _tok and
+               "color: var(--c-cherry)" not in html,
+               "2.06:1 - surface only"))
+struct.append(("the gradient runs ember to gold, hottest last",
+               "var(--c-ember) 0%" in _css and "var(--c-gold) 100%" in _css,
+               "the fire heats toward the ask"))
 
 struct.append(("radius is 5", "--r-1: 5px" in (root/'docs/softfire/tokens.css').read_text(encoding='utf-8'), "tokens.css"))
 
