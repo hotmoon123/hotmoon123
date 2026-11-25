@@ -201,7 +201,7 @@ It now runs **94 checks**, including the price ladder pinned by row, every claus
 
 **Business documents:** `brand/BRAND.md` · `brand/BRAND-PROMPT.md` · `PRICING.md` ·
 `MAINTENANCE.md` · `SECURITY-HOSTING.md` · `OPERATIONS.md` ·
-`LAW-GOVERNANCE.md` · `CARD.md`. Besides the fact-to-source checks it asserts the
+`LAW-GOVERNANCE.md` · `GROWTH.md` · `CARD.md`. Besides the fact-to-source checks it asserts the
 structure the page now depends on: six `<details>` exist, each has a summary and
 a body, the numbers run 01–06 in order, every `#anchor` on the page resolves to a
 real id, the accordion and print behaviour are present in `app.js`, and radius is
@@ -609,6 +609,43 @@ fault?*
 
 `CARD.md` is the one-page version — strength, logic, process, fundamentals, the
 numbers, and what to do when everything is on fire.
+
+## Build, grow, scale, stabilise, sustain
+
+`GROWTH.md` is the lifecycle, the strategy, the tactics and the calendar.
+
+**The number that decides everything — computed, not asserted:** 4 build-hours a
+day × 5 days = **20 build-hours a week**. At 30 hours a build that is **2.9 builds a
+month = GH₵4,330**. At 22 hours (a mature job) it is 3.9 builds, GH₵5,905.
+
+| Mix | Monthly | Yearly |
+|---|---|---|
+| 2 builds, no retainers | GH₵3,000 | GH₵36,000 |
+| **2 builds + 10 retainers** | **GH₵5,000** | **GH₵60,000** |
+| 3 builds + 10 retainers | GH₵6,500 | GH₵78,000 |
+
+So: **SoftFire cannot build its way past about GH₵4,300 a month**, and 10 retainers
+adds GH₵2,000 for work that already has a block reserved. Everything else follows.
+
+**Strategy is a list of refusals, not a plan.** Five of them, each costing money the
+day it is adopted: no fourth build, no bespoke design per client, no reselling
+hosting, no ranking promises, no price below the page. The test of a real strategy
+is that a competitor could not copy it without losing money. *"We care more"* fails
+that test; *"we will not resell your hosting"* passes it.
+
+**The scale sequencing, and the one thing that is wrong:** there are three levers —
+price, product, hiring. **Hiring now is arithmetic that does not work** — a build
+earns GH₵1,500 and a junior costs more than one a month, so you need 3–4 builds to
+cover a hire you cannot feed. The order is: **raise the price, then hire. Never
+hire to justify the price you have.**
+
+**The calendar is the strategy.** Friday has no build block on purpose — if
+building is available on Friday it fills Friday, and the week never closes. And
+**two build slots are booked a month, not three**: the gap between 2 and 3 is what
+"the number does not move" is made of.
+
+**Sustain is one number:** three months of personal costs. It is not a luxury, it
+is the price of the only strategic freedom that matters — **the ability to say no.**
 
 ## Known gaps — read before shipping
 

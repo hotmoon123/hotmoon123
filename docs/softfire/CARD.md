@@ -52,6 +52,11 @@ already yours.*
    at 10 clients
 ```
 
+**The ceiling, computed:** 20 build-hours a week ÷ 30 hours a build = **2.9 builds
+a month = GH₵4,330.** SoftFire cannot build its way past that. With 10 retainers it
+is GH₵5,000/mo. **Every cedi of growth after year one comes from price, retainers
+or the product — never from more hours.** See `GROWTH.md`.
+
 **The two things this diagram says that the prose does not:**
 
 1. **Every stage has an exit, and the exit is cheap.** The cost of saying no at the
