@@ -9,8 +9,6 @@
  * third width is a build step — not twenty hand-written imports. The naming
  * contract is `<name>-<width>.<format>` inside `assets/responsive/`.
  */
-import { SITE_BASE } from '../data/catalogue';
-
 export type ImageName = 'food-fried' | 'food-unfried' | 'food-frozen' | 'bitekasa-logo';
 
 type Format = 'avif' | 'webp' | 'jpg';
@@ -34,7 +32,10 @@ for (const [path, url] of Object.entries(files)) {
   const width = Number(rawWidth);
   const bucket = (registry[name] ??= {});
 
-  (bucket[format] ??= []).push({ url: url.startsWith('/') ? `${SITE_BASE.replace(/\/$/, '')}${url}` : url, width });
+  // Vite has already applied `base` to this URL, whatever the deployment
+  // root is. Prepending it again shipped `/hotmoon123/hotmoon123/assets/...`
+  // to production, where every photograph 404'd. Do not touch it.
+  (bucket[format] ??= []).push({ url, width });
 }
 
 for (const formats of Object.values(registry)) {

@@ -46,6 +46,8 @@ jobs:
         run: npm run check:bundle
       - name: Check SEO metadata and sitemap
         run: npm run check:seo
+      - name: Check every asset URL resolves under the Pages base
+        run: npm run check:paths -- /hotmoon123/
       - name: Verify required pages and discovery files
         run: |
           test -s dist/index.html
