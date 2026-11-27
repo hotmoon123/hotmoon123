@@ -21,18 +21,18 @@ export default function Hero() {
             to your doorstep, the same way our happiest customers buy it.
           </p>
           <div className="hero-actions">
-            <a href="#wholesale" className="btn btn--solid">
-              <Store aria-hidden="true" size={18} />
-              Become a stockist
-            </a>
             <a
               href={waLink(SITE.phoneMapsIntl, orderMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn--ghost"
+              className="btn btn--solid"
             >
               <MessageCircle aria-hidden="true" size={18} />
               Order on WhatsApp
+            </a>
+            <a href="#wholesale" className="btn btn--ghost">
+              <Store aria-hidden="true" size={18} />
+              Become a stockist
             </a>
           </div>
           <p className="hero-note">

@@ -148,6 +148,16 @@ img { display: block; max-width: 100%; height: auto; }
 .hero-title .feel { color: var(--cyan); }
 .hero-sub { margin-top: var(--space-5); font-size: var(--text-md); color: var(--on-dark-soft); max-width: 34rem; line-height: 1.6; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+@media (max-width: 47.94rem) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
 .hero-note { margin-top: var(--space-5); font-size: var(--text-xs); color: rgb(245 250 252 / 62%); letter-spacing: 0.02em; }
 
 .hero-figure {
@@ -334,9 +344,7 @@ img { display: block; max-width: 100%; height: auto; }
    Sticky mobile CTA
    ============================================================ */
 .sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; display: none; gap: var(--space-2); padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: rgb(245 250 252 / 94%); backdrop-filter: blur(12px); }
-.sticky-primary, .sticky-secondary { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; border-radius: var(--radius-pill); font-size: var(--text-sm); font-weight: 700; }
-.sticky-primary { background: var(--navy-deep); color: #fff; }
-.sticky-secondary { border: 1px solid var(--line-strong); color: var(--navy-deep); background: #fff; }
+.sticky-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; min-height: 48px; border-radius: var(--radius-pill); font-size: var(--text-sm); font-weight: 700; background: var(--navy-deep); color: #fff; }
 @media (max-width: 47.94rem) { .sticky-cta { display: flex; } body { padding-bottom: 4.5rem; } }
 
 @media (prefers-reduced-motion: reduce) {
