@@ -1,32 +1,27 @@
-import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, MessageCircle, Phone } from 'lucide-react';
-import friedFood from '../../assets/food-fried.jpg';
 import { PACKS, PHONES, SITE_BASE, cedi } from '../data/catalogue';
+import ResponsiveImage from './ResponsiveImage';
 import { whatsappHref } from '../lib/order';
 import Reveal from './Reveal';
 
 const cheapest = Math.min(...PACKS.map((pack) => pack.price));
 
 export default function Hero() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section id="home" className="bg-cream">
       <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 pb-14 pt-8 sm:px-7 sm:pb-20 sm:pt-10 md:grid-cols-2 md:gap-14 md:px-12 md:py-24">
-        <motion.figure
-          className="hero-photo relative order-2 md:order-1"
-          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduceMotion ? 0 : 0.4 }}
-        >
-          <img
-            src={friedFood}
+        <figure className="hero-photo relative order-2 md:order-1">
+          <ResponsiveImage
+            name="food-fried"
             alt="Illustrative image of golden-brown samosas and spring rolls on a plate."
             className="hero-image"
-            fetchPriority="high"
+            sizes="(min-width: 1280px) 600px, (min-width: 768px) 46vw, 92vw"
+            width={1024}
+            height={1024}
+            priority
           />
           <figcaption className="image-disclosure">Illustrative product image</figcaption>
-        </motion.figure>
+        </figure>
 
         <div className="order-1 md:order-2">
           <Reveal>

@@ -22,6 +22,29 @@ npm run dev
 
 Vite binds to `0.0.0.0` for preview compatibility. Run `npm run typecheck` for TypeScript validation, `npm run test:coverage` for component tests and coverage, and `npm run build` for a production build. Then run `npm run check:bundle` and `npm run check:seo` for the compressed-asset budget and metadata/sitemap checks. Use `npm run preview` to inspect the build.
 
+## Images
+
+Photographs are served through `src/site/ResponsiveImage.tsx`, which discovers
+files by glob from `assets/responsive/`. The naming contract is:
+
+```
+assets/responsive/<name>-<width>.<format>
+```
+
+`<format>` is `avif`, `webp` or `jpg`; `<width>` is the pixel width. Each image
+name needs both widths (currently 640 and 1024) in all three formats, plus a
+JPEG fallback, or the component warns in development and renders nothing.
+
+```bash
+convert assets/food-fried.jpg -resize 640x640 -strip -quality 66 \
+  -interlace Plane -sampling-factor 4:2:0 assets/responsive/food-fried-640.jpg
+```
+
+Adding a third width is a build step, not a code change. The original
+1024px JPEGs in `assets/` are the masters and are no longer served.
+
+Budgets: no single image over 45 kB, first-load JavaScript under 90 KiB gzip.
+
 ## Brand palette
 
 - BiteKasa Royal Red: `#A71920`
