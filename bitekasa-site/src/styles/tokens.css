@@ -41,8 +41,18 @@
   --ink-muted: #7a675c;      /* captions, 4.9:1 on paper */
   --red: #a71920;            /* brand red — one event per screen */
   --red-deep: #7e1116;       /* text-safe red, 7.4:1 on paper */
-  --gold: #d5a12e;           /* hairline / rule only, never a fill */
-  --gold-deep: #8a6516;      /* gold where it must carry text */
+  /* Royal Gold is the third brand colour and the site's energy: it carries
+     marks, rules and prices. Two weights, because they are not
+     interchangeable —
+       --gold       #d5a12e  2.03:1 on cream. DECORATIVE ONLY: rules, ticks,
+                             glows, fills. Never small text.
+       --gold-deep  #8a6516  4.61:1 on cream. The one that may carry type.
+     Using the bright gold for text is the single easiest way to make this
+     palette fail WCAG AA. */
+  --gold: #d5a12e;
+  --gold-deep: #8a6516;
+  --gold-wash: rgb(213 161 46 / 16%);   /* tinted surfaces */
+  --gold-glow: rgb(213 161 46 / 26%);   /* the warm light over the hero */
   --line: rgb(36 27 24 / 14%);
   --line-strong: rgb(36 27 24 / 30%);
   --on-dark: #f7eedb;        /* text on ink and on red */
