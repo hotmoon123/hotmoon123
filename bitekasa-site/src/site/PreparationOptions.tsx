@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { PREPARATIONS, SITE_BASE } from '../data/catalogue';
 import Reveal from './Reveal';
+import ResponsiveImage from './ResponsiveImage';
 
 export default function PreparationOptions() {
   return (
@@ -14,7 +15,14 @@ export default function PreparationOptions() {
         <div className="grid gap-4 sm:grid-cols-3">
           {PREPARATIONS.map((option, index) => (
             <Reveal key={option.slug} delay={index * 0.05} className="option-card">
-              <img src={option.image} alt={option.alt} className="option-image" loading="lazy" />
+              <ResponsiveImage
+                name={option.image}
+                alt={option.alt}
+                className="option-image"
+                sizes="(min-width: 1280px) 360px, (min-width: 768px) 30vw, 92vw"
+                width={1024}
+                height={1024}
+              />
               <div className="option-copy">
                 <p className="image-disclosure">Illustrative image</p>
                 <h3 className="option-name">{option.label}</h3>

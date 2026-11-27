@@ -1,6 +1,6 @@
 import { ArrowRight, MessageCircle, Phone } from 'lucide-react';
-import { SiInstagram } from 'react-icons/si';
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL, PHONES } from '../data/catalogue';
+import InstagramIcon from './InstagramIcon';
 import { whatsappHref } from '../lib/order';
 import Reveal from './Reveal';
 
@@ -38,7 +38,7 @@ export default function ContactCta() {
           ))}
 
           <a className="instagram-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-            <SiInstagram aria-hidden="true" size={16} />
+            <InstagramIcon size={16} />
             Instagram · {INSTAGRAM_HANDLE} <ArrowRight aria-hidden="true" size={16} />
           </a>
         </Reveal>

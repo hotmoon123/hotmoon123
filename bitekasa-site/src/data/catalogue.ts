@@ -1,6 +1,4 @@
-import friedFood from '../../assets/food-fried.jpg';
-import unfriedFood from '../../assets/food-unfried.jpg';
-import frozenFood from '../../assets/food-frozen.jpg';
+import type { ImageName } from '../site/ResponsiveImage';
 
 /** Single source of truth for every commercial fact on the site. */
 export const SITE_BASE = import.meta.env.BASE_URL;
@@ -50,7 +48,6 @@ export const cedi = (amount: number) => `GH₵${amount.toLocaleString('en-GH')}`
 export const packContents = (pack: Pack) =>
   pack.drink ? `${pack.pieces} pieces + ${pack.drink}` : `${pack.pieces} pieces`;
 
-export const packUnitPrice = (pack: Pack) => pack.price / pack.pieces;
 
 export type PreparationSlug = 'fried' | 'unfried' | 'frozen';
 
@@ -60,7 +57,7 @@ export type Preparation = {
   title: string;
   state: string;
   description: string;
-  image: string;
+  image: ImageName;
   alt: string;
 };
 
@@ -72,7 +69,7 @@ export const PREPARATIONS: Preparation[] = [
     state: 'Ready to eat',
     description:
       'Ask BiteKasa about fried samosas and spring rolls, current availability, pack options and the product mix before ordering.',
-    image: friedFood,
+    image: 'food-fried',
     alt: 'Illustrative image of fried samosas and spring rolls.',
   },
   {
@@ -82,7 +79,7 @@ export const PREPARATIONS: Preparation[] = [
     state: 'Prepared, not yet fried',
     description:
       'Ask BiteKasa about prepared, unfried samosas and spring rolls. Confirm current availability, pack options and product mix before ordering.',
-    image: unfriedFood,
+    image: 'food-unfried',
     alt: 'Illustrative image of unfried samosas and spring rolls.',
   },
   {
@@ -92,7 +89,7 @@ export const PREPARATIONS: Preparation[] = [
     state: 'Rolled and frozen before frying',
     description:
       'Ask BiteKasa about rolled and frozen samosas and spring rolls. Confirm current availability, pack options and product mix before ordering.',
-    image: frozenFood,
+    image: 'food-frozen',
     alt: 'Illustrative image of frozen, unfried samosas and spring rolls.',
   },
 ];

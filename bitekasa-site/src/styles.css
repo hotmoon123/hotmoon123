@@ -230,6 +230,11 @@ main[id] {
 
 .hero-photo { margin: 0; }
 
+/* <picture> is a wrapper, not a layout box: the image inside keeps the same
+   width, aspect-ratio and border it had when it was a bare <img>. */
+.photo-picture { display: block; }
+.photo-picture > img { display: block; }
+
 .hero-image {
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -367,6 +372,7 @@ main[id] {
   margin: 0;
   color: var(--ink-muted);
   font-size: var(--text-sm);
+  line-height: 1.45;
 }
 
 .pack-points {
@@ -1017,6 +1023,42 @@ main[id] {
    One rule set: motion confirms, it never decorates. Distances are
    2-12px, durations come from the token scale, and nothing loops.
    ============================================================ */
+
+/* Entrance reveal. Behaviour lives in src/site/Reveal.tsx; this is the only
+   place the distance and duration are authored. Visitors who ask for less
+   motion never see the hidden state at all, because the media query wraps it. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity var(--dur-slow) var(--ease),
+      transform var(--dur-slow) var(--ease);
+  }
+  .reveal.is-shown {
+    opacity: 1;
+    transform: none;
+  }
+  .hero-photo {
+    animation: hero-settle var(--dur-slow) var(--ease) both;
+  }
+  .mobile-nav-panel {
+    animation: menu-drop var(--dur) var(--ease) both;
+    transform-origin: top center;
+  }
+}
+
+@keyframes hero-settle {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* The panel is a plain element that exists or does not; this is its whole
+   entrance. Nothing has to measure height, so nothing can jump. */
+@keyframes menu-drop {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
 
 /* Cards: a 2px lift and a deeper shadow. Transform and shadow only, so
    the grid never reflows and the price never moves. Pointer devices only,

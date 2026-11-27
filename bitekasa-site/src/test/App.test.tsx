@@ -100,3 +100,38 @@ describe('analytics consent', () => {
     expect(tag?.src).toContain('id=G-TEST000000');
   });
 });
+
+/**
+ * Two standing rules from the owner, held as tests rather than as a note in a
+ * README, because a rule that lives only in prose gets broken by the next edit.
+ */
+describe('BiteKasa publishing rules', () => {
+  it('never prints a per-piece price', () => {
+    render(<App />);
+
+    // The pack prices are the only numbers a customer should ever see.
+    expect(document.body.textContent).not.toMatch(/per piece/i);
+    expect(document.body.textContent).not.toMatch(/GH₵\s?\d*\.\d/);
+  });
+
+  it('reserves space for every image, so nothing shifts as it loads', () => {
+    render(<App />);
+    const images = Array.from(document.querySelectorAll('img'));
+
+    expect(images.length).toBeGreaterThan(0);
+    for (const image of images) {
+      expect(image.getAttribute('width')).toBeTruthy();
+      expect(image.getAttribute('height')).toBeTruthy();
+    }
+  });
+
+  it('offers a modern format before the JPEG fallback', () => {
+    render(<App />);
+    const sources = Array.from(document.querySelectorAll('picture source')).map((source) =>
+      source.getAttribute('type'),
+    );
+
+    expect(sources).toContain('image/avif');
+    expect(sources).toContain('image/webp');
+  });
+});

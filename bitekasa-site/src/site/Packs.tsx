@@ -1,5 +1,5 @@
 import { ArrowRight, Check } from 'lucide-react';
-import { PACKS, SITE_BASE, cedi, packContents, packUnitPrice } from '../data/catalogue';
+import { PACKS, SITE_BASE, cedi, packContents } from '../data/catalogue';
 import { whatsappHref } from '../lib/order';
 import Reveal from './Reveal';
 
@@ -23,7 +23,7 @@ export default function Packs() {
               <h3 className="pack-name">{pack.name}</h3>
               <p className="pack-price">{cedi(pack.price)}</p>
               <p className="pack-description">{packContents(pack)}</p>
-              <p className="pack-unit">{cedi(Math.round(packUnitPrice(pack) * 100) / 100)} per piece</p>
+              <p className="pack-unit">Everything is made to order in one house kitchen.</p>
               <ul className="pack-points">
                 <li>
                   <Check aria-hidden="true" size={14} /> Fried, unfried or frozen — ask what is available

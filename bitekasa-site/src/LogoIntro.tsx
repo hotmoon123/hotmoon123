@@ -19,11 +19,13 @@ import logoFull from '../assets/bitekasa-logo-full.png';
  * - No WebGL, no slow network, or a failed module load all fall back to the same still.
  * - The page renders underneath the whole time, so nothing is blocked from loading.
  */
-// Start the chunk download as soon as this module is parsed, so the glass is
-// almost always ready before the splash is painted. A visitor must never see a
-// still logo standing in for the animation.
-const glassModule = import('./components/liquid-glass-logo');
-const LiquidGlassLogo = lazy(() => glassModule.then((module) => ({ default: module.LiquidGlassLogo })));
+// Loaded only when the splash is actually going to play. `lazy` calls this
+// factory on first render, so a returning visitor — and anyone with reduced
+// motion — never downloads the shader chunk at all. Cream is painted until
+// the module resolves, so the still logo can never stand in for the animation.
+const LiquidGlassLogo = lazy(() =>
+  import('./components/liquid-glass-logo').then((module) => ({ default: module.LiquidGlassLogo })),
+);
 
 const STORAGE_KEY = 'bitekasa-intro-seen';
 const HOLD_MS = 2400;

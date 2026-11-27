@@ -1,5 +1,4 @@
 import { ArrowRight, MessageCircle } from 'lucide-react';
-import { SiInstagram } from 'react-icons/si';
 import {
   INSTAGRAM_HANDLE,
   INSTAGRAM_URL,
@@ -8,8 +7,10 @@ import {
   type PreparationSlug,
 } from '../data/catalogue';
 import { whatsappHref } from '../lib/order';
+import InstagramIcon from './InstagramIcon';
 import Header from './Header';
 import Footer from './Footer';
+import ResponsiveImage from './ResponsiveImage';
 import Reveal from './Reveal';
 
 export default function ServicePage({ slug }: { slug: PreparationSlug }) {
@@ -44,7 +45,15 @@ export default function ServicePage({ slug }: { slug: PreparationSlug }) {
               </div>
             </Reveal>
             <Reveal>
-              <img src={page.image} alt={page.alt} className="hero-image" />
+              <ResponsiveImage
+                name={page.image}
+                alt={page.alt}
+                className="hero-image"
+                sizes="(min-width: 1280px) 600px, (min-width: 768px) 46vw, 92vw"
+                width={1024}
+                height={1024}
+                priority
+              />
               <p className="image-disclosure">Illustrative example</p>
             </Reveal>
           </div>
@@ -89,7 +98,7 @@ export default function ServicePage({ slug }: { slug: PreparationSlug }) {
                 WhatsApp BiteKasa <ArrowRight aria-hidden="true" size={17} />
               </a>
               <a className="instagram-link" href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                <SiInstagram aria-hidden="true" size={16} />
+                <InstagramIcon size={16} />
                 Instagram · {INSTAGRAM_HANDLE}
               </a>
             </div>
