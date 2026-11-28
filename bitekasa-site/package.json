@@ -12,7 +12,8 @@
     "test:coverage": "vitest run --coverage",
     "check:bundle": "node scripts/check-bundle-size.mjs",
     "check:seo": "node scripts/check-seo.mjs",
-    "check:paths": "node scripts/check-asset-paths.mjs"
+    "check:paths": "node scripts/check-asset-paths.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.69.0",
